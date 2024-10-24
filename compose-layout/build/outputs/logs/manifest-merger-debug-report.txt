@@ -1,0 +1,26 @@
+-- Merging decision tree log ---
+manifest
+ADDED from C:\Users\SSAFY\projects\hotdog-release\compose-layout\src\main\AndroidManifest.xml:17:1-24:12
+INJECTED from C:\Users\SSAFY\projects\hotdog-release\compose-layout\src\main\AndroidManifest.xml:17:1-24:12
+	package
+		ADDED from C:\Users\SSAFY\projects\hotdog-release\compose-layout\src\main\AndroidManifest.xml:19:5-59
+		INJECTED from C:\Users\SSAFY\projects\hotdog-release\compose-layout\src\main\AndroidManifest.xml
+	xmlns:tools
+		ADDED from C:\Users\SSAFY\projects\hotdog-release\compose-layout\src\main\AndroidManifest.xml:18:5-51
+	xmlns:android
+		ADDED from C:\Users\SSAFY\projects\hotdog-release\compose-layout\src\main\AndroidManifest.xml:17:11-69
+uses-feature#android.hardware.type.watch
+ADDED from C:\Users\SSAFY\projects\hotdog-release\compose-layout\src\main\AndroidManifest.xml:21:5-64
+	android:name
+		ADDED from C:\Users\SSAFY\projects\hotdog-release\compose-layout\src\main\AndroidManifest.xml:21:19-61
+uses-sdk
+ADDED from C:\Users\SSAFY\projects\hotdog-release\compose-layout\src\main\AndroidManifest.xml:23:5-75
+INJECTED from C:\Users\SSAFY\projects\hotdog-release\compose-layout\src\main\AndroidManifest.xml:23:5-75
+INJECTED from C:\Users\SSAFY\projects\hotdog-release\compose-layout\src\main\AndroidManifest.xml:23:5-75
+	android:targetSdkVersion
+		INJECTED from C:\Users\SSAFY\projects\hotdog-release\compose-layout\src\main\AndroidManifest.xml
+	tools:ignore
+		ADDED from C:\Users\SSAFY\projects\hotdog-release\compose-layout\src\main\AndroidManifest.xml:23:42-72
+	android:minSdkVersion
+		ADDED from C:\Users\SSAFY\projects\hotdog-release\compose-layout\src\main\AndroidManifest.xml:23:15-41
+		INJECTED from C:\Users\SSAFY\projects\hotdog-release\compose-layout\src\main\AndroidManifest.xml

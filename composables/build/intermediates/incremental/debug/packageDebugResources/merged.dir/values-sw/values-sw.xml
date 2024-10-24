@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="horologist_time_picker_hours_content_description">
+    <item quantity="one">Saa %d</item>
+    <item quantity="other">Saa %d</item>
+  </plurals>
+    <plurals name="horologist_time_picker_minutes_content_description">
+    <item quantity="one">Dakika %d</item>
+    <item quantity="other">Dakika %d</item>
+  </plurals>
+    <plurals name="horologist_time_picker_seconds_content_description">
+    <item quantity="one">Sekunde %d</item>
+    <item quantity="other">Sekunde %d</item>
+  </plurals>
+    <string name="horologist_picker_confirm_button_content_description">Thibitisha</string>
+    <string name="horologist_picker_day">Siku</string>
+    <string name="horologist_picker_month">Mwezi</string>
+    <string name="horologist_picker_next_button_content_description">Kinachofuata</string>
+    <string name="horologist_picker_year">Mwaka</string>
+    <string name="horologist_placeholderchip_content_description">Inapakia</string>
+    <string name="horologist_time_picker_hour">Saa</string>
+    <string name="horologist_time_picker_min">Dak</string>
+    <string name="horologist_time_picker_minute">Dakika</string>
+    <string name="horologist_time_picker_period">Nukta</string>
+    <string name="horologist_time_picker_second">Sekunde</string>
+</resources>

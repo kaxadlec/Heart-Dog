@@ -1,0 +1,1 @@
+int drawable sample_image 0x0

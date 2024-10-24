@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="horologist_split_toggle_chip_off_state_description">Вимкнено</string>
+    <string name="horologist_split_toggle_chip_on_state_description">Увімкнено</string>
+    <string name="horologist_stepper_decrease_content_description">Зменшити</string>
+    <string name="horologist_stepper_increase_content_description">Збільшити</string>
+    <string name="horologist_toggle_button_off_state_description">Вимкнено</string>
+    <string name="horologist_toggle_button_on_state_description">Увімкнено</string>
+    <string name="horologist_toggle_chip_off_state_description">Вимкнено</string>
+    <string name="horologist_toggle_chip_on_state_description">Увімкнено</string>
+</resources>

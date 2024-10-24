@@ -1,0 +1,2 @@
+com.google.android.horologist.images.coil
+drawable sample_image

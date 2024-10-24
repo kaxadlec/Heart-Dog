@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="horologist_time_picker_hours_content_description">
+    <item quantity="one">%d гадзіна</item>
+    <item quantity="few">%d гадзіны</item>
+    <item quantity="many">%d гадзін</item>
+    <item quantity="other">%d гадзіны</item>
+  </plurals>
+    <plurals name="horologist_time_picker_minutes_content_description">
+    <item quantity="one">%d хвіліна</item>
+    <item quantity="few">%d хвіліны</item>
+    <item quantity="many">%d хвілін</item>
+    <item quantity="other">%d хвіліны</item>
+  </plurals>
+    <plurals name="horologist_time_picker_seconds_content_description">
+    <item quantity="one">%d секунда</item>
+    <item quantity="few">%d секунды</item>
+    <item quantity="many">%d секунд</item>
+    <item quantity="other">%d секунды</item>
+  </plurals>
+    <string name="horologist_picker_confirm_button_content_description">Пацвердзіць</string>
+    <string name="horologist_picker_day">Дні</string>
+    <string name="horologist_picker_month">Месяцы</string>
+    <string name="horologist_picker_next_button_content_description">Далей</string>
+    <string name="horologist_picker_year">Гады</string>
+    <string name="horologist_placeholderchip_content_description">Загрузка</string>
+    <string name="horologist_time_picker_hour">Гадзіны</string>
+    <string name="horologist_time_picker_min">Хв</string>
+    <string name="horologist_time_picker_minute">Хвіліны</string>
+    <string name="horologist_time_picker_period">Кропка</string>
+    <string name="horologist_time_picker_second">Секунды</string>
+</resources>

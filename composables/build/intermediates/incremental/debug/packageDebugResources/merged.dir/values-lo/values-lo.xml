@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="horologist_time_picker_hours_content_description">
+    <item quantity="one">%d ຊົ່ວໂມງ</item>
+    <item quantity="other">%d ຊົ່ວໂມງ</item>
+  </plurals>
+    <plurals name="horologist_time_picker_minutes_content_description">
+    <item quantity="one">%d ນາທີ</item>
+    <item quantity="other">%d ນາທີ</item>
+  </plurals>
+    <plurals name="horologist_time_picker_seconds_content_description">
+    <item quantity="one">%d ວິນາທີ</item>
+    <item quantity="other">%d ວິນາທີ</item>
+  </plurals>
+    <string name="horologist_picker_confirm_button_content_description">ຢືນຢັນ</string>
+    <string name="horologist_picker_day">ມື້</string>
+    <string name="horologist_picker_month">ເດືອນ</string>
+    <string name="horologist_picker_next_button_content_description">ຕໍ່ໄປ</string>
+    <string name="horologist_picker_year">ປີ</string>
+    <string name="horologist_placeholderchip_content_description">ກຳລັງໂຫຼດ</string>
+    <string name="horologist_time_picker_hour">ຊົ່ວໂມງ</string>
+    <string name="horologist_time_picker_min">ນທ</string>
+    <string name="horologist_time_picker_minute">ນາທີ</string>
+    <string name="horologist_time_picker_period">ໄລຍະເວລາ</string>
+    <string name="horologist_time_picker_second">ວິນາທີ</string>
+</resources>

@@ -1,0 +1,615 @@
+-- Merging decision tree log ---
+manifest
+ADDED from C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\sample\phone\src\main\AndroidManifest.xml:17:1-65:12
+INJECTED from C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\sample\phone\src\main\AndroidManifest.xml:17:1-65:12
+INJECTED from C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\sample\phone\src\main\AndroidManifest.xml:17:1-65:12
+INJECTED from C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\sample\phone\src\main\AndroidManifest.xml:17:1-65:12
+MERGED from [:datalayer:sample:shared] C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\sample\shared\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:17:1-25:12
+MERGED from [:datalayer:grpc] C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\grpc\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:17:1-25:12
+MERGED from [:datalayer:phone-ui] C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\phone-ui\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-33:12
+MERGED from [:datalayer:phone] C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\phone\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:17:1-41:12
+MERGED from [:datalayer:core] C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\core\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:17:1-44:12
+MERGED from [com.google.android.material:material:1.12.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\f9d2c6961ff1a94b51610eaca0e1e90e\transformed\material-1.12.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.appcompat:appcompat-resources:1.7.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\815af122653c9b4e1c256f3ab2617354\transformed\appcompat-resources-1.7.0\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.constraintlayout:constraintlayout:2.0.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\5eebd97f9f8793ce7b39f751d585895e\transformed\constraintlayout-2.0.1\AndroidManifest.xml:2:1-11:12
+MERGED from [androidx.appcompat:appcompat:1.7.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\fba55ecab54b5d26451a1b731f816814\transformed\appcompat-1.7.0\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.wear:wear-remote-interactions:1.1.0-rc01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\fadab9dc1a93b1709e652d5b99bbfe0a\transformed\wear-remote-interactions-1.1.0-rc01\AndroidManifest.xml:17:1-28:12
+MERGED from [com.google.android.gms:play-services-wearable:18.2.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\221265a9b17623cbf9df802a3d9a2429\transformed\play-services-wearable-18.2.0\AndroidManifest.xml:2:1-8:12
+MERGED from [com.google.android.gms:play-services-base:18.5.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\196d6c6c849b69ec815ba072ef374891\transformed\play-services-base-18.5.0\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.datastore:datastore-core-android:1.1.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\36d467c79f15c52f76a8bcf45b2d250a\transformed\datastore-core-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.datastore:datastore-android:1.1.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\1619850a609cbf75bbeac3fb230a258c\transformed\datastore-release\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.datastore:datastore-preferences-android:1.1.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\7216ed42644258b2cb9ce764aec25a9d\transformed\datastore-preferences-release\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.hilt:hilt-navigation-compose:1.2.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\0a9d227197fbf6bb481ef991b227e76c\transformed\hilt-navigation-compose-1.2.0\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.hilt:hilt-navigation:1.2.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\b1afe8fac22322f25f6d3f314302488e\transformed\hilt-navigation-1.2.0\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.navigation:navigation-common:2.8.3] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\828921d439f8b15cec736d3f934e7b1c\transformed\navigation-common-2.8.3\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.navigation:navigation-runtime:2.8.3] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\91b566bd62742dfb41b4a9405dccf89c\transformed\navigation-runtime-2.8.3\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.navigation:navigation-common-ktx:2.8.3] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\f2ed68328a23c8c9220393fb3db432dd\transformed\navigation-common-ktx-2.8.3\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.navigation:navigation-runtime-ktx:2.8.3] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\ffc58e73d0ac3e3fb1d7000a788ea539\transformed\navigation-runtime-ktx-2.8.3\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.navigation:navigation-compose:2.8.3] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\8c33c5c1e373ea2f03bd11041a3fede9\transformed\navigation-compose-2.8.3\AndroidManifest.xml:2:1-7:12
+MERGED from [com.google.dagger:hilt-android:2.52] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\9998642659fbae3369879d3d60c1038d\transformed\hilt-android-2.52\AndroidManifest.xml:16:1-19:12
+MERGED from [androidx.compose.material3:material3-android:1.3.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\5d67271ebb75db0eca74304573f88b41\transformed\material3-release\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.compose.material:material-icons-extended-android:1.7.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\a09751604f926a447ee5794ccc612e74\transformed\material-icons-extended-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.material:material-icons-core-android:1.7.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\3bbe3302521ae5942f0342268b5a9b28\transformed\material-icons-core-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.material:material-android:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\0737d29552583c86cf929a8a73ee59e5\transformed\material-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.material:material-ripple-android:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\49ab1ca805cdec089df6cd2d500b8efa\transformed\material-ripple-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.foundation:foundation-android:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\f6c85b21e82dd12c6c5bbf0d26f4965e\transformed\foundation-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.foundation:foundation-layout-android:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\b2293783419842645ea9b844c434fb28\transformed\foundation-layout-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.animation:animation-core-android:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\edd7478d6f2b3b0b60f293fa4d429d9f\transformed\animation-core-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.animation:animation-android:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\588ac4dc9ad1486dd4517a1a15fa22a4\transformed\animation-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-tooling-data-android:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\7aaed9ba6090af9bd3dd47a1e1985ac8\transformed\ui-tooling-data-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-unit-android:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\233245e300bcd0f330b9deae6aa15b90\transformed\ui-unit-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-geometry-android:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\0850fac59b56bdf4a5f2d55b75e15c43\transformed\ui-geometry-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-util-android:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\67c25bc2d33c70db6eb6aa0d7b7fcdba\transformed\ui-util-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-text-android:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\bee012fc85ec7ceebfe42ddb26bd76c3\transformed\ui-text-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-tooling-preview-android:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\616318eb9b679fa0555bbf8b88494075\transformed\ui-tooling-preview-release\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.compose.ui:ui-tooling-android:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\d7e7cdc61eae3294799cbca6c1e64e4c\transformed\ui-tooling-release\AndroidManifest.xml:17:1-28:12
+MERGED from [androidx.compose.ui:ui-graphics-android:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\e07ff2180776bef6ebfd062c61d76a41\transformed\ui-graphics-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.viewpager2:viewpager2:1.0.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\123664fe7604e768185e5a35e05de4a0\transformed\viewpager2-1.0.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.fragment:fragment:1.5.4] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\ad07b97eb70e3c8a5fb63e2df96f2a0e\transformed\fragment-1.5.4\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.transition:transition:1.5.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\afc00e46fc6fd2498ac51a0d3818a63c\transformed\transition-1.5.0\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.dynamicanimation:dynamicanimation:1.0.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\55218c1598cc8d9ad46dbfc83434edce\transformed\dynamicanimation-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\8fef89c85cdf3d9cba41a5d32013e931\transformed\legacy-support-core-utils-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.loader:loader:1.0.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\c7143de4e6fe06daad230a2de4eb8e5e\transformed\loader-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.emoji2:emoji2-views-helper:1.4.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\ff2318c6881562d4a4719ec2539dfb20\transformed\emoji2-views-helper-1.4.0\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.emoji2:emoji2:1.4.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\deb425c322119d363f23c43933009f49\transformed\emoji2-1.4.0\AndroidManifest.xml:17:1-35:12
+MERGED from [androidx.savedstate:savedstate-ktx:1.2.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\bf9aba50a140d19386bb3847ed2d01e4\transformed\savedstate-ktx-1.2.1\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.savedstate:savedstate:1.2.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\2bad5c2474327cc98a472543ba113a53\transformed\savedstate-1.2.1\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.9.0-alpha02] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\7f5f1aea7ab034efb9e2b25b958a8d4e\transformed\lifecycle-viewmodel-2.9.0-alpha02\AndroidManifest.xml:2:1-5:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-android:2.9.0-alpha02] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\4de74193502644f191fe2bfec4d5a7da\transformed\lifecycle-viewmodel-release\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-livedata-core-ktx:2.9.0-alpha02] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\4e02828c94e74f03e2aa5fcb3266aaf1\transformed\lifecycle-livedata-core-ktx-2.9.0-alpha02\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.lifecycle:lifecycle-runtime-ktx-android:2.9.0-alpha02] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\630e313173cc775c2047080859820c8b\transformed\lifecycle-runtime-ktx-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.lifecycle:lifecycle-runtime-android:2.9.0-alpha02] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\b7915e52e170e0c447a435ab09c1cd60\transformed\lifecycle-runtime-release\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-process:2.9.0-alpha02] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\7ae6601c39f56f3e81b60637f2d42c75\transformed\lifecycle-process-2.9.0-alpha02\AndroidManifest.xml:17:1-35:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.9.0-alpha02] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\7b7e6e2b4497731a9ca2aab70d0f4dbf\transformed\lifecycle-viewmodel-savedstate-2.9.0-alpha02\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.9.0-alpha02] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\48df8f46ac4404e2f02e987869a87d55\transformed\lifecycle-viewmodel-ktx-2.9.0-alpha02\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.lifecycle:lifecycle-service:2.9.0-alpha02] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\d0e0a06cda06bf6170eb78f5a9ca30cf\transformed\lifecycle-service-2.9.0-alpha02\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.9.0-alpha02] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\634b3772336fb35aebae5befb7b76ab6\transformed\lifecycle-livedata-core-2.9.0-alpha02\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.9.0-alpha02] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\c32d5b50d85437424bd9c67616976960\transformed\lifecycle-livedata-2.9.0-alpha02\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-runtime-compose-android:2.9.0-alpha02] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\2b4844710834d2f2cc0978eea6e3ef26\transformed\lifecycle-runtime-compose-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-compose-android:2.9.0-alpha02] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\60611bfd2148ace73d5b1422f8fd16d6\transformed\lifecycle-viewmodel-compose-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-android:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\301d9da7bd272434f4e453d95c48fa99\transformed\ui-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-test-manifest:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\d214a5e04585f83358e1ff4fda898bf6\transformed\ui-test-manifest-1.8.0-alpha01\AndroidManifest.xml:17:1-28:12
+MERGED from [androidx.activity:activity:1.9.3] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\c032bcb49b36ecfaf703918761b4ba67\transformed\activity-1.9.3\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.activity:activity-ktx:1.9.3] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\60e6ae19db62c1a56d3fe1a629af244e\transformed\activity-ktx-1.9.3\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.activity:activity-compose:1.9.3] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\f076427dc31ce387f4eea96fa9c6e4db\transformed\activity-compose-1.9.3\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.runtime:runtime-saveable-android:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\5f4c95d26b2571dc8149a1328bc70d98\transformed\runtime-saveable-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.runtime:runtime-android:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\f118fd8dfdf928ab794ccded6c02a927\transformed\runtime-release\AndroidManifest.xml:2:1-7:12
+MERGED from [com.google.android.gms:play-services-tasks:18.2.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\9324b7f64635302d856bbd459e7404a7\transformed\play-services-tasks-18.2.0\AndroidManifest.xml:2:1-5:12
+MERGED from [com.google.android.gms:play-services-basement:18.4.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\9a270d1b09a17b0d83672316670a6abf\transformed\play-services-basement-18.4.0\AndroidManifest.xml:2:1-9:12
+MERGED from [androidx.drawerlayout:drawerlayout:1.1.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\9c05091e9f8e2e10865a17a4657e6135\transformed\drawerlayout-1.1.1\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.1.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\293eb4ad7e2a4fc690b6e6042c0199cb\transformed\coordinatorlayout-1.1.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\c4ae6f0879f6d9926d6375f1d3b5ead9\transformed\vectordrawable-animated-1.1.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\438378dbebd2026b5d03e87741b098b3\transformed\vectordrawable-1.1.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\2a26c55424c80cad4cdb54d1a464ca45\transformed\viewpager-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.recyclerview:recyclerview:1.1.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\09ca7290ccc289d1a168ec5f3de080aa\transformed\recyclerview-1.1.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.customview:customview:1.1.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\49be7a005a4d64e9bf40350d27994514\transformed\customview-1.1.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.autofill:autofill:1.0.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\a818813c842bc42c6537c01953d139e8\transformed\autofill-1.0.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.graphics:graphics-path:1.0.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\5e6cbc8d3ea6bf481617cbf048a0a631\transformed\graphics-path-1.0.1\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.core:core:1.13.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\a75509c3f42053ee7f497dfae7bbdc49\transformed\core-1.13.1\AndroidManifest.xml:17:1-30:12
+MERGED from [androidx.customview:customview-poolingcontainer:1.0.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\1603c7800afe9e1cef606ca0856e68a3\transformed\customview-poolingcontainer-1.0.0\AndroidManifest.xml:17:1-23:12
+MERGED from [androidx.core:core-ktx:1.13.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\60614883dc206a3eb055df2e66ac02d5\transformed\core-ktx-1.13.1\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.annotation:annotation-experimental:1.4.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\b4474818abb3f4532607ea2f1cc12003\transformed\annotation-experimental-1.4.1\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\24e413c841ff3266fcb67d52e9a49dfc\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:17:1-27:12
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\88fb10e0347bd03a08a3d08594b57d84\transformed\cursoradapter-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\01e6106602d01bff870d38fe83afdc71\transformed\profileinstaller-1.3.1\AndroidManifest.xml:17:1-55:12
+MERGED from [androidx.cardview:cardview:1.0.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\bf1ec577a821ab49a89298617ff9f7e5\transformed\cardview-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\ea6eb39c41402b07f3e3353d7ac64f5b\transformed\interpolator-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\d05e77825b40fff31f5f57eec8796e92\transformed\startup-runtime-1.1.1\AndroidManifest.xml:17:1-33:12
+MERGED from [androidx.tracing:tracing:1.0.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\54756bef13a398b59337bcb1d1a720d0\transformed\tracing-1.0.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.documentfile:documentfile:1.0.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\3ea91bc765314f750660fdae402ecda8\transformed\documentfile-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\bf62526d77c41b913d29064562a04da2\transformed\localbroadcastmanager-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.print:print:1.0.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\39e1488decd67166b1491cf991dedaf5\transformed\print-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.arch.core:core-runtime:2.2.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\77af994700ec4ba14ac43f0b3e67ea9a\transformed\core-runtime-2.2.0\AndroidManifest.xml:17:1-22:12
+MERGED from [com.google.dagger:dagger-lint-aar:2.52] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\ca198770d2ce30f0885f53138286a1b3\transformed\dagger-lint-aar-2.52\AndroidManifest.xml:16:1-19:12
+	package
+		ADDED from C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\sample\phone\src\main\AndroidManifest.xml:19:5-61
+		INJECTED from C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\sample\phone\src\main\AndroidManifest.xml
+	android:versionName
+		INJECTED from C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\sample\phone\src\main\AndroidManifest.xml
+	xmlns:tools
+		ADDED from C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\sample\phone\src\main\AndroidManifest.xml:18:5-51
+	android:versionCode
+		INJECTED from C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\sample\phone\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\sample\phone\src\main\AndroidManifest.xml:17:11-69
+uses-permission#android.permission.INTERNET
+ADDED from C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\sample\phone\src\main\AndroidManifest.xml:21:5-67
+	android:name
+		ADDED from C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\sample\phone\src\main\AndroidManifest.xml:21:22-64
+application
+ADDED from C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\sample\phone\src\main\AndroidManifest.xml:23:5-63:19
+INJECTED from C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\sample\phone\src\main\AndroidManifest.xml:23:5-63:19
+MERGED from [:datalayer:phone-ui] C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\phone-ui\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:10:5-31:19
+MERGED from [:datalayer:phone-ui] C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\phone-ui\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:10:5-31:19
+MERGED from [:datalayer:phone] C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\phone\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:25:5-39:19
+MERGED from [:datalayer:phone] C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\phone\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:25:5-39:19
+MERGED from [com.google.android.material:material:1.12.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\f9d2c6961ff1a94b51610eaca0e1e90e\transformed\material-1.12.0\AndroidManifest.xml:22:5-20
+MERGED from [com.google.android.material:material:1.12.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\f9d2c6961ff1a94b51610eaca0e1e90e\transformed\material-1.12.0\AndroidManifest.xml:22:5-20
+MERGED from [androidx.constraintlayout:constraintlayout:2.0.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\5eebd97f9f8793ce7b39f751d585895e\transformed\constraintlayout-2.0.1\AndroidManifest.xml:9:5-20
+MERGED from [androidx.constraintlayout:constraintlayout:2.0.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\5eebd97f9f8793ce7b39f751d585895e\transformed\constraintlayout-2.0.1\AndroidManifest.xml:9:5-20
+MERGED from [androidx.wear:wear-remote-interactions:1.1.0-rc01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\fadab9dc1a93b1709e652d5b99bbfe0a\transformed\wear-remote-interactions-1.1.0-rc01\AndroidManifest.xml:22:5-26:19
+MERGED from [androidx.wear:wear-remote-interactions:1.1.0-rc01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\fadab9dc1a93b1709e652d5b99bbfe0a\transformed\wear-remote-interactions-1.1.0-rc01\AndroidManifest.xml:22:5-26:19
+MERGED from [com.google.android.gms:play-services-wearable:18.2.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\221265a9b17623cbf9df802a3d9a2429\transformed\play-services-wearable-18.2.0\AndroidManifest.xml:6:5-20
+MERGED from [com.google.android.gms:play-services-wearable:18.2.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\221265a9b17623cbf9df802a3d9a2429\transformed\play-services-wearable-18.2.0\AndroidManifest.xml:6:5-20
+MERGED from [com.google.android.gms:play-services-base:18.5.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\196d6c6c849b69ec815ba072ef374891\transformed\play-services-base-18.5.0\AndroidManifest.xml:4:5-6:19
+MERGED from [com.google.android.gms:play-services-base:18.5.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\196d6c6c849b69ec815ba072ef374891\transformed\play-services-base-18.5.0\AndroidManifest.xml:4:5-6:19
+MERGED from [androidx.compose.ui:ui-tooling-android:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\d7e7cdc61eae3294799cbca6c1e64e4c\transformed\ui-tooling-release\AndroidManifest.xml:22:5-26:19
+MERGED from [androidx.compose.ui:ui-tooling-android:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\d7e7cdc61eae3294799cbca6c1e64e4c\transformed\ui-tooling-release\AndroidManifest.xml:22:5-26:19
+MERGED from [androidx.emoji2:emoji2:1.4.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\deb425c322119d363f23c43933009f49\transformed\emoji2-1.4.0\AndroidManifest.xml:23:5-33:19
+MERGED from [androidx.emoji2:emoji2:1.4.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\deb425c322119d363f23c43933009f49\transformed\emoji2-1.4.0\AndroidManifest.xml:23:5-33:19
+MERGED from [androidx.lifecycle:lifecycle-process:2.9.0-alpha02] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\7ae6601c39f56f3e81b60637f2d42c75\transformed\lifecycle-process-2.9.0-alpha02\AndroidManifest.xml:23:5-33:19
+MERGED from [androidx.lifecycle:lifecycle-process:2.9.0-alpha02] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\7ae6601c39f56f3e81b60637f2d42c75\transformed\lifecycle-process-2.9.0-alpha02\AndroidManifest.xml:23:5-33:19
+MERGED from [androidx.compose.ui:ui-test-manifest:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\d214a5e04585f83358e1ff4fda898bf6\transformed\ui-test-manifest-1.8.0-alpha01\AndroidManifest.xml:22:5-26:19
+MERGED from [androidx.compose.ui:ui-test-manifest:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\d214a5e04585f83358e1ff4fda898bf6\transformed\ui-test-manifest-1.8.0-alpha01\AndroidManifest.xml:22:5-26:19
+MERGED from [com.google.android.gms:play-services-tasks:18.2.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\9324b7f64635302d856bbd459e7404a7\transformed\play-services-tasks-18.2.0\AndroidManifest.xml:4:5-20
+MERGED from [com.google.android.gms:play-services-tasks:18.2.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\9324b7f64635302d856bbd459e7404a7\transformed\play-services-tasks-18.2.0\AndroidManifest.xml:4:5-20
+MERGED from [com.google.android.gms:play-services-basement:18.4.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\9a270d1b09a17b0d83672316670a6abf\transformed\play-services-basement-18.4.0\AndroidManifest.xml:5:5-7:19
+MERGED from [com.google.android.gms:play-services-basement:18.4.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\9a270d1b09a17b0d83672316670a6abf\transformed\play-services-basement-18.4.0\AndroidManifest.xml:5:5-7:19
+MERGED from [androidx.core:core:1.13.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\a75509c3f42053ee7f497dfae7bbdc49\transformed\core-1.13.1\AndroidManifest.xml:28:5-89
+MERGED from [androidx.core:core:1.13.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\a75509c3f42053ee7f497dfae7bbdc49\transformed\core-1.13.1\AndroidManifest.xml:28:5-89
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\24e413c841ff3266fcb67d52e9a49dfc\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:24:5-25:19
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\24e413c841ff3266fcb67d52e9a49dfc\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:24:5-25:19
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\01e6106602d01bff870d38fe83afdc71\transformed\profileinstaller-1.3.1\AndroidManifest.xml:23:5-53:19
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\01e6106602d01bff870d38fe83afdc71\transformed\profileinstaller-1.3.1\AndroidManifest.xml:23:5-53:19
+MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\d05e77825b40fff31f5f57eec8796e92\transformed\startup-runtime-1.1.1\AndroidManifest.xml:25:5-31:19
+MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\d05e77825b40fff31f5f57eec8796e92\transformed\startup-runtime-1.1.1\AndroidManifest.xml:25:5-31:19
+	android:extractNativeLibs
+		INJECTED from C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\sample\phone\src\main\AndroidManifest.xml
+	android:appComponentFactory
+		ADDED from [androidx.core:core:1.13.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\a75509c3f42053ee7f497dfae7bbdc49\transformed\core-1.13.1\AndroidManifest.xml:28:18-86
+	android:supportsRtl
+		ADDED from C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\sample\phone\src\main\AndroidManifest.xml:29:9-35
+	android:label
+		ADDED from C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\sample\phone\src\main\AndroidManifest.xml:27:9-41
+	android:roundIcon
+		ADDED from C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\sample\phone\src\main\AndroidManifest.xml:28:9-54
+	android:icon
+		ADDED from C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\sample\phone\src\main\AndroidManifest.xml:26:9-43
+	android:allowBackup
+		ADDED from C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\sample\phone\src\main\AndroidManifest.xml:25:9-35
+	android:theme
+		ADDED from C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\sample\phone\src\main\AndroidManifest.xml:30:9-48
+	android:name
+		ADDED from C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\sample\phone\src\main\AndroidManifest.xml:24:9-28
+activity#com.google.android.horologist.datalayer.sample.MainActivity
+ADDED from C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\sample\phone\src\main\AndroidManifest.xml:32:9-43:20
+	android:exported
+		ADDED from C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\sample\phone\src\main\AndroidManifest.xml:34:13-36
+	android:theme
+		ADDED from C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\sample\phone\src\main\AndroidManifest.xml:36:13-52
+	android:taskAffinity
+		ADDED from C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\sample\phone\src\main\AndroidManifest.xml:35:13-41
+	android:name
+		ADDED from C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\sample\phone\src\main\AndroidManifest.xml:33:13-41
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\sample\phone\src\main\AndroidManifest.xml:38:13-42:29
+action#android.intent.action.MAIN
+ADDED from C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\sample\phone\src\main\AndroidManifest.xml:39:17-69
+	android:name
+		ADDED from C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\sample\phone\src\main\AndroidManifest.xml:39:25-66
+category#android.intent.category.LAUNCHER
+ADDED from C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\sample\phone\src\main\AndroidManifest.xml:41:17-77
+	android:name
+		ADDED from C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\sample\phone\src\main\AndroidManifest.xml:41:27-74
+activity#com.google.android.horologist.datalayer.sample.screens.startremote.StartRemoteSampleActivity
+ADDED from C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\sample\phone\src\main\AndroidManifest.xml:45:9-49:55
+	android:exported
+		ADDED from C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\sample\phone\src\main\AndroidManifest.xml:47:13-37
+	android:theme
+		ADDED from C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\sample\phone\src\main\AndroidManifest.xml:49:13-52
+	android:taskAffinity
+		ADDED from C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\sample\phone\src\main\AndroidManifest.xml:48:13-41
+	android:name
+		ADDED from C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\sample\phone\src\main\AndroidManifest.xml:46:13-74
+service#com.google.android.horologist.datalayer.sample.grpc.WearCounterDataService
+ADDED from C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\sample\phone\src\main\AndroidManifest.xml:51:9-61:19
+	android:exported
+		ADDED from C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\sample\phone\src\main\AndroidManifest.xml:51:62-85
+	tools:ignore
+		ADDED from C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\sample\phone\src\main\AndroidManifest.xml:52:13-43
+	android:name
+		ADDED from C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\sample\phone\src\main\AndroidManifest.xml:51:18-61
+intent-filter#action:name:com.google.android.gms.wearable.REQUEST_RECEIVED+data:host:*+data:pathPrefix:/grpc/+data:scheme:wear
+ADDED from C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\sample\phone\src\main\AndroidManifest.xml:53:13-60:29
+action#com.google.android.gms.wearable.REQUEST_RECEIVED
+ADDED from C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\sample\phone\src\main\AndroidManifest.xml:54:17-91
+	android:name
+		ADDED from C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\sample\phone\src\main\AndroidManifest.xml:54:25-88
+data
+ADDED from C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\sample\phone\src\main\AndroidManifest.xml:55:17-59:23
+	android:host
+		ADDED from C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\sample\phone\src\main\AndroidManifest.xml:56:21-37
+	android:scheme
+		ADDED from C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\sample\phone\src\main\AndroidManifest.xml:58:21-42
+	android:pathPrefix
+		ADDED from C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\sample\phone\src\main\AndroidManifest.xml:57:21-48
+uses-sdk
+INJECTED from C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\sample\phone\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\sample\phone\src\main\AndroidManifest.xml
+INJECTED from C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\sample\phone\src\main\AndroidManifest.xml
+MERGED from [:datalayer:sample:shared] C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\sample\shared\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:21:5-23:42
+MERGED from [:datalayer:sample:shared] C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\sample\shared\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:21:5-23:42
+MERGED from [:datalayer:grpc] C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\grpc\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:21:5-23:42
+MERGED from [:datalayer:grpc] C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\grpc\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:21:5-23:42
+MERGED from [:datalayer:phone-ui] C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\phone-ui\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:6:5-8:42
+MERGED from [:datalayer:phone-ui] C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\phone-ui\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:6:5-8:42
+MERGED from [:datalayer:phone] C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\phone\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:21:5-23:42
+MERGED from [:datalayer:phone] C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\phone\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:21:5-23:42
+MERGED from [:datalayer:core] C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\core\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:21:5-24:69
+MERGED from [:datalayer:core] C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\core\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:21:5-24:69
+MERGED from [com.google.android.material:material:1.12.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\f9d2c6961ff1a94b51610eaca0e1e90e\transformed\material-1.12.0\AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.material:material:1.12.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\f9d2c6961ff1a94b51610eaca0e1e90e\transformed\material-1.12.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.appcompat:appcompat-resources:1.7.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\815af122653c9b4e1c256f3ab2617354\transformed\appcompat-resources-1.7.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.appcompat:appcompat-resources:1.7.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\815af122653c9b4e1c256f3ab2617354\transformed\appcompat-resources-1.7.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.constraintlayout:constraintlayout:2.0.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\5eebd97f9f8793ce7b39f751d585895e\transformed\constraintlayout-2.0.1\AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.constraintlayout:constraintlayout:2.0.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\5eebd97f9f8793ce7b39f751d585895e\transformed\constraintlayout-2.0.1\AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.appcompat:appcompat:1.7.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\fba55ecab54b5d26451a1b731f816814\transformed\appcompat-1.7.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.appcompat:appcompat:1.7.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\fba55ecab54b5d26451a1b731f816814\transformed\appcompat-1.7.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.wear:wear-remote-interactions:1.1.0-rc01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\fadab9dc1a93b1709e652d5b99bbfe0a\transformed\wear-remote-interactions-1.1.0-rc01\AndroidManifest.xml:20:5-44
+MERGED from [androidx.wear:wear-remote-interactions:1.1.0-rc01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\fadab9dc1a93b1709e652d5b99bbfe0a\transformed\wear-remote-interactions-1.1.0-rc01\AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-wearable:18.2.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\221265a9b17623cbf9df802a3d9a2429\transformed\play-services-wearable-18.2.0\AndroidManifest.xml:4:5-44
+MERGED from [com.google.android.gms:play-services-wearable:18.2.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\221265a9b17623cbf9df802a3d9a2429\transformed\play-services-wearable-18.2.0\AndroidManifest.xml:4:5-44
+MERGED from [com.google.android.gms:play-services-base:18.5.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\196d6c6c849b69ec815ba072ef374891\transformed\play-services-base-18.5.0\AndroidManifest.xml:3:5-44
+MERGED from [com.google.android.gms:play-services-base:18.5.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\196d6c6c849b69ec815ba072ef374891\transformed\play-services-base-18.5.0\AndroidManifest.xml:3:5-44
+MERGED from [androidx.datastore:datastore-core-android:1.1.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\36d467c79f15c52f76a8bcf45b2d250a\transformed\datastore-core-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.datastore:datastore-core-android:1.1.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\36d467c79f15c52f76a8bcf45b2d250a\transformed\datastore-core-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.datastore:datastore-android:1.1.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\1619850a609cbf75bbeac3fb230a258c\transformed\datastore-release\AndroidManifest.xml:20:5-44
+MERGED from [androidx.datastore:datastore-android:1.1.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\1619850a609cbf75bbeac3fb230a258c\transformed\datastore-release\AndroidManifest.xml:20:5-44
+MERGED from [androidx.datastore:datastore-preferences-android:1.1.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\7216ed42644258b2cb9ce764aec25a9d\transformed\datastore-preferences-release\AndroidManifest.xml:20:5-44
+MERGED from [androidx.datastore:datastore-preferences-android:1.1.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\7216ed42644258b2cb9ce764aec25a9d\transformed\datastore-preferences-release\AndroidManifest.xml:20:5-44
+MERGED from [androidx.hilt:hilt-navigation-compose:1.2.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\0a9d227197fbf6bb481ef991b227e76c\transformed\hilt-navigation-compose-1.2.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.hilt:hilt-navigation-compose:1.2.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\0a9d227197fbf6bb481ef991b227e76c\transformed\hilt-navigation-compose-1.2.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.hilt:hilt-navigation:1.2.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\b1afe8fac22322f25f6d3f314302488e\transformed\hilt-navigation-1.2.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.hilt:hilt-navigation:1.2.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\b1afe8fac22322f25f6d3f314302488e\transformed\hilt-navigation-1.2.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.navigation:navigation-common:2.8.3] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\828921d439f8b15cec736d3f934e7b1c\transformed\navigation-common-2.8.3\AndroidManifest.xml:20:5-44
+MERGED from [androidx.navigation:navigation-common:2.8.3] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\828921d439f8b15cec736d3f934e7b1c\transformed\navigation-common-2.8.3\AndroidManifest.xml:20:5-44
+MERGED from [androidx.navigation:navigation-runtime:2.8.3] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\91b566bd62742dfb41b4a9405dccf89c\transformed\navigation-runtime-2.8.3\AndroidManifest.xml:20:5-44
+MERGED from [androidx.navigation:navigation-runtime:2.8.3] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\91b566bd62742dfb41b4a9405dccf89c\transformed\navigation-runtime-2.8.3\AndroidManifest.xml:20:5-44
+MERGED from [androidx.navigation:navigation-common-ktx:2.8.3] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\f2ed68328a23c8c9220393fb3db432dd\transformed\navigation-common-ktx-2.8.3\AndroidManifest.xml:5:5-44
+MERGED from [androidx.navigation:navigation-common-ktx:2.8.3] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\f2ed68328a23c8c9220393fb3db432dd\transformed\navigation-common-ktx-2.8.3\AndroidManifest.xml:5:5-44
+MERGED from [androidx.navigation:navigation-runtime-ktx:2.8.3] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\ffc58e73d0ac3e3fb1d7000a788ea539\transformed\navigation-runtime-ktx-2.8.3\AndroidManifest.xml:5:5-44
+MERGED from [androidx.navigation:navigation-runtime-ktx:2.8.3] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\ffc58e73d0ac3e3fb1d7000a788ea539\transformed\navigation-runtime-ktx-2.8.3\AndroidManifest.xml:5:5-44
+MERGED from [androidx.navigation:navigation-compose:2.8.3] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\8c33c5c1e373ea2f03bd11041a3fede9\transformed\navigation-compose-2.8.3\AndroidManifest.xml:5:5-44
+MERGED from [androidx.navigation:navigation-compose:2.8.3] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\8c33c5c1e373ea2f03bd11041a3fede9\transformed\navigation-compose-2.8.3\AndroidManifest.xml:5:5-44
+MERGED from [com.google.dagger:hilt-android:2.52] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\9998642659fbae3369879d3d60c1038d\transformed\hilt-android-2.52\AndroidManifest.xml:18:3-42
+MERGED from [com.google.dagger:hilt-android:2.52] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\9998642659fbae3369879d3d60c1038d\transformed\hilt-android-2.52\AndroidManifest.xml:18:3-42
+MERGED from [androidx.compose.material3:material3-android:1.3.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\5d67271ebb75db0eca74304573f88b41\transformed\material3-release\AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.material3:material3-android:1.3.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\5d67271ebb75db0eca74304573f88b41\transformed\material3-release\AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.material:material-icons-extended-android:1.7.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\a09751604f926a447ee5794ccc612e74\transformed\material-icons-extended-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-icons-extended-android:1.7.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\a09751604f926a447ee5794ccc612e74\transformed\material-icons-extended-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-icons-core-android:1.7.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\3bbe3302521ae5942f0342268b5a9b28\transformed\material-icons-core-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-icons-core-android:1.7.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\3bbe3302521ae5942f0342268b5a9b28\transformed\material-icons-core-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-android:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\0737d29552583c86cf929a8a73ee59e5\transformed\material-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-android:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\0737d29552583c86cf929a8a73ee59e5\transformed\material-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-ripple-android:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\49ab1ca805cdec089df6cd2d500b8efa\transformed\material-ripple-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-ripple-android:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\49ab1ca805cdec089df6cd2d500b8efa\transformed\material-ripple-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.foundation:foundation-android:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\f6c85b21e82dd12c6c5bbf0d26f4965e\transformed\foundation-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.foundation:foundation-android:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\f6c85b21e82dd12c6c5bbf0d26f4965e\transformed\foundation-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.foundation:foundation-layout-android:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\b2293783419842645ea9b844c434fb28\transformed\foundation-layout-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.foundation:foundation-layout-android:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\b2293783419842645ea9b844c434fb28\transformed\foundation-layout-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.animation:animation-core-android:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\edd7478d6f2b3b0b60f293fa4d429d9f\transformed\animation-core-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.animation:animation-core-android:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\edd7478d6f2b3b0b60f293fa4d429d9f\transformed\animation-core-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.animation:animation-android:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\588ac4dc9ad1486dd4517a1a15fa22a4\transformed\animation-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.animation:animation-android:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\588ac4dc9ad1486dd4517a1a15fa22a4\transformed\animation-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-tooling-data-android:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\7aaed9ba6090af9bd3dd47a1e1985ac8\transformed\ui-tooling-data-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-tooling-data-android:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\7aaed9ba6090af9bd3dd47a1e1985ac8\transformed\ui-tooling-data-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-unit-android:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\233245e300bcd0f330b9deae6aa15b90\transformed\ui-unit-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-unit-android:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\233245e300bcd0f330b9deae6aa15b90\transformed\ui-unit-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-geometry-android:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\0850fac59b56bdf4a5f2d55b75e15c43\transformed\ui-geometry-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-geometry-android:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\0850fac59b56bdf4a5f2d55b75e15c43\transformed\ui-geometry-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-util-android:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\67c25bc2d33c70db6eb6aa0d7b7fcdba\transformed\ui-util-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-util-android:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\67c25bc2d33c70db6eb6aa0d7b7fcdba\transformed\ui-util-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-text-android:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\bee012fc85ec7ceebfe42ddb26bd76c3\transformed\ui-text-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-text-android:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\bee012fc85ec7ceebfe42ddb26bd76c3\transformed\ui-text-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-tooling-preview-android:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\616318eb9b679fa0555bbf8b88494075\transformed\ui-tooling-preview-release\AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.ui:ui-tooling-preview-android:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\616318eb9b679fa0555bbf8b88494075\transformed\ui-tooling-preview-release\AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.ui:ui-tooling-android:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\d7e7cdc61eae3294799cbca6c1e64e4c\transformed\ui-tooling-release\AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.ui:ui-tooling-android:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\d7e7cdc61eae3294799cbca6c1e64e4c\transformed\ui-tooling-release\AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.ui:ui-graphics-android:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\e07ff2180776bef6ebfd062c61d76a41\transformed\ui-graphics-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-graphics-android:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\e07ff2180776bef6ebfd062c61d76a41\transformed\ui-graphics-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.viewpager2:viewpager2:1.0.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\123664fe7604e768185e5a35e05de4a0\transformed\viewpager2-1.0.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.viewpager2:viewpager2:1.0.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\123664fe7604e768185e5a35e05de4a0\transformed\viewpager2-1.0.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.fragment:fragment:1.5.4] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\ad07b97eb70e3c8a5fb63e2df96f2a0e\transformed\fragment-1.5.4\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.fragment:fragment:1.5.4] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\ad07b97eb70e3c8a5fb63e2df96f2a0e\transformed\fragment-1.5.4\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.transition:transition:1.5.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\afc00e46fc6fd2498ac51a0d3818a63c\transformed\transition-1.5.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.transition:transition:1.5.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\afc00e46fc6fd2498ac51a0d3818a63c\transformed\transition-1.5.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.dynamicanimation:dynamicanimation:1.0.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\55218c1598cc8d9ad46dbfc83434edce\transformed\dynamicanimation-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.dynamicanimation:dynamicanimation:1.0.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\55218c1598cc8d9ad46dbfc83434edce\transformed\dynamicanimation-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\8fef89c85cdf3d9cba41a5d32013e931\transformed\legacy-support-core-utils-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\8fef89c85cdf3d9cba41a5d32013e931\transformed\legacy-support-core-utils-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.loader:loader:1.0.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\c7143de4e6fe06daad230a2de4eb8e5e\transformed\loader-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.loader:loader:1.0.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\c7143de4e6fe06daad230a2de4eb8e5e\transformed\loader-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.emoji2:emoji2-views-helper:1.4.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\ff2318c6881562d4a4719ec2539dfb20\transformed\emoji2-views-helper-1.4.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.emoji2:emoji2-views-helper:1.4.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\ff2318c6881562d4a4719ec2539dfb20\transformed\emoji2-views-helper-1.4.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.emoji2:emoji2:1.4.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\deb425c322119d363f23c43933009f49\transformed\emoji2-1.4.0\AndroidManifest.xml:21:5-44
+MERGED from [androidx.emoji2:emoji2:1.4.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\deb425c322119d363f23c43933009f49\transformed\emoji2-1.4.0\AndroidManifest.xml:21:5-44
+MERGED from [androidx.savedstate:savedstate-ktx:1.2.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\bf9aba50a140d19386bb3847ed2d01e4\transformed\savedstate-ktx-1.2.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.savedstate:savedstate-ktx:1.2.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\bf9aba50a140d19386bb3847ed2d01e4\transformed\savedstate-ktx-1.2.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.savedstate:savedstate:1.2.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\2bad5c2474327cc98a472543ba113a53\transformed\savedstate-1.2.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.savedstate:savedstate:1.2.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\2bad5c2474327cc98a472543ba113a53\transformed\savedstate-1.2.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.9.0-alpha02] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\7f5f1aea7ab034efb9e2b25b958a8d4e\transformed\lifecycle-viewmodel-2.9.0-alpha02\AndroidManifest.xml:4:5-43
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.9.0-alpha02] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\7f5f1aea7ab034efb9e2b25b958a8d4e\transformed\lifecycle-viewmodel-2.9.0-alpha02\AndroidManifest.xml:4:5-43
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-android:2.9.0-alpha02] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\4de74193502644f191fe2bfec4d5a7da\transformed\lifecycle-viewmodel-release\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-android:2.9.0-alpha02] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\4de74193502644f191fe2bfec4d5a7da\transformed\lifecycle-viewmodel-release\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core-ktx:2.9.0-alpha02] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\4e02828c94e74f03e2aa5fcb3266aaf1\transformed\lifecycle-livedata-core-ktx-2.9.0-alpha02\AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core-ktx:2.9.0-alpha02] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\4e02828c94e74f03e2aa5fcb3266aaf1\transformed\lifecycle-livedata-core-ktx-2.9.0-alpha02\AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime-ktx-android:2.9.0-alpha02] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\630e313173cc775c2047080859820c8b\transformed\lifecycle-runtime-ktx-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime-ktx-android:2.9.0-alpha02] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\630e313173cc775c2047080859820c8b\transformed\lifecycle-runtime-ktx-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime-android:2.9.0-alpha02] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\b7915e52e170e0c447a435ab09c1cd60\transformed\lifecycle-runtime-release\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime-android:2.9.0-alpha02] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\b7915e52e170e0c447a435ab09c1cd60\transformed\lifecycle-runtime-release\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-process:2.9.0-alpha02] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\7ae6601c39f56f3e81b60637f2d42c75\transformed\lifecycle-process-2.9.0-alpha02\AndroidManifest.xml:21:5-44
+MERGED from [androidx.lifecycle:lifecycle-process:2.9.0-alpha02] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\7ae6601c39f56f3e81b60637f2d42c75\transformed\lifecycle-process-2.9.0-alpha02\AndroidManifest.xml:21:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.9.0-alpha02] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\7b7e6e2b4497731a9ca2aab70d0f4dbf\transformed\lifecycle-viewmodel-savedstate-2.9.0-alpha02\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.9.0-alpha02] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\7b7e6e2b4497731a9ca2aab70d0f4dbf\transformed\lifecycle-viewmodel-savedstate-2.9.0-alpha02\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.9.0-alpha02] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\48df8f46ac4404e2f02e987869a87d55\transformed\lifecycle-viewmodel-ktx-2.9.0-alpha02\AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.9.0-alpha02] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\48df8f46ac4404e2f02e987869a87d55\transformed\lifecycle-viewmodel-ktx-2.9.0-alpha02\AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-service:2.9.0-alpha02] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\d0e0a06cda06bf6170eb78f5a9ca30cf\transformed\lifecycle-service-2.9.0-alpha02\AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-service:2.9.0-alpha02] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\d0e0a06cda06bf6170eb78f5a9ca30cf\transformed\lifecycle-service-2.9.0-alpha02\AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.9.0-alpha02] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\634b3772336fb35aebae5befb7b76ab6\transformed\lifecycle-livedata-core-2.9.0-alpha02\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.9.0-alpha02] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\634b3772336fb35aebae5befb7b76ab6\transformed\lifecycle-livedata-core-2.9.0-alpha02\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.9.0-alpha02] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\c32d5b50d85437424bd9c67616976960\transformed\lifecycle-livedata-2.9.0-alpha02\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.9.0-alpha02] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\c32d5b50d85437424bd9c67616976960\transformed\lifecycle-livedata-2.9.0-alpha02\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime-compose-android:2.9.0-alpha02] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\2b4844710834d2f2cc0978eea6e3ef26\transformed\lifecycle-runtime-compose-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime-compose-android:2.9.0-alpha02] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\2b4844710834d2f2cc0978eea6e3ef26\transformed\lifecycle-runtime-compose-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-compose-android:2.9.0-alpha02] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\60611bfd2148ace73d5b1422f8fd16d6\transformed\lifecycle-viewmodel-compose-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-compose-android:2.9.0-alpha02] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\60611bfd2148ace73d5b1422f8fd16d6\transformed\lifecycle-viewmodel-compose-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-android:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\301d9da7bd272434f4e453d95c48fa99\transformed\ui-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-android:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\301d9da7bd272434f4e453d95c48fa99\transformed\ui-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-test-manifest:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\d214a5e04585f83358e1ff4fda898bf6\transformed\ui-test-manifest-1.8.0-alpha01\AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.ui:ui-test-manifest:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\d214a5e04585f83358e1ff4fda898bf6\transformed\ui-test-manifest-1.8.0-alpha01\AndroidManifest.xml:20:5-44
+MERGED from [androidx.activity:activity:1.9.3] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\c032bcb49b36ecfaf703918761b4ba67\transformed\activity-1.9.3\AndroidManifest.xml:20:5-44
+MERGED from [androidx.activity:activity:1.9.3] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\c032bcb49b36ecfaf703918761b4ba67\transformed\activity-1.9.3\AndroidManifest.xml:20:5-44
+MERGED from [androidx.activity:activity-ktx:1.9.3] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\60e6ae19db62c1a56d3fe1a629af244e\transformed\activity-ktx-1.9.3\AndroidManifest.xml:5:5-44
+MERGED from [androidx.activity:activity-ktx:1.9.3] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\60e6ae19db62c1a56d3fe1a629af244e\transformed\activity-ktx-1.9.3\AndroidManifest.xml:5:5-44
+MERGED from [androidx.activity:activity-compose:1.9.3] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\f076427dc31ce387f4eea96fa9c6e4db\transformed\activity-compose-1.9.3\AndroidManifest.xml:5:5-44
+MERGED from [androidx.activity:activity-compose:1.9.3] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\f076427dc31ce387f4eea96fa9c6e4db\transformed\activity-compose-1.9.3\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.runtime:runtime-saveable-android:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\5f4c95d26b2571dc8149a1328bc70d98\transformed\runtime-saveable-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.runtime:runtime-saveable-android:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\5f4c95d26b2571dc8149a1328bc70d98\transformed\runtime-saveable-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.runtime:runtime-android:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\f118fd8dfdf928ab794ccded6c02a927\transformed\runtime-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.runtime:runtime-android:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\f118fd8dfdf928ab794ccded6c02a927\transformed\runtime-release\AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-tasks:18.2.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\9324b7f64635302d856bbd459e7404a7\transformed\play-services-tasks-18.2.0\AndroidManifest.xml:3:5-44
+MERGED from [com.google.android.gms:play-services-tasks:18.2.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\9324b7f64635302d856bbd459e7404a7\transformed\play-services-tasks-18.2.0\AndroidManifest.xml:3:5-44
+MERGED from [com.google.android.gms:play-services-basement:18.4.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\9a270d1b09a17b0d83672316670a6abf\transformed\play-services-basement-18.4.0\AndroidManifest.xml:3:5-44
+MERGED from [com.google.android.gms:play-services-basement:18.4.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\9a270d1b09a17b0d83672316670a6abf\transformed\play-services-basement-18.4.0\AndroidManifest.xml:3:5-44
+MERGED from [androidx.drawerlayout:drawerlayout:1.1.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\9c05091e9f8e2e10865a17a4657e6135\transformed\drawerlayout-1.1.1\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.drawerlayout:drawerlayout:1.1.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\9c05091e9f8e2e10865a17a4657e6135\transformed\drawerlayout-1.1.1\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.1.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\293eb4ad7e2a4fc690b6e6042c0199cb\transformed\coordinatorlayout-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.1.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\293eb4ad7e2a4fc690b6e6042c0199cb\transformed\coordinatorlayout-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\c4ae6f0879f6d9926d6375f1d3b5ead9\transformed\vectordrawable-animated-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\c4ae6f0879f6d9926d6375f1d3b5ead9\transformed\vectordrawable-animated-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\438378dbebd2026b5d03e87741b098b3\transformed\vectordrawable-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\438378dbebd2026b5d03e87741b098b3\transformed\vectordrawable-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\2a26c55424c80cad4cdb54d1a464ca45\transformed\viewpager-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\2a26c55424c80cad4cdb54d1a464ca45\transformed\viewpager-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.recyclerview:recyclerview:1.1.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\09ca7290ccc289d1a168ec5f3de080aa\transformed\recyclerview-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.recyclerview:recyclerview:1.1.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\09ca7290ccc289d1a168ec5f3de080aa\transformed\recyclerview-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.customview:customview:1.1.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\49be7a005a4d64e9bf40350d27994514\transformed\customview-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.customview:customview:1.1.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\49be7a005a4d64e9bf40350d27994514\transformed\customview-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.autofill:autofill:1.0.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\a818813c842bc42c6537c01953d139e8\transformed\autofill-1.0.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.autofill:autofill:1.0.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\a818813c842bc42c6537c01953d139e8\transformed\autofill-1.0.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.graphics:graphics-path:1.0.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\5e6cbc8d3ea6bf481617cbf048a0a631\transformed\graphics-path-1.0.1\AndroidManifest.xml:5:5-44
+MERGED from [androidx.graphics:graphics-path:1.0.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\5e6cbc8d3ea6bf481617cbf048a0a631\transformed\graphics-path-1.0.1\AndroidManifest.xml:5:5-44
+MERGED from [androidx.core:core:1.13.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\a75509c3f42053ee7f497dfae7bbdc49\transformed\core-1.13.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.core:core:1.13.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\a75509c3f42053ee7f497dfae7bbdc49\transformed\core-1.13.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.customview:customview-poolingcontainer:1.0.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\1603c7800afe9e1cef606ca0856e68a3\transformed\customview-poolingcontainer-1.0.0\AndroidManifest.xml:20:5-21:38
+MERGED from [androidx.customview:customview-poolingcontainer:1.0.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\1603c7800afe9e1cef606ca0856e68a3\transformed\customview-poolingcontainer-1.0.0\AndroidManifest.xml:20:5-21:38
+MERGED from [androidx.core:core-ktx:1.13.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\60614883dc206a3eb055df2e66ac02d5\transformed\core-ktx-1.13.1\AndroidManifest.xml:5:5-44
+MERGED from [androidx.core:core-ktx:1.13.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\60614883dc206a3eb055df2e66ac02d5\transformed\core-ktx-1.13.1\AndroidManifest.xml:5:5-44
+MERGED from [androidx.annotation:annotation-experimental:1.4.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\b4474818abb3f4532607ea2f1cc12003\transformed\annotation-experimental-1.4.1\AndroidManifest.xml:5:5-44
+MERGED from [androidx.annotation:annotation-experimental:1.4.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\b4474818abb3f4532607ea2f1cc12003\transformed\annotation-experimental-1.4.1\AndroidManifest.xml:5:5-44
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\24e413c841ff3266fcb67d52e9a49dfc\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\24e413c841ff3266fcb67d52e9a49dfc\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\88fb10e0347bd03a08a3d08594b57d84\transformed\cursoradapter-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\88fb10e0347bd03a08a3d08594b57d84\transformed\cursoradapter-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\01e6106602d01bff870d38fe83afdc71\transformed\profileinstaller-1.3.1\AndroidManifest.xml:21:5-44
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\01e6106602d01bff870d38fe83afdc71\transformed\profileinstaller-1.3.1\AndroidManifest.xml:21:5-44
+MERGED from [androidx.cardview:cardview:1.0.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\bf1ec577a821ab49a89298617ff9f7e5\transformed\cardview-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.cardview:cardview:1.0.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\bf1ec577a821ab49a89298617ff9f7e5\transformed\cardview-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\ea6eb39c41402b07f3e3353d7ac64f5b\transformed\interpolator-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\ea6eb39c41402b07f3e3353d7ac64f5b\transformed\interpolator-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\d05e77825b40fff31f5f57eec8796e92\transformed\startup-runtime-1.1.1\AndroidManifest.xml:21:5-23:41
+MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\d05e77825b40fff31f5f57eec8796e92\transformed\startup-runtime-1.1.1\AndroidManifest.xml:21:5-23:41
+MERGED from [androidx.tracing:tracing:1.0.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\54756bef13a398b59337bcb1d1a720d0\transformed\tracing-1.0.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.tracing:tracing:1.0.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\54756bef13a398b59337bcb1d1a720d0\transformed\tracing-1.0.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.documentfile:documentfile:1.0.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\3ea91bc765314f750660fdae402ecda8\transformed\documentfile-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.documentfile:documentfile:1.0.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\3ea91bc765314f750660fdae402ecda8\transformed\documentfile-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\bf62526d77c41b913d29064562a04da2\transformed\localbroadcastmanager-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\bf62526d77c41b913d29064562a04da2\transformed\localbroadcastmanager-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.print:print:1.0.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\39e1488decd67166b1491cf991dedaf5\transformed\print-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.print:print:1.0.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\39e1488decd67166b1491cf991dedaf5\transformed\print-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.arch.core:core-runtime:2.2.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\77af994700ec4ba14ac43f0b3e67ea9a\transformed\core-runtime-2.2.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.arch.core:core-runtime:2.2.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\77af994700ec4ba14ac43f0b3e67ea9a\transformed\core-runtime-2.2.0\AndroidManifest.xml:20:5-44
+MERGED from [com.google.dagger:dagger-lint-aar:2.52] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\ca198770d2ce30f0885f53138286a1b3\transformed\dagger-lint-aar-2.52\AndroidManifest.xml:18:3-42
+MERGED from [com.google.dagger:dagger-lint-aar:2.52] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\ca198770d2ce30f0885f53138286a1b3\transformed\dagger-lint-aar-2.52\AndroidManifest.xml:18:3-42
+	tools:overrideLibrary
+		ADDED from [:datalayer:core] C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\core\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:24:9-66
+	android:targetSdkVersion
+		INJECTED from C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\sample\phone\src\main\AndroidManifest.xml
+	tools:ignore
+		ADDED from [:datalayer:sample:shared] C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\sample\shared\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:23:9-39
+	android:minSdkVersion
+		INJECTED from C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\sample\phone\src\main\AndroidManifest.xml
+activity#com.google.android.horologist.datalayer.phone.ui.prompt.installapp.InstallAppBottomSheetActivity
+ADDED from [:datalayer:phone-ui] C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\phone-ui\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:11:9-15:66
+	android:excludeFromRecents
+		ADDED from [:datalayer:phone-ui] C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\phone-ui\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:13:13-46
+	android:exported
+		ADDED from [:datalayer:phone-ui] C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\phone-ui\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:14:13-37
+	android:theme
+		ADDED from [:datalayer:phone-ui] C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\phone-ui\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:15:13-63
+	android:name
+		ADDED from [:datalayer:phone-ui] C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\phone-ui\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:12:13-124
+activity#com.google.android.horologist.datalayer.phone.ui.prompt.reengage.ReEngageBottomSheetActivity
+ADDED from [:datalayer:phone-ui] C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\phone-ui\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:16:9-20:66
+	android:excludeFromRecents
+		ADDED from [:datalayer:phone-ui] C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\phone-ui\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:18:13-46
+	android:exported
+		ADDED from [:datalayer:phone-ui] C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\phone-ui\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:19:13-37
+	android:theme
+		ADDED from [:datalayer:phone-ui] C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\phone-ui\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:20:13-63
+	android:name
+		ADDED from [:datalayer:phone-ui] C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\phone-ui\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:17:13-120
+activity#com.google.android.horologist.datalayer.phone.ui.prompt.signin.SignInBottomSheetActivity
+ADDED from [:datalayer:phone-ui] C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\phone-ui\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:21:9-25:66
+	android:excludeFromRecents
+		ADDED from [:datalayer:phone-ui] C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\phone-ui\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:23:13-46
+	android:exported
+		ADDED from [:datalayer:phone-ui] C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\phone-ui\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:24:13-37
+	android:theme
+		ADDED from [:datalayer:phone-ui] C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\phone-ui\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:25:13-63
+	android:name
+		ADDED from [:datalayer:phone-ui] C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\phone-ui\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:22:13-116
+activity#com.google.android.horologist.datalayer.phone.ui.prompt.installtile.InstallTileBottomSheetActivity
+ADDED from [:datalayer:phone-ui] C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\phone-ui\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:26:9-30:66
+	android:excludeFromRecents
+		ADDED from [:datalayer:phone-ui] C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\phone-ui\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:28:13-46
+	android:exported
+		ADDED from [:datalayer:phone-ui] C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\phone-ui\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:29:13-37
+	android:theme
+		ADDED from [:datalayer:phone-ui] C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\phone-ui\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:30:13-63
+	android:name
+		ADDED from [:datalayer:phone-ui] C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\phone-ui\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:27:13-126
+service#com.google.android.horologist.datalayer.phone.PhoneDataLayerListenerService
+ADDED from [:datalayer:phone] C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\phone\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:26:9-38:19
+	android:exported
+		ADDED from [:datalayer:phone] C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\phone\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:28:13-36
+	tools:ignore
+		ADDED from [:datalayer:phone] C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\phone\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:29:13-43
+	android:name
+		ADDED from [:datalayer:phone] C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\phone\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:27:13-103
+intent-filter#action:name:com.google.android.gms.wearable.REQUEST_RECEIVED+data:host:*+data:path:/data_layer_app_helper/launch_app+data:scheme:wear
+ADDED from [:datalayer:phone] C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\phone\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:30:13-37:29
+uses-permission#android.permission.WAKE_LOCK
+ADDED from [:datalayer:core] C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\core\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:30:5-68
+	android:name
+		ADDED from [:datalayer:core] C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\core\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:30:22-65
+queries
+ADDED from [:datalayer:core] C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\core\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:36:5-42:15
+intent#action:name:com.google.android.gms.wearable.CAPABILITY_CHANGED+data:scheme:wear
+ADDED from [:datalayer:core] C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\core\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:37:9-41:18
+action#com.google.android.gms.wearable.CAPABILITY_CHANGED
+ADDED from [:datalayer:core] C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\core\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:38:13-89
+	android:name
+		ADDED from [:datalayer:core] C:\Users\SSAFY\projects\health-test-apps\horologist\datalayer\core\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:38:21-86
+uses-library#wear-sdk
+ADDED from [androidx.wear:wear-remote-interactions:1.1.0-rc01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\fadab9dc1a93b1709e652d5b99bbfe0a\transformed\wear-remote-interactions-1.1.0-rc01\AndroidManifest.xml:23:9-25:40
+	android:required
+		ADDED from [androidx.wear:wear-remote-interactions:1.1.0-rc01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\fadab9dc1a93b1709e652d5b99bbfe0a\transformed\wear-remote-interactions-1.1.0-rc01\AndroidManifest.xml:25:13-37
+	android:name
+		ADDED from [androidx.wear:wear-remote-interactions:1.1.0-rc01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\fadab9dc1a93b1709e652d5b99bbfe0a\transformed\wear-remote-interactions-1.1.0-rc01\AndroidManifest.xml:24:13-36
+activity#com.google.android.gms.common.api.GoogleApiActivity
+ADDED from [com.google.android.gms:play-services-base:18.5.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\196d6c6c849b69ec815ba072ef374891\transformed\play-services-base-18.5.0\AndroidManifest.xml:5:9-173
+	android:exported
+		ADDED from [com.google.android.gms:play-services-base:18.5.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\196d6c6c849b69ec815ba072ef374891\transformed\play-services-base-18.5.0\AndroidManifest.xml:5:146-170
+	android:theme
+		ADDED from [com.google.android.gms:play-services-base:18.5.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\196d6c6c849b69ec815ba072ef374891\transformed\play-services-base-18.5.0\AndroidManifest.xml:5:86-145
+	android:name
+		ADDED from [com.google.android.gms:play-services-base:18.5.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\196d6c6c849b69ec815ba072ef374891\transformed\play-services-base-18.5.0\AndroidManifest.xml:5:19-85
+activity#androidx.compose.ui.tooling.PreviewActivity
+ADDED from [androidx.compose.ui:ui-tooling-android:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\d7e7cdc61eae3294799cbca6c1e64e4c\transformed\ui-tooling-release\AndroidManifest.xml:23:9-25:39
+	android:exported
+		ADDED from [androidx.compose.ui:ui-tooling-android:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\d7e7cdc61eae3294799cbca6c1e64e4c\transformed\ui-tooling-release\AndroidManifest.xml:25:13-36
+	android:name
+		ADDED from [androidx.compose.ui:ui-tooling-android:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\d7e7cdc61eae3294799cbca6c1e64e4c\transformed\ui-tooling-release\AndroidManifest.xml:24:13-71
+provider#androidx.startup.InitializationProvider
+ADDED from [androidx.emoji2:emoji2:1.4.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\deb425c322119d363f23c43933009f49\transformed\emoji2-1.4.0\AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.lifecycle:lifecycle-process:2.9.0-alpha02] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\7ae6601c39f56f3e81b60637f2d42c75\transformed\lifecycle-process-2.9.0-alpha02\AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.lifecycle:lifecycle-process:2.9.0-alpha02] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\7ae6601c39f56f3e81b60637f2d42c75\transformed\lifecycle-process-2.9.0-alpha02\AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\01e6106602d01bff870d38fe83afdc71\transformed\profileinstaller-1.3.1\AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\01e6106602d01bff870d38fe83afdc71\transformed\profileinstaller-1.3.1\AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\d05e77825b40fff31f5f57eec8796e92\transformed\startup-runtime-1.1.1\AndroidManifest.xml:26:9-30:34
+MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\d05e77825b40fff31f5f57eec8796e92\transformed\startup-runtime-1.1.1\AndroidManifest.xml:26:9-30:34
+	tools:node
+		ADDED from [androidx.emoji2:emoji2:1.4.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\deb425c322119d363f23c43933009f49\transformed\emoji2-1.4.0\AndroidManifest.xml:28:13-31
+	android:authorities
+		ADDED from [androidx.emoji2:emoji2:1.4.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\deb425c322119d363f23c43933009f49\transformed\emoji2-1.4.0\AndroidManifest.xml:26:13-68
+	android:exported
+		ADDED from [androidx.emoji2:emoji2:1.4.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\deb425c322119d363f23c43933009f49\transformed\emoji2-1.4.0\AndroidManifest.xml:27:13-37
+	android:name
+		ADDED from [androidx.emoji2:emoji2:1.4.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\deb425c322119d363f23c43933009f49\transformed\emoji2-1.4.0\AndroidManifest.xml:25:13-67
+meta-data#androidx.emoji2.text.EmojiCompatInitializer
+ADDED from [androidx.emoji2:emoji2:1.4.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\deb425c322119d363f23c43933009f49\transformed\emoji2-1.4.0\AndroidManifest.xml:29:13-31:52
+	android:value
+		ADDED from [androidx.emoji2:emoji2:1.4.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\deb425c322119d363f23c43933009f49\transformed\emoji2-1.4.0\AndroidManifest.xml:31:17-49
+	android:name
+		ADDED from [androidx.emoji2:emoji2:1.4.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\deb425c322119d363f23c43933009f49\transformed\emoji2-1.4.0\AndroidManifest.xml:30:17-75
+meta-data#androidx.lifecycle.ProcessLifecycleInitializer
+ADDED from [androidx.lifecycle:lifecycle-process:2.9.0-alpha02] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\7ae6601c39f56f3e81b60637f2d42c75\transformed\lifecycle-process-2.9.0-alpha02\AndroidManifest.xml:29:13-31:52
+	android:value
+		ADDED from [androidx.lifecycle:lifecycle-process:2.9.0-alpha02] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\7ae6601c39f56f3e81b60637f2d42c75\transformed\lifecycle-process-2.9.0-alpha02\AndroidManifest.xml:31:17-49
+	android:name
+		ADDED from [androidx.lifecycle:lifecycle-process:2.9.0-alpha02] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\7ae6601c39f56f3e81b60637f2d42c75\transformed\lifecycle-process-2.9.0-alpha02\AndroidManifest.xml:30:17-78
+activity#androidx.activity.ComponentActivity
+ADDED from [androidx.compose.ui:ui-test-manifest:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\d214a5e04585f83358e1ff4fda898bf6\transformed\ui-test-manifest-1.8.0-alpha01\AndroidManifest.xml:23:9-25:39
+	android:exported
+		ADDED from [androidx.compose.ui:ui-test-manifest:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\d214a5e04585f83358e1ff4fda898bf6\transformed\ui-test-manifest-1.8.0-alpha01\AndroidManifest.xml:25:13-36
+	android:name
+		ADDED from [androidx.compose.ui:ui-test-manifest:1.8.0-alpha01] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\d214a5e04585f83358e1ff4fda898bf6\transformed\ui-test-manifest-1.8.0-alpha01\AndroidManifest.xml:24:13-63
+meta-data#com.google.android.gms.version
+ADDED from [com.google.android.gms:play-services-basement:18.4.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\9a270d1b09a17b0d83672316670a6abf\transformed\play-services-basement-18.4.0\AndroidManifest.xml:6:9-122
+	android:value
+		ADDED from [com.google.android.gms:play-services-basement:18.4.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\9a270d1b09a17b0d83672316670a6abf\transformed\play-services-basement-18.4.0\AndroidManifest.xml:6:66-119
+	android:name
+		ADDED from [com.google.android.gms:play-services-basement:18.4.0] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\9a270d1b09a17b0d83672316670a6abf\transformed\play-services-basement-18.4.0\AndroidManifest.xml:6:20-65
+permission#${applicationId}.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.13.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\a75509c3f42053ee7f497dfae7bbdc49\transformed\core-1.13.1\AndroidManifest.xml:22:5-24:47
+	android:protectionLevel
+		ADDED from [androidx.core:core:1.13.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\a75509c3f42053ee7f497dfae7bbdc49\transformed\core-1.13.1\AndroidManifest.xml:24:9-44
+	android:name
+		ADDED from [androidx.core:core:1.13.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\a75509c3f42053ee7f497dfae7bbdc49\transformed\core-1.13.1\AndroidManifest.xml:23:9-81
+permission#com.google.android.horologist.datalayer.sample.debug.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.13.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\a75509c3f42053ee7f497dfae7bbdc49\transformed\core-1.13.1\AndroidManifest.xml:22:5-24:47
+	android:protectionLevel
+		ADDED from [androidx.core:core:1.13.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\a75509c3f42053ee7f497dfae7bbdc49\transformed\core-1.13.1\AndroidManifest.xml:24:9-44
+	android:name
+		ADDED from [androidx.core:core:1.13.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\a75509c3f42053ee7f497dfae7bbdc49\transformed\core-1.13.1\AndroidManifest.xml:23:9-81
+uses-permission#${applicationId}.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.13.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\a75509c3f42053ee7f497dfae7bbdc49\transformed\core-1.13.1\AndroidManifest.xml:26:5-97
+	android:name
+		ADDED from [androidx.core:core:1.13.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\a75509c3f42053ee7f497dfae7bbdc49\transformed\core-1.13.1\AndroidManifest.xml:26:22-94
+uses-permission#com.google.android.horologist.datalayer.sample.debug.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.13.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\a75509c3f42053ee7f497dfae7bbdc49\transformed\core-1.13.1\AndroidManifest.xml:26:5-97
+	android:name
+		ADDED from [androidx.core:core:1.13.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\a75509c3f42053ee7f497dfae7bbdc49\transformed\core-1.13.1\AndroidManifest.xml:26:22-94
+meta-data#androidx.profileinstaller.ProfileInstallerInitializer
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\01e6106602d01bff870d38fe83afdc71\transformed\profileinstaller-1.3.1\AndroidManifest.xml:29:13-31:52
+	android:value
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\01e6106602d01bff870d38fe83afdc71\transformed\profileinstaller-1.3.1\AndroidManifest.xml:31:17-49
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\01e6106602d01bff870d38fe83afdc71\transformed\profileinstaller-1.3.1\AndroidManifest.xml:30:17-85
+receiver#androidx.profileinstaller.ProfileInstallReceiver
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\01e6106602d01bff870d38fe83afdc71\transformed\profileinstaller-1.3.1\AndroidManifest.xml:34:9-52:20
+	android:enabled
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\01e6106602d01bff870d38fe83afdc71\transformed\profileinstaller-1.3.1\AndroidManifest.xml:37:13-35
+	android:exported
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\01e6106602d01bff870d38fe83afdc71\transformed\profileinstaller-1.3.1\AndroidManifest.xml:38:13-36
+	android:permission
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\01e6106602d01bff870d38fe83afdc71\transformed\profileinstaller-1.3.1\AndroidManifest.xml:39:13-57
+	android:directBootAware
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\01e6106602d01bff870d38fe83afdc71\transformed\profileinstaller-1.3.1\AndroidManifest.xml:36:13-44
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\01e6106602d01bff870d38fe83afdc71\transformed\profileinstaller-1.3.1\AndroidManifest.xml:35:13-76
+intent-filter#action:name:androidx.profileinstaller.action.INSTALL_PROFILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\01e6106602d01bff870d38fe83afdc71\transformed\profileinstaller-1.3.1\AndroidManifest.xml:40:13-42:29
+action#androidx.profileinstaller.action.INSTALL_PROFILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\01e6106602d01bff870d38fe83afdc71\transformed\profileinstaller-1.3.1\AndroidManifest.xml:41:17-91
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\01e6106602d01bff870d38fe83afdc71\transformed\profileinstaller-1.3.1\AndroidManifest.xml:41:25-88
+intent-filter#action:name:androidx.profileinstaller.action.SKIP_FILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\01e6106602d01bff870d38fe83afdc71\transformed\profileinstaller-1.3.1\AndroidManifest.xml:43:13-45:29
+action#androidx.profileinstaller.action.SKIP_FILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\01e6106602d01bff870d38fe83afdc71\transformed\profileinstaller-1.3.1\AndroidManifest.xml:44:17-85
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\01e6106602d01bff870d38fe83afdc71\transformed\profileinstaller-1.3.1\AndroidManifest.xml:44:25-82
+intent-filter#action:name:androidx.profileinstaller.action.SAVE_PROFILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\01e6106602d01bff870d38fe83afdc71\transformed\profileinstaller-1.3.1\AndroidManifest.xml:46:13-48:29
+action#androidx.profileinstaller.action.SAVE_PROFILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\01e6106602d01bff870d38fe83afdc71\transformed\profileinstaller-1.3.1\AndroidManifest.xml:47:17-88
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\01e6106602d01bff870d38fe83afdc71\transformed\profileinstaller-1.3.1\AndroidManifest.xml:47:25-85
+intent-filter#action:name:androidx.profileinstaller.action.BENCHMARK_OPERATION
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\01e6106602d01bff870d38fe83afdc71\transformed\profileinstaller-1.3.1\AndroidManifest.xml:49:13-51:29
+action#androidx.profileinstaller.action.BENCHMARK_OPERATION
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\01e6106602d01bff870d38fe83afdc71\transformed\profileinstaller-1.3.1\AndroidManifest.xml:50:17-95
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\SSAFY\.gradle\caches\8.10.2\transforms\01e6106602d01bff870d38fe83afdc71\transformed\profileinstaller-1.3.1\AndroidManifest.xml:50:25-92

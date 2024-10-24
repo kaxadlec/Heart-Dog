@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="horologist_split_toggle_chip_off_state_description">꺼짐</string>
+    <string name="horologist_split_toggle_chip_on_state_description">켜짐</string>
+    <string name="horologist_stepper_decrease_content_description">감소</string>
+    <string name="horologist_stepper_increase_content_description">증가</string>
+    <string name="horologist_toggle_button_off_state_description">꺼짐</string>
+    <string name="horologist_toggle_button_on_state_description">켜짐</string>
+    <string name="horologist_toggle_chip_off_state_description">꺼짐</string>
+    <string name="horologist_toggle_chip_on_state_description">켜짐</string>
+</resources>

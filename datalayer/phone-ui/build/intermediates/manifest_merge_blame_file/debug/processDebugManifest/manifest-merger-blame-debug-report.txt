@@ -1,0 +1,57 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    xmlns:tools="http://schemas.android.com/tools"
+4    package="com.google.android.horologist.datalayer.phone.ui" >
+5
+6    <uses-sdk
+6-->C:\Users\SSAFY\projects\hotdog-release\datalayer\phone-ui\src\main\AndroidManifest.xml:6:5-8:42
+7        android:minSdkVersion="21"
+7-->C:\Users\SSAFY\projects\hotdog-release\datalayer\phone-ui\src\main\AndroidManifest.xml:7:9-35
+8        tools:ignore="GradleOverrides" />
+8-->C:\Users\SSAFY\projects\hotdog-release\datalayer\phone-ui\src\main\AndroidManifest.xml:8:9-39
+9
+10    <application>
+10-->C:\Users\SSAFY\projects\hotdog-release\datalayer\phone-ui\src\main\AndroidManifest.xml:10:5-34:19
+11        <activity
+11-->C:\Users\SSAFY\projects\hotdog-release\datalayer\phone-ui\src\main\AndroidManifest.xml:11:9-15:66
+12            android:name="com.google.android.horologist.datalayer.phone.ui.prompt.installapp.InstallAppBottomSheetActivity"
+12-->C:\Users\SSAFY\projects\hotdog-release\datalayer\phone-ui\src\main\AndroidManifest.xml:12:13-76
+13            android:excludeFromRecents="true"
+13-->C:\Users\SSAFY\projects\hotdog-release\datalayer\phone-ui\src\main\AndroidManifest.xml:13:13-46
+14            android:exported="false"
+14-->C:\Users\SSAFY\projects\hotdog-release\datalayer\phone-ui\src\main\AndroidManifest.xml:14:13-37
+15            android:theme="@style/HorologistTheme.Transparent" />
+15-->C:\Users\SSAFY\projects\hotdog-release\datalayer\phone-ui\src\main\AndroidManifest.xml:15:13-63
+16        <activity
+16-->C:\Users\SSAFY\projects\hotdog-release\datalayer\phone-ui\src\main\AndroidManifest.xml:17:9-21:66
+17            android:name="com.google.android.horologist.datalayer.phone.ui.prompt.reengage.ReEngageBottomSheetActivity"
+17-->C:\Users\SSAFY\projects\hotdog-release\datalayer\phone-ui\src\main\AndroidManifest.xml:18:13-72
+18            android:excludeFromRecents="true"
+18-->C:\Users\SSAFY\projects\hotdog-release\datalayer\phone-ui\src\main\AndroidManifest.xml:19:13-46
+19            android:exported="false"
+19-->C:\Users\SSAFY\projects\hotdog-release\datalayer\phone-ui\src\main\AndroidManifest.xml:20:13-37
+20            android:theme="@style/HorologistTheme.Transparent" />
+20-->C:\Users\SSAFY\projects\hotdog-release\datalayer\phone-ui\src\main\AndroidManifest.xml:21:13-63
+21        <activity
+21-->C:\Users\SSAFY\projects\hotdog-release\datalayer\phone-ui\src\main\AndroidManifest.xml:23:9-27:66
+22            android:name="com.google.android.horologist.datalayer.phone.ui.prompt.signin.SignInBottomSheetActivity"
+22-->C:\Users\SSAFY\projects\hotdog-release\datalayer\phone-ui\src\main\AndroidManifest.xml:24:13-68
+23            android:excludeFromRecents="true"
+23-->C:\Users\SSAFY\projects\hotdog-release\datalayer\phone-ui\src\main\AndroidManifest.xml:25:13-46
+24            android:exported="false"
+24-->C:\Users\SSAFY\projects\hotdog-release\datalayer\phone-ui\src\main\AndroidManifest.xml:26:13-37
+25            android:theme="@style/HorologistTheme.Transparent" />
+25-->C:\Users\SSAFY\projects\hotdog-release\datalayer\phone-ui\src\main\AndroidManifest.xml:27:13-63
+26        <activity
+26-->C:\Users\SSAFY\projects\hotdog-release\datalayer\phone-ui\src\main\AndroidManifest.xml:29:9-33:66
+27            android:name="com.google.android.horologist.datalayer.phone.ui.prompt.installtile.InstallTileBottomSheetActivity"
+27-->C:\Users\SSAFY\projects\hotdog-release\datalayer\phone-ui\src\main\AndroidManifest.xml:30:13-78
+28            android:excludeFromRecents="true"
+28-->C:\Users\SSAFY\projects\hotdog-release\datalayer\phone-ui\src\main\AndroidManifest.xml:31:13-46
+29            android:exported="false"
+29-->C:\Users\SSAFY\projects\hotdog-release\datalayer\phone-ui\src\main\AndroidManifest.xml:32:13-37
+30            android:theme="@style/HorologistTheme.Transparent" />
+30-->C:\Users\SSAFY\projects\hotdog-release\datalayer\phone-ui\src\main\AndroidManifest.xml:33:13-63
+31    </application>
+32
+33</manifest>

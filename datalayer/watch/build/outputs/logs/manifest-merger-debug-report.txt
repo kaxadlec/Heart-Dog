@@ -1,0 +1,46 @@
+-- Merging decision tree log ---
+manifest
+ADDED from C:\Users\SSAFY\projects\hotdog-release\datalayer\watch\src\main\AndroidManifest.xml:17:1-40:12
+INJECTED from C:\Users\SSAFY\projects\hotdog-release\datalayer\watch\src\main\AndroidManifest.xml:17:1-40:12
+	package
+		ADDED from C:\Users\SSAFY\projects\hotdog-release\datalayer\watch\src\main\AndroidManifest.xml:19:5-60
+		INJECTED from C:\Users\SSAFY\projects\hotdog-release\datalayer\watch\src\main\AndroidManifest.xml
+	xmlns:tools
+		ADDED from C:\Users\SSAFY\projects\hotdog-release\datalayer\watch\src\main\AndroidManifest.xml:18:5-51
+	xmlns:android
+		ADDED from C:\Users\SSAFY\projects\hotdog-release\datalayer\watch\src\main\AndroidManifest.xml:17:11-69
+uses-sdk
+ADDED from C:\Users\SSAFY\projects\hotdog-release\datalayer\watch\src\main\AndroidManifest.xml:21:5-23:42
+INJECTED from C:\Users\SSAFY\projects\hotdog-release\datalayer\watch\src\main\AndroidManifest.xml:21:5-23:42
+INJECTED from C:\Users\SSAFY\projects\hotdog-release\datalayer\watch\src\main\AndroidManifest.xml:21:5-23:42
+	android:targetSdkVersion
+		INJECTED from C:\Users\SSAFY\projects\hotdog-release\datalayer\watch\src\main\AndroidManifest.xml
+	tools:ignore
+		ADDED from C:\Users\SSAFY\projects\hotdog-release\datalayer\watch\src\main\AndroidManifest.xml:23:9-39
+	android:minSdkVersion
+		ADDED from C:\Users\SSAFY\projects\hotdog-release\datalayer\watch\src\main\AndroidManifest.xml:22:9-35
+		INJECTED from C:\Users\SSAFY\projects\hotdog-release\datalayer\watch\src\main\AndroidManifest.xml
+application
+ADDED from C:\Users\SSAFY\projects\hotdog-release\datalayer\watch\src\main\AndroidManifest.xml:25:5-38:19
+service#com.google.android.horologist.datalayer.watch.WearDataLayerListenerService
+ADDED from C:\Users\SSAFY\projects\hotdog-release\datalayer\watch\src\main\AndroidManifest.xml:26:9-37:19
+	android:exported
+		ADDED from C:\Users\SSAFY\projects\hotdog-release\datalayer\watch\src\main\AndroidManifest.xml:28:13-36
+	tools:ignore
+		ADDED from C:\Users\SSAFY\projects\hotdog-release\datalayer\watch\src\main\AndroidManifest.xml:29:13-43
+	android:name
+		ADDED from C:\Users\SSAFY\projects\hotdog-release\datalayer\watch\src\main\AndroidManifest.xml:27:13-102
+intent-filter#action:name:com.google.android.gms.wearable.REQUEST_RECEIVED+data:host:*+data:path:/data_layer_app_helper/launch_app+data:scheme:wear
+ADDED from C:\Users\SSAFY\projects\hotdog-release\datalayer\watch\src\main\AndroidManifest.xml:30:13-36:29
+action#com.google.android.gms.wearable.REQUEST_RECEIVED
+ADDED from C:\Users\SSAFY\projects\hotdog-release\datalayer\watch\src\main\AndroidManifest.xml:31:17-91
+	android:name
+		ADDED from C:\Users\SSAFY\projects\hotdog-release\datalayer\watch\src\main\AndroidManifest.xml:31:25-88
+data
+ADDED from C:\Users\SSAFY\projects\hotdog-release\datalayer\watch\src\main\AndroidManifest.xml:32:17-35:45
+	android:path
+		ADDED from C:\Users\SSAFY\projects\hotdog-release\datalayer\watch\src\main\AndroidManifest.xml:34:21-69
+	android:host
+		ADDED from C:\Users\SSAFY\projects\hotdog-release\datalayer\watch\src\main\AndroidManifest.xml:33:21-37
+	android:scheme
+		ADDED from C:\Users\SSAFY\projects\hotdog-release\datalayer\watch\src\main\AndroidManifest.xml:35:21-42

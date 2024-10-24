@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="horologist_split_toggle_chip_off_state_description">Fra</string>
+    <string name="horologist_split_toggle_chip_on_state_description">Til</string>
+    <string name="horologist_stepper_decrease_content_description">Sænk</string>
+    <string name="horologist_stepper_increase_content_description">Hæv</string>
+    <string name="horologist_toggle_button_off_state_description">Fra</string>
+    <string name="horologist_toggle_button_on_state_description">Til</string>
+    <string name="horologist_toggle_chip_off_state_description">Fra</string>
+    <string name="horologist_toggle_chip_on_state_description">Til</string>
+</resources>

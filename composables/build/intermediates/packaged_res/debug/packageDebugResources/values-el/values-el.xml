@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="horologist_time_picker_hours_content_description">
+    <item quantity="one">%d Ώρα</item>
+    <item quantity="other">%d Ώρες</item>
+  </plurals>
+    <plurals name="horologist_time_picker_minutes_content_description">
+    <item quantity="one">%d Λεπτό</item>
+    <item quantity="other">%d Λεπτά</item>
+  </plurals>
+    <plurals name="horologist_time_picker_seconds_content_description">
+    <item quantity="one">%d Δευτερόλεπτο</item>
+    <item quantity="other">%d Δευτερόλεπτα</item>
+  </plurals>
+    <string name="horologist_picker_confirm_button_content_description">Επιβεβαίωση</string>
+    <string name="horologist_picker_day">Ημέρα</string>
+    <string name="horologist_picker_month">Μήνας</string>
+    <string name="horologist_picker_next_button_content_description">Επόμενο</string>
+    <string name="horologist_picker_year">Έτος</string>
+    <string name="horologist_placeholderchip_content_description">Φόρτωση</string>
+    <string name="horologist_time_picker_hour">Ώρα</string>
+    <string name="horologist_time_picker_min">Λεπ.</string>
+    <string name="horologist_time_picker_minute">Λεπτό</string>
+    <string name="horologist_time_picker_period">Περίοδος</string>
+    <string name="horologist_time_picker_second">Δευτερ.</string>
+</resources>

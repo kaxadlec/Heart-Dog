@@ -1,0 +1,22 @@
+-- Merging decision tree log ---
+manifest
+ADDED from C:\Users\SSAFY\projects\hotdog-release\datalayer\grpc\src\main\AndroidManifest.xml:17:1-25:12
+INJECTED from C:\Users\SSAFY\projects\hotdog-release\datalayer\grpc\src\main\AndroidManifest.xml:17:1-25:12
+	package
+		ADDED from C:\Users\SSAFY\projects\hotdog-release\datalayer\grpc\src\main\AndroidManifest.xml:19:5-59
+		INJECTED from C:\Users\SSAFY\projects\hotdog-release\datalayer\grpc\src\main\AndroidManifest.xml
+	xmlns:tools
+		ADDED from C:\Users\SSAFY\projects\hotdog-release\datalayer\grpc\src\main\AndroidManifest.xml:18:5-51
+	xmlns:android
+		ADDED from C:\Users\SSAFY\projects\hotdog-release\datalayer\grpc\src\main\AndroidManifest.xml:17:11-69
+uses-sdk
+ADDED from C:\Users\SSAFY\projects\hotdog-release\datalayer\grpc\src\main\AndroidManifest.xml:21:5-23:42
+INJECTED from C:\Users\SSAFY\projects\hotdog-release\datalayer\grpc\src\main\AndroidManifest.xml:21:5-23:42
+INJECTED from C:\Users\SSAFY\projects\hotdog-release\datalayer\grpc\src\main\AndroidManifest.xml:21:5-23:42
+	android:targetSdkVersion
+		INJECTED from C:\Users\SSAFY\projects\hotdog-release\datalayer\grpc\src\main\AndroidManifest.xml
+	tools:ignore
+		ADDED from C:\Users\SSAFY\projects\hotdog-release\datalayer\grpc\src\main\AndroidManifest.xml:23:9-39
+	android:minSdkVersion
+		ADDED from C:\Users\SSAFY\projects\hotdog-release\datalayer\grpc\src\main\AndroidManifest.xml:22:9-35
+		INJECTED from C:\Users\SSAFY\projects\hotdog-release\datalayer\grpc\src\main\AndroidManifest.xml

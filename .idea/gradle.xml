@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleMigrationSettings" migrationVersion="1" />
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <option name="testRunner" value="CHOOSE_PER_TEST" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleJvm" value="#GRADLE_LOCAL_JAVA_HOME" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/annotations" />
+            <option value="$PROJECT_DIR$/composables" />
+            <option value="$PROJECT_DIR$/compose-layout" />
+            <option value="$PROJECT_DIR$/compose-material" />
+            <option value="$PROJECT_DIR$/compose-tools" />
+            <option value="$PROJECT_DIR$/datalayer" />
+            <option value="$PROJECT_DIR$/datalayer/core" />
+            <option value="$PROJECT_DIR$/datalayer/grpc" />
+            <option value="$PROJECT_DIR$/datalayer/phone" />
+            <option value="$PROJECT_DIR$/datalayer/phone-ui" />
+            <option value="$PROJECT_DIR$/datalayer/sample" />
+            <option value="$PROJECT_DIR$/datalayer/sample/phone" />
+            <option value="$PROJECT_DIR$/datalayer/sample/shared" />
+            <option value="$PROJECT_DIR$/datalayer/sample/wear" />
+            <option value="$PROJECT_DIR$/datalayer/watch" />
+            <option value="$PROJECT_DIR$/images" />
+            <option value="$PROJECT_DIR$/images/base" />
+            <option value="$PROJECT_DIR$/images/coil" />
+            <option value="$PROJECT_DIR$/tiles" />
+          </set>
+        </option>
+        <option name="resolveExternalAnnotations" value="false" />
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>

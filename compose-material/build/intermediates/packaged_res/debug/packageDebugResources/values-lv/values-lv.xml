@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="horologist_split_toggle_chip_off_state_description">Izslēgts</string>
+    <string name="horologist_split_toggle_chip_on_state_description">Ieslēgts</string>
+    <string name="horologist_stepper_decrease_content_description">Samazināt</string>
+    <string name="horologist_stepper_increase_content_description">Palielināt</string>
+    <string name="horologist_toggle_button_off_state_description">Izslēgts</string>
+    <string name="horologist_toggle_button_on_state_description">Ieslēgts</string>
+    <string name="horologist_toggle_chip_off_state_description">Izslēgts</string>
+    <string name="horologist_toggle_chip_on_state_description">Ieslēgts</string>
+</resources>

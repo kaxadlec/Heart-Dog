@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:ns1="http://schemas.android.com/tools">
+    <string description="State description of the SplitToggleChip. It lets the user know if the toggle is checked or not. [CHAR_LIMIT=NONE]" name="horologist_split_toggle_chip_off_state_description">Off</string>
+    <string description="State description of the SplitToggleChip. It lets the user know if the toggle is checked or not. [CHAR_LIMIT=NONE]" name="horologist_split_toggle_chip_on_state_description">On</string>
+    <string description="Content description of the Stepper Decrease Button. [CHAR_LIMIT=NONE]" name="horologist_stepper_decrease_content_description">Decrease</string>
+    <string description="Content description of the Stepper Increase Button. [CHAR_LIMIT=NONE]" name="horologist_stepper_increase_content_description">Increase</string>
+    <string description="State description of the ToggleButton. It lets the user know if the toggle is checked or not. [CHAR_LIMIT=NONE]" name="horologist_toggle_button_off_state_description">Off</string>
+    <string description="State description of the ToggleButton. It lets the user know if the toggle is checked or not. [CHAR_LIMIT=NONE]" name="horologist_toggle_button_on_state_description">On</string>
+    <string description="State description of the ToggleChip. It lets the user know if the toggle is checked or not. [CHAR_LIMIT=NONE]" name="horologist_toggle_chip_off_state_description">Off</string>
+    <string description="State description of the ToggleChip. It lets the user know if the toggle is checked or not. [CHAR_LIMIT=NONE]" name="horologist_toggle_chip_on_state_description">On</string>
+    <string name="primary_label" ns1:ignore="MissingTranslation">Primary label</string>
+    <string name="secondary_label" ns1:ignore="MissingTranslation">Secondary label</string>
+    <string name="title" ns1:ignore="MissingTranslation">Title</string>
+</resources>

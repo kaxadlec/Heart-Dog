@@ -1,0 +1,64 @@
+-- Merging decision tree log ---
+manifest
+ADDED from C:\Users\SSAFY\projects\hotdog-release\datalayer\phone-ui\src\main\AndroidManifest.xml:2:1-35:12
+INJECTED from C:\Users\SSAFY\projects\hotdog-release\datalayer\phone-ui\src\main\AndroidManifest.xml:2:1-35:12
+	package
+		ADDED from C:\Users\SSAFY\projects\hotdog-release\datalayer\phone-ui\src\main\AndroidManifest.xml:4:5-63
+		INJECTED from C:\Users\SSAFY\projects\hotdog-release\datalayer\phone-ui\src\main\AndroidManifest.xml
+	xmlns:tools
+		ADDED from C:\Users\SSAFY\projects\hotdog-release\datalayer\phone-ui\src\main\AndroidManifest.xml:3:5-51
+	xmlns:android
+		ADDED from C:\Users\SSAFY\projects\hotdog-release\datalayer\phone-ui\src\main\AndroidManifest.xml:2:11-69
+uses-sdk
+ADDED from C:\Users\SSAFY\projects\hotdog-release\datalayer\phone-ui\src\main\AndroidManifest.xml:6:5-8:42
+INJECTED from C:\Users\SSAFY\projects\hotdog-release\datalayer\phone-ui\src\main\AndroidManifest.xml:6:5-8:42
+INJECTED from C:\Users\SSAFY\projects\hotdog-release\datalayer\phone-ui\src\main\AndroidManifest.xml:6:5-8:42
+	android:targetSdkVersion
+		INJECTED from C:\Users\SSAFY\projects\hotdog-release\datalayer\phone-ui\src\main\AndroidManifest.xml
+	tools:ignore
+		ADDED from C:\Users\SSAFY\projects\hotdog-release\datalayer\phone-ui\src\main\AndroidManifest.xml:8:9-39
+	android:minSdkVersion
+		ADDED from C:\Users\SSAFY\projects\hotdog-release\datalayer\phone-ui\src\main\AndroidManifest.xml:7:9-35
+		INJECTED from C:\Users\SSAFY\projects\hotdog-release\datalayer\phone-ui\src\main\AndroidManifest.xml
+application
+ADDED from C:\Users\SSAFY\projects\hotdog-release\datalayer\phone-ui\src\main\AndroidManifest.xml:10:5-34:19
+activity#com.google.android.horologist.datalayer.phone.ui.prompt.installapp.InstallAppBottomSheetActivity
+ADDED from C:\Users\SSAFY\projects\hotdog-release\datalayer\phone-ui\src\main\AndroidManifest.xml:11:9-15:66
+	android:excludeFromRecents
+		ADDED from C:\Users\SSAFY\projects\hotdog-release\datalayer\phone-ui\src\main\AndroidManifest.xml:13:13-46
+	android:exported
+		ADDED from C:\Users\SSAFY\projects\hotdog-release\datalayer\phone-ui\src\main\AndroidManifest.xml:14:13-37
+	android:theme
+		ADDED from C:\Users\SSAFY\projects\hotdog-release\datalayer\phone-ui\src\main\AndroidManifest.xml:15:13-63
+	android:name
+		ADDED from C:\Users\SSAFY\projects\hotdog-release\datalayer\phone-ui\src\main\AndroidManifest.xml:12:13-76
+activity#com.google.android.horologist.datalayer.phone.ui.prompt.reengage.ReEngageBottomSheetActivity
+ADDED from C:\Users\SSAFY\projects\hotdog-release\datalayer\phone-ui\src\main\AndroidManifest.xml:17:9-21:66
+	android:excludeFromRecents
+		ADDED from C:\Users\SSAFY\projects\hotdog-release\datalayer\phone-ui\src\main\AndroidManifest.xml:19:13-46
+	android:exported
+		ADDED from C:\Users\SSAFY\projects\hotdog-release\datalayer\phone-ui\src\main\AndroidManifest.xml:20:13-37
+	android:theme
+		ADDED from C:\Users\SSAFY\projects\hotdog-release\datalayer\phone-ui\src\main\AndroidManifest.xml:21:13-63
+	android:name
+		ADDED from C:\Users\SSAFY\projects\hotdog-release\datalayer\phone-ui\src\main\AndroidManifest.xml:18:13-72
+activity#com.google.android.horologist.datalayer.phone.ui.prompt.signin.SignInBottomSheetActivity
+ADDED from C:\Users\SSAFY\projects\hotdog-release\datalayer\phone-ui\src\main\AndroidManifest.xml:23:9-27:66
+	android:excludeFromRecents
+		ADDED from C:\Users\SSAFY\projects\hotdog-release\datalayer\phone-ui\src\main\AndroidManifest.xml:25:13-46
+	android:exported
+		ADDED from C:\Users\SSAFY\projects\hotdog-release\datalayer\phone-ui\src\main\AndroidManifest.xml:26:13-37
+	android:theme
+		ADDED from C:\Users\SSAFY\projects\hotdog-release\datalayer\phone-ui\src\main\AndroidManifest.xml:27:13-63
+	android:name
+		ADDED from C:\Users\SSAFY\projects\hotdog-release\datalayer\phone-ui\src\main\AndroidManifest.xml:24:13-68
+activity#com.google.android.horologist.datalayer.phone.ui.prompt.installtile.InstallTileBottomSheetActivity
+ADDED from C:\Users\SSAFY\projects\hotdog-release\datalayer\phone-ui\src\main\AndroidManifest.xml:29:9-33:66
+	android:excludeFromRecents
+		ADDED from C:\Users\SSAFY\projects\hotdog-release\datalayer\phone-ui\src\main\AndroidManifest.xml:31:13-46
+	android:exported
+		ADDED from C:\Users\SSAFY\projects\hotdog-release\datalayer\phone-ui\src\main\AndroidManifest.xml:32:13-37
+	android:theme
+		ADDED from C:\Users\SSAFY\projects\hotdog-release\datalayer\phone-ui\src\main\AndroidManifest.xml:33:13-63
+	android:name
+		ADDED from C:\Users\SSAFY\projects\hotdog-release\datalayer\phone-ui\src\main\AndroidManifest.xml:30:13-78
