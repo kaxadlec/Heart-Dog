@@ -6,6 +6,7 @@ captures
 /local.properties
 
 # IntelliJ .idea folder
+.idea
 .idea/workspace.xml
 .idea/libraries
 .idea/caches
