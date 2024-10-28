@@ -106,7 +106,7 @@ fun MenuScreen(
         }
 
         Button(onClick = { navController.navigate(HeartRate) }) {
-            Text(text = stringResource(id = R.string.menu_screen_counter_item))
+            Text(text = stringResource(id = R.string.menu_screen_heart_rate))
         }
     }
 }

@@ -34,6 +34,7 @@
     <string name="menu_screen_install_tile_custom_demo_item">Install Tile (custom prompt)</string>
     <string name="menu_screen_datalayer_header">Data Layer</string>
     <string name="menu_screen_counter_item">Counter sample</string>
+    <string name="menu_screen_heart_rate">Heart Rate</string>
 
     <!-- App Helper Nodes screen -->
     <string name="nodes_screen_header">Nodes</string>
@@ -168,4 +169,5 @@
 
     <!-- Start Remote Sample Activity screen -->
     <string name="app_helper_start_remote_activity_message">This is a sample activity to demonstrate it being launched remotely from the watch.</string>
+
 </resources>
