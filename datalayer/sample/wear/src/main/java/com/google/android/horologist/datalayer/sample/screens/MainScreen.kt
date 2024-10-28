@@ -76,6 +76,8 @@ private fun SectionedListScope.generalSection(navigateToRoute: (String) -> Unit)
         listOf(
             Pair(R.string.main_menu_datalayer_counter_item, Screen.CounterScreen.route),
             Pair(R.string.main_menu_datalayer_nodes_item, Screen.ListNodesScreen.route),
+
+            Pair(R.string.main_menu_datalayer_heart_rate, Screen.HeartRateScreen.route)
         ),
     ) {
         header {

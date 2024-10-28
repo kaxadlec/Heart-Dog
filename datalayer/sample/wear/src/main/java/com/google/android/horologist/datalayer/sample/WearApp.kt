@@ -19,19 +19,33 @@
 package com.google.android.horologist.datalayer.sample
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import androidx.wear.compose.material.Scaffold
+import androidx.wear.compose.material.TimeText
 import androidx.wear.compose.navigation.SwipeDismissableNavHost
 import androidx.wear.compose.navigation.composable
 import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
 import androidx.wear.compose.ui.tooling.preview.WearPreviewSmallRound
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.rememberPermissionState
 import com.google.android.horologist.compose.layout.AppScaffold
 import com.google.android.horologist.compose.layout.ScalingLazyColumnDefaults.ItemType
 import com.google.android.horologist.compose.layout.ScreenScaffold
 import com.google.android.horologist.compose.layout.rememberResponsiveColumnState
 import com.google.android.horologist.datalayer.sample.screens.MainScreen
 import com.google.android.horologist.datalayer.sample.screens.datalayer.DataLayerScreen
+import com.google.android.horologist.datalayer.sample.screens.heartrate.data.HeartRateServicesRepository
+import com.google.android.horologist.datalayer.sample.screens.heartrate.presentation.HeartRateScreen
+import com.google.android.horologist.datalayer.sample.screens.heartrate.presentation.HeartRateViewModel
+import com.google.android.horologist.datalayer.sample.screens.heartrate.presentation.HeartRateViewModelFactory
+import com.google.android.horologist.datalayer.sample.screens.heartrate.presentation.NotSupportedScreen
+import com.google.android.horologist.datalayer.sample.screens.heartrate.presentation.UiState
 import com.google.android.horologist.datalayer.sample.screens.info.infoScreen
 import com.google.android.horologist.datalayer.sample.screens.info.navigateToInfoScreen
 import com.google.android.horologist.datalayer.sample.screens.nodes.DataLayerNodesScreen
@@ -41,11 +55,18 @@ import com.google.android.horologist.datalayer.sample.screens.nodesactions.nodeD
 import com.google.android.horologist.datalayer.sample.screens.nodeslistener.NodesListenerScreen
 import com.google.android.horologist.datalayer.sample.screens.tracking.TrackingScreen
 
+const val TAG = "Measure Data Sample"
+const val PERMISSION = android.Manifest.permission.BODY_SENSORS
+
+@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun WearApp(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberSwipeDismissableNavController(),
+
+    heartRateServicesRepository: HeartRateServicesRepository
 ) {
+
     AppScaffold {
         SwipeDismissableNavHost(
             startDestination = Screen.MainScreen.route,
@@ -99,8 +120,10 @@ fun WearApp(
                 }
             }
             composable(route = Screen.AppHelperNodesListenerScreen.route) {
-                val columnState = rememberResponsiveColumnState(first = ItemType.Unspecified, last = ItemType.Unspecified)
-
+                val columnState = rememberResponsiveColumnState(
+                    first = ItemType.Unspecified,
+                    last = ItemType.Unspecified
+                )
                 ScreenScaffold(scrollState = columnState) {
                     NodesListenerScreen(columnState = columnState)
                 }
@@ -109,12 +132,50 @@ fun WearApp(
             infoScreen(
                 onDismissClick = navController::popBackStack,
             )
+
+
+            composable(route = Screen.HeartRateScreen.route) {
+                Scaffold(
+                    modifier = Modifier.fillMaxSize(),
+                    timeText = { TimeText() }
+                ) {
+                    val viewModel: HeartRateViewModel = viewModel(
+                        factory = HeartRateViewModelFactory(
+                            heartRateServicesRepository = heartRateServicesRepository
+                        )
+                    )
+                    val enabled by viewModel.enabled.collectAsState()
+                    val hr by viewModel.hr
+                    val availability by viewModel.availability
+                    val uiState by viewModel.uiState
+
+                    if (uiState == UiState.Supported) {
+                        val permissionState = rememberPermissionState(
+                            permission = PERMISSION,
+                            onPermissionResult = { granted ->
+                                if (granted) viewModel.toggleEnabled()
+                            }
+                        )
+                        HeartRateScreen(
+//                            columnState = columnState,
+                            hr = hr,
+                            availability = availability,
+                            enabled = enabled,
+                            onButtonClick = { viewModel.toggleEnabled() },
+                            permissionState = permissionState
+                        )
+
+                    } else if (uiState == UiState.NotSupported) {
+                        NotSupportedScreen()
+                    }
+                }
+            }
         }
     }
 }
 
-@WearPreviewSmallRound
-@Composable
-fun DefaultPreview() {
-    WearApp()
-}
+//@WearPreviewSmallRound
+//@Composable
+//fun DefaultPreview() {
+//    WearApp()
+//}

@@ -18,10 +18,14 @@ package com.google.android.horologist.datalayer.sample
 
 import android.app.Application
 import android.os.StrictMode
+import com.google.android.horologist.datalayer.sample.screens.heartrate.data.HeartRateServicesRepository
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
 class SampleApplication : Application() {
+
+    val heartRateServicesRepository by lazy { HeartRateServicesRepository(this) }
+
     override fun onCreate() {
         super.onCreate()
 

@@ -1,4 +1,4 @@
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright 2023 The Android Open Source Project
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,10 +25,20 @@
     <string name="main_menu_datalayer_counter_item">Counter</string>
     <string name="main_menu_datalayer_nodes_item">Data Layer Nodes</string>
 
+    <string name="main_menu_datalayer_heart_rate">Heart Rate</string>
+
     <string name="main_menu_apphelpers_header">App Helpers</string>
     <string name="main_menu_apphelpers_tracking_item">Tracking</string>
     <string name="main_menu_apphelpers_nodes_actions_item">Nodes actions</string>
     <string name="main_menu_apphelpers_nodes_listener_item">Nodes listener</string>
+
+    <!-- Heart Rate screen -->
+    <!--    <string name="app_name">Measure Data Sample</string>-->
+    <string name="not_available">Not available on this device</string>
+    <string name="stop">Stop</string>
+    <string name="start">Start</string>
+    <string name="no_hr_reading">--</string>
+    <string name="icon">Icon</string>
 
     <!-- Counter screen -->
     <string name="server_counter_message">Open the datalayer sample on your phone to observe how the counter number is incremented.</string>
