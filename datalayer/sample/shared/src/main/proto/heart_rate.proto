@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package com.google.android.horologist.datalayer.sample.shared.grpc;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+option java_package = "com.google.android.horologist.datalayer.sample.shared.grpc";
+option java_outer_classname = "HeartRateProto";
+
+// 심박수 기록에 대한 세부 정보
+message HeartRateRecord {
+  // 측정한 심박수
+  int32 heart_rate = 1;
+
+  // 기록된 측정 시간
+  .google.protobuf.Timestamp update = 2;
+}
+
+message HeartRateDelta {
+  int32 heart_rate = 1;
+}
+
+service HeartRateService {
+  rpc get(.google.protobuf.Empty) returns (HeartRateRecord);
+  rpc put(HeartRateDelta) returns (HeartRateRecord);
+}

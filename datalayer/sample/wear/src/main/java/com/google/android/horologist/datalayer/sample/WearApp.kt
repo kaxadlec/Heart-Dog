@@ -24,6 +24,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.wear.compose.material.Scaffold
@@ -43,7 +44,6 @@ import com.google.android.horologist.datalayer.sample.screens.datalayer.DataLaye
 import com.google.android.horologist.datalayer.sample.screens.heartrate.data.HeartRateServicesRepository
 import com.google.android.horologist.datalayer.sample.screens.heartrate.presentation.HeartRateScreen
 import com.google.android.horologist.datalayer.sample.screens.heartrate.presentation.HeartRateViewModel
-import com.google.android.horologist.datalayer.sample.screens.heartrate.presentation.HeartRateViewModelFactory
 import com.google.android.horologist.datalayer.sample.screens.heartrate.presentation.NotSupportedScreen
 import com.google.android.horologist.datalayer.sample.screens.heartrate.presentation.UiState
 import com.google.android.horologist.datalayer.sample.screens.info.infoScreen
@@ -63,8 +63,6 @@ const val PERMISSION = android.Manifest.permission.BODY_SENSORS
 fun WearApp(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberSwipeDismissableNavController(),
-
-    heartRateServicesRepository: HeartRateServicesRepository
 ) {
 
     AppScaffold {
@@ -139,11 +137,8 @@ fun WearApp(
                     modifier = Modifier.fillMaxSize(),
                     timeText = { TimeText() }
                 ) {
-                    val viewModel: HeartRateViewModel = viewModel(
-                        factory = HeartRateViewModelFactory(
-                            heartRateServicesRepository = heartRateServicesRepository
-                        )
-                    )
+                    val viewModel: HeartRateViewModel = hiltViewModel()
+
                     val enabled by viewModel.enabled.collectAsState()
                     val hr by viewModel.hr
                     val availability by viewModel.availability

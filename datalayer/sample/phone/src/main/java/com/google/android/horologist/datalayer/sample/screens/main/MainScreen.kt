@@ -31,6 +31,7 @@ import androidx.navigation.compose.rememberNavController
 import com.google.android.horologist.datalayer.sample.screens.AppHelperNodes
 import com.google.android.horologist.datalayer.sample.screens.AppHelperNodesListener
 import com.google.android.horologist.datalayer.sample.screens.Counter
+import com.google.android.horologist.datalayer.sample.screens.HeartRate
 import com.google.android.horologist.datalayer.sample.screens.InstallAppCustomPromptDemo
 import com.google.android.horologist.datalayer.sample.screens.InstallAppPromptDemo
 import com.google.android.horologist.datalayer.sample.screens.InstallTileCustomPromptDemo
@@ -41,6 +42,7 @@ import com.google.android.horologist.datalayer.sample.screens.ReEngagePromptDemo
 import com.google.android.horologist.datalayer.sample.screens.SignInCustomPromptDemo
 import com.google.android.horologist.datalayer.sample.screens.SignInPromptDemo
 import com.google.android.horologist.datalayer.sample.screens.counter.CounterScreen
+import com.google.android.horologist.datalayer.sample.screens.heartrate.HeartRateScreen
 import com.google.android.horologist.datalayer.sample.screens.inappprompts.custom.installapp.InstallAppCustomPromptDemoScreen
 import com.google.android.horologist.datalayer.sample.screens.inappprompts.custom.installtile.InstallTileCustomPromptDemoScreen
 import com.google.android.horologist.datalayer.sample.screens.inappprompts.custom.reengage.ReEngageCustomPromptDemoScreen
@@ -108,6 +110,9 @@ fun MainScreen(
                 }
                 composable<Counter> {
                     CounterScreen()
+                }
+                composable<HeartRate> {
+                    HeartRateScreen()
                 }
             }
         }

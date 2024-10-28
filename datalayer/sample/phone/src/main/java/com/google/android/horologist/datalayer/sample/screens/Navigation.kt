@@ -53,3 +53,6 @@ object InstallTileCustomPromptDemo
 
 @Serializable
 object Counter
+
+@Serializable
+object HeartRate

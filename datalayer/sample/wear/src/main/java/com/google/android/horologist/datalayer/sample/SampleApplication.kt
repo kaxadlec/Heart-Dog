@@ -24,7 +24,7 @@ import dagger.hilt.android.HiltAndroidApp
 @HiltAndroidApp
 class SampleApplication : Application() {
 
-    val heartRateServicesRepository by lazy { HeartRateServicesRepository(this) }
+//    val heartRateServicesRepository by lazy { HeartRateServicesRepository(this) }
 
     override fun onCreate() {
         super.onCreate()

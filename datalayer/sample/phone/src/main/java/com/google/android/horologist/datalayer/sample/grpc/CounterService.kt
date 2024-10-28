@@ -16,6 +16,7 @@
 
 package com.google.android.horologist.datalayer.sample.grpc
 
+import android.util.Log
 import androidx.datastore.core.DataStore
 import com.google.android.horologist.datalayer.sample.shared.grpc.CounterServiceGrpcKt
 import com.google.android.horologist.datalayer.sample.shared.grpc.GrpcDemoProto
@@ -33,6 +34,7 @@ class CounterService(
 
     override suspend fun increment(request: GrpcDemoProto.CounterDelta): GrpcDemoProto.CounterValue {
         return dataStore.updateData {
+            Log.i("counter", "up")
             it.copy {
                 this.value += request.delta
                 this.updated = System.currentTimeMillis().toProtoTimestamp()

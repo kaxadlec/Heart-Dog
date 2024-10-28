@@ -162,6 +162,10 @@
     <string name="app_helper_counter_message">Value: %1$s </string>
     <string name="app_helper_counter_increase_explanation">Open the datalayer sample on your watch to observe how the counter number is incremented.</string>
 
+    <!-- Heart Rate Screen -->
+    <string name="app_helper_heart_rate_message">Heart Rate : %1$s</string>
+    <string name="app_helper_heart_rate_increase_explanation">Open the datalayer sample on your watch to observe how the counter number is incremented.</string>
+
     <!-- Start Remote Sample Activity screen -->
     <string name="app_helper_start_remote_activity_message">This is a sample activity to demonstrate it being launched remotely from the watch.</string>
 </resources>

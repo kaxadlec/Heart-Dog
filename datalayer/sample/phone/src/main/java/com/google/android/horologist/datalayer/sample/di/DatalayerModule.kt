@@ -20,6 +20,7 @@ import android.content.Context
 import com.google.android.horologist.data.WearDataLayerRegistry
 import com.google.android.horologist.datalayer.phone.PhoneDataLayerAppHelper
 import com.google.android.horologist.datalayer.sample.shared.CounterValueSerializer
+import com.google.android.horologist.datalayer.sample.shared.HeartRateRecordSerializer
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -60,5 +61,6 @@ object DatalayerModule {
         coroutineScope = coroutineScope,
     ).apply {
         registerSerializer(CounterValueSerializer)
+        registerSerializer(HeartRateRecordSerializer)
     }
 }

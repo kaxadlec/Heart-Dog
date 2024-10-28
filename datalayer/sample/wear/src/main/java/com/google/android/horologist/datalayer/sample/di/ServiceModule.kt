@@ -25,6 +25,7 @@ import com.google.android.horologist.data.store.ProtoDataListener
 import com.google.android.horologist.datalayer.sample.TileSync
 import com.google.android.horologist.datalayer.sample.screens.nodes.SampleDataSerializer
 import com.google.android.horologist.datalayer.sample.shared.CounterValueSerializer
+import com.google.android.horologist.datalayer.sample.shared.HeartRateRecordSerializer
 import com.google.android.horologist.datalayer.watch.WearDataLayerAppHelper
 import dagger.Module
 import dagger.Provides
@@ -64,6 +65,7 @@ object ServiceModule {
         coroutineScope = coroutineScope,
     ).apply {
         registerSerializer(CounterValueSerializer)
+        registerSerializer(HeartRateRecordSerializer)
 
         registerSerializer(SampleDataSerializer)
 

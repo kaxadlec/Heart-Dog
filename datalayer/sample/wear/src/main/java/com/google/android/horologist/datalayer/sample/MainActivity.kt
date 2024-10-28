@@ -36,10 +36,10 @@ class MainActivity : ComponentActivity() {
             tileSync.trackInstalledTiles(this@MainActivity)
         }
 
-        val heartRateServicesRepository = (application as SampleApplication).heartRateServicesRepository
+//        val heartRateServicesRepository = (application as SampleApplication).heartRateServicesRepository
 
         setContent {
-            WearApp(heartRateServicesRepository = heartRateServicesRepository)
+            WearApp()
         }
     }
 }

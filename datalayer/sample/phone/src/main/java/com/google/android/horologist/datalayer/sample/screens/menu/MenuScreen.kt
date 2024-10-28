@@ -30,6 +30,7 @@ import com.google.android.horologist.datalayer.sample.R
 import com.google.android.horologist.datalayer.sample.screens.AppHelperNodes
 import com.google.android.horologist.datalayer.sample.screens.AppHelperNodesListener
 import com.google.android.horologist.datalayer.sample.screens.Counter
+import com.google.android.horologist.datalayer.sample.screens.HeartRate
 import com.google.android.horologist.datalayer.sample.screens.InstallAppCustomPromptDemo
 import com.google.android.horologist.datalayer.sample.screens.InstallAppPromptDemo
 import com.google.android.horologist.datalayer.sample.screens.InstallTileCustomPromptDemo
@@ -101,6 +102,10 @@ fun MenuScreen(
         )
 
         Button(onClick = { navController.navigate(Counter) }) {
+            Text(text = stringResource(id = R.string.menu_screen_counter_item))
+        }
+
+        Button(onClick = { navController.navigate(HeartRate) }) {
             Text(text = stringResource(id = R.string.menu_screen_counter_item))
         }
     }
