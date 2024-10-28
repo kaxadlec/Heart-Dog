@@ -20,7 +20,6 @@ object HeartRateRecordSerializer : Serializer<HeartRateRecord> {
         }
 
     override suspend fun writeTo(t: HeartRateRecord, output: OutputStream) {
-        Log.i("heartRateSerializer", "${t.heartRate}")
         t.writeTo(output)
     }
 }

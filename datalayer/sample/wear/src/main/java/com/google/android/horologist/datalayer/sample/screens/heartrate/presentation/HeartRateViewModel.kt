@@ -59,10 +59,8 @@ class HeartRateViewModel
                                     Log.i("heartRate", "measure start ${hr.value.toInt()}")
 
                                     /* Coroutine */
-                                    launch {
-                                        val newRecord = heartRateService.put(heartRateDelta { heartRate = hr.value.toInt() })
-                                        Log.i("heartRate", "measure end ${newRecord.heartRate}")
-                                    }
+                                    val newRecord = heartRateService.put(heartRateDelta { heartRate = hr.value.toInt() })
+                                    Log.i("heartRate", "measure end ${newRecord.heartRate}")
                                 }
                                 is MeasureMessage.MeasureAvailability -> {
                                     availability.value = measureMessage.availability
