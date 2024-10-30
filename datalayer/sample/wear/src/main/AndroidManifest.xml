@@ -15,10 +15,13 @@
   -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.google.android.horologist.datalayer.sample">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.BODY_SENSORS"/>
+    <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION"/>
+
 
     <uses-feature android:name="android.hardware.type.watch" />
 
@@ -67,6 +70,10 @@
                     android:scheme="wear" />
             </intent-filter>
         </service>
+        <service
+            android:name="com.google.android.horologist.datalayer.sample.screens.steps.StepCountService"
+            android:foregroundServiceType="health"
+            android:exported="false" />
 
         <service
             android:name=".SampleTileService"
@@ -80,6 +87,12 @@
                 android:name="androidx.wear.tiles.PREVIEW"
                 android:resource="@drawable/tile_preview" />
         </service>
+
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            tools:node="remove" />
+
 
     </application>
 

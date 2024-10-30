@@ -101,6 +101,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime)
     implementation(libs.androidx.wear.remote.interactions)
     implementation(libs.androidx.wear.phone.interactions)
+    implementation ("androidx.work:work-runtime-ktx:2.8.0")
 
     testImplementation(libs.junit)
     testImplementation(libs.truth)
