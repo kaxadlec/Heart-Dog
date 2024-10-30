@@ -89,4 +89,16 @@
 
     <!--  Start Remote Sample Activity screen -->
     <string name="app_helper_start_remote_activity_message">This is a sample activity to demonstrate it being launched remotely from the phone.</string>
+
+    <!-- Steps -->
+    <string name="steps_count_label">"걸음 수 :"</string>
+    <string name="main_menu_datalayer_steps">Step Counter</string>
+    <string name="steps_count_title">걸음수 보여주기</string>
+    <string name="steps_count_value_message">%1$d 걸음</string>
+    <string name="steps_count_loading_message">Loading step count...</string>
+    <string name="steps_title">걸음수</string>
+    <string name="server_step_message">현재걸음 수</string>
+    <string name="steps_value_message">%1$d 걸음</string>
+    <string name="steps_missing_message">찾을 수 없습니다.</string>
+    <string name="request_permission">권한 요청</string>
 </resources>
