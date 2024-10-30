@@ -56,3 +56,10 @@ object Counter
 
 @Serializable
 object HeartRate
+
+// 모바일 앱 개발
+@Serializable
+object Splash
+
+@Serializable
+object HotDogMain

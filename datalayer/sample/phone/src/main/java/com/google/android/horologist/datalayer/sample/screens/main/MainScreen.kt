@@ -55,6 +55,13 @@ import com.google.android.horologist.datalayer.sample.screens.menu.MenuScreen
 import com.google.android.horologist.datalayer.sample.screens.nodes.NodesScreen
 import com.google.android.horologist.datalayer.sample.screens.nodeslistener.NodesListenerScreen
 
+// 모바일 화면 개발
+import com.google.android.horologist.datalayer.sample.screens.Splash
+import com.google.android.horologist.datalayer.sample.screens.HotDogMain
+
+import com.google.android.horologist.datalayer.sample.screens.hotdog.splash.SplashScreen
+import com.google.android.horologist.datalayer.sample.screens.hotdog.main.HotDogMainScreen
+
 @Composable
 fun MainScreen(
     modifier: Modifier = Modifier,
@@ -78,6 +85,16 @@ fun MainScreen(
                 composable<Menu> {
                     MenuScreen(navController = navController)
                 }
+
+                // Splash코드 추가한 부분
+                composable<Splash> {
+                    SplashScreen(navController = navController)
+                }
+
+                composable<HotDogMain> {
+                    HotDogMainScreen() // MainScreen 경로 추가
+                }
+
                 composable<AppHelperNodes> {
                     NodesScreen()
                 }

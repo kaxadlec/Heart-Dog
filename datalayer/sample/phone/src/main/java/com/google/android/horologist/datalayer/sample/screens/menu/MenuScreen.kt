@@ -40,6 +40,8 @@ import com.google.android.horologist.datalayer.sample.screens.ReEngagePromptDemo
 import com.google.android.horologist.datalayer.sample.screens.SignInCustomPromptDemo
 import com.google.android.horologist.datalayer.sample.screens.SignInPromptDemo
 
+import com.google.android.horologist.datalayer.sample.screens.Splash
+
 @Composable
 fun MenuScreen(
     navController: NavHostController,
@@ -49,6 +51,12 @@ fun MenuScreen(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
+
+        // 스플래시 화면으로 이동 버튼
+        Button(onClick = { navController.navigate(Splash) }) {
+            Text(text = "Go to Splash Screen")
+        }
+
         Text(text = stringResource(id = R.string.menu_screen_apphelper_header))
 
         Button(onClick = { navController.navigate(AppHelperNodes) }) {
