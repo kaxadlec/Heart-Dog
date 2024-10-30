@@ -89,4 +89,10 @@
 
     <!--  Start Remote Sample Activity screen -->
     <string name="app_helper_start_remote_activity_message">This is a sample activity to demonstrate it being launched remotely from the phone.</string>
+
+    <!-- Watch Page screen -->
+    <string name="main_menu_watch_page_header">Watch Page Section</string>
+    <string name="main_menu_watch_page_item">Watch Page</string>
+
+
 </resources>
