@@ -25,7 +25,7 @@ fun GameTab(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Button(onClick = onNavigateToSingle) {
-            Text("싱글 게임", Modifier.size(100.dp))
+            Text("싱글 게임")
         }
 
         Button(onClick = onNavigateToCouple) {
