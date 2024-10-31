@@ -41,6 +41,7 @@ import com.google.android.horologist.datalayer.sample.screens.ReEngageCustomProm
 import com.google.android.horologist.datalayer.sample.screens.ReEngagePromptDemo
 import com.google.android.horologist.datalayer.sample.screens.SignInCustomPromptDemo
 import com.google.android.horologist.datalayer.sample.screens.SignInPromptDemo
+import com.google.android.horologist.datalayer.sample.screens.StepCount
 import com.google.android.horologist.datalayer.sample.screens.counter.CounterScreen
 import com.google.android.horologist.datalayer.sample.screens.heartrate.HeartRateScreen
 import com.google.android.horologist.datalayer.sample.screens.inappprompts.custom.installapp.InstallAppCustomPromptDemoScreen
@@ -54,6 +55,7 @@ import com.google.android.horologist.datalayer.sample.screens.inappprompts.signi
 import com.google.android.horologist.datalayer.sample.screens.menu.MenuScreen
 import com.google.android.horologist.datalayer.sample.screens.nodes.NodesScreen
 import com.google.android.horologist.datalayer.sample.screens.nodeslistener.NodesListenerScreen
+import com.google.android.horologist.datalayer.sample.screens.steps.StepCountScreen
 
 @Composable
 fun MainScreen(
@@ -113,6 +115,9 @@ fun MainScreen(
                 }
                 composable<HeartRate> {
                     HeartRateScreen()
+                }
+                composable<StepCount> {
+                    StepCountScreen()
                 }
             }
         }

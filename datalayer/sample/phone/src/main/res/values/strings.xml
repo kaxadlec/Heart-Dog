@@ -35,6 +35,7 @@
     <string name="menu_screen_datalayer_header">Data Layer</string>
     <string name="menu_screen_counter_item">Counter sample</string>
     <string name="menu_screen_heart_rate">Heart Rate</string>
+    <string name="menu_screen_step_count">Step Count</string>
 
     <!-- App Helper Nodes screen -->
     <string name="nodes_screen_header">Nodes</string>
@@ -166,6 +167,14 @@
     <!-- Heart Rate Screen -->
     <string name="app_helper_heart_rate_message">Heart Rate : %1$s</string>
     <string name="app_helper_heart_rate_increase_explanation">Open the datalayer sample on your watch to observe how the counter number is incremented.</string>
+
+    <!--Steps Screen -->
+    <string name="steps_title">steps_title</string>
+    <string name="server_step_message">server_step_message</string>
+    <string name="steps_value_message">steps_value_message</string>
+    <string name="steps_missing_message">steps_missing_message</string>
+
+
 
     <!-- Start Remote Sample Activity screen -->
     <string name="app_helper_start_remote_activity_message">This is a sample activity to demonstrate it being launched remotely from the watch.</string>

@@ -17,10 +17,15 @@
 package com.google.android.horologist.datalayer.sample.di
 
 import android.content.Context
+import android.util.Log
+import com.google.android.horologist.data.TargetNodeId
 import com.google.android.horologist.data.WearDataLayerRegistry
+import com.google.android.horologist.datalayer.grpc.GrpcExtensions.grpcClient
 import com.google.android.horologist.datalayer.phone.PhoneDataLayerAppHelper
 import com.google.android.horologist.datalayer.sample.shared.CounterValueSerializer
 import com.google.android.horologist.datalayer.sample.shared.HeartRateRecordSerializer
+import com.google.android.horologist.datalayer.sample.shared.StepCountRecordSerializer
+import com.google.android.horologist.datalayer.sample.shared.grpc.StepCountServiceGrpcKt
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -62,5 +67,24 @@ object DatalayerModule {
     ).apply {
         registerSerializer(CounterValueSerializer)
         registerSerializer(HeartRateRecordSerializer)
+        registerSerializer(StepCountRecordSerializer)
+    }
+
+    @Singleton
+    @Provides
+    fun provideStepCountServiceStub(
+        wearDataLayerRegistry: WearDataLayerRegistry
+    ): StepCountServiceGrpcKt.StepCountServiceCoroutineStub {
+        Log.d("DatalayerModule", "Initializing StepCountServiceStub with TargetNodeId: PairedPhone")
+
+        return wearDataLayerRegistry.grpcClient(
+            nodeId = TargetNodeId.PairedPhone,
+            coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
+        ) {
+            StepCountServiceGrpcKt.StepCountServiceCoroutineStub(it).also{
+                Log.d("DatalayerModule", "StepCountServiceCoroutineStub created")
+
+            }
+        }
     }
 }
