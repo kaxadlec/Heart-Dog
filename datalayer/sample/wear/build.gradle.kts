@@ -179,7 +179,7 @@ dependencies {
     implementation(libs.dagger.hiltandroid)
     ksp(libs.dagger.hiltandroidcompiler)
 //    kapt("com.google.dagger:hilt-compiler:2.52")
-    implementation ("androidx.hilt:hilt-work:1.0.0")
+    implementation(libs.hilt.ext.work)
 
 
     implementation(libs.hilt.navigationcompose)
