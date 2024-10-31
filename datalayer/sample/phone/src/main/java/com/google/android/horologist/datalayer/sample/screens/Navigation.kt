@@ -76,3 +76,6 @@ object CreateQRCode
 @Serializable
 object InsertQRCode
 
+@Serializable
+object Notification
+
