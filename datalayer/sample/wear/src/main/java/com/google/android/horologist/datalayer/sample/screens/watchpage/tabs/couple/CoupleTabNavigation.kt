@@ -31,11 +31,11 @@ fun NavGraphBuilder.coupleTabNavigation(
         }
 
         composable(CoupleTabScreen.Walk.route) {
-            WalkScreen()
+            WalkScreen(stepCount = 4200)
         }
 
         composable(CoupleTabScreen.TimeTogether.route) {
-            TimeTogetherScreen()
+            TimeTogetherScreen(timeTogether = 3)
         }
 
         composable(CoupleTabScreen.Emoji.route) {
