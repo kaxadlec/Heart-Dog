@@ -1,6 +1,7 @@
 // PetTabNavigation.kt
 package com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.pet
 
+import androidx.compose.runtime.MutableState
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable

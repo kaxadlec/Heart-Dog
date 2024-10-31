@@ -27,6 +27,7 @@ import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.hom
 import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.pet.PetTab
 import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.settings.SettingsTab
 import androidx.navigation.compose.rememberNavController
+import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.couple.CoupleTabScreen
 import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.couple.coupleTabNavigation
 import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.game.GameTabScreen
 import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.game.gameTabNavigation
@@ -42,17 +43,21 @@ fun TabContainerScreen() {
         pageCount = { 5 }
     )
 
-    // 현재 메인 화면인지 추적하기 위한 상태
-    var isMainScreen = remember { mutableStateOf(true) }
-    val isMainScreenState = remember { mutableStateOf(true) }
-    val coupleNavController = rememberNavController()
+    val currentPetRoute = remember { mutableStateOf(PetTabScreen.Main.route) }
+    val currentCoupleRoute = remember { mutableStateOf("couple_tab") }
+    val currentGameRoute = remember { mutableStateOf(GameTabScreen.Main.route) }
+    val currentSettingsRoute = remember { mutableStateOf(SettingsTabScreen.Main.route) }
 
-    LaunchedEffect(coupleNavController) {
-        coupleNavController.currentBackStackEntryFlow.collect { entry ->
-            // value로 접근
-            isMainScreenState.value = entry.destination.route == "couple_tab"
-        }
+    // 현재 페이지가 메인 화면인지 확인
+    val isMainScreen = when (pagerState.currentPage) {
+        0 -> currentPetRoute.value == PetTabScreen.Main.route
+        1 -> true // HomeTab은 항상 true
+        2 -> currentCoupleRoute.value == CoupleTabScreen.Main.route
+        3 -> currentGameRoute.value == GameTabScreen.Main.route
+        4 -> currentSettingsRoute.value == SettingsTabScreen.Main.route
+        else -> false
     }
+
 
     Box(
         modifier = Modifier.fillMaxSize()
@@ -66,11 +71,18 @@ fun TabContainerScreen() {
         // 페이지별 탭
         HorizontalPager(
             state = pagerState,
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize(),
+            // 메인 화면에서만 스와이프 가능
+            userScrollEnabled = isMainScreen
         ) { page ->
             when (page) {
                 0 -> {
                     val navController = rememberNavController()
+                    LaunchedEffect(navController) {
+                        navController.currentBackStackEntryFlow.collect { entry ->
+                            currentPetRoute.value = entry.destination.route ?: ""
+                        }
+                    }
                     NavHost(
                         navController = navController,
                         startDestination = PetTabScreen.Main.route
@@ -81,15 +93,25 @@ fun TabContainerScreen() {
                 1 -> HomeTab()
                 2 -> {
                     val navController = rememberNavController()
+                    LaunchedEffect(navController) {
+                        navController.currentBackStackEntryFlow.collect { entry ->
+                            currentCoupleRoute.value = entry.destination.route ?: ""
+                        }
+                    }
                     NavHost(
                         navController = navController,
-                        startDestination = "couple_tab"
+                        startDestination = CoupleTabScreen.Main.route
                     ) {
                         coupleTabNavigation(navController)
                     }
                 }
                 3 -> {
                     val navController = rememberNavController()
+                    LaunchedEffect(navController) {
+                        navController.currentBackStackEntryFlow.collect { entry ->
+                            currentGameRoute.value = entry.destination.route ?: ""
+                        }
+                    }
                     NavHost(
                         navController = navController,
                         startDestination = GameTabScreen.Main.route
@@ -99,6 +121,11 @@ fun TabContainerScreen() {
                 }
                 4 -> {
                     val navController = rememberNavController()
+                    LaunchedEffect(navController) {
+                        navController.currentBackStackEntryFlow.collect { entry ->
+                            currentSettingsRoute.value = entry.destination.route ?: ""
+                        }
+                    }
                     NavHost(
                         navController = navController,
                         startDestination = SettingsTabScreen.Main.route
@@ -111,7 +138,7 @@ fun TabContainerScreen() {
 
         // 간단한 페이지 인디케이터
         // 페이지 인디케이터 - 메인 탭 화면들에서만 표시
-        if (pagerState.currentPage in 0..4) {  // 메인 탭 화면들에서만 표시
+        if (isMainScreen) {  // 메인 탭 화면들에서만 표시
             Box(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)

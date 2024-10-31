@@ -1,5 +1,6 @@
 package com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.couple
 
+import androidx.compose.runtime.MutableState
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
@@ -18,28 +19,30 @@ sealed class CoupleTabScreen(val route: String) {
 fun NavGraphBuilder.coupleTabNavigation(
     navController: NavHostController
 ) {
-    navigation(
-        startDestination = CoupleTabScreen.Main.route,
-        route = "couple_tab"
-    ) {
-        composable(CoupleTabScreen.Main.route) {
-            CoupleTab(
-                onWalkClick = { navController.navigate(CoupleTabScreen.Walk.route) },
-                onTimeTogetherClick = { navController.navigate(CoupleTabScreen.TimeTogether.route) },
-                onEmojiClick = { navController.navigate(CoupleTabScreen.Emoji.route) }
-            )
-        }
-
-        composable(CoupleTabScreen.Walk.route) {
-            WalkScreen()
-        }
-
-        composable(CoupleTabScreen.TimeTogether.route) {
-            TimeTogetherScreen()
-        }
-
-        composable(CoupleTabScreen.Emoji.route) {
-            EmojiScreen()
-        }
+    composable(CoupleTabScreen.Main.route) {
+        CoupleTab(
+            onWalkClick = { navController.navigate(CoupleTabScreen.Walk.route) },
+            onTimeTogetherClick = { navController.navigate(CoupleTabScreen.TimeTogether.route) },
+            onEmojiClick = { navController.navigate(CoupleTabScreen.Emoji.route) }
+        )
     }
+
+    composable(CoupleTabScreen.Walk.route) {
+        WalkScreen(
+//            onBack = { navController.popBackStack() }
+        )
+    }
+
+    composable(CoupleTabScreen.TimeTogether.route) {
+        TimeTogetherScreen(
+//            onBack = { navController.popBackStack() }
+        )
+    }
+
+    composable(CoupleTabScreen.Emoji.route) {
+        EmojiScreen(
+//            onBack = { navController.popBackStack() }
+        )
+    }
+
 }

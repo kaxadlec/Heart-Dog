@@ -12,7 +12,9 @@ import androidx.compose.ui.graphics.Color
 
 
 @Composable
-fun WalkScreen() {
+fun WalkScreen(
+    modifier: Modifier = Modifier
+) {
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,

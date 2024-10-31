@@ -12,7 +12,7 @@ import androidx.compose.ui.graphics.Color
 
 // EmojiScreen.kt
 @Composable
-fun EmojiScreen() {
+fun EmojiScreen( modifier: Modifier = Modifier) {
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,

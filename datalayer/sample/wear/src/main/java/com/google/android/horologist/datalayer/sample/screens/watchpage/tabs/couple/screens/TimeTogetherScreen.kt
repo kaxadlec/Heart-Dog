@@ -12,7 +12,9 @@ import androidx.compose.ui.graphics.Color
 
 // TimeTogetherScreen.kt
 @Composable
-fun TimeTogetherScreen() {
+fun TimeTogetherScreen(
+    modifier: Modifier = Modifier
+) {
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
