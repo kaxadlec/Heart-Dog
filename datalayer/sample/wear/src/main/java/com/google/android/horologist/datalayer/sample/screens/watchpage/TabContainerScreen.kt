@@ -17,16 +17,23 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.couple.CoupleTab
-import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.GameTab
-import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.HomeTab
-import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.PetTab
-import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.SettingsTab
+import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.game.GameTab
+import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.home.HomeTab
+import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.pet.PetTab
+import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.settings.SettingsTab
 import androidx.navigation.compose.rememberNavController
 import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.couple.coupleTabNavigation
+import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.game.GameTabScreen
+import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.game.gameTabNavigation
+import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.pet.PetTabScreen
+import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.pet.petTabNavigation
+import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.settings.SettingsTabScreen
+import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.settings.settingsTabNavigation
 
 @Composable
 fun TabContainerScreen() {
@@ -34,6 +41,18 @@ fun TabContainerScreen() {
         initialPage = 1,  // MainScreen을 초기 페이지로 설정
         pageCount = { 5 }
     )
+
+    // 현재 메인 화면인지 추적하기 위한 상태
+    var isMainScreen = remember { mutableStateOf(true) }
+    val isMainScreenState = remember { mutableStateOf(true) }
+    val coupleNavController = rememberNavController()
+
+    LaunchedEffect(coupleNavController) {
+        coupleNavController.currentBackStackEntryFlow.collect { entry ->
+            // value로 접근
+            isMainScreenState.value = entry.destination.route == "couple_tab"
+        }
+    }
 
     Box(
         modifier = Modifier.fillMaxSize()
@@ -50,7 +69,15 @@ fun TabContainerScreen() {
             modifier = Modifier.fillMaxSize()
         ) { page ->
             when (page) {
-                0 -> PetTab()
+                0 -> {
+                    val navController = rememberNavController()
+                    NavHost(
+                        navController = navController,
+                        startDestination = PetTabScreen.Main.route
+                    ) {
+                        petTabNavigation(navController)
+                    }
+                }
                 1 -> HomeTab()
                 2 -> {
                     val navController = rememberNavController()
@@ -61,8 +88,24 @@ fun TabContainerScreen() {
                         coupleTabNavigation(navController)
                     }
                 }
-                3 -> GameTab()
-                4 -> SettingsTab()
+                3 -> {
+                    val navController = rememberNavController()
+                    NavHost(
+                        navController = navController,
+                        startDestination = GameTabScreen.Main.route
+                    ) {
+                        gameTabNavigation(navController)  // 새로 추가할 게임 탭 내비게이션
+                    }
+                }
+                4 -> {
+                    val navController = rememberNavController()
+                    NavHost(
+                        navController = navController,
+                        startDestination = SettingsTabScreen.Main.route
+                    ) {
+                        settingsTabNavigation(navController)
+                    }
+                }
             }
         }
 

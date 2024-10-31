@@ -1,5 +1,5 @@
 // HomeTab.kt
-package com.google.android.horologist.datalayer.sample.screens.watchpage.tabs
+package com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.home
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
