@@ -62,6 +62,7 @@ import com.google.android.horologist.datalayer.sample.screens.HotDogMain
 import com.google.android.horologist.datalayer.sample.screens.InsertQRCode
 import com.google.android.horologist.datalayer.sample.screens.Login
 import com.google.android.horologist.datalayer.sample.screens.Matching
+import com.google.android.horologist.datalayer.sample.screens.Notification
 
 import com.google.android.horologist.datalayer.sample.screens.hotdog.splash.SplashScreen
 import com.google.android.horologist.datalayer.sample.screens.hotdog.main.HotDogMainScreen
@@ -69,6 +70,7 @@ import com.google.android.horologist.datalayer.sample.screens.hotdog.login.Login
 import com.google.android.horologist.datalayer.sample.screens.hotdog.matching.CreateQRCodeScreen
 import com.google.android.horologist.datalayer.sample.screens.hotdog.matching.InsertQRCodeScreen
 import com.google.android.horologist.datalayer.sample.screens.hotdog.matching.MatchingScreen
+import com.google.android.horologist.datalayer.sample.screens.hotdog.notification.NotificationScreen
 
 @Composable
 fun MainScreen(
@@ -116,9 +118,12 @@ fun MainScreen(
                    InsertQRCodeScreen(navController = navController)
                 }
 
-
                 composable<HotDogMain> {
                     HotDogMainScreen()
+                }
+
+                composable<Notification> {
+                    NotificationScreen(navController = navController)
                 }
 
                 // 기존 코드
