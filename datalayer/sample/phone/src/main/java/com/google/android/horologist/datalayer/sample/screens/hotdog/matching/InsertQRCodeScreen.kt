@@ -1,6 +1,6 @@
 package com.google.android.horologist.datalayer.sample.screens.hotdog.matching
 
-import androidx.compose.foundation.Image
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,17 +10,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.google.android.horologist.datalayer.sample.R
 import com.google.android.horologist.datalayer.sample.screens.hotdog.common.LogoHeader
 import com.google.android.horologist.datalayer.sample.screens.hotdog.matching.components.CameraPreview
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.remember
-import androidx.compose.ui.platform.LocalContext
-import com.google.accompanist.permissions.PermissionState
 import com.google.accompanist.permissions.PermissionStatus
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
@@ -62,11 +56,13 @@ fun InsertQRCodeScreen(navController: NavHostController) {
         // 1. 카메라 연결
         // 2. 데이터 전송
 
-        CameraPreview(
-            modifier = Modifier
-                .width(300.dp)
-                .height(300.dp)
-        )
+        CameraPermissionWrapper {
+            CameraPreview(
+                modifier = Modifier
+                    .width(250.dp)
+                    .height(250.dp)
+            )
+        }
 
     }
 
