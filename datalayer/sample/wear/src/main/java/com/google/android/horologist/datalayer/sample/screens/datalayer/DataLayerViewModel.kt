@@ -1,21 +1,12 @@
-/*
- * Copyright 2023 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.google.android.horologist.datalayer.sample.screens.datalayer
 
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
+import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.android.horologist.datalayer.sample.shared.grpc.CounterServiceGrpcKt.CounterServiceCoroutineStub
@@ -33,54 +24,101 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DataLayerViewModel
-    @Inject
-    constructor(
-        private val counterService: CounterServiceCoroutineStub,
-        private val counterFlow: Flow<CounterValue>,
-    ) : ViewModel() {
-        init {
-            viewModelScope.launch {
-                counterFlow.collectLatest { newValue ->
-                    uiState.update { state ->
-                        updateIfNewer(state, newValue)
+@Inject
+constructor(
+    private val counterService: CounterServiceCoroutineStub,
+    private val counterFlow: Flow<CounterValue>,
+    private val sensorManager: SensorManager,
+) : ViewModel() {
+
+    private val accelerometer: Sensor? = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+
+    private val _gestureCount = MutableLiveData<Int>(0)
+    val gestureCount: LiveData<Int> = _gestureCount // UI에서 관찰할 수 있는 LiveData
+
+    val uiState: MutableStateFlow<DataLayerScreenState> = MutableStateFlow(DataLayerScreenState())
+
+
+    // TypingGestureDetector 인스턴스 생성
+    private val TypingGestureDetector = TypingGestureDetector(
+
+        onTypingGestureDetected = {
+            Log.d("DataLayerViewModel", "'Typing' gesture detected.")
+            incrementGestureCount() }
+    )
+
+    // FistGestureDetector 인스턴스 생성
+    private val fistGestureDetector = FistGestureDetector(
+
+        onFistGestureDetected = {
+            Log.d("DataLayerViewModel", "Fist gesture detected.")
+            incrementGestureCount() }
+    )
+
+
+
+    init {
+        Log.d("DataLayerViewModel", "Initializing DataLayerViewModel.")
+        accelerometer?.let { sensor ->
+            Log.d("DataLayerViewModel", "Accelerometer sensor available.")
+            sensorManager.registerListener(object : SensorEventListener {
+                override fun onSensorChanged(event: SensorEvent?) {
+                    if (event?.sensor?.type == Sensor.TYPE_ACCELEROMETER) {
+                        TypingGestureDetector.detectTypingGesture(event.values)
                     }
                 }
-            }
-        }
 
-        val uiState: MutableStateFlow<DataLayerScreenState> = MutableStateFlow(DataLayerScreenState())
+                override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
+            }, sensor, SensorManager.SENSOR_DELAY_NORMAL)
+        } ?: throw Exception("Accelerometer sensor not available")
 
-        fun addDelta(i: Int) {
-            viewModelScope.launch {
-                try {
-                    val newValue: CounterValue =
-                        counterService.increment(counterDelta { delta = i.toLong() })
-                    uiState.update {
-                        updateIfNewer(it, newValue)
-                    }
-                } catch (e: Exception) {
-                    uiState.update {
-                        it.copy(error = e.message)
-                    }
+        viewModelScope.launch {
+            counterFlow.collectLatest { newValue ->
+                uiState.update { state ->
+                    updateIfNewer(state, newValue)
                 }
-            }
-        }
-
-        private fun updateIfNewer(
-            it: DataLayerScreenState,
-            newValue: CounterValue,
-        ): DataLayerScreenState {
-            val currentUpdated = it.counterValue?.updatedOrNull
-            return if (currentUpdated == null || currentUpdated.isBefore(newValue)) {
-                it.copy(counterValue = newValue)
-            } else {
-                it
             }
         }
     }
 
-private fun Timestamp.isBefore(other: CounterValue): Boolean =
-    seconds < other.updated.seconds || (seconds == other.updated.seconds && nanos < other.updated.nanos)
+    private fun incrementGestureCount() {
+        val newCount = (_gestureCount.value ?: 0) + 1
+        _gestureCount.value = newCount
+
+            addDelta(1) // 1씩 증가하도록 설정
+    }
+
+    fun addDelta(i: Int) {
+        viewModelScope.launch {
+            try {
+                val newValue: CounterValue =
+                    counterService.increment(counterDelta { delta = i.toLong() })
+                uiState.update {
+                    updateIfNewer(it, newValue)
+                }
+            } catch (e: Exception) {
+                uiState.update {
+                    it.copy(error = e.message)
+                }
+            }
+        }
+    }
+
+    private fun updateIfNewer(
+        it: DataLayerScreenState,
+        newValue: CounterValue,
+    ): DataLayerScreenState {
+        val currentUpdated = it.counterValue?.updatedOrNull
+        return if (currentUpdated == null || currentUpdated.isBefore(newValue)) {
+            it.copy(counterValue = newValue)
+        } else {
+            it
+        }
+    }
+
+    private fun Timestamp.isBefore(other: CounterValue): Boolean =
+        seconds < other.updated.seconds || (seconds == other.updated.seconds && nanos < other.updated.nanos)
+}
 
 data class DataLayerScreenState(
     val counterValue: CounterValue? = null,

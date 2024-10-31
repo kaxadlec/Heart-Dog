@@ -85,9 +85,27 @@ fun WearApp(
             }
             composable(route = Screen.CounterScreen.route) {
                 val columnState = rememberResponsiveColumnState(first = ItemType.Unspecified, last = ItemType.Unspecified)
+                val bodySensorsPermissionState = rememberPermissionState(BODY_SENSORS_PERMISSION)
+
+                val permissionGranted = bodySensorsPermissionState.status.isGranted
 
                 ScreenScaffold(scrollState = columnState) {
-                    DataLayerScreen(columnState = columnState)
+                    if (!permissionGranted) {
+                        // 권한이 부여되지 않았을 경우 권한 요청
+                        LaunchedEffect(Unit) {
+                            bodySensorsPermissionState.launchPermissionRequest()
+                        }
+                        // 권한 대기 중일 때 메시지 표시
+                        Text(
+                            text = "Please grant BODY_SENSORS permission to access data.",
+                            modifier = Modifier.padding(16.dp),
+                            textAlign = TextAlign.Center,
+                            color = MaterialTheme.colors.error
+                        )
+                    } else {
+                        // 권한이 부여된 경우에만 DataLayerScreen 표시
+                        DataLayerScreen(columnState = columnState)
+                    }
                 }
             }
             composable(route = Screen.ListNodesScreen.route) {
