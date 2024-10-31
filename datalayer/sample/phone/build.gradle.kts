@@ -96,6 +96,13 @@ repositories {
 }
 
 dependencies {
+
+    val cameraxVersion = "1.1.0"
+
+    implementation ("androidx.camera:camera-camera2:$cameraxVersion")
+    implementation ("androidx.camera:camera-lifecycle:$cameraxVersion")
+    implementation ("androidx.camera:camera-view:$cameraxVersion")
+
     api(projects.annotations)
 
     implementation(projects.datalayer.core)
@@ -136,5 +143,5 @@ dependencies {
     androidTestImplementation(libs.androidx.test.runner)
 
     implementation(libs.mpandroidchart)
-//    implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
+    implementation(libs.accompanist.permissions)
 }
