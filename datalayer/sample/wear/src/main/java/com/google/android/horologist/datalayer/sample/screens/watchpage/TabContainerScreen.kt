@@ -17,16 +17,24 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.couple.CoupleTab
-import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.GameTab
-import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.HomeTab
-import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.PetTab
-import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.SettingsTab
+import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.game.GameTab
+import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.home.HomeTab
+import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.pet.PetTab
+import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.settings.SettingsTab
 import androidx.navigation.compose.rememberNavController
+import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.couple.CoupleTabScreen
 import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.couple.coupleTabNavigation
+import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.game.GameTabScreen
+import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.game.gameTabNavigation
+import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.pet.PetTabScreen
+import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.pet.petTabNavigation
+import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.settings.SettingsTabScreen
+import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.settings.settingsTabNavigation
 
 @Composable
 fun TabContainerScreen() {
@@ -34,6 +42,22 @@ fun TabContainerScreen() {
         initialPage = 1,  // MainScreen을 초기 페이지로 설정
         pageCount = { 5 }
     )
+
+    val currentPetRoute = remember { mutableStateOf(PetTabScreen.Main.route) }
+    val currentCoupleRoute = remember { mutableStateOf("couple_tab") }
+    val currentGameRoute = remember { mutableStateOf(GameTabScreen.Main.route) }
+    val currentSettingsRoute = remember { mutableStateOf(SettingsTabScreen.Main.route) }
+
+    // 현재 페이지가 메인 화면인지 확인
+    val isMainScreen = when (pagerState.currentPage) {
+        0 -> currentPetRoute.value == PetTabScreen.Main.route
+        1 -> true // HomeTab은 항상 true
+        2 -> currentCoupleRoute.value == CoupleTabScreen.Main.route
+        3 -> currentGameRoute.value == GameTabScreen.Main.route
+        4 -> currentSettingsRoute.value == SettingsTabScreen.Main.route
+        else -> false
+    }
+
 
     Box(
         modifier = Modifier.fillMaxSize()
@@ -47,28 +71,74 @@ fun TabContainerScreen() {
         // 페이지별 탭
         HorizontalPager(
             state = pagerState,
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize(),
+            // 메인 화면에서만 스와이프 가능
+            userScrollEnabled = isMainScreen
         ) { page ->
             when (page) {
-                0 -> PetTab()
+                0 -> {
+                    val navController = rememberNavController()
+                    LaunchedEffect(navController) {
+                        navController.currentBackStackEntryFlow.collect { entry ->
+                            currentPetRoute.value = entry.destination.route ?: ""
+                        }
+                    }
+                    NavHost(
+                        navController = navController,
+                        startDestination = PetTabScreen.Main.route
+                    ) {
+                        petTabNavigation(navController)
+                    }
+                }
                 1 -> HomeTab()
                 2 -> {
                     val navController = rememberNavController()
+                    LaunchedEffect(navController) {
+                        navController.currentBackStackEntryFlow.collect { entry ->
+                            currentCoupleRoute.value = entry.destination.route ?: ""
+                        }
+                    }
                     NavHost(
                         navController = navController,
-                        startDestination = "couple_tab"
+                        startDestination = CoupleTabScreen.Main.route
                     ) {
                         coupleTabNavigation(navController)
                     }
                 }
-                3 -> GameTab()
-                4 -> SettingsTab()
+                3 -> {
+                    val navController = rememberNavController()
+                    LaunchedEffect(navController) {
+                        navController.currentBackStackEntryFlow.collect { entry ->
+                            currentGameRoute.value = entry.destination.route ?: ""
+                        }
+                    }
+                    NavHost(
+                        navController = navController,
+                        startDestination = GameTabScreen.Main.route
+                    ) {
+                        gameTabNavigation(navController)  // 새로 추가할 게임 탭 내비게이션
+                    }
+                }
+                4 -> {
+                    val navController = rememberNavController()
+                    LaunchedEffect(navController) {
+                        navController.currentBackStackEntryFlow.collect { entry ->
+                            currentSettingsRoute.value = entry.destination.route ?: ""
+                        }
+                    }
+                    NavHost(
+                        navController = navController,
+                        startDestination = SettingsTabScreen.Main.route
+                    ) {
+                        settingsTabNavigation(navController)
+                    }
+                }
             }
         }
 
         // 간단한 페이지 인디케이터
         // 페이지 인디케이터 - 메인 탭 화면들에서만 표시
-        if (pagerState.currentPage in 0..4) {  // 메인 탭 화면들에서만 표시
+        if (isMainScreen) {  // 메인 탭 화면들에서만 표시
             Box(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)

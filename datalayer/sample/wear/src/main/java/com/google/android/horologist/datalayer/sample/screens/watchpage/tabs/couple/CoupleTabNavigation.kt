@@ -1,5 +1,6 @@
 package com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.couple
 
+import androidx.compose.runtime.MutableState
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
@@ -42,4 +43,23 @@ fun NavGraphBuilder.coupleTabNavigation(
             EmojiScreen()
         }
     }
+
+    composable(CoupleTabScreen.Walk.route) {
+        WalkScreen(
+//            onBack = { navController.popBackStack() }
+        )
+    }
+
+    composable(CoupleTabScreen.TimeTogether.route) {
+        TimeTogetherScreen(
+//            onBack = { navController.popBackStack() }
+        )
+    }
+
+    composable(CoupleTabScreen.Emoji.route) {
+        EmojiScreen(
+//            onBack = { navController.popBackStack() }
+        )
+    }
+
 }
