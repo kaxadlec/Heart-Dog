@@ -19,10 +19,6 @@ sealed class CoupleTabScreen(val route: String) {
 fun NavGraphBuilder.coupleTabNavigation(
     navController: NavHostController
 ) {
-    navigation(
-        startDestination = CoupleTabScreen.Main.route,
-        route = "couple_tab"
-    ) {
         composable(CoupleTabScreen.Main.route) {
             CoupleTab(
                 onWalkClick = { navController.navigate(CoupleTabScreen.Walk.route) },
@@ -43,23 +39,3 @@ fun NavGraphBuilder.coupleTabNavigation(
             EmojiScreen()
         }
     }
-
-    composable(CoupleTabScreen.Walk.route) {
-        WalkScreen(
-//            onBack = { navController.popBackStack() }
-        )
-    }
-
-    composable(CoupleTabScreen.TimeTogether.route) {
-        TimeTogetherScreen(
-//            onBack = { navController.popBackStack() }
-        )
-    }
-
-    composable(CoupleTabScreen.Emoji.route) {
-        EmojiScreen(
-//            onBack = { navController.popBackStack() }
-        )
-    }
-
-}
