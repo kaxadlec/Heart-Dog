@@ -26,6 +26,7 @@ sealed class Screen(
 
     data object CounterScreen : Screen("counterScreen")
     data object ListNodesScreen : Screen("listNodesScreen")
+    data object StepsScreen : Screen("stepsScreen")
 
     data object HeartRateScreen : Screen("heartRateScreen")
 
