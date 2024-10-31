@@ -91,6 +91,13 @@ android {
 }
 
 dependencies {
+
+    val cameraxVersion = "1.1.0"
+
+    implementation ("androidx.camera:camera-camera2:$cameraxVersion")
+    implementation ("androidx.camera:camera-lifecycle:$cameraxVersion")
+    implementation ("androidx.camera:camera-view:$cameraxVersion")
+
     api(projects.annotations)
 
     implementation(projects.datalayer.core)
@@ -128,4 +135,7 @@ dependencies {
     debugImplementation(libs.compose.ui.test.manifest)
 
     androidTestImplementation(libs.androidx.test.runner)
+
+    implementation(libs.accompanist.permissions)
+
 }
