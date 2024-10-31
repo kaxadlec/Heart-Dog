@@ -31,6 +31,7 @@ import com.google.android.horologist.datalayer.sample.screens.AppHelperNodes
 import com.google.android.horologist.datalayer.sample.screens.AppHelperNodesListener
 import com.google.android.horologist.datalayer.sample.screens.Counter
 import com.google.android.horologist.datalayer.sample.screens.HeartRate
+import com.google.android.horologist.datalayer.sample.screens.HotDogMain
 import com.google.android.horologist.datalayer.sample.screens.InstallAppCustomPromptDemo
 import com.google.android.horologist.datalayer.sample.screens.InstallAppPromptDemo
 import com.google.android.horologist.datalayer.sample.screens.InstallTileCustomPromptDemo
@@ -54,6 +55,10 @@ fun MenuScreen(
 
         // 스플래시 화면으로 이동 버튼
         Button(onClick = { navController.navigate(Splash) }) {
+            Text(text = "Go to Splash Screen")
+        }
+
+        Button(onClick = { navController.navigate(HotDogMain) }) {
             Text(text = "Go to Splash Screen")
         }
 

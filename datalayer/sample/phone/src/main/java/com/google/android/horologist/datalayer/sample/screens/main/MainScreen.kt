@@ -119,7 +119,7 @@ fun MainScreen(
                 }
 
                 composable<HotDogMain> {
-                    HotDogMainScreen()
+                    HotDogMainScreen(navController = navController)
                 }
 
                 composable<Notification> {

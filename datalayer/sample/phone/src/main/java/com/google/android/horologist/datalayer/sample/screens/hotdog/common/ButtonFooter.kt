@@ -18,6 +18,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.google.android.horologist.datalayer.sample.R
+import com.google.android.horologist.datalayer.sample.screens.HotDogMain
 import com.google.android.horologist.datalayer.sample.screens.InsertQRCode
 import com.google.android.horologist.datalayer.sample.screens.Notification
 
@@ -42,7 +43,13 @@ fun ButtonFooter( navController : NavController) {
             modifier = Modifier
                 .width(120.dp)
                 .height(120.dp)
-                .offset(x = 1.dp),
+                .offset(x = 1.dp)
+                .clickable (
+                    indication = null,
+                    interactionSource = remember { MutableInteractionSource() } // InteractionSource 설정
+                ) {
+                    navController.navigate(HotDogMain)
+                },
             contentScale = ContentScale.Fit
         )
 
