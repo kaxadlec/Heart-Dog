@@ -63,3 +63,16 @@ object Splash
 
 @Serializable
 object HotDogMain
+
+@Serializable
+object Login
+
+@Serializable
+object Matching
+
+@Serializable
+object CreateQRCode
+
+@Serializable
+object InsertQRCode
+
