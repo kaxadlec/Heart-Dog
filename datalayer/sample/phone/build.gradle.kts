@@ -76,9 +76,9 @@ android {
 
         // Allow for widescale experimental APIs in Alpha libraries we build upon
         freeCompilerArgs = freeCompilerArgs +
-            listOf(
-                "-opt-in=com.google.android.horologist.annotations.ExperimentalHorologistApi",
-            )
+                listOf(
+                    "-opt-in=com.google.android.horologist.annotations.ExperimentalHorologistApi",
+                )
     }
 
     packaging {
@@ -88,6 +88,11 @@ android {
     }
 
     namespace = "com.google.android.horologist.datalayer.sample"
+}
+
+// 추가된 repositories 블록
+repositories {
+    maven { url = uri("https://jitpack.io") }
 }
 
 dependencies {
@@ -118,6 +123,7 @@ dependencies {
     implementation(libs.kotlinx.serialization.core)
 
     implementation(libs.dagger.hiltandroid)
+    implementation(libs.androidx.storage)
     ksp(libs.dagger.hiltandroidcompiler)
     implementation(libs.hilt.navigationcompose)
 
@@ -128,4 +134,7 @@ dependencies {
     debugImplementation(libs.compose.ui.test.manifest)
 
     androidTestImplementation(libs.androidx.test.runner)
+
+    implementation(libs.mpandroidchart)
+//    implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
 }
