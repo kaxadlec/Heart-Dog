@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.android.horologist.datalayer.sample.screens.heartrate
+package com.google.android.horologist.datalayer.sample.screens.gps
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -22,9 +22,15 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.PlusOne
+import androidx.compose.material.icons.filled.Update
+import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -35,46 +41,75 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.google.android.horologist.datalayer.sample.R
 
 @Composable
-fun HeartRateScreen(
+fun LocationTrackingScreen(
     modifier: Modifier = Modifier,
-    viewModel: HeartRateScreenViewModel = hiltViewModel(),
+    viewModel: LocationTrackingScreenViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
 
-    if (state == HeartRateScreenUiState.Idle) {
+    if (state == LocationTrackingScreenUiState.Idle) {
         SideEffect {
             viewModel.initialize()
         }
     }
 
-    HeartRateScreen(
+    LocationTrackingScreen(
         state = state,
-//        onPlusClick = { viewModel.updateHeartRate() },
+        onClick = { viewModel.updateCurrentLocation() },
         modifier = modifier,
     )
 }
 
+@OptIn(ExperimentalPermissionsApi::class)
 @Composable
-fun HeartRateScreen(
-    state: HeartRateScreenUiState,
-//    onPlusClick: () -> Unit,
+fun LocationTrackingScreen(
+    state: LocationTrackingScreenUiState,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+
+    // Permissions state
+    val locationPermissionsState = rememberMultiplePermissionsState(
+        permissions = listOf(
+            android.Manifest.permission.ACCESS_FINE_LOCATION,
+            android.Manifest.permission.ACCESS_COARSE_LOCATION
+        )
+    )
+
+    // Handle permission request
+    LaunchedEffect(Unit) {
+        locationPermissionsState.launchMultiplePermissionRequest()
+    }
+
+    // Check if permissions are granted
+    val permissionsGranted = locationPermissionsState.allPermissionsGranted
+
     Row(verticalAlignment = Alignment.CenterVertically) {
+        if (!permissionsGranted) {
+            Text(
+                text = stringResource(R.string.permission_required_message),
+                modifier = modifier.fillMaxWidth(),
+                color = Color.Red,
+                textAlign = TextAlign.Center,
+            )
+        }
+
         when (state) {
-            HeartRateScreenUiState.Idle,
-            HeartRateScreenUiState.CheckingApiAvailability,
-            HeartRateScreenUiState.Loading,
+            LocationTrackingScreenUiState.Idle,
+            LocationTrackingScreenUiState.CheckingApiAvailability,
+            LocationTrackingScreenUiState.Loading,
             -> {
                 CircularProgressIndicator(
                     modifier = Modifier.width(64.dp),
                 )
             }
 
-            is HeartRateScreenUiState.Loaded -> {
+            is LocationTrackingScreenUiState.Loaded -> {
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -90,16 +125,19 @@ fun HeartRateScreen(
                         Text(
                             modifier = Modifier
                                 .padding(16.dp),
-                            text = stringResource(R.string.app_helper_heart_rate_message, state.heartRate),
+                            text = stringResource(
+                                R.string.app_helper_location_tracking_message,
+                                state.locationTracking.lat, state.locationTracking.lng
+                            ),
                         )
-//                        Button(onClick = onPlusClick) {
-//                            Icon(imageVector = Icons.Default.PlusOne, contentDescription = "Plus 1")
-//                        }
+                        Button (onClick = onClick) {
+                            Icon(imageVector = Icons.Default.Update, contentDescription = "update location")
+                        }
                     }
                 }
             }
 
-            HeartRateScreenUiState.ApiNotAvailable -> {
+            LocationTrackingScreenUiState.ApiNotAvailable -> {
                 Text(
                     text = stringResource(R.string.wearable_message_api_unavailable),
                     modifier.fillMaxWidth(),
@@ -107,6 +145,8 @@ fun HeartRateScreen(
                     textAlign = TextAlign.Center,
                 )
             }
+
+            else -> {}
         }
     }
 }

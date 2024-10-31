@@ -50,6 +50,7 @@ moshi = "1.15.1"
 okio = "3.9.1"
 org-robolectric = "4.13"
 playServicesAuth = "21.2.0"
+playServicesLocation = "21.3.0"
 protobuf = "4.28.2"
 protobuf-gen-grpc-java = "1.68.0"
 protobuf-gen-grpc-kotlin = "1.3.0:jdk8@jar"
@@ -194,6 +195,7 @@ moshi-adapters = { module = "com.squareup.moshi:moshi-adapters", version.ref = "
 moshi-kotlin = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "moshi" }
 moshi-kotlin-codegen = { module = "com.squareup.moshi:moshi-kotlin-codegen", version.ref = "moshi" }
 okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
+play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocation" }
 playservices-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "playServicesAuth" }
 playservices-base = "com.google.android.gms:play-services-base:18.5.0"
 playservices-wearable = "com.google.android.gms:play-services-wearable:18.2.0"

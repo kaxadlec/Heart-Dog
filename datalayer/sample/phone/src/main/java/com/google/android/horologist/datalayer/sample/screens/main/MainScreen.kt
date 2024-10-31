@@ -36,12 +36,14 @@ import com.google.android.horologist.datalayer.sample.screens.InstallAppCustomPr
 import com.google.android.horologist.datalayer.sample.screens.InstallAppPromptDemo
 import com.google.android.horologist.datalayer.sample.screens.InstallTileCustomPromptDemo
 import com.google.android.horologist.datalayer.sample.screens.InstallTilePromptDemo
+import com.google.android.horologist.datalayer.sample.screens.LocationTracking
 import com.google.android.horologist.datalayer.sample.screens.Menu
 import com.google.android.horologist.datalayer.sample.screens.ReEngageCustomPromptDemo
 import com.google.android.horologist.datalayer.sample.screens.ReEngagePromptDemo
 import com.google.android.horologist.datalayer.sample.screens.SignInCustomPromptDemo
 import com.google.android.horologist.datalayer.sample.screens.SignInPromptDemo
 import com.google.android.horologist.datalayer.sample.screens.counter.CounterScreen
+import com.google.android.horologist.datalayer.sample.screens.gps.LocationTrackingScreen
 import com.google.android.horologist.datalayer.sample.screens.heartrate.HeartRateScreen
 import com.google.android.horologist.datalayer.sample.screens.inappprompts.custom.installapp.InstallAppCustomPromptDemoScreen
 import com.google.android.horologist.datalayer.sample.screens.inappprompts.custom.installtile.InstallTileCustomPromptDemoScreen
@@ -113,6 +115,9 @@ fun MainScreen(
                 }
                 composable<HeartRate> {
                     HeartRateScreen()
+                }
+                composable<LocationTracking> {
+                    LocationTrackingScreen()
                 }
             }
         }

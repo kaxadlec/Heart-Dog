@@ -170,4 +170,10 @@
     <!-- Start Remote Sample Activity screen -->
     <string name="app_helper_start_remote_activity_message">This is a sample activity to demonstrate it being launched remotely from the watch.</string>
 
+    <!-- location tracking -->
+    <string name="menu_screen_location_button">Fetch Location</string>
+    <string name="app_helper_location_tracking_message">Location : %1$s, %2$s</string>
+
+    <string name="permission_required_message">권한 추가좀</string>
+
 </resources>
