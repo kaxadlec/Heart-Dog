@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.offset
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -23,13 +24,19 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.android.horologist.datalayer.sample.screens.watchpage.state.pet.PetViewModel
 
 @Composable
-fun HomeTab(modifier: Modifier = Modifier, petViewModel: PetViewModel = hiltViewModel()) {
+fun HomeTab(modifier: Modifier = Modifier, petViewModel: PetViewModel) {
     val petState by petViewModel.uiState.collectAsStateWithLifecycle()
     // satiety를 0-1 사이의 값으로 변환 (100 -> 1.0f, 50 -> 0.5f)
     val satietyProgress = petState.satiety / 100f
     val expProgress = petState.exp / 100f
     val name = petState.name
     val level = petState.level
+
+    // 상태 변화 로그
+    LaunchedEffect(petState.satiety) {
+        println("HomeTab - Satiety Changed: ${petState.satiety}")
+    }
+
 
     Box(
         modifier = Modifier.fillMaxSize() // 화면 전체를 배경으로 채움
@@ -60,7 +67,7 @@ fun HomeTab(modifier: Modifier = Modifier, petViewModel: PetViewModel = hiltView
 
             // 이미지 위에 텍스트 표시
             Text(
-                text = "$name LV.$level",
+                text = "$name LV.$level ${petState.satiety}",
                 fontSize = 15.sp,
                 color = Color.Black,
                 modifier = Modifier

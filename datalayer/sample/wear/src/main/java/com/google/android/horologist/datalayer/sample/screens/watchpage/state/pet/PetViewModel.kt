@@ -35,6 +35,7 @@ class PetViewModel @Inject constructor() : ViewModel() {
     fun updateSatiety(amount: Int) {
         _uiState.update { currentState ->
             val newSatiety = (currentState.satiety + amount).coerceIn(0, 100)  // 0~100 사이로 제한
+            println("PetViewModel - Updating satiety: $newSatiety")  // 업데이트 로그
             currentState.copy(satiety = newSatiety)
         }
     }
