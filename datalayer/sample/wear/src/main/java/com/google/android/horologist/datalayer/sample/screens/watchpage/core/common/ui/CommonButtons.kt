@@ -39,7 +39,7 @@ fun CircleIconButton(
 //    iconSize: Dp = 24.dp,
     buttonSizeRatio: Float = 0.3f,  // 화면 너비 대비 버튼 크기 비율
     iconSizeRatio: Float = 0.14f,  //
-    backgroundColor: Color = Color(0xFFD66F24),
+    backgroundColor: Color = Color(0xFFFF9A4D),
     textColor: Color = Color.Black,
 //    textSize: TextUnit = 10.sp,
     textSizeRatio: Float = 0.05f,

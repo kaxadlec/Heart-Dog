@@ -61,7 +61,7 @@ fun TabContainerScreen() {
         ) {
             // 고정 배경 이미지
             Image(
-                painter = painterResource(id = R.drawable.background_image_2),
+                painter = painterResource(id = R.drawable.background_image),
                 contentDescription = "Background",
                 modifier = Modifier.fillMaxSize()
             )
