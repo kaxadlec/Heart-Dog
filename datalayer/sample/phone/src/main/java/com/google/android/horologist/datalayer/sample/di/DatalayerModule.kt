@@ -17,9 +17,6 @@
 package com.google.android.horologist.datalayer.sample.di
 
 import android.content.Context
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
-import com.google.android.horologist.data.TargetNodeId
 import com.google.android.horologist.data.WearDataLayerRegistry
 import com.google.android.horologist.datalayer.phone.PhoneDataLayerAppHelper
 import com.google.android.horologist.datalayer.sample.shared.CounterValueSerializer
@@ -67,14 +64,6 @@ object DatalayerModule {
         registerSerializer(CounterValueSerializer)
         registerSerializer(HeartRateRecordSerializer)
         registerSerializer(LocationTrackingRecordSerializer)
-    }
-
-    @Provides
-    @Singleton
-    fun provideFusedLocationProviderClient(
-        @ApplicationContext applicationContext: Context
-    ): FusedLocationProviderClient {
-        return LocationServices.getFusedLocationProviderClient(applicationContext)
     }
 
 //    fun heartRateFlow(wearDataLayerRegistry: WearDataLayerRegistry): Flow<HeartRateRecord> =

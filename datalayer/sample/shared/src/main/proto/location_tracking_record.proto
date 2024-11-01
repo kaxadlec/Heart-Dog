@@ -12,5 +12,12 @@ option java_outer_classname = "LocationTrackingProto";
 message LocationTrackingRecord {
   double latitude = 1;  // 위도
   double longitude = 2; // 경도
-  int64 timestamp = 3;  // Unix 타임스탬프 (밀리초 단위)
+  .google.protobuf.Timestamp timestamp = 3;  // Unix 타임스탬프 (밀리초 단위)
 }
+
+service LocationTrackingService {
+  rpc getCurrentLocation(.google.protobuf.Empty) returns (LocationTrackingRecord); // delta만큼 걸음 수를 증가시키고 새로운 값 반환
+  rpc updateLocation(LocationTrackingRecord) returns (LocationTrackingRecord); // 현재 걸음 수 반환
+}
+
+

@@ -134,4 +134,7 @@ dependencies {
 
     /* Permissions */
     implementation(libs.accompanist.permissions)
+
+    /* Worker */
+    implementation(libs.androidx.work.ktx)
 }

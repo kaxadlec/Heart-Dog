@@ -35,11 +35,11 @@ import com.google.android.horologist.datalayer.sample.screens.InstallAppCustomPr
 import com.google.android.horologist.datalayer.sample.screens.InstallAppPromptDemo
 import com.google.android.horologist.datalayer.sample.screens.InstallTileCustomPromptDemo
 import com.google.android.horologist.datalayer.sample.screens.InstallTilePromptDemo
-import com.google.android.horologist.datalayer.sample.screens.LocationTracking
 import com.google.android.horologist.datalayer.sample.screens.ReEngageCustomPromptDemo
 import com.google.android.horologist.datalayer.sample.screens.ReEngagePromptDemo
 import com.google.android.horologist.datalayer.sample.screens.SignInCustomPromptDemo
 import com.google.android.horologist.datalayer.sample.screens.SignInPromptDemo
+import com.google.android.horologist.datalayer.sample.screens.gps.LocationTracking
 
 @Composable
 fun MenuScreen(
@@ -108,10 +108,6 @@ fun MenuScreen(
 
         Button(onClick = { navController.navigate(HeartRate) }) {
             Text(text = stringResource(id = R.string.menu_screen_heart_rate))
-        }
-
-        Button(onClick = { navController.navigate(LocationTracking) }) {
-            Text(text = stringResource(id = R.string.menu_screen_location_button))
         }
     }
 }

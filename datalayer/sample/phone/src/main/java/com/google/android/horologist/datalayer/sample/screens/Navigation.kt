@@ -56,6 +56,3 @@ object Counter
 
 @Serializable
 object HeartRate
-
-@Serializable
-object LocationTracking

@@ -16,18 +16,22 @@
 
 package com.google.android.horologist.datalayer.sample.screens.main
 
+import android.Manifest
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.google.android.horologist.datalayer.sample.screens.AppHelperNodes
 import com.google.android.horologist.datalayer.sample.screens.AppHelperNodesListener
 import com.google.android.horologist.datalayer.sample.screens.Counter
@@ -36,14 +40,12 @@ import com.google.android.horologist.datalayer.sample.screens.InstallAppCustomPr
 import com.google.android.horologist.datalayer.sample.screens.InstallAppPromptDemo
 import com.google.android.horologist.datalayer.sample.screens.InstallTileCustomPromptDemo
 import com.google.android.horologist.datalayer.sample.screens.InstallTilePromptDemo
-import com.google.android.horologist.datalayer.sample.screens.LocationTracking
 import com.google.android.horologist.datalayer.sample.screens.Menu
 import com.google.android.horologist.datalayer.sample.screens.ReEngageCustomPromptDemo
 import com.google.android.horologist.datalayer.sample.screens.ReEngagePromptDemo
 import com.google.android.horologist.datalayer.sample.screens.SignInCustomPromptDemo
 import com.google.android.horologist.datalayer.sample.screens.SignInPromptDemo
 import com.google.android.horologist.datalayer.sample.screens.counter.CounterScreen
-import com.google.android.horologist.datalayer.sample.screens.gps.LocationTrackingScreen
 import com.google.android.horologist.datalayer.sample.screens.heartrate.HeartRateScreen
 import com.google.android.horologist.datalayer.sample.screens.inappprompts.custom.installapp.InstallAppCustomPromptDemoScreen
 import com.google.android.horologist.datalayer.sample.screens.inappprompts.custom.installtile.InstallTileCustomPromptDemoScreen
@@ -61,6 +63,7 @@ import com.google.android.horologist.datalayer.sample.screens.nodeslistener.Node
 fun MainScreen(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
+    onStartLocationService: () -> Unit
 ) {
     Scaffold(
         modifier = modifier,
@@ -72,6 +75,7 @@ fun MainScreen(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
+            RequestLocationPermissions(onStartLocationService = onStartLocationService)
             NavHost(
                 navController = navController,
                 startDestination = Menu,
@@ -116,10 +120,28 @@ fun MainScreen(
                 composable<HeartRate> {
                     HeartRateScreen()
                 }
-                composable<LocationTracking> {
-                    LocationTrackingScreen()
-                }
             }
+        }
+    }
+}
+
+
+
+@OptIn(ExperimentalPermissionsApi::class)
+@Composable
+fun RequestLocationPermissions(onStartLocationService: () -> Unit) {
+    val permissions = listOf(
+        Manifest.permission.ACCESS_FINE_LOCATION,
+        Manifest.permission.ACCESS_COARSE_LOCATION,
+        Manifest.permission.FOREGROUND_SERVICE_LOCATION
+    )
+    val permissionState = rememberMultiplePermissionsState(permissions)
+
+    LaunchedEffect(Unit) {
+        if (!permissionState.allPermissionsGranted) {
+            permissionState.launchMultiplePermissionRequest()
+        } else {
+            onStartLocationService() // 모든 권한이 승인된 경우 서비스 시작
         }
     }
 }

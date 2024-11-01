@@ -30,7 +30,6 @@ class LocationTrackingScreenViewModel
     @Inject constructor(
         private val phoneDataLayerAppHelper: PhoneDataLayerAppHelper,
         private val registry: WearDataLayerRegistry,
-        private val fusedLocationProviderClient: FusedLocationProviderClient
     ) : ViewModel() {
 
     private var initializeCalled = false
@@ -41,7 +40,11 @@ class LocationTrackingScreenViewModel
     private val _uiState = MutableStateFlow<LocationTrackingScreenUiState>(LocationTrackingScreenUiState.Idle)
     val uiState: StateFlow<LocationTrackingScreenUiState> = _uiState
 
-    @OptIn(ExperimentalCoroutinesApi::class)
+    init {
+        initialize()
+    }
+
+//    @OptIn(ExperimentalCoroutinesApi::class)
     private val locationTrackingState: Flow<LocationTrackingProto.LocationTrackingRecord?> =
         apiAvailable.flatMapLatest { apiAvailable ->
             if (!apiAvailable) {
@@ -96,45 +99,9 @@ class LocationTrackingScreenViewModel
     @SuppressLint("MissingPermission")
     fun updateCurrentLocation() {
         viewModelScope.launch {
-            saveCurrentLocation()
+//            saveCurrentLocation()
         }
     }
-
-    // DataStore에 LocationTrackingRecord를 저장하는 함수
-    @RequiresPermission(Manifest.permission.ACCESS_FINE_LOCATION)
-    suspend fun saveCurrentLocation() {
-        val location = fusedLocationProviderClient.getCurrentLocationCancellable()
-        location?.let {
-            locationTrackingDataStore.updateData { currentData ->
-                currentData.toBuilder()
-                    .setLatitude(it.latitude)
-                    .setLongitude(it.longitude)
-                    .setTimestamp(System.currentTimeMillis())
-                    .build()
-            }
-        }
-    }
-
-    @RequiresPermission(Manifest.permission.ACCESS_FINE_LOCATION)
-    suspend fun FusedLocationProviderClient.getCurrentLocationCancellable(): Location? =
-        suspendCancellableCoroutine { continuation ->
-            lastLocation
-                .addOnSuccessListener { location ->
-                    if (location != null) {
-                        continuation.resumeWith(Result.success(location))
-                    } else {
-                        continuation.resumeWith(Result.failure(Exception("Location not available")))
-                    }
-                }
-                .addOnFailureListener { exception ->
-                    continuation.resumeWith(Result.failure(exception))
-                }
-
-            // 코루틴이 취소되었을 때 Task를 중단하도록 설정
-            continuation.invokeOnCancellation {
-                this.flushLocations()
-            }
-        }
 }
 
 
