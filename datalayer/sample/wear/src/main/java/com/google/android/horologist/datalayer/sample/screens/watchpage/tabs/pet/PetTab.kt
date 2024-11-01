@@ -19,6 +19,7 @@ import com.google.android.horologist.datalayer.sample.screens.watchpage.state.us
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Pets
+import androidx.compose.ui.platform.LocalConfiguration
 import com.google.android.horologist.datalayer.sample.screens.watchpage.core.common.ui.CircleIconButton
 
 @Composable
@@ -27,10 +28,17 @@ fun PetTab(
     onNavigateToFeed: () -> Unit,
     onNavigateToCall: () -> Unit,
     userViewModel: UserViewModel = hiltViewModel(),
-    petViewModel: PetViewModel
+    petViewModel: PetViewModel,
+    largeSpacingRatio: Float = 0.08f,  // 큰 간격 비율
+    smallSpacingRatio: Float = 0.02f   // 작은 간격 비율
 ) {
     val userState by userViewModel.uiState.collectAsStateWithLifecycle()
     val petState by petViewModel.uiState.collectAsStateWithLifecycle()
+
+    val configuration = LocalConfiguration.current
+    val screenWidth = configuration.screenWidthDp.dp
+    val largeSpacing = screenWidth * largeSpacingRatio
+    val smallSpacing = screenWidth * smallSpacingRatio
 
     // 상태 변화 로그
     LaunchedEffect(petState.satiety) {
@@ -44,12 +52,12 @@ fun PetTab(
         Column(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+            verticalArrangement = Arrangement.spacedBy(largeSpacing)
         ) {
             // 상태 텍스트
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(4.dp)
+                verticalArrangement = Arrangement.spacedBy(smallSpacing)
             ) {
                 Text(text = "하트: ${userState.heart}", color = Color.Black)
                 Text(text = "현재 포만도: ${petState.satiety}", color = Color.Black)

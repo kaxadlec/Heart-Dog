@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -24,8 +25,14 @@ fun SettingsTab(
     modifier: Modifier = Modifier,
     onNavigateToGuide: () -> Unit,
     onNavigateToReset: () -> Unit,
-    onNavigateToLogout: () -> Unit
+    onNavigateToLogout: () -> Unit,
+    paddingRatio: Float = 0.135f
 ) {
+    val configuration = LocalConfiguration.current
+    val screenWidth = configuration.screenWidthDp.dp
+    val dynamicPadding = screenWidth * paddingRatio
+
+
     Box(
         modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
@@ -33,7 +40,7 @@ fun SettingsTab(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(27.dp)
+                .padding(dynamicPadding)
         ) {
             // 상단 버튼
             CircleIconButton(

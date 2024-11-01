@@ -8,6 +8,7 @@ import androidx.compose.material.icons.filled.Timer
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.wear.compose.foundation.lazy.ScalingLazyColumn
@@ -21,8 +22,13 @@ fun CoupleTab(
     onWalkClick: () -> Unit,
     onTimeTogetherClick: () -> Unit,
     onEmojiClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    paddingRatio: Float = 0.135f
 ) {
+    val configuration = LocalConfiguration.current
+    val screenWidth = configuration.screenWidthDp.dp
+    val dynamicPadding = screenWidth * paddingRatio
+
     Box(
         modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
@@ -30,7 +36,7 @@ fun CoupleTab(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(27.dp)
+                .padding(dynamicPadding)
         ) {
             // 상단 버튼
             CircleIconButton(
