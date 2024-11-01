@@ -16,6 +16,10 @@ import androidx.wear.compose.material.Button
 import androidx.wear.compose.material.Text
 import com.google.android.horologist.datalayer.sample.screens.watchpage.state.pet.PetViewModel
 import com.google.android.horologist.datalayer.sample.screens.watchpage.state.user.UserViewModel
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Pets
+import com.google.android.horologist.datalayer.sample.screens.watchpage.core.common.ui.CircleIconButton
 
 @Composable
 fun PetTab(
@@ -33,32 +37,49 @@ fun PetTab(
         println("PetTab - Satiety Changed: ${petState.satiety}")
     }
 
-    Column(
+    Box(
         modifier = modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        contentAlignment = Alignment.Center
     ) {
-        Text(text = "하트: ${userState.heart}", color = Color.Black)
-        Text(text = "현재 포만도: ${petState.satiety}", color = Color.Black)
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        Button(
-            onClick = {
-                if (userState.heart > 0) {  // 하트가 있을 때만 실행
-                    userViewModel.updateHeart(userState.heart - 1)  // 하트 1 감소
-                    petViewModel.updateSatiety(5)  // 포만도 5 증가
-                }
-            }, enabled = userState.heart > 0  // 하트가 0이면 버튼 비활성화
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            Text("하트 먹이기")
-        }
-         Spacer(modifier = Modifier.width(16.dp)) // 버튼 간격
-         
-        Button(onClick = onNavigateToCall) {
-            Text("부르기",
-                fontSize = 10.sp,
+            // 상태 텍스트
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
+                Text(text = "하트: ${userState.heart}", color = Color.Black)
+                Text(text = "현재 포만도: ${petState.satiety}", color = Color.Black)
+            }
+
+            // 버튼들을 가로로 배치
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                CircleIconButton(
+                    text = "하트 먹이기",
+                    onClick = {
+                        if (userState.heart > 0) {
+                            userViewModel.updateHeart(userState.heart - 1)
+                            petViewModel.updateSatiety(5)
+                        }
+                    },
+                    icon = Icons.Default.Favorite,  // 하트 아이콘
+                    enabled = userState.heart > 0,  // 하트가 0이면 버튼 비활성화
+                    backgroundColor = if (userState.heart > 0) Color(0xFFC56013) else Color.Gray
                 )
+
+                CircleIconButton(
+                    text = "부르기",
+                    onClick = onNavigateToCall,
+                    icon = Icons.Default.Pets  // 반려동물 아이콘
+                )
+            }
         }
     }
 }

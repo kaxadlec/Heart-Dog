@@ -50,6 +50,25 @@ fun HomeTab(modifier: Modifier = Modifier, petViewModel: PetViewModel) {
             leftProgress = satietyProgress,  // 왼쪽 반원의 진행률
             rightProgress = expProgress  // 오른쪽 반원의 진행률
         )
+        // 각 반원 옆에 설명 텍스트 추가
+        Text(
+            text = "포만도", // 왼쪽 반원 설명 텍스트
+            fontSize = 10.sp,
+            color = Color.Black,
+            modifier = Modifier
+                .align(Alignment.CenterStart)
+                .offset(x = 8.dp) // 왼쪽으로 오프셋 설정
+        )
+
+        Text(
+            text = "경험치", // 오른쪽 반원 설명 텍스트
+            fontSize = 10.sp,
+            color = Color.Black,
+            modifier = Modifier
+                .align(Alignment.CenterEnd)
+                .offset(x = (-8).dp) // 오른쪽으로 오프셋 설정
+        )
+
 
         // 캐릭터 이미지와 텍스트를 감싸는 박스
         Box(
@@ -89,10 +108,13 @@ fun ExperienceArcs(
         val strokeWidth = 15.dp.toPx() // 선 두께
         val radius = size.minDimension / 2
 
+        // 진한 빨간색과 연두색 설정
+        val darkRed = Color(0xFFB71C1C) // 진한 빨간색
+        val darkGreen = Color(0xFF388E3C) // 진한 연두색
 
         // 왼쪽 반원 (빨간색)
         drawArc(
-            color = Color.Red,
+            color = darkRed,
             startAngle = -90f,  // 북쪽(12시)에서 시작
             sweepAngle = -(180f * leftProgress),  // 음수값: 반시계 방향으로 진행
             useCenter = false,
@@ -106,7 +128,7 @@ fun ExperienceArcs(
 
         // 오른쪽 반원 (연두색)
         drawArc(
-            color = Color.Green,
+            color = darkGreen,
             startAngle = -90f,  // 북쪽(12시)에서 시작
             sweepAngle = 180f * rightProgress,  // 양수값: 시계 방향으로 진행
             useCenter = false,

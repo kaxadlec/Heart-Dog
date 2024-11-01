@@ -11,6 +11,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.wear.compose.material.Button
 import androidx.wear.compose.material.Text
+import com.google.android.horologist.datalayer.sample.screens.watchpage.core.common.ui.CircleIconButton
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.SportsEsports
+import androidx.compose.material.icons.filled.Favorite
 
 @Composable
 fun GameTab(
@@ -19,17 +23,28 @@ fun GameTab(
     onNavigateToCouple: () -> Unit
 
 ) {
-    Column(
+    Box(
         modifier = modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        contentAlignment = Alignment.Center
     ) {
-        Button(onClick = onNavigateToSingle) {
-            Text("싱글 게임")
-        }
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 23.dp),
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            CircleIconButton(
+                text = "싱글 게임",
+                onClick = onNavigateToSingle,
+                icon = Icons.Default.SportsEsports  // 게임 아이콘
+            )
 
-        Button(onClick = onNavigateToCouple) {
-            Text("커플 게임")
+            CircleIconButton(
+                text = "커플 게임",
+                onClick = onNavigateToCouple,
+                icon = Icons.Default.Favorite  // 커플용 하트 아이콘
+            )
         }
     }
 }

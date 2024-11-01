@@ -13,6 +13,8 @@ import androidx.compose.ui.unit.dp
 import androidx.wear.compose.foundation.lazy.ScalingLazyColumn
 import androidx.wear.compose.foundation.lazy.rememberScalingLazyListState
 import androidx.wear.compose.material.*
+import com.google.android.horologist.datalayer.sample.screens.watchpage.core.common.ui.CircleIconButton
+import com.google.android.horologist.datalayer.sample.R
 
 @Composable
 fun CoupleTab(
@@ -21,73 +23,37 @@ fun CoupleTab(
     onEmojiClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val listState = rememberScalingLazyListState()
-
-    ScalingLazyColumn(
+    Box(
         modifier = modifier.fillMaxSize(),
-        state = listState,
-        horizontalAlignment = Alignment.CenterHorizontally,
-        autoCentering = androidx.wear.compose.foundation.lazy.AutoCenteringParams(itemIndex = 0)
+        contentAlignment = Alignment.Center
     ) {
-        item {
-            CompactChip(
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(27.dp)
+        ) {
+            // 상단 버튼
+            CircleIconButton(
+                text = "함께 산책하기",
                 onClick = onWalkClick,
-                label = {
-                    Text(
-                        "함께 산책하기",
-                        textAlign = TextAlign.Center
-                    )
-                },
-                icon = {
-                    Icon(
-                        imageVector = Icons.Default.DirectionsWalk,
-                        contentDescription = "산책"
-                    )
-                },
-                modifier = Modifier
-                    .padding(bottom = 8.dp)
-                    .fillMaxWidth(0.8f)
+                icon = Icons.Default.DirectionsWalk,
+                modifier = Modifier.align(Alignment.TopCenter)
             )
-        }
 
-        item {
-            CompactChip(
+            // 좌하단 버튼
+            CircleIconButton(
+                text = "함께한 시간",
                 onClick = onTimeTogetherClick,
-                label = {
-                    Text(
-                        "함께한 시간",
-                        textAlign = TextAlign.Center
-                    )
-                },
-                icon = {
-                    Icon(
-                        imageVector = Icons.Default.Timer,
-                        contentDescription = "시간"
-                    )
-                },
-                modifier = Modifier
-                    .padding(bottom = 8.dp)
-                    .fillMaxWidth(0.8f)
+                icon = Icons.Default.Timer, // 타이머 아이콘 이미지
+                modifier = Modifier.align(Alignment.BottomStart)
             )
-        }
 
-        item {
-            CompactChip(
+            // 우하단 버튼
+            CircleIconButton(
+                text = "이모지 보내기",
                 onClick = onEmojiClick,
-                label = {
-                    Text(
-                        "이모지 보내기",
-                        textAlign = TextAlign.Center
-                    )
-                },
-                icon = {
-                    Icon(
-                        imageVector = Icons.Default.EmojiEmotions,
-                        contentDescription = "이모지"
-                    )
-                },
-                modifier = Modifier
-                    .fillMaxWidth(0.8f)
+                iconResId = R.drawable.heart,  // 하트 이모지 아이콘 이미지
+                modifier = Modifier.align(Alignment.BottomEnd)
             )
         }
     }
