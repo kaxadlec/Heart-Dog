@@ -18,6 +18,7 @@ plugins {
     id("com.android.application")
     id("com.google.devtools.ksp")
     id("dagger.hilt.android.plugin")
+//    id("org.jetbrains.kotlin.plugin.serialization") version "2.0.21"
     kotlin("android")
     kotlin("plugin.serialization")
     alias(libs.plugins.compose.compiler)
@@ -92,6 +93,8 @@ android {
 
 // 추가된 repositories 블록
 repositories {
+    google()
+    mavenCentral()
     maven { url = uri("https://jitpack.io") }
 }
 
@@ -144,4 +147,8 @@ dependencies {
 
     implementation(libs.mpandroidchart)
     implementation(libs.accompanist.permissions)
+
+    implementation(libs.bom)
+    implementation(libs.supabase.postgrest.kt)
+    implementation(libs.ktor.client.android)
 }
