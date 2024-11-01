@@ -6,23 +6,23 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import androidx.wear.compose.material.Button
-import androidx.wear.compose.material.Text
 import com.google.android.horologist.datalayer.sample.screens.watchpage.core.common.ui.CircleIconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.SportsEsports
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.ui.platform.LocalConfiguration
 
 @Composable
 fun GameTab(
     modifier: Modifier = Modifier,
     onNavigateToSingle: () -> Unit,
-    onNavigateToCouple: () -> Unit
-
+    onNavigateToCouple: () -> Unit,
+    paddingRatio: Float = 0.05f
 ) {
+    val configuration = LocalConfiguration.current
+    val screenWidth = configuration.screenWidthDp.dp
+    val dynamicPadding = screenWidth * paddingRatio
+
     Box(
         modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
@@ -30,7 +30,7 @@ fun GameTab(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 23.dp),
+                .padding(horizontal = dynamicPadding),
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically
         ) {
