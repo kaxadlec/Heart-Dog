@@ -58,7 +58,7 @@ fun CoupleTab(
             CircleIconButton(
                 text = "이모지 보내기",
                 onClick = onEmojiClick,
-                iconResId = R.drawable.heart,  // 하트 이모지 아이콘 이미지
+                icon = Icons.Default.EmojiEmotions, // 이모지 아이콘 이미지
                 modifier = Modifier.align(Alignment.BottomEnd)
             )
         }

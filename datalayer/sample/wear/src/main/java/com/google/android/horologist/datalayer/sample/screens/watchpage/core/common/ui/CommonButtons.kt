@@ -43,6 +43,7 @@ fun CircleIconButton(
     textColor: Color = Color.Black,
 //    textSize: TextUnit = 10.sp,
     textSizeRatio: Float = 0.05f,
+    spacingRatio: Float = 0.02f,
     enabled: Boolean = true  // enabled 속성 추가
 ) {
     // 화면 너비와 높이 가져오기
@@ -54,11 +55,12 @@ fun CircleIconButton(
     val buttonSize = screenWidth * buttonSizeRatio
     val iconSize = screenWidth * iconSizeRatio
     val textSize = (screenWidth * textSizeRatio).value.sp
+    val spacing = screenHeight * spacingRatio
 
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(0.5.dp)
+        verticalArrangement = Arrangement.spacedBy(spacing)
     ) {
         Button(
             onClick = onClick,
@@ -87,7 +89,7 @@ fun CircleIconButton(
             text = text,
             color = textColor,
             fontSize = textSize,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Normal
         )
     }
 }
