@@ -7,6 +7,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.Alignment
 import androidx.wear.compose.material.Button
 import androidx.wear.compose.material.Text
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 @Composable
 fun PetTab(
@@ -14,17 +16,22 @@ fun PetTab(
     onNavigateToFeed: () -> Unit,
     onNavigateToCall: () -> Unit
 ) {
-    Column(
+     Row(
         modifier = modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Button(onClick = onNavigateToFeed) {
-            Text("하트 먹이기")
+            Text("하트 먹이기",
+                fontSize = 10.sp,
+                )
         }
-
+         Spacer(modifier = Modifier.width(16.dp)) // 버튼 간격
+         
         Button(onClick = onNavigateToCall) {
-            Text("호출하기")
+            Text("부르기",
+                fontSize = 10.sp,
+                )
         }
     }
 }
