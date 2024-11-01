@@ -21,16 +21,20 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.game.GameTab
 import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.home.HomeTab
 import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.pet.PetTab
 import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.settings.SettingsTab
 import androidx.navigation.compose.rememberNavController
+import com.google.android.horologist.datalayer.sample.screens.watchpage.state.pet.PetViewModel
 import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.couple.CoupleTabScreen
 import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.couple.coupleTabNavigation
 import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.game.GameTabScreen
 import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.game.gameTabNavigation
+import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.home.HomeTabScreen
+import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.home.homeTabNavigation
 import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.pet.PetTabScreen
 import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.pet.petTabNavigation
 import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.settings.SettingsTabScreen
@@ -42,16 +46,18 @@ fun TabContainerScreen() {
         initialPage = 1,  // MainScreen을 초기 페이지로 설정
         pageCount = { 5 }
     )
+    val sharedPetViewModel: PetViewModel = hiltViewModel()
 
     val currentPetRoute = remember { mutableStateOf(PetTabScreen.Main.route) }
-    val currentCoupleRoute = remember { mutableStateOf("couple_tab") }
+    val currentHomeRoute = remember { mutableStateOf(HomeTabScreen.Main.route) }
+    val currentCoupleRoute = remember { mutableStateOf(CoupleTabScreen.Main.route) }
     val currentGameRoute = remember { mutableStateOf(GameTabScreen.Main.route) }
     val currentSettingsRoute = remember { mutableStateOf(SettingsTabScreen.Main.route) }
 
     // 현재 페이지가 메인 화면인지 확인
     val isMainScreen = when (pagerState.currentPage) {
         0 -> currentPetRoute.value == PetTabScreen.Main.route
-        1 -> true // HomeTab은 항상 true
+        1 -> currentHomeRoute.value == HomeTabScreen.Main.route
         2 -> currentCoupleRoute.value == CoupleTabScreen.Main.route
         3 -> currentGameRoute.value == GameTabScreen.Main.route
         4 -> currentSettingsRoute.value == SettingsTabScreen.Main.route
@@ -87,10 +93,23 @@ fun TabContainerScreen() {
                         navController = navController,
                         startDestination = PetTabScreen.Main.route
                     ) {
-                        petTabNavigation(navController)
+                        petTabNavigation(navController, sharedPetViewModel)
                     }
                 }
-                1 -> HomeTab()
+                1 -> {
+                    val navController = rememberNavController()
+                    LaunchedEffect(navController) {
+                        navController.currentBackStackEntryFlow.collect { entry ->
+                            currentHomeRoute.value = entry.destination.route ?: ""
+                        }
+                    }
+                    NavHost(
+                        navController = navController,
+                        startDestination = HomeTabScreen.Main.route
+                    ) {
+                        homeTabNavigation(navController, sharedPetViewModel)
+                    }
+                }
                 2 -> {
                     val navController = rememberNavController()
                     LaunchedEffect(navController) {
