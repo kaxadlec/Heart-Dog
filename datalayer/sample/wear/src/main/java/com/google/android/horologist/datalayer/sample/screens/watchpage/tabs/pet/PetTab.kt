@@ -59,8 +59,8 @@ fun PetTab(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(smallSpacing)
             ) {
-                Text(text = "하트: ${userState.heart}", color = Color.Black)
-                Text(text = "현재 포만도: ${petState.satiety}", color = Color.Black)
+                Text(text = "모아둔 하트 ${userState.heart} / 100", color = Color.Black)
+                Text(text = "현재 포만도 ${petState.satiety} / 100", color = Color.Black)
             }
 
             // 버튼들을 가로로 배치
@@ -72,14 +72,14 @@ fun PetTab(
                 CircleIconButton(
                     text = "하트 먹이기",
                     onClick = {
-                        if (userState.heart > 0) {
+                        if (userState.heart > 0 && petState.satiety < 100) {
                             userViewModel.updateHeart(userState.heart - 1)
                             petViewModel.updateSatiety(5)
                         }
                     },
                     icon = Icons.Default.Favorite,  // 하트 아이콘
-                    enabled = userState.heart > 0,  // 하트가 0이면 버튼 비활성화
-                    backgroundColor = if (userState.heart > 0) Color(0xFFC56013) else Color.Gray
+                    enabled = userState.heart > 0 && petState.satiety < 100,  // 하트가 0이면 버튼 비활성화
+                    backgroundColor = if (userState.heart > 0) Color(0xFFD66F24) else Color.Gray
                 )
 
                 CircleIconButton(
