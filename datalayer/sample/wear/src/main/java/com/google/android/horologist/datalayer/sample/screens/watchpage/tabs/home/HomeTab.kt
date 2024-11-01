@@ -15,11 +15,29 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.offset
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.google.android.horologist.datalayer.sample.screens.watchpage.state.pet.PetViewModel
 
 @Composable
-fun HomeTab(modifier: Modifier = Modifier, name: String = "강아지", level: Int = 123) {
+fun HomeTab(modifier: Modifier = Modifier, petViewModel: PetViewModel) {
+    val petState by petViewModel.uiState.collectAsStateWithLifecycle()
+    // satiety를 0-1 사이의 값으로 변환 (100 -> 1.0f, 50 -> 0.5f)
+    val satietyProgress = petState.satiety / 100f
+    val expProgress = petState.exp / 100f
+    val name = petState.name
+    val level = petState.level
+
+    // 상태 변화 로그
+    LaunchedEffect(petState.satiety) {
+        println("HomeTab - Satiety Changed: ${petState.satiety}")
+    }
+
+
     Box(
         modifier = Modifier.fillMaxSize() // 화면 전체를 배경으로 채움
     ) {
@@ -29,8 +47,8 @@ fun HomeTab(modifier: Modifier = Modifier, name: String = "강아지", level: In
             modifier = Modifier
                 .align(Alignment.Center)
                 .fillMaxSize(), // fillMaxSize(0.6f)에서 변경
-            leftProgress = 0.7f,  // 왼쪽 반원의 진행률
-            rightProgress = 0.4f  // 오른쪽 반원의 진행률
+            leftProgress = satietyProgress,  // 왼쪽 반원의 진행률
+            rightProgress = expProgress  // 오른쪽 반원의 진행률
         )
 
         // 캐릭터 이미지와 텍스트를 감싸는 박스
