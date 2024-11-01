@@ -16,7 +16,7 @@
 
 <resources>
     <!-- General -->
-    <string name="app_name">Horologist Datalayer Sample</string>
+    <string name="app_name">Heart Dog</string>
     <string name="wearable_message_api_unavailable">This device does not have capability to communicate to Wearable Data Layer API</string>
 
     <!-- Main Menu screen -->
