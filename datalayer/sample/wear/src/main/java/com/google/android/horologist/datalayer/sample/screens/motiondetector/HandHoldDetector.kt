@@ -1,3 +1,6 @@
+package com.google.android.horologist.datalayer.sample.screens.motiondetector
+
+
 class HandHoldDetector(
     private val onHandHoldDetected: () -> Unit,
     private val onHandReleaseDetected: () -> Unit,

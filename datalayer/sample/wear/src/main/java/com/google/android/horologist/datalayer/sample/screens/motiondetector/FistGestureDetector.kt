@@ -1,4 +1,4 @@
-package com.google.android.horologist.datalayer.sample.screens.datalayer
+package com.google.android.horologist.datalayer.sample.screens.motiondetector
 
 class FistGestureDetector(
     private val onFistGestureDetected: () -> Unit,
