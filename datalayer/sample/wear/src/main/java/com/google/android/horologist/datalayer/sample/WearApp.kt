@@ -63,6 +63,8 @@ import com.google.android.horologist.datalayer.sample.screens.steps.StepsViewMod
 import com.google.android.horologist.datalayer.sample.screens.tracking.TrackingScreen
 
 const val TAG = "Measure Data Sample"
+
+const val LOCATION_PERMISSION = android.Manifest.permission.ACCESS_FINE_LOCATION
 const val BODY_SENSORS_PERMISSION = Manifest.permission.BODY_SENSORS
 const val ACTIVITY_RECOGNITION_PERMISSION = Manifest.permission.ACTIVITY_RECOGNITION
 
