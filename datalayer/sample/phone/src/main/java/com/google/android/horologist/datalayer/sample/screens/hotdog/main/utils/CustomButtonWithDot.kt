@@ -34,7 +34,7 @@ fun CustomButtonWithDot(
                 text = "•", // 큰 점
                 fontSize = 36.sp, // 점 크기 2배
                 color = dotStyle.color,
-                modifier = Modifier.offset(y = (-8).dp)
+                modifier = Modifier.offset(y = (-16).dp)
             )
         }
     }

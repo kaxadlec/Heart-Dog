@@ -73,7 +73,7 @@ fun StatData(dist: Int, hour: Int, heart: Int) {
         ) {
             Text(
                 text = "${numberFormat.format(dist)} km",
-                fontSize = 14.sp,
+                fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
                 color = textColor,
                 modifier = Modifier
@@ -83,7 +83,7 @@ fun StatData(dist: Int, hour: Int, heart: Int) {
             )
             Text(
                 text = "${numberFormat.format(hour)} 시간",
-                fontSize = 14.sp,
+                fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
                 color = textColor,
                 modifier = Modifier
@@ -93,7 +93,7 @@ fun StatData(dist: Int, hour: Int, heart: Int) {
             )
             Text(
                 text = "${numberFormat.format(heart)} 개",
-                fontSize = 14.sp,
+                fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
                 color = textColor,
                 modifier = Modifier
