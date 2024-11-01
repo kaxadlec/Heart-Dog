@@ -67,7 +67,7 @@ fun HomeTab(modifier: Modifier = Modifier, petViewModel: PetViewModel) {
 
             // 이미지 위에 텍스트 표시
             Text(
-                text = "$name LV.$level ${petState.satiety}",
+                text = "$name LV.$level",
                 fontSize = 15.sp,
                 color = Color.Black,
                 modifier = Modifier
