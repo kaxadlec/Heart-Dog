@@ -15,7 +15,8 @@ import kotlin.random.Random
 @Composable
 fun CoupleGameScreenMission(
     modifier: Modifier = Modifier,
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    onNavigate: () -> Unit
 ) {
     val activities = listOf(
         "서로 눈맞춤",
@@ -27,11 +28,14 @@ fun CoupleGameScreenMission(
     )
 
     val randomActivity = remember { activities[Random.nextInt(activities.size)] }
-    var timeLeft by remember { mutableStateOf(10) }
+    var timeLeft by remember { mutableStateOf(1) }
     LaunchedEffect(timeLeft) {
         if (timeLeft > 0) {
             delay(1000L)
             timeLeft -= 1
+        }
+        else {
+            onNavigate()
         }
     }
 

@@ -6,6 +6,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.game.screens.couple.CoupleGameScreen
 import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.game.screens.couple.CoupleGameScreenMission
+import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.game.screens.couple.CoupleGameScreenMissionResult
 import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.game.screens.single.SingleGameScreen
 
 sealed class GameTabScreen(val route: String) {
@@ -13,10 +14,11 @@ sealed class GameTabScreen(val route: String) {
     object Single : GameTabScreen("single_games")
     object Couple : GameTabScreen("couple_games")
     object CoupleMission : GameTabScreen("couple_game_mission")
+    object CoupleMissionResult : GameTabScreen("couple_game_mission_result")
 }
 
 fun NavGraphBuilder.gameTabNavigation(
-    navController: NavController
+    navController: NavController,
 ) {
     composable(GameTabScreen.Main.route) {
         GameTab(
@@ -32,7 +34,13 @@ fun NavGraphBuilder.gameTabNavigation(
     }
     composable(GameTabScreen.CoupleMission.route) {
         CoupleGameScreenMission(
-            onBack = {navController.popBackStack()}
+            onBack = {navController.popBackStack()},
+            onNavigate = {navController.navigate(GameTabScreen.CoupleMissionResult.route)}
+        )
+    }
+    composable(GameTabScreen.CoupleMissionResult.route) {
+        CoupleGameScreenMissionResult(
+            onBack = { navController.popBackStack() }
         )
     }
 
@@ -41,4 +49,5 @@ fun NavGraphBuilder.gameTabNavigation(
             onBack = { navController.popBackStack() }
         )
     }
+
 }
