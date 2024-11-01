@@ -4,6 +4,9 @@ import androidx.compose.runtime.MutableState
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
+import kotlin.time.Duration
+import kotlin.time.DurationUnit
+import kotlin.time.toDuration
 import androidx.navigation.navigation
 import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.couple.screens.WalkScreen
 import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.couple.screens.TimeTogetherScreen
@@ -32,7 +35,8 @@ fun NavGraphBuilder.coupleTabNavigation(
         }
 
         composable(CoupleTabScreen.TimeTogether.route) {
-            TimeTogetherScreen(timeTogether = 3)
+            val timeTogetherDuration = (3 * 60 + 30).toDuration(DurationUnit.MINUTES)
+            TimeTogetherScreen(timeTogether = timeTogetherDuration)
         }
 
         composable(CoupleTabScreen.Emoji.route) {

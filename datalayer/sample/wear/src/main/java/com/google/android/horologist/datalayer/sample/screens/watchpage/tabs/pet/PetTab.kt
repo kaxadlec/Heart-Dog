@@ -34,8 +34,8 @@ fun PetTab(
 
     Column(
         modifier = modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Text(text = "하트: ${userState.heart}", color = Color.Black)
         Text(text = "현재 포만도: ${petState.satiety}", color = Color.Black)
@@ -52,9 +52,12 @@ fun PetTab(
         ) {
             Text("하트 먹이기")
         }
-
+         Spacer(modifier = Modifier.width(16.dp)) // 버튼 간격
+         
         Button(onClick = onNavigateToCall) {
-            Text("호출하기")
+            Text("부르기",
+                fontSize = 10.sp,
+                )
         }
     }
 }

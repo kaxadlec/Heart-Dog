@@ -16,10 +16,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.android.horologist.datalayer.sample.R
+import kotlin.time.Duration
+import kotlin.time.ExperimentalTime
 
-
+@OptIn(ExperimentalTime::class)
 @Composable
-fun TimeTogetherScreen(timeTogether: Int) {
+fun TimeTogetherScreen(timeTogether: Duration) {
+    val hours = timeTogether.inWholeHours
+    val minutes = (timeTogether.inWholeMinutes % 60)
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -44,7 +49,7 @@ fun TimeTogetherScreen(timeTogether: Int) {
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(
-            text = "$timeTogether 시간",
+            text = "${hours}시간 ${minutes}분",
             fontSize = 32.sp,
             fontWeight = FontWeight.Bold,
             color = Color.Black
