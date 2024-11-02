@@ -24,8 +24,12 @@ class LocationTrackingRepository @Inject constructor(
 
     private var locationTracking = LocationTracking(0.0, 0.0)
 
-    suspend fun findLocation(): LocationTracking {
-        val locationTracking = locationTrackingDataStore.data.first()
+    fun findLocation(): LocationTracking {
+        serviceScope.launch {
+            val first = locationTrackingDataStore.data.first()
+            locationTracking.latitude = first.latitude
+            locationTracking.longitude = first.longitude
+        }
         return LocationTracking(
             latitude = locationTracking.latitude,
             longitude = locationTracking.longitude
@@ -43,7 +47,6 @@ class LocationTrackingRepository @Inject constructor(
                     this.timestamp = System.currentTimeMillis().toProtoTimestamp()
                 }
             }
-            Log.d("location repository", "save")
         }
     }
 }
