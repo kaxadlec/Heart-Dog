@@ -3,12 +3,13 @@ package com.google.android.horologist.datalayer.sample.screens.gps
 import android.Manifest
 import android.app.Service
 import android.content.Intent
+import android.content.pm.ServiceInfo
 import android.os.IBinder
 import android.os.Looper
 import android.util.Log
 import androidx.annotation.RequiresPermission
 import androidx.core.app.NotificationCompat
-import androidx.core.app.ServiceCompat.startForeground
+import androidx.core.app.ServiceCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
@@ -31,11 +32,6 @@ class LocationTrackingForegroundService : Service() {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var locationCallback: LocationCallback
 
-    // 서비스로 본인 위치 찾기
-//    fun getLocation(): LocationTracking {
-//        return locationTrackingRepository.findLocation()
-//    }
-
     @RequiresPermission(allOf = [
         Manifest.permission.ACCESS_FINE_LOCATION,
         Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -54,32 +50,29 @@ class LocationTrackingForegroundService : Service() {
             locationCallback = object : LocationCallback() {
                 override fun onLocationResult(locationResult: LocationResult) {
                     locationResult.locations.forEach { location ->
-                        Log.d("LocationService 1", "Lat: ${location.latitude}, Lng: ${location.longitude}")
+                        Log.d("LocationService", "Lat: ${location.latitude}, Lng: ${location.longitude}")
 
-                        if (locationTrackingRepository != null) {
-                            CoroutineScope(Dispatchers.IO).launch {
-                                locationTrackingRepository.saveLocation(
-                                    location.latitude,
-                                    location.longitude
-                                )
-                            }
-                        } else {
-                            Log.d("Location", "null locationTrackingRepository")
+                        CoroutineScope(Dispatchers.IO).launch {
+                            locationTrackingRepository.saveLocation(
+                                location.latitude,
+                                location.longitude
+                            )
                         }
-
+                        val l = locationTrackingRepository.findLocation()
+                        Log.d("LocationService", "get in LocationRepository -> Lat: ${l.latitude}, Lng: ${l.longitude}")
                     }
                 }
             }
-                fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper())
-            } catch (e: Exception) {
-                Log.d("asdf error", "${e.message}")
-            }
+            fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper())
+        } catch (e: Exception) {
+            Log.d("LocationService Error", "${e.message}")
+        }
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         if (intent == null) {
             Log.w("LocationService", "Received null intent in onStartCommand")
-            return START_NOT_STICKY // 필요에 따라 다른 반환 값을 사용할 수 있습니다.
+            return START_NOT_STICKY
         }
 
         val notification = NotificationCompat.Builder(this, "location_channel")
@@ -88,7 +81,12 @@ class LocationTrackingForegroundService : Service() {
             .setSmallIcon(R.drawable.ic_launcher_foreground)
             .build()
 
-        startForeground(1, notification)
+        ServiceCompat.startForeground(
+            this,
+            1,
+            notification,
+            ServiceInfo.FOREGROUND_SERVICE_TYPE_LOCATION
+        )
         return START_STICKY
     }
 
