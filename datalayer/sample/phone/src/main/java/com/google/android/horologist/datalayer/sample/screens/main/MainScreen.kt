@@ -17,6 +17,7 @@
 package com.google.android.horologist.datalayer.sample.screens.main
 
 import android.Manifest
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -75,7 +76,7 @@ fun MainScreen(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            RequestLocationPermissions(onStartLocationService = onStartLocationService)
+            RequestLocationPermissions(onAllPermissionsGranted = onStartLocationService)
             NavHost(
                 navController = navController,
                 startDestination = Menu,
@@ -127,21 +128,45 @@ fun MainScreen(
 
 
 
+@SuppressLint("InlinedApi")
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
-fun RequestLocationPermissions(onStartLocationService: () -> Unit) {
-    val permissions = listOf(
-        Manifest.permission.ACCESS_FINE_LOCATION,
-        Manifest.permission.ACCESS_COARSE_LOCATION,
-        Manifest.permission.FOREGROUND_SERVICE_LOCATION
+fun RequestLocationPermissions(
+    onAllPermissionsGranted: () -> Unit
+) {
+    // 위치 권한 상태
+    val locationPermissionsState = rememberMultiplePermissionsState(
+        permissions = listOf(
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        )
     )
-    val permissionState = rememberMultiplePermissionsState(permissions)
 
+    // 위치 서비스 권한 상태
+    val foregroundServicePermissionState = rememberMultiplePermissionsState(
+        permissions = listOf(Manifest.permission.FOREGROUND_SERVICE_LOCATION)
+    )
+
+    // 위치 권한을 먼저 요청
     LaunchedEffect(Unit) {
-        if (!permissionState.allPermissionsGranted) {
-            permissionState.launchMultiplePermissionRequest()
-        } else {
-            onStartLocationService() // 모든 권한이 승인된 경우 서비스 시작
+        if (!locationPermissionsState.allPermissionsGranted) {
+            locationPermissionsState.launchMultiplePermissionRequest()
         }
+    }
+
+    // 위치 권한이 모두 승인된 경우에만 서비스 권한 요청
+    LaunchedEffect(locationPermissionsState.allPermissionsGranted) {
+        if (locationPermissionsState.allPermissionsGranted) {
+            if (!foregroundServicePermissionState.allPermissionsGranted) {
+                foregroundServicePermissionState.launchMultiplePermissionRequest()
+            } else {
+                onAllPermissionsGranted() // 모든 권한이 승인된 경우 호출
+            }
+        }
+    }
+
+    // 모든 권한이 승인되지 않은 경우 콜백 호출
+    if (!locationPermissionsState.allPermissionsGranted || !foregroundServicePermissionState.allPermissionsGranted) {
+//        onPermissionsNotGranted()
     }
 }
