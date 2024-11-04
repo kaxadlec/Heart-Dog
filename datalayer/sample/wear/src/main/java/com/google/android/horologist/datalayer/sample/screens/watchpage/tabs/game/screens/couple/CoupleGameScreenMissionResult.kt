@@ -12,13 +12,17 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import androidx.wear.compose.material.Text
 import com.google.android.horologist.datalayer.sample.R
+import com.google.android.horologist.datalayer.sample.Screen
+import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.game.GameTabScreen
 
 
 @Composable
 fun CoupleGameScreenMissionResult(
-    onBack: () -> Unit // 추가: onBack 콜백
+    onBack: () -> Unit,
+    navController: NavController
 )
 {
     Column(
@@ -34,18 +38,40 @@ fun CoupleGameScreenMissionResult(
             contentDescription = null,
             modifier = Modifier
                 .size(30.dp)
-                .padding(bottom = 8.dp)
+
         )
+        Spacer(modifier = Modifier.height(14.dp))
         Text(
-            text = "당신의 심박수 : ",
-            fontSize = 10.sp,
+            text = "당신의 최고 심박수 : ",
+            fontSize = 12.sp,
             color = Color.Black
         )
-        Spacer(modifier = Modifier.height(10.dp))
+        Spacer(modifier = Modifier.height(14.dp))
         Text(
-            text = "상대의 심박수 : ",
-            fontSize = 10.sp,
+            text = "상대의 최고 심박수 : ",
+            fontSize = 12.sp,
             color = Color.Black
         )
+
+        Spacer(modifier = Modifier.height(20.dp))
+
+        androidx.wear.compose.material.Button(
+            onClick = {
+                // 게임화면 밖으로 나가기
+                navController.popBackStack(
+                    route = GameTabScreen.Main.route,
+                    inclusive = false
+                )
+            },
+            modifier = Modifier
+                .padding(top = 8.dp)
+                .size(width = 80.dp, height = 30.dp)
+        ) {
+            Text(
+                text = "확인",
+                fontSize = 12.sp,
+                color = Color.White
+            )
+        }
     }
 }

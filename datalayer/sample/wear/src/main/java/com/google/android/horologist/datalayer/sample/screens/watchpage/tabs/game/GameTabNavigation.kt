@@ -40,7 +40,8 @@ fun NavGraphBuilder.gameTabNavigation(
     }
     composable(GameTabScreen.CoupleMissionResult.route) {
         CoupleGameScreenMissionResult(
-            onBack = { navController.popBackStack() }
+            onBack = { navController.popBackStack() },
+            navController = navController
         )
     }
 

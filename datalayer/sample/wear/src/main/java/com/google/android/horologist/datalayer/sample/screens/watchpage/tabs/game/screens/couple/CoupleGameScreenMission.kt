@@ -28,7 +28,7 @@ fun CoupleGameScreenMission(
     )
 
     val randomActivity = remember { activities[Random.nextInt(activities.size)] }
-    var timeLeft by remember { mutableStateOf(1) }
+    var timeLeft by remember { mutableStateOf(10) }
     LaunchedEffect(timeLeft) {
         if (timeLeft > 0) {
             delay(1000L)
@@ -47,27 +47,27 @@ fun CoupleGameScreenMission(
         Text(
             text = "커플 랜덤 미션",
             fontSize = 10.sp,
-            color = Color.Black
+            color = Color.Black,
+            modifier = Modifier.padding(6.dp)
         )
-
-        Spacer(modifier = Modifier.height(8.dp))
 
         Text(
             text = randomActivity,
-            fontSize = 13.sp,
-            color = Color.Black
+            fontSize = 14.sp,
+            color = Color.Black,
+            modifier = Modifier.padding(16.dp)
         )
         Text(
             text = "${timeLeft}초",
-            fontSize = 10.sp,
+            fontSize = 20.sp,
             color = Color.Black
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
 
-        Button(onClick = onBack) {
-            Text("<",
-                fontSize = 10.sp)
-        }
+
+//        Button(onClick = onBack) {
+//            Text("<",
+//                fontSize = 10.sp)
+//        }
     }
 }
