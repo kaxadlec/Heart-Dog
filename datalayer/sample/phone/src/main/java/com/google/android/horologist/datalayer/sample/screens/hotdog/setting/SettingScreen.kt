@@ -10,11 +10,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import com.google.android.horologist.datalayer.sample.screens.hotdog.common.ButtonFooter
-import com.google.android.horologist.datalayer.sample.screens.hotdog.notification.components.NotificationLogo
-import com.google.android.horologist.datalayer.sample.screens.hotdog.notification.components.NotificationPage
 
 @Composable
-fun NotificationScreen(navController: NavHostController) {
+fun SettingScreen(navController: NavHostController) {
 
     Box(
         modifier = Modifier
@@ -22,8 +20,7 @@ fun NotificationScreen(navController: NavHostController) {
             .background(Color(0xFFFFE5B4)),
         contentAlignment = Alignment.Center
     ) {
-        NotificationLogo()
-        NotificationPage()
+
     }
 
     ButtonFooter(navController = navController)
