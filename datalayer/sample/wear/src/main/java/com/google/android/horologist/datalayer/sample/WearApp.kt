@@ -251,6 +251,40 @@ fun WearApp(
                     onDismissClick = navController::popBackStack,
                 )
             }
+
+            composable(route = Screen.StepsScreen.route) {
+                val viewModel: StepsViewModel = hiltViewModel()
+                val columnState = rememberResponsiveColumnState(ItemType.Unspecified, ItemType.Unspecified)
+
+
+                val bodySensorsPermissionState = rememberPermissionState(BODY_SENSORS_PERMISSION)
+                val activityRecognitionPermissionState = rememberPermissionState(ACTIVITY_RECOGNITION_PERMISSION)
+
+                val permissionsGranted = bodySensorsPermissionState.status.isGranted && activityRecognitionPermissionState.status.isGranted
+
+                ScreenScaffold(scrollState = columnState) {
+                    if (!permissionsGranted) {
+                        // Request permissions if not granted
+                        LaunchedEffect(Unit) {
+                            bodySensorsPermissionState.launchPermissionRequest()
+                            activityRecognitionPermissionState.launchPermissionRequest()
+                        }
+                        // Display message while waiting for permission grant
+                        Text(
+                            text = "Please grant permissions to access step count.",
+                            modifier = Modifier.padding(16.dp),
+                            textAlign = TextAlign.Center,
+                            color = MaterialTheme.colors.error
+                        )
+                    } else {
+                        // Show StepsScreen if permissions are granted
+                        StepsScreen(
+                            columnState = columnState,
+                            viewModel = viewModel
+                        )
+                    }
+                }
+            }
         }
     }
 }
