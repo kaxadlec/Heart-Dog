@@ -152,10 +152,6 @@ dependencies {
     implementation(libs.mpandroidchart)
     implementation(libs.accompanist.permissions)
 
-    implementation(libs.bom)
-    implementation(libs.supabase.postgrest.kt)
-    implementation(libs.ktor.client.android)
-
     /* Google Play Location */
     implementation(libs.play.services.location)
 

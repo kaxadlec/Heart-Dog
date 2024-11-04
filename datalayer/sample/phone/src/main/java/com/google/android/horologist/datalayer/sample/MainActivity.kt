@@ -36,14 +36,6 @@ import com.google.android.horologist.datalayer.sample.screens.main.MainScreen
 import com.google.android.horologist.datalayer.sample.ui.theme.HorologistTheme
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import dagger.hilt.android.AndroidEntryPoint
-import io.ktor.websocket.WebSocketDeflateExtension.Companion.install
-
-//private val supabase = createSupabaseClient(
-//    supabaseUrl = "",
-//    supabaseKey = ""
-//) {
-//    install(Postgrest)
-//}
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
