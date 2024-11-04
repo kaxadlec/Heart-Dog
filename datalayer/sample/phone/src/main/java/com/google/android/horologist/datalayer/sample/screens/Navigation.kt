@@ -80,4 +80,10 @@ object InsertQRCode
 object Notification
 
 @Serializable
+object Setting
+
+@Serializable
+object UserManual
+
+@Serializable
 object StepCount
