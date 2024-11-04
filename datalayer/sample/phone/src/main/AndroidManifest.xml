@@ -18,7 +18,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.google.android.horologist.datalayer.sample">
 
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA"/>
 
     <!-- GPS 권한
         Fine (ACCESS_FINE_LOCATION)의 경우 gps랑 네트워크를 모두 사용함. 더정확함.

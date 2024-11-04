@@ -18,6 +18,7 @@ plugins {
     id("com.android.application")
     id("com.google.devtools.ksp")
     id("dagger.hilt.android.plugin")
+//    id("org.jetbrains.kotlin.plugin.serialization") version "2.0.21"
     kotlin("android")
     kotlin("plugin.serialization")
     alias(libs.plugins.compose.compiler)
@@ -76,9 +77,9 @@ android {
 
         // Allow for widescale experimental APIs in Alpha libraries we build upon
         freeCompilerArgs = freeCompilerArgs +
-            listOf(
-                "-opt-in=com.google.android.horologist.annotations.ExperimentalHorologistApi",
-            )
+                listOf(
+                    "-opt-in=com.google.android.horologist.annotations.ExperimentalHorologistApi",
+                )
     }
 
     packaging {
@@ -90,7 +91,21 @@ android {
     namespace = "com.google.android.horologist.datalayer.sample"
 }
 
+// 추가된 repositories 블록
+repositories {
+    google()
+    mavenCentral()
+    maven { url = uri("https://jitpack.io") }
+}
+
 dependencies {
+
+    val cameraxVersion = "1.1.0"
+
+    implementation ("androidx.camera:camera-camera2:$cameraxVersion")
+    implementation ("androidx.camera:camera-lifecycle:$cameraxVersion")
+    implementation ("androidx.camera:camera-view:$cameraxVersion")
+
     api(projects.annotations)
 
     implementation(projects.datalayer.core)
@@ -122,6 +137,7 @@ dependencies {
 
 
     implementation(libs.dagger.hiltandroid)
+    implementation(libs.androidx.storage)
     ksp(libs.dagger.hiltandroidcompiler)
     implementation(libs.hilt.navigationcompose)
 
@@ -132,6 +148,13 @@ dependencies {
     debugImplementation(libs.compose.ui.test.manifest)
 
     androidTestImplementation(libs.androidx.test.runner)
+
+    implementation(libs.mpandroidchart)
+    implementation(libs.accompanist.permissions)
+
+    implementation(libs.bom)
+    implementation(libs.supabase.postgrest.kt)
+    implementation(libs.ktor.client.android)
 
     /* Google Play Location */
     implementation(libs.play.services.location)

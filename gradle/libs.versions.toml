@@ -1,5 +1,6 @@
 [versions]
 accompanist = "0.36.0"
+accompanistCharts = "<latest_version>"
 androidx-benchmark = "1.3.3"
 androidx-complications-data = "1.2.1"
 androidx-concurrent = "1.2.0"
@@ -47,6 +48,7 @@ ktlint = "0.50.0"
 material = "1.12.0"
 metalava = "0.3.5"
 moshi = "1.15.1"
+mpandroidchart = "v3.1.0"
 okio = "3.9.1"
 org-robolectric = "4.13"
 playServicesAuth = "21.2.0"
@@ -66,11 +68,14 @@ wearToolingPreview = "1.0.0"
 wearcompose = "1.5.0-alpha04"
 
 accompanist-permissions = "0.36.0"
+<<<<<<< gradle/libs.versions.toml
+storage = "1.4.2"
 workRuntime = "2.9.1"
 workRuntimeKtx = "2.9.1"
 monitor = "1.7.2"
 
 [libraries]
+accompanist-charts = { module = "com.google.accompanist:accompanist-charts", version.ref = "accompanistCharts" }
 accompanist-testharness = { module = "com.google.accompanist:accompanist-testharness", version.ref = "accompanist" }
 android-tools-build-gradle = { module = "com.android.tools.build:gradle", version.ref = "gradlePlugin" }
 androidx-activity = { module = "androidx.activity:activity", version.ref = "androidxActivity" }
@@ -197,6 +202,7 @@ mikepenz-markdown = "com.mikepenz:multiplatform-markdown-renderer:0.20.0-coil2"
 moshi-adapters = { module = "com.squareup.moshi:moshi-adapters", version.ref = "moshi" }
 moshi-kotlin = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "moshi" }
 moshi-kotlin-codegen = { module = "com.squareup.moshi:moshi-kotlin-codegen", version.ref = "moshi" }
+mpandroidchart = { group = "com.github.PhilJay", name = "MPAndroidChart", version.ref = "mpandroidchart" }
 okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
 play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocation" }
 playservices-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "playServicesAuth" }
@@ -226,6 +232,7 @@ wearcompose-navigation = { module = "androidx.wear.compose:compose-navigation", 
 wearcompose-tooling = { module = "androidx.wear.compose:compose-ui-tooling", version.ref = "wearcompose" }
 
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist-permissions" }
+androidx-storage = { group = "androidx.test.services", name = "storage", version.ref = "storage" }
 androidx-work-runtime = { group = "androidx.work", name = "work-runtime", version.ref = "workRuntime" }
 androidx-work-runtime-ktx = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "workRuntimeKtx" }
 androidx-monitor = { group = "androidx.test", name = "monitor", version.ref = "monitor" }

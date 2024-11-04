@@ -31,6 +31,7 @@ import com.google.android.horologist.datalayer.sample.screens.AppHelperNodes
 import com.google.android.horologist.datalayer.sample.screens.AppHelperNodesListener
 import com.google.android.horologist.datalayer.sample.screens.Counter
 import com.google.android.horologist.datalayer.sample.screens.HeartRate
+import com.google.android.horologist.datalayer.sample.screens.HotDogMain
 import com.google.android.horologist.datalayer.sample.screens.InstallAppCustomPromptDemo
 import com.google.android.horologist.datalayer.sample.screens.InstallAppPromptDemo
 import com.google.android.horologist.datalayer.sample.screens.InstallTileCustomPromptDemo
@@ -42,6 +43,8 @@ import com.google.android.horologist.datalayer.sample.screens.SignInPromptDemo
 import com.google.android.horologist.datalayer.sample.screens.gps.LocationTracking
 import com.google.android.horologist.datalayer.sample.screens.StepCount
 
+import com.google.android.horologist.datalayer.sample.screens.Splash
+
 @Composable
 fun MenuScreen(
     navController: NavHostController,
@@ -51,6 +54,16 @@ fun MenuScreen(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
+
+        // 스플래시 화면으로 이동 버튼
+        Button(onClick = { navController.navigate(Splash) }) {
+            Text(text = "Go to Splash Screen")
+        }
+
+        Button(onClick = { navController.navigate(HotDogMain) }) {
+            Text(text = "Go to Splash Screen")
+        }
+
         Text(text = stringResource(id = R.string.menu_screen_apphelper_header))
 
         Button(onClick = { navController.navigate(AppHelperNodes) }) {

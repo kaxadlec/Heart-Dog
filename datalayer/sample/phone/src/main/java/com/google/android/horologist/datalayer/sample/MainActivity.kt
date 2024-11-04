@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.google.android.horologist.datalayer.sample
 
 import android.app.NotificationChannel
@@ -37,10 +36,17 @@ import com.google.android.horologist.datalayer.sample.screens.main.MainScreen
 import com.google.android.horologist.datalayer.sample.ui.theme.HorologistTheme
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import dagger.hilt.android.AndroidEntryPoint
+import io.ktor.websocket.WebSocketDeflateExtension.Companion.install
+
+//private val supabase = createSupabaseClient(
+//    supabaseUrl = "",
+//    supabaseKey = ""
+//) {
+//    install(Postgrest)
+//}
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -55,7 +61,6 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-
 
     private fun startLocationService() {
         val intent = Intent(this, LocationTrackingForegroundService::class.java)
@@ -93,4 +98,3 @@ fun GoogleSignInButton() {
         Text("Sign in with Google")
     }
 }
-

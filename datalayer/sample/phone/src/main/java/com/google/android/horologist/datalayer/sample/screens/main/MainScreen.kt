@@ -36,6 +36,7 @@ import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.google.android.horologist.datalayer.sample.screens.AppHelperNodes
 import com.google.android.horologist.datalayer.sample.screens.AppHelperNodesListener
 import com.google.android.horologist.datalayer.sample.screens.Counter
+import com.google.android.horologist.datalayer.sample.screens.CreateQRCode
 import com.google.android.horologist.datalayer.sample.screens.HeartRate
 import com.google.android.horologist.datalayer.sample.screens.InstallAppCustomPromptDemo
 import com.google.android.horologist.datalayer.sample.screens.InstallAppPromptDemo
@@ -62,6 +63,22 @@ import com.google.android.horologist.datalayer.sample.screens.nodes.NodesScreen
 import com.google.android.horologist.datalayer.sample.screens.nodeslistener.NodesListenerScreen
 import com.google.android.horologist.datalayer.sample.screens.steps.StepCountScreen
 
+// 모바일 화면 개발
+import com.google.android.horologist.datalayer.sample.screens.Splash
+import com.google.android.horologist.datalayer.sample.screens.HotDogMain
+import com.google.android.horologist.datalayer.sample.screens.InsertQRCode
+import com.google.android.horologist.datalayer.sample.screens.Login
+import com.google.android.horologist.datalayer.sample.screens.Matching
+import com.google.android.horologist.datalayer.sample.screens.Notification
+
+import com.google.android.horologist.datalayer.sample.screens.hotdog.splash.SplashScreen
+import com.google.android.horologist.datalayer.sample.screens.hotdog.main.HotDogMainScreen
+import com.google.android.horologist.datalayer.sample.screens.hotdog.login.LoginScreen
+import com.google.android.horologist.datalayer.sample.screens.hotdog.matching.CreateQRCodeScreen
+import com.google.android.horologist.datalayer.sample.screens.hotdog.matching.InsertQRCodeScreen
+import com.google.android.horologist.datalayer.sample.screens.hotdog.matching.MatchingScreen
+import com.google.android.horologist.datalayer.sample.screens.hotdog.notification.NotificationScreen
+
 @Composable
 fun MainScreen(
     modifier: Modifier = Modifier,
@@ -87,6 +104,39 @@ fun MainScreen(
                 composable<Menu> {
                     MenuScreen(navController = navController)
                 }
+
+                // 추가한 부분
+
+                composable<Splash> {
+                    SplashScreen(navController = navController)
+                }
+
+                composable<Login> {
+                    LoginScreen(navController = navController)
+                }
+
+                composable<Matching> {
+                    MatchingScreen(navController = navController)
+                }
+
+                composable<CreateQRCode> {
+                    CreateQRCodeScreen(navController = navController)
+                }
+
+                composable<InsertQRCode> {
+                   InsertQRCodeScreen(navController = navController)
+                }
+
+                composable<HotDogMain> {
+                    HotDogMainScreen(navController = navController)
+                }
+
+                composable<Notification> {
+                    NotificationScreen(navController = navController)
+                }
+
+                // 기존 코드
+
                 composable<AppHelperNodes> {
                     NodesScreen()
                 }
