@@ -58,7 +58,7 @@ private const val TAG = "DataLayerAppHelper"
  * device.
  */
 @ExperimentalHorologistApi
-public class WearDataLayerAppHelper internal constructor(
+public class WearDataLayerAppHelper public constructor(
     context: Context,
     registry: WearDataLayerRegistry,
     private val appStoreUri: String?,
@@ -319,8 +319,8 @@ public class WearDataLayerAppHelper internal constructor(
             timestamp = Timestamp.getDefaultInstance()
         }
 
-    internal companion object {
-        internal fun Long.toProtoTimestamp(): Timestamp {
+    public companion object {
+        public fun Long.toProtoTimestamp(): Timestamp {
             return Timestamp.newBuilder()
                 .setSeconds(this / 1000)
                 .setNanos((this % 1000).toInt() * 1000000)

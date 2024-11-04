@@ -15,6 +15,7 @@
  */
 package com.google.android.horologist.datalayer.sample.screens.heartrate.data
 
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.util.Log
 import androidx.concurrent.futures.await
@@ -27,6 +28,7 @@ import androidx.health.services.client.data.DataTypeAvailability
 import androidx.health.services.client.data.DeltaDataType
 import androidx.health.services.client.data.SampleDataPoint
 import com.google.android.horologist.datalayer.sample.TAG
+import jakarta.inject.Inject
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.channels.trySendBlocking
 import kotlinx.coroutines.flow.callbackFlow
@@ -36,7 +38,7 @@ import kotlinx.coroutines.runBlocking
  * Entry point for [HealthServicesClient] APIs. This also provides suspend functions around
  * those APIs to enable use in coroutines.
  */
-class HeartRateServicesRepository(context: Context) {
+class HeartRateServicesRepository @Inject constructor(context: Context) {
     private val healthServicesClient = HealthServices.getClient(context)
     private val measureClient = healthServicesClient.measureClient
 
@@ -66,6 +68,7 @@ class HeartRateServicesRepository(context: Context) {
 
             override fun onDataReceived(data: DataPointContainer) {
                 val heartRateBpm = data.getData(DataType.HEART_RATE_BPM)
+                Log.d(TAG, "Heart rate data received: $heartRateBpm")
                 trySendBlocking(MeasureMessage.MeasureData(heartRateBpm))
             }
         }

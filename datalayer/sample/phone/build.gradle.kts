@@ -117,6 +117,10 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.kotlinx.serialization.core)
 
+    implementation("androidx.credentials:credentials:1.5.0-beta01")
+    implementation("com.google.android.libraries.identity.googleid:googleid:1.1.1")
+
+
     implementation(libs.dagger.hiltandroid)
     ksp(libs.dagger.hiltandroidcompiler)
     implementation(libs.hilt.navigationcompose)
@@ -128,4 +132,13 @@ dependencies {
     debugImplementation(libs.compose.ui.test.manifest)
 
     androidTestImplementation(libs.androidx.test.runner)
+
+    /* Google Play Location */
+    implementation(libs.play.services.location)
+
+    /* Permissions */
+    implementation(libs.accompanist.permissions)
+
+    /* Worker */
+    implementation(libs.androidx.work.ktx)
 }
