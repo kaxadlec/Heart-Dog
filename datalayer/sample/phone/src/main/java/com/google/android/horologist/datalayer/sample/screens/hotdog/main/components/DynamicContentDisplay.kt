@@ -18,7 +18,7 @@ fun DynamicContentDisplay(contentType: ContentType, heartValue: Int = 75, expVal
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(24.dp),
+            .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         // 이름 표시

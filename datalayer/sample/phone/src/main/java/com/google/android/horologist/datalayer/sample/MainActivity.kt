@@ -15,26 +15,25 @@
  */
 package com.google.android.horologist.datalayer.sample
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import com.google.android.horologist.datalayer.sample.screens.gps.LocationTrackingForegroundService
 import com.google.android.horologist.datalayer.sample.screens.main.MainScreen
 import com.google.android.horologist.datalayer.sample.ui.theme.HorologistTheme
 import dagger.hilt.android.AndroidEntryPoint
-import io.ktor.websocket.WebSocketDeflateExtension.Companion.install
-import io.github.jan.supabase.createSupabaseClient
-import io.github.jan.supabase.postgrest.Postgrest
-
-private val supabase = createSupabaseClient(
-    supabaseUrl = "https://uajngryuubmkjmxxahsm.supabase.co",
-    supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVham5ncnl1dWJta2pteHhhaHNtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzAxNjc4OTEsImV4cCI6MjA0NTc0Mzg5MX0.78sdA7CTrEbRUbZG-Rz73CcP6yWqs845QJZbnzXznKI"
-) {
-    install(Postgrest)
-}
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -47,9 +46,27 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background,
                 ) {
-                    MainScreen()
+                    MainScreen { startLocationService() }
                 }
             }
         }
     }
+
+    private fun startLocationService() {
+        val intent = Intent(this, LocationTrackingForegroundService::class.java)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val serviceChannel = NotificationChannel(
+                "location_channel", // 채널 ID
+                "Location Service Channel", // 채널 이름
+                NotificationManager.IMPORTANCE_DEFAULT
+            )
+            val manager = getSystemService(NotificationManager::class.java)
+            manager.createNotificationChannel(serviceChannel)
+
+            startForegroundService(intent)
+        } else {
+            startService(intent)
+        }
+    }
+
 }

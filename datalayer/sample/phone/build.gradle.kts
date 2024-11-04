@@ -132,7 +132,6 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.kotlinx.serialization.core)
 
-
     implementation(libs.dagger.hiltandroid)
     implementation(libs.androidx.storage)
     ksp(libs.dagger.hiltandroidcompiler)
@@ -153,6 +152,12 @@ dependencies {
     implementation("io.github.jan-tennert.supabase:postgrest-kt")
     implementation("io.ktor:ktor-client-android:3.0.0")
 
+    /* Google Play Location */
+    implementation(libs.play.services.location)
 
+    /* Permissions */
+    implementation(libs.accompanist.permissions)
 
+    /* Worker */
+    implementation(libs.androidx.work.ktx)
 }

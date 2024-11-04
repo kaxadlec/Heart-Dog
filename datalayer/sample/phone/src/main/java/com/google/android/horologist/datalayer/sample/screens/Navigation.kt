@@ -85,3 +85,6 @@ object UserInsert
 
 @Serializable
 object UserSelect
+
+@Serializable
+object StepCount

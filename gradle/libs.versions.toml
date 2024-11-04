@@ -52,6 +52,7 @@ mpandroidchart = "v3.1.0"
 okio = "3.9.1"
 org-robolectric = "4.13"
 playServicesAuth = "21.2.0"
+playServicesLocation = "21.3.0"
 protobuf = "4.28.2"
 protobuf-gen-grpc-java = "1.68.0"
 protobuf-gen-grpc-kotlin = "1.3.0:jdk8@jar"
@@ -68,6 +69,9 @@ wearcompose = "1.5.0-alpha04"
 
 accompanist-permissions = "0.36.0"
 storage = "1.4.2"
+workRuntime = "2.9.1"
+workRuntimeKtx = "2.9.1"
+monitor = "1.7.2"
 
 [libraries]
 accompanist-charts = { module = "com.google.accompanist:accompanist-charts", version.ref = "accompanistCharts" }
@@ -199,6 +203,7 @@ moshi-kotlin = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "mosh
 moshi-kotlin-codegen = { module = "com.squareup.moshi:moshi-kotlin-codegen", version.ref = "moshi" }
 mpandroidchart = { group = "com.github.PhilJay", name = "MPAndroidChart", version.ref = "mpandroidchart" }
 okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
+play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocation" }
 playservices-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "playServicesAuth" }
 playservices-base = "com.google.android.gms:play-services-base:18.5.0"
 playservices-wearable = "com.google.android.gms:play-services-wearable:18.2.0"
@@ -227,6 +232,9 @@ wearcompose-tooling = { module = "androidx.wear.compose:compose-ui-tooling", ver
 
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist-permissions" }
 androidx-storage = { group = "androidx.test.services", name = "storage", version.ref = "storage" }
+androidx-work-runtime = { group = "androidx.work", name = "work-runtime", version.ref = "workRuntime" }
+androidx-work-runtime-ktx = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "workRuntimeKtx" }
+androidx-monitor = { group = "androidx.test", name = "monitor", version.ref = "monitor" }
 
 [plugins]
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
