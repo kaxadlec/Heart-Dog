@@ -19,6 +19,7 @@ package com.google.android.horologist.datalayer.sample
 import com.google.android.horologist.datalayer.sample.screens.info.infoScreenRoute
 import com.google.android.horologist.datalayer.sample.screens.nodesactions.nodeDetailsScreenRoute
 
+
 sealed class Screen(
     val route: String,
 ) {
@@ -39,4 +40,6 @@ sealed class Screen(
     data object AppHelperNodeDetailsScreen : Screen(nodeDetailsScreenRoute)
 
     data object InfoScreen : Screen(infoScreenRoute)
+
+    data object TabContainerScreen : Screen("tabContainerScreen")
 }

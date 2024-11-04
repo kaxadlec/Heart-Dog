@@ -56,6 +56,8 @@ import com.google.android.horologist.datalayer.sample.screens.nodeslistener.Node
 import com.google.android.horologist.datalayer.sample.screens.steps.StepsScreen
 import com.google.android.horologist.datalayer.sample.screens.steps.StepsViewModel
 import com.google.android.horologist.datalayer.sample.screens.tracking.TrackingScreen
+import com.google.android.horologist.datalayer.sample.screens.watchpage.TabContainerScreen
+
 
 
 const val BODY_SENSORS_PERMISSION = Manifest.permission.BODY_SENSORS
@@ -285,6 +287,17 @@ fun WearApp(
                     }
                 }
             }
+            // WearApp.kt 파일에서
+            composable(route = Screen.TabContainerScreen.route) {
+                val columnState = rememberResponsiveColumnState(first = ItemType.Unspecified, last = ItemType.Unspecified)
+
+                ScreenScaffold(scrollState = columnState) {
+                    TabContainerScreen(
+//                        columnState = columnState
+                    )
+                }
+            }
+
         }
     }
 }

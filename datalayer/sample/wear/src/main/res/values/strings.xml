@@ -101,4 +101,10 @@
     <string name="steps_value_message">%1$d 걸음</string>
     <string name="steps_missing_message">찾을 수 없습니다.</string>
     <string name="request_permission">권한 요청</string>
+
+    <!-- Watch Page screen -->
+    <string name="main_menu_watch_page_header">Watch Page Section</string>
+    <string name="main_menu_watch_page_item">Watch Page</string>
+
+
 </resources>
