@@ -24,12 +24,18 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.credentials.CredentialManager
 import com.google.android.horologist.datalayer.sample.screens.gps.LocationTrackingForegroundService
 import com.google.android.horologist.datalayer.sample.screens.main.MainScreen
 import com.google.android.horologist.datalayer.sample.ui.theme.HorologistTheme
+import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -50,6 +56,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+
     private fun startLocationService() {
         val intent = Intent(this, LocationTrackingForegroundService::class.java)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -66,4 +73,24 @@ class MainActivity : ComponentActivity() {
             startService(intent)
         }
     }
+
 }
+@Composable
+fun GoogleSignInButton() {
+    val context = LocalContext.current
+
+    val onClick: () -> Unit = {
+        val credentialManager = CredentialManager.create(context)
+
+        val googleIdOption: GetGoogleIdOption = GetGoogleIdOption.Builder()
+            .setFilterByAuthorizedAccounts(false)
+            .setServerClientId("")
+            .setNonce("")
+            .build()
+    }
+
+    Button(onClick = onClick){
+        Text("Sign in with Google")
+    }
+}
+

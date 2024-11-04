@@ -15,6 +15,7 @@
  */
 package com.google.android.horologist.datalayer.sample.screens.heartrate.data
 
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.util.Log
 import androidx.concurrent.futures.await

@@ -200,6 +200,9 @@ dependencies {
 
     /* Permission */
     implementation(libs.accompanist.permissions)
+
+    /*fusedlocation*/
+    implementation(libs.play.services.location)
 }
 
 // tasks.maybeCreate("prepareKotlinIdeaImport")
