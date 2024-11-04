@@ -106,6 +106,9 @@ dependencies {
     implementation ("androidx.camera:camera-lifecycle:$cameraxVersion")
     implementation ("androidx.camera:camera-view:$cameraxVersion")
 
+    implementation (libs.coil)
+    implementation ("io.coil-kt:coil-gif:2.4.0")
+
     api(projects.annotations)
 
     implementation(projects.datalayer.core)
