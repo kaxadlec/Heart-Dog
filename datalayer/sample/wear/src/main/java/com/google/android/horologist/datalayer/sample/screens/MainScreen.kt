@@ -44,8 +44,8 @@ fun MainScreen(
         modifier = modifier.fillMaxSize(),
     ) {
         appHelpersSection(navigateToRoute)
-
         generalSection(navigateToRoute)
+        watchPageSection(navigateToRoute)
     }
 }
 
@@ -76,8 +76,9 @@ private fun SectionedListScope.generalSection(navigateToRoute: (String) -> Unit)
         listOf(
             Pair(R.string.main_menu_datalayer_counter_item, Screen.CounterScreen.route),
             Pair(R.string.main_menu_datalayer_nodes_item, Screen.ListNodesScreen.route),
+            Pair(R.string.main_menu_datalayer_heart_rate, Screen.HeartRateScreen.route),
+            Pair(R.string.main_menu_datalayer_steps, Screen.StepsScreen.route)
 
-            Pair(R.string.main_menu_datalayer_heart_rate, Screen.HeartRateScreen.route)
         ),
     ) {
         header {
@@ -93,6 +94,27 @@ private fun SectionedListScope.generalSection(navigateToRoute: (String) -> Unit)
         }
     }
 }
+
+private fun SectionedListScope.watchPageSection(navigateToRoute: (String) -> Unit) {
+    section(
+        listOf(
+            Pair(R.string.main_menu_watch_page_item, Screen.TabContainerScreen.route)
+        ),
+    ) {
+        header {
+            Title(stringResource(id = R.string.main_menu_watch_page_header))
+        }
+
+        loaded { (textId, route) ->
+            Chip(
+                label = stringResource(id = textId),
+                modifier = Modifier.fillMaxWidth(),
+                onClick = { navigateToRoute(route) },
+            )
+        }
+    }
+}
+
 
 @WearPreviewDevices
 @Composable

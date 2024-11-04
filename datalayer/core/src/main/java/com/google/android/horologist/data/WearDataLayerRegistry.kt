@@ -18,6 +18,7 @@ package com.google.android.horologist.data
 
 import android.content.Context
 import android.net.Uri
+import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.core.Serializer
 import com.google.android.gms.wearable.CapabilityClient
@@ -124,6 +125,7 @@ public class WearDataLayerRegistry(
                 val listeners = protoDataListeners.filter { it.path == dataEvent.dataItem.uri.path }
 
                 if (listeners.isNotEmpty()) {
+                    Log.d("WearDataLayerRegistry", "Data event received for path: ${dataEvent.dataItem.uri.path}")
                     fireListeners(dataEvent, listeners)
                 }
             }

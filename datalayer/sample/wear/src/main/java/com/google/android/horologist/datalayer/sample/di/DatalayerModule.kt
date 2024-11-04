@@ -18,17 +18,11 @@ package com.google.android.horologist.datalayer.sample.di
 
 import android.content.Context
 import com.google.android.horologist.data.ProtoDataStoreHelper.protoFlow
-import com.google.android.horologist.data.ProtoDataStoreHelper.registerProtoDataListener
 import com.google.android.horologist.data.TargetNodeId
 import com.google.android.horologist.data.WearDataLayerRegistry
-import com.google.android.horologist.data.proto.SampleProto
-import com.google.android.horologist.data.store.ProtoDataListener
 import com.google.android.horologist.datalayer.grpc.GrpcExtensions.grpcClient
 import com.google.android.horologist.datalayer.sample.TileSync
 import com.google.android.horologist.datalayer.sample.screens.heartrate.data.HeartRateServicesRepository
-import com.google.android.horologist.datalayer.sample.screens.nodes.SampleDataSerializer
-import com.google.android.horologist.datalayer.sample.shared.CounterValueSerializer
-import com.google.android.horologist.datalayer.sample.shared.HeartRateRecordSerializer
 import com.google.android.horologist.datalayer.sample.shared.grpc.CounterServiceGrpcKt
 import com.google.android.horologist.datalayer.sample.shared.grpc.GrpcDemoProto
 import com.google.android.horologist.datalayer.sample.shared.grpc.HeartRateProto.HeartRateRecord
@@ -37,67 +31,39 @@ import com.google.android.horologist.datalayer.watch.WearDataLayerAppHelper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.ActivityRetainedLifecycle
 import dagger.hilt.android.components.ActivityRetainedComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.Flow
 
 @Module
 @InstallIn(ActivityRetainedComponent::class)
 object DatalayerModule {
 
-    @ActivityRetainedScoped
-    @Provides
-    fun coroutineScope(
-        activityRetainedLifecycle: ActivityRetainedLifecycle,
-    ): CoroutineScope {
-        return CoroutineScope(SupervisorJob() + Dispatchers.Default).also {
-            activityRetainedLifecycle.addOnClearedListener {
-                it.cancel()
-            }
-        }
-    }
-
-    @ActivityRetainedScoped
-    @Provides
-    fun wearDataLayerRegistry(
-        @ApplicationContext applicationContext: Context,
-        coroutineScope: CoroutineScope,
-    ): WearDataLayerRegistry = WearDataLayerRegistry.fromContext(
-        application = applicationContext,
-        coroutineScope = coroutineScope,
-    ).apply {
-        registerSerializer(CounterValueSerializer)
-        registerSerializer(HeartRateRecordSerializer)
-
-        registerSerializer(SampleDataSerializer)
-
-        registerProtoDataListener(object : ProtoDataListener<SampleProto.Data> {
-            override fun dataAdded(nodeId: String, path: String, value: SampleProto.Data) {
-                println("Data Added: $nodeId $path $value")
-            }
-
-            override fun dataDeleted(nodeId: String, path: String) {
-                println("Data Deleted: $nodeId $path")
-            }
-        })
-    }
-
+//    @ActivityRetainedScoped
+//    @Provides
+//    fun coroutineScope(
+//        activityRetainedLifecycle: ActivityRetainedLifecycle,
+//    ): CoroutineScope {
+//        return CoroutineScope(SupervisorJob() + Dispatchers.Default).also {
+//            activityRetainedLifecycle.addOnClearedListener {
+//                it.cancel()
+//            }
+//        }
+//    }
     @ActivityRetainedScoped
     @Provides
     fun wearDataLayerAppHelper(
         @ApplicationContext applicationContext: Context,
         wearDataLayerRegistry: WearDataLayerRegistry,
-        coroutineScope: CoroutineScope,
+//        activityCoroutineScope: CoroutineScope,
     ) = WearDataLayerAppHelper(
         context = applicationContext,
         registry = wearDataLayerRegistry,
-        scope = coroutineScope,
+        scope = CoroutineScope(SupervisorJob() + Dispatchers.Default),
     )
 
     @ActivityRetainedScoped
@@ -109,11 +75,11 @@ object DatalayerModule {
     @Provides
     fun counterService(
         wearDataLayerRegistry: WearDataLayerRegistry,
-        coroutineScope: CoroutineScope,
+//        activityCoroutineScope: CoroutineScope,
     ): CounterServiceGrpcKt.CounterServiceCoroutineStub =
         wearDataLayerRegistry.grpcClient(
             nodeId = TargetNodeId.PairedPhone,
-            coroutineScope = coroutineScope,
+            coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Default),
         ) {
             CounterServiceGrpcKt.CounterServiceCoroutineStub(it)
         }
@@ -132,18 +98,18 @@ object DatalayerModule {
     @Provides
     fun heartRateService(
         wearDataLayerRegistry: WearDataLayerRegistry,
-        coroutineScope: CoroutineScope,
+//        activityCoroutineScope: CoroutineScope,
     ): HeartRateServiceGrpcKt.HeartRateServiceCoroutineStub =
         wearDataLayerRegistry.grpcClient(
             nodeId = TargetNodeId.PairedPhone,
-            coroutineScope = coroutineScope,
+            coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Default),
         ) {
             HeartRateServiceGrpcKt.HeartRateServiceCoroutineStub(it)
         }
 
     @ActivityRetainedScoped
     @Provides
-    fun provideHeartRateServicesRepository(context: Context): HeartRateServicesRepository {
+    fun provideHeartRateServicesRepository(@ApplicationContext context: Context): HeartRateServicesRepository {
         return HeartRateServicesRepository(context)
     }
 

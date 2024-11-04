@@ -79,3 +79,5 @@ object InsertQRCode
 @Serializable
 object Notification
 
+@Serializable
+object StepCount

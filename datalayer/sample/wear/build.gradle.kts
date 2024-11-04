@@ -70,7 +70,7 @@ android {
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.majorVersion
+        jvmTarget = "17"
 
         // Allow for widescale experimental APIs in Alpha libraries we build upon
         freeCompilerArgs = freeCompilerArgs +
@@ -165,6 +165,9 @@ dependencies {
     implementation(project(":composables"))
     implementation(libs.material)
     implementation(project(":compose-material"))
+    implementation(libs.androidx.work.runtime)
+    implementation(libs.androidx.work.runtime.ktx)
+    implementation(libs.androidx.monitor)
 
     debugImplementation(libs.compose.ui.tooling)
     implementation(libs.androidx.wear.tooling.preview)
@@ -175,6 +178,10 @@ dependencies {
 
     implementation(libs.dagger.hiltandroid)
     ksp(libs.dagger.hiltandroidcompiler)
+//    kapt("com.google.dagger:hilt-compiler:2.52")
+    implementation(libs.hilt.ext.work)
+
+
     implementation(libs.hilt.navigationcompose)
 
     testImplementation(platform(libs.compose.bom))
@@ -193,6 +200,9 @@ dependencies {
 
     /* Permission */
     implementation(libs.accompanist.permissions)
+
+    /*fusedlocation*/
+    implementation(libs.play.services.location)
 }
 
 // tasks.maybeCreate("prepareKotlinIdeaImport")

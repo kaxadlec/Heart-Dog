@@ -40,6 +40,8 @@ import com.google.android.horologist.datalayer.sample.screens.ReEngageCustomProm
 import com.google.android.horologist.datalayer.sample.screens.ReEngagePromptDemo
 import com.google.android.horologist.datalayer.sample.screens.SignInCustomPromptDemo
 import com.google.android.horologist.datalayer.sample.screens.SignInPromptDemo
+import com.google.android.horologist.datalayer.sample.screens.gps.LocationTracking
+import com.google.android.horologist.datalayer.sample.screens.StepCount
 
 import com.google.android.horologist.datalayer.sample.screens.Splash
 
@@ -120,6 +122,10 @@ fun MenuScreen(
 
         Button(onClick = { navController.navigate(HeartRate) }) {
             Text(text = stringResource(id = R.string.menu_screen_heart_rate))
+        }
+
+        Button(onClick = { navController.navigate(StepCount) }) {
+            Text(text = stringResource(id = R.string.menu_screen_step_count))
         }
     }
 }
