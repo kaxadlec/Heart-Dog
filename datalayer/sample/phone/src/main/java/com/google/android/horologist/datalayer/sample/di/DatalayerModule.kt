@@ -24,6 +24,7 @@ import com.google.android.horologist.datalayer.grpc.GrpcExtensions.grpcClient
 import com.google.android.horologist.datalayer.phone.PhoneDataLayerAppHelper
 import com.google.android.horologist.datalayer.sample.shared.CounterValueSerializer
 import com.google.android.horologist.datalayer.sample.shared.HeartRateRecordSerializer
+import com.google.android.horologist.datalayer.sample.shared.LocationTrackingRecordSerializer
 import com.google.android.horologist.datalayer.sample.shared.StepCountRecordSerializer
 import com.google.android.horologist.datalayer.sample.shared.grpc.StepCountServiceGrpcKt
 import dagger.Module
@@ -67,6 +68,7 @@ object DatalayerModule {
     ).apply {
         registerSerializer(CounterValueSerializer)
         registerSerializer(HeartRateRecordSerializer)
+        registerSerializer(LocationTrackingRecordSerializer)
         registerSerializer(StepCountRecordSerializer)
     }
 
@@ -87,4 +89,8 @@ object DatalayerModule {
             }
         }
     }
+
+//    fun heartRateFlow(wearDataLayerRegistry: WearDataLayerRegistry): Flow<HeartRateRecord> =
+//        wearDataLayerRegistry.protoFlow(TargetNodeId.PairedPhone)
+
 }

@@ -20,6 +20,15 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <!-- GPS 권한
+        Fine (ACCESS_FINE_LOCATION)의 경우 gps랑 네트워크를 모두 사용함. 더정확함.
+        Coarse (ACCESS_COARSE_LOCATION)은 네트워크만 사용함. 덜정확함.
+    -->
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/> <!-- 백그라운드 -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION"/> <!-- 포그라운드 -->
 
     <application
         android:name=".App"
@@ -85,6 +94,24 @@
                     android:pathPrefix="/grpc/"
                     android:scheme="wear" />
             </intent-filter>
+        </service>
+
+        <service android:name=".grpc.WearLocationTrackingDataService" android:exported="true"
+            tools:ignore="ExportedService">
+            <intent-filter>
+                <action android:name="com.google.android.gms.wearable.REQUEST_RECEIVED" />
+                <data
+                    android:host="*"
+                    android:pathPrefix="/grpc/"
+                    android:scheme="wear"
+                    />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name=".screens.gps.LocationTrackingForegroundService"
+            android:foregroundServiceType="location">
+        <!-- Any inner elements would go here. -->
         </service>
 
     </application>

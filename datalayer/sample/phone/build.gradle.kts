@@ -128,4 +128,13 @@ dependencies {
     debugImplementation(libs.compose.ui.test.manifest)
 
     androidTestImplementation(libs.androidx.test.runner)
+
+    /* Google Play Location */
+    implementation(libs.play.services.location)
+
+    /* Permissions */
+    implementation(libs.accompanist.permissions)
+
+    /* Worker */
+    implementation(libs.androidx.work.ktx)
 }

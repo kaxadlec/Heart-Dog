@@ -23,10 +23,7 @@ import androidx.lifecycle.viewModelScope
 import com.google.android.horologist.data.ProtoDataStoreHelper.protoDataStore
 import com.google.android.horologist.data.WearDataLayerRegistry
 import com.google.android.horologist.datalayer.phone.PhoneDataLayerAppHelper
-import com.google.android.horologist.datalayer.sample.shared.grpc.GrpcDemoProto
 import com.google.android.horologist.datalayer.sample.shared.grpc.HeartRateProto
-import com.google.android.horologist.datalayer.sample.shared.grpc.copy
-import com.google.android.horologist.datalayer.sample.util.toProtoTimestamp
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow

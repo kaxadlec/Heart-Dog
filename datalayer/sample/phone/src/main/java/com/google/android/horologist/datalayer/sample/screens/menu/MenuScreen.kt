@@ -39,6 +39,7 @@ import com.google.android.horologist.datalayer.sample.screens.ReEngageCustomProm
 import com.google.android.horologist.datalayer.sample.screens.ReEngagePromptDemo
 import com.google.android.horologist.datalayer.sample.screens.SignInCustomPromptDemo
 import com.google.android.horologist.datalayer.sample.screens.SignInPromptDemo
+import com.google.android.horologist.datalayer.sample.screens.gps.LocationTracking
 import com.google.android.horologist.datalayer.sample.screens.StepCount
 
 @Composable
