@@ -132,6 +132,7 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.kotlinx.serialization.core)
 
+
     implementation(libs.dagger.hiltandroid)
     implementation(libs.androidx.storage)
     ksp(libs.dagger.hiltandroidcompiler)
@@ -148,7 +149,10 @@ dependencies {
     implementation(libs.mpandroidchart)
     implementation(libs.accompanist.permissions)
 
-    implementation(libs.bom)
-    implementation(libs.supabase.postgrest.kt)
-    implementation(libs.ktor.client.android)
+    implementation(platform("io.github.jan-tennert.supabase:bom:3.0.1"))
+    implementation("io.github.jan-tennert.supabase:postgrest-kt")
+    implementation("io.ktor:ktor-client-android:3.0.0")
+
+
+
 }

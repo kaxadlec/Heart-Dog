@@ -26,13 +26,15 @@ import com.google.android.horologist.datalayer.sample.screens.main.MainScreen
 import com.google.android.horologist.datalayer.sample.ui.theme.HorologistTheme
 import dagger.hilt.android.AndroidEntryPoint
 import io.ktor.websocket.WebSocketDeflateExtension.Companion.install
+import io.github.jan.supabase.createSupabaseClient
+import io.github.jan.supabase.postgrest.Postgrest
 
-//private val supabase = createSupabaseClient(
-//    supabaseUrl = "",
-//    supabaseKey = ""
-//) {
-//    install(Postgrest)
-//}
+private val supabase = createSupabaseClient(
+    supabaseUrl = "https://uajngryuubmkjmxxahsm.supabase.co",
+    supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVham5ncnl1dWJta2pteHhhaHNtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzAxNjc4OTEsImV4cCI6MjA0NTc0Mzg5MX0.78sdA7CTrEbRUbZG-Rz73CcP6yWqs845QJZbnzXznKI"
+) {
+    install(Postgrest)
+}
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
