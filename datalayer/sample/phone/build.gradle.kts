@@ -106,6 +106,9 @@ dependencies {
     implementation ("androidx.camera:camera-lifecycle:$cameraxVersion")
     implementation ("androidx.camera:camera-view:$cameraxVersion")
 
+    implementation (libs.coil)
+    implementation ("io.coil-kt:coil-gif:2.4.0")
+
     api(projects.annotations)
 
     implementation(projects.datalayer.core)
@@ -132,10 +135,6 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.kotlinx.serialization.core)
 
-    implementation("androidx.credentials:credentials:1.5.0-beta01")
-    implementation("com.google.android.libraries.identity.googleid:googleid:1.1.1")
-
-
     implementation(libs.dagger.hiltandroid)
     implementation(libs.androidx.storage)
     ksp(libs.dagger.hiltandroidcompiler)
@@ -151,6 +150,10 @@ dependencies {
 
     implementation(libs.mpandroidchart)
     implementation(libs.accompanist.permissions)
+
+    implementation(platform("io.github.jan-tennert.supabase:bom:3.0.1"))
+    implementation("io.github.jan-tennert.supabase:postgrest-kt")
+    implementation("io.ktor:ktor-client-android:3.0.0")
 
     /* Google Play Location */
     implementation(libs.play.services.location)
