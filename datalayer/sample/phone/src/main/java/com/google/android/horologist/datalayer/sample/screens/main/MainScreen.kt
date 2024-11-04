@@ -71,6 +71,8 @@ import com.google.android.horologist.datalayer.sample.screens.InsertQRCode
 import com.google.android.horologist.datalayer.sample.screens.Login
 import com.google.android.horologist.datalayer.sample.screens.Matching
 import com.google.android.horologist.datalayer.sample.screens.Notification
+import com.google.android.horologist.datalayer.sample.screens.Setting
+import com.google.android.horologist.datalayer.sample.screens.UserManual
 import com.google.android.horologist.datalayer.sample.screens.UserInsert
 import com.google.android.horologist.datalayer.sample.screens.UserSelect
 
@@ -81,6 +83,8 @@ import com.google.android.horologist.datalayer.sample.screens.hotdog.matching.Cr
 import com.google.android.horologist.datalayer.sample.screens.hotdog.matching.InsertQRCodeScreen
 import com.google.android.horologist.datalayer.sample.screens.hotdog.matching.MatchingScreen
 import com.google.android.horologist.datalayer.sample.screens.hotdog.notification.NotificationScreen
+import com.google.android.horologist.datalayer.sample.screens.hotdog.setting.SettingScreen
+import com.google.android.horologist.datalayer.sample.screens.hotdog.setting.components.UserManualPage
 import com.google.android.horologist.datalayer.sample.screens.hotdog.repository.UserInsertScreen
 import com.google.android.horologist.datalayer.sample.screens.hotdog.repository.UserSelectScreen
 
@@ -142,6 +146,14 @@ fun MainScreen(
                     NotificationScreen(navController = navController)
                 }
 
+                composable<Setting> {
+                    SettingScreen(navController = navController)
+                }
+
+                composable<UserManual> {
+                    UserManualPage(navController = navController)
+                }
+
                 // test
 
                 composable<UserInsert> {
@@ -151,7 +163,6 @@ fun MainScreen(
                 composable<UserSelect> {
                     UserSelectScreen(userRepository = userRepository)
                 }
-
 
 
                 // 기존 코드

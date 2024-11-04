@@ -18,6 +18,7 @@ package com.google.android.horologist.datalayer.sample.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
+val bgBoxColor = Color(0xFFF5ECD5)
 val textColor = Color(0xFF5D4037)
 val textColor50 = Color(0x805D4037)
 val bgColor = Color(0x40FFFFFF)
