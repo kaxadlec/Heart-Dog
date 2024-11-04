@@ -3,6 +3,7 @@ package com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.co
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -13,9 +14,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.wear.compose.material.Text
 import com.google.android.horologist.datalayer.sample.R
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.google.android.horologist.datalayer.sample.screens.steps.StepsViewModel
 
 @Composable
-fun WalkScreen(stepCount: Int) {
+fun WalkScreen(viewModel: StepsViewModel = hiltViewModel()) {
+    val state = viewModel.uiState.collectAsState()
+    val stepCount = state.value.stepCountValue?.value ?: 0
+
     Column(
         modifier = Modifier
             .fillMaxSize()
