@@ -69,27 +69,7 @@ object DatalayerModule {
         registerSerializer(CounterValueSerializer)
         registerSerializer(HeartRateRecordSerializer)
         registerSerializer(StepCountRecordSerializer)
-    }
-
-    @Singleton
-    @Provides
-    fun provideStepCountServiceStub(
-        wearDataLayerRegistry: WearDataLayerRegistry
-    ): StepCountServiceGrpcKt.StepCountServiceCoroutineStub {
-        Log.d("DatalayerModule", "Initializing StepCountServiceStub with TargetNodeId: PairedPhone")
-
-        return wearDataLayerRegistry.grpcClient(
-            nodeId = TargetNodeId.PairedPhone,
-            coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
-        ) {
-            StepCountServiceGrpcKt.StepCountServiceCoroutineStub(it).also{
-                Log.d("DatalayerModule", "StepCountServiceCoroutineStub created")
-
-            }
-        }
         registerSerializer(LocationTrackingRecordSerializer)
-        registerSerializer(StepCountRecordSerializer)
-
     }
 
     @Singleton
@@ -108,6 +88,7 @@ object DatalayerModule {
 
             }
         }
+
     }
 
 //    fun heartRateFlow(wearDataLayerRegistry: WearDataLayerRegistry): Flow<HeartRateRecord> =

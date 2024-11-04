@@ -90,7 +90,6 @@
             android:exported="false"
             android:foregroundServiceType="health"
             tools:ignore="ForegroundServicePermission" />
-            android:exported="false" />
 
 
         <service
