@@ -66,6 +66,9 @@ wearToolingPreview = "1.0.0"
 wearcompose = "1.5.0-alpha04"
 
 accompanist-permissions = "0.36.0"
+workRuntime = "2.9.1"
+workRuntimeKtx = "2.9.1"
+monitor = "1.7.2"
 
 [libraries]
 accompanist-testharness = { module = "com.google.accompanist:accompanist-testharness", version.ref = "accompanist" }
@@ -223,6 +226,9 @@ wearcompose-navigation = { module = "androidx.wear.compose:compose-navigation", 
 wearcompose-tooling = { module = "androidx.wear.compose:compose-ui-tooling", version.ref = "wearcompose" }
 
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist-permissions" }
+androidx-work-runtime = { group = "androidx.work", name = "work-runtime", version.ref = "workRuntime" }
+androidx-work-runtime-ktx = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "workRuntimeKtx" }
+androidx-monitor = { group = "androidx.test", name = "monitor", version.ref = "monitor" }
 
 [plugins]
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }

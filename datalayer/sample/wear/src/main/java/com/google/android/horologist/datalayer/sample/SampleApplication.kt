@@ -1,43 +1,32 @@
-/*
- * Copyright 2023 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.google.android.horologist.datalayer.sample
 
 import android.app.Application
 import android.os.StrictMode
-import com.google.android.horologist.datalayer.sample.screens.heartrate.data.HeartRateServicesRepository
+import androidx.work.Configuration
+import com.google.android.horologist.datalayer.sample.screens.steps.CustomHiltWorkerFactory
 import dagger.hilt.android.HiltAndroidApp
+import javax.inject.Inject
 
 @HiltAndroidApp
-class SampleApplication : Application() {
+class SampleApplication : Application(), Configuration.Provider {
 
-//    val heartRateServicesRepository by lazy { HeartRateServicesRepository(this) }
+    @Inject
+    lateinit var workerFactory: CustomHiltWorkerFactory
+
+    override val workManagerConfiguration: Configuration
+        get() = Configuration.Builder()
+            .setWorkerFactory(workerFactory)
+            .build()
+
 
     override fun onCreate() {
         super.onCreate()
-
         setStrictMode()
     }
 
     private fun setStrictMode() {
         StrictMode.setThreadPolicy(
             StrictMode.ThreadPolicy.Builder()
-                // https://issuetracker.google.com/issues/329399019
-//                .detectDiskReads()
-//                .detectDiskWrites()
                 .detectNetwork()
                 .penaltyDeath()
                 .build(),

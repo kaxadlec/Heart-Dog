@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package com.google.android.horologist.datalayer.sample.shared.grpc;
+
+option java_package = "com.google.android.horologist.datalayer.sample.shared.grpc";
+option java_outer_classname = "StepCountProto";
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+message StepCountValue {
+  int32 value = 1; // 현재 걸음 수
+  .google.protobuf.Timestamp updated = 2; // 업데이트된 타임스탬프
+}
+
+message StepCountDelta {
+  int32 delta = 1; // 걸음 수 증가 또는 감소 값
+}
+
+service StepCountService {
+  rpc Increment(StepCountDelta) returns (StepCountValue); // delta만큼 걸음 수를 증가시키고 새로운 값 반환
+  rpc GetCurrentStepCount(.google.protobuf.Empty) returns (StepCountValue); // 현재 걸음 수 반환
+  rpc SetCurrentStepCount(StepCountValue) returns (StepCountValue); // currentStepCount를 직접 서버에 설정
+}
