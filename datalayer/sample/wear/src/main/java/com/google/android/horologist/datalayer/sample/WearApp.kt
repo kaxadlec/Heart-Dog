@@ -238,7 +238,8 @@ fun WearApp(
 
         AppScaffold {
             SwipeDismissableNavHost(
-                startDestination = Screen.MainScreen.route,
+//                startDestination = Screen.MainScreen.route,
+                startDestination = Screen.TabContainerScreen.route,
                 navController = navController,
                 modifier = modifier,
             ) {
