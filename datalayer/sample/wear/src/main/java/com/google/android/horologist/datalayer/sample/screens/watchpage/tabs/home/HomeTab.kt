@@ -51,23 +51,23 @@ fun HomeTab(modifier: Modifier = Modifier, petViewModel: PetViewModel) {
             rightProgress = expProgress  // 오른쪽 반원의 진행률
         )
         // 각 반원 옆에 설명 텍스트 추가
-        Text(
-            text = "포만도", // 왼쪽 반원 설명 텍스트
-            fontSize = 10.sp,
-            color = Color.Black,
-            modifier = Modifier
-                .align(Alignment.CenterStart)
-                .offset(x = 8.dp) // 왼쪽으로 오프셋 설정
-        )
-
-        Text(
-            text = "경험치", // 오른쪽 반원 설명 텍스트
-            fontSize = 10.sp,
-            color = Color.Black,
-            modifier = Modifier
-                .align(Alignment.CenterEnd)
-                .offset(x = (-8).dp) // 오른쪽으로 오프셋 설정
-        )
+//        Text(
+//            text = "", // 왼쪽 반원 설명 텍스트
+//            fontSize = 10.sp,
+//            color = Color.Black,
+//            modifier = Modifier
+//                .align(Alignment.CenterStart)
+//                .offset(x = 8.dp) // 왼쪽으로 오프셋 설정
+//        )
+//
+//        Text(
+//            text = "경험치", // 오른쪽 반원 설명 텍스트
+//            fontSize = 10.sp,
+//            color = Color.Black,
+//            modifier = Modifier
+//                .align(Alignment.CenterEnd)
+//                .offset(x = (-8).dp) // 오른쪽으로 오프셋 설정
+//        )
 
 
         // 캐릭터 이미지와 텍스트를 감싸는 박스
