@@ -40,6 +40,11 @@ fun PetTab(
     val largeSpacing = screenWidth * largeSpacingRatio
     val smallSpacing = screenWidth * smallSpacingRatio
 
+    // 상태 변화 로그 추가
+    LaunchedEffect(userState.hasPet) {
+        println("PetTab - hasPet 상태: ${userState.hasPet}")
+    }
+
     // 상태 변화 로그
     LaunchedEffect(petState.satiety) {
         println("PetTab - Satiety Changed: ${petState.satiety}")
@@ -85,11 +90,13 @@ fun PetTab(
                 CircleIconButton(
                     text = "부르기",
                     onClick = {
+                        println("부르기 버튼 클릭됨") // 버튼 클릭 로그
                         userViewModel.updateHasPet(true)
-                        onNavigateToCall()
+                        println("부르기 버튼 클릭 후 hasPet 상태: ${userViewModel.uiState.value.hasPet}") // 상태 업데이트 확인
                     },
                     icon = Icons.Default.Pets,  // 반려 동물 아이콘
-                    enabled = !userState.hasPet
+                    enabled = !userState.hasPet,
+                    backgroundColor = if (!userState.hasPet) Color(0xFFD66F24) else Color.Gray  // 버튼 색상 조건
                 )
             }
         }
