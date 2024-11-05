@@ -31,7 +31,7 @@ fun NavGraphBuilder.coupleTabNavigation(
         }
 
         composable(CoupleTabScreen.Walk.route) {
-            WalkScreen(stepCount = 4200)
+            WalkScreen()
         }
 
         composable(CoupleTabScreen.TimeTogether.route) {

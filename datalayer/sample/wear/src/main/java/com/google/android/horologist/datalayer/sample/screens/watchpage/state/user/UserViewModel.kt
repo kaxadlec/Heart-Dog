@@ -50,6 +50,8 @@ class UserViewModel @Inject constructor() : ViewModel() {
     }
 
     fun updateHasPet(hasPet: Boolean) {  // 추가된 함수
+        println("UserViewModel - hasPet 업데이트 시도: $hasPet") // 업데이트 시작 로그
         _uiState.update { it.copy(hasPet = hasPet) }
+        println("UserViewModel - hasPet 업데이트 완료: ${_uiState.value.hasPet}") // 업데이트 완료 로그
     }
 }

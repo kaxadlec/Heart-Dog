@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
+import com.google.android.horologist.datalayer.sample.screens.heartrate.presentation.HeartRateViewModel
 import com.google.android.horologist.datalayer.sample.screens.watchpage.state.pet.PetViewModel
 import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.couple.CoupleTabScreen
 import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.couple.coupleTabNavigation
@@ -29,6 +30,8 @@ import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.pet
 import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.settings.SettingsTabScreen
 import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.settings.settingsTabNavigation
 import com.google.android.horologist.datalayer.sample.screens.watchpage.theme.WatchPageTheme
+import com.google.android.horologist.datalayer.sample.screens.watchpage.state.user.UserViewModel
+
 
 @Composable
 fun TabContainerScreen() {
@@ -38,6 +41,7 @@ fun TabContainerScreen() {
             pageCount = { 5 }
         )
         val sharedPetViewModel: PetViewModel = hiltViewModel() // 공유 뷰모델 생성
+        val sharedUserViewModel: UserViewModel = hiltViewModel()
 
         // 각 탭의 현재 라우트 상태를 저장
         val currentPetRoute = remember { mutableStateOf(PetTabScreen.Main.route) }
@@ -84,7 +88,9 @@ fun TabContainerScreen() {
                             navController = navController,
                             startDestination = PetTabScreen.Main.route
                         ) {
-                            petTabNavigation(navController, sharedPetViewModel)
+                            petTabNavigation( navController = navController,
+                                petViewModel = sharedPetViewModel,
+                                userViewModel = sharedUserViewModel)
                         }
                     }
 
@@ -99,7 +105,10 @@ fun TabContainerScreen() {
                             navController = navController,
                             startDestination = HomeTabScreen.Main.route
                         ) {
-                            homeTabNavigation(navController, sharedPetViewModel)
+                            homeTabNavigation(
+                                navController = navController,
+                                petViewModel = sharedPetViewModel,
+                                userViewModel = sharedUserViewModel)
                         }
                     }
 
@@ -120,6 +129,8 @@ fun TabContainerScreen() {
 
                     3 -> {
                         val navController = rememberNavController()
+                        val heartRateViewModel: HeartRateViewModel = hiltViewModel()
+
                         LaunchedEffect(navController) {
                             navController.currentBackStackEntryFlow.collect { entry ->
                                 currentGameRoute.value = entry.destination.route ?: ""
@@ -129,7 +140,7 @@ fun TabContainerScreen() {
                             navController = navController,
                             startDestination = GameTabScreen.Main.route
                         ) {
-                            gameTabNavigation(navController)  // 새로 추가할 게임 탭 내비게이션
+                            gameTabNavigation(navController = navController, sharedHeartRateViewModel = heartRateViewModel  )  // 새로 추가할 게임 탭 내비게이션
                         }
                     }
 
@@ -157,8 +168,8 @@ fun TabContainerScreen() {
                     indicatorSizeRatio = 0.03f,
                     curveRadiusRatio = 0.6f,
                     paddingBottomRatio = 0.28f,
-                    activeColor = Color(0xFFFFFFFF),
-                    inactiveColor = Color(0x4DFFFFFF),
+                    activeColor = Color(0xFFFFA500),
+                    inactiveColor = Color(0xFFFFCC80),
                     modifier = Modifier.align(Alignment.BottomCenter)
                 )
             }
