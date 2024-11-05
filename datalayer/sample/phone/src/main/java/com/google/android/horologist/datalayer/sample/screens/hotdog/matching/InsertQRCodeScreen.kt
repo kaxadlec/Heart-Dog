@@ -60,7 +60,12 @@ fun InsertQRCodeScreen(navController: NavHostController) {
             CameraPreview(
                 modifier = Modifier
                     .width(250.dp)
-                    .height(250.dp)
+                    .height(250.dp),
+                onQRCodeScanned = { qrCode ->
+                    // 스캔된 QR 코드 데이터 처리
+                    println("Scanned QR Code: $qrCode")
+                    // 필요 시 NavController를 통해 다른 화면으로 이동하거나 스캔 결과를 사용하세요.
+                }
             )
         }
 
