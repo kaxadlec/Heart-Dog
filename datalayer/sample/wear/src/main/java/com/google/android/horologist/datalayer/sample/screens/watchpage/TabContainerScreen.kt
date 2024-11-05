@@ -29,6 +29,8 @@ import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.pet
 import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.settings.SettingsTabScreen
 import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.settings.settingsTabNavigation
 import com.google.android.horologist.datalayer.sample.screens.watchpage.theme.WatchPageTheme
+import com.google.android.horologist.datalayer.sample.screens.watchpage.state.user.UserViewModel
+
 
 @Composable
 fun TabContainerScreen() {
@@ -38,6 +40,7 @@ fun TabContainerScreen() {
             pageCount = { 5 }
         )
         val sharedPetViewModel: PetViewModel = hiltViewModel() // 공유 뷰모델 생성
+        val sharedUserViewModel: UserViewModel = hiltViewModel()
 
         // 각 탭의 현재 라우트 상태를 저장
         val currentPetRoute = remember { mutableStateOf(PetTabScreen.Main.route) }
@@ -99,7 +102,10 @@ fun TabContainerScreen() {
                             navController = navController,
                             startDestination = HomeTabScreen.Main.route
                         ) {
-                            homeTabNavigation(navController, sharedPetViewModel)
+                            homeTabNavigation(
+                                navController = navController,
+                                petViewModel = sharedPetViewModel,
+                                userViewModel = sharedUserViewModel)
                         }
                     }
 
