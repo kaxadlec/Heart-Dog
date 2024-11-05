@@ -15,12 +15,10 @@ class UserRepository {
         runCatching {
             println("Attempting to insert user: $user")
 
-            // 데이터만 삽입하고 응답을 처리하지 않음
             SupabaseClientProvider.supabase
                 .from("users")
                 .insert(user)
 
-            // 삽입 시 오류가 없으면 성공으로 간주
             true
         }.getOrElse { e ->
             println("Error inserting user: ${e.localizedMessage}")
@@ -46,4 +44,35 @@ class UserRepository {
             null
         }
     }
+
+    // 특정 사용자의 코드 업데이트 함수
+    suspend fun insertCode(userId: Long, code: String): Boolean = withContext(Dispatchers.IO) {
+        runCatching {
+            val users = SupabaseClientProvider.supabase
+                .from("users")
+                .select()
+                .decodeList<User>()
+
+            val user = users.firstOrNull { it.userId == userId }
+            if (user != null) {
+                SupabaseClientProvider.supabase
+                    .from("users")
+                    .update(mapOf("code" to code))
+                    .decodeSingleOrNull<User>()
+
+                println("Code updated for userId: $userId")
+                true
+            } else {
+                println("User not found for ID: $userId")
+                false
+            }
+        }.getOrElse { e ->
+            println("Error inserting code: ${e.localizedMessage}")
+            e.printStackTrace()
+            false
+        }
+    }
 }
+
+
+

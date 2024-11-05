@@ -27,9 +27,13 @@ import com.google.zxing.BarcodeFormat
 import com.google.zxing.WriterException
 import com.google.zxing.qrcode.QRCodeWriter
 import com.google.android.horologist.datalayer.sample.R
+import com.google.android.horologist.datalayer.sample.repository.UserRepository
 
 @Composable
-fun CreateQRCodeScreen(navController: NavHostController) {
+fun CreateQRCodeScreen(navController: NavHostController, userRepository: UserRepository) {
+
+    // , userId: Long 추가해주기
+
     val randomCode = remember { generateRandomCode() }
     var qrBitmap by remember { mutableStateOf<Bitmap?>(null) }
     var remainingTime by remember { mutableStateOf(120) } // 타이머 (2분)
@@ -41,6 +45,14 @@ fun CreateQRCodeScreen(navController: NavHostController) {
 
     LaunchedEffect(randomCode) {
         qrBitmap = generateQRCode(randomCode)
+
+        val userId = 1
+
+        // 생성된 코드를 데이터베이스에 저장
+        val insertResult = userRepository.insertCode(userId.toLong(), randomCode)
+        if (!insertResult) {
+            println("Failed to insert code for userId: $userId")
+        }
 
         // 타이머 시작
         while (remainingTime > 0) {
