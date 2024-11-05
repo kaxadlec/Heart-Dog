@@ -88,7 +88,9 @@ fun TabContainerScreen() {
                             navController = navController,
                             startDestination = PetTabScreen.Main.route
                         ) {
-                            petTabNavigation(navController, sharedPetViewModel)
+                            petTabNavigation( navController = navController,
+                                petViewModel = sharedPetViewModel,
+                                userViewModel = sharedUserViewModel)
                         }
                     }
 
