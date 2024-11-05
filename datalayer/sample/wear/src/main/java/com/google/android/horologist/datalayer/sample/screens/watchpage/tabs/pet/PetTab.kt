@@ -1,6 +1,7 @@
 // PetTab.kt
 package com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.pet
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -20,7 +21,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Pets
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.painterResource
 import com.google.android.horologist.datalayer.sample.screens.watchpage.core.common.ui.CircleIconButton
+import com.google.android.horologist.datalayer.sample.R
+
+
 
 @Composable
 fun PetTab(
@@ -64,30 +69,43 @@ fun PetTab(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(smallSpacing)
             ) {
-                Text(text = "모아둔 하트 ${userState.heart} / 100", color = Color.Black)
-                Text(text = "현재 포만도 ${petState.satiety} / 100", color = Color.Black)
-            }
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    // redheart 이미지
+                    Image(
+                        painter = painterResource(id = R.drawable.redheart),
+                        contentDescription = "Heart Icon",
+                        modifier = Modifier.size(24.dp) // 원하는 크기로 조정
+                    )
 
-            // 버튼들을 가로로 배치
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                CircleIconButton(
-                    text = "하트 먹이기",
-                    onClick = {
-                        if (userState.heart > 0 && petState.satiety < 100) {
-                            userViewModel.updateHeart(userState.heart - 1)
-                            petViewModel.updateSatiety(5)
-                        }
-                    },
-                    icon = Icons.Default.Favorite,  // 하트 아이콘
-                    enabled = userState.heart > 0 && petState.satiety < 100,  // 하트가 0이면 버튼 비활성화
-                    backgroundColor = if (userState. heart > 0) Color(0xFFD66F24) else Color.Gray
-                )
+//                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        text = " ${userState.heart}",
+                        color = Color.Black,
+                        fontSize = 20.sp
+                    )
+//                Text(text = "현재 포만도 ${petState.satiety} / 100", color = Color.Black)
+                }
 
-                CircleIconButton(
+                // 버튼들을 가로로 배치
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    CircleIconButton(
+                        text = "하트 먹이기",
+                        onClick = {
+                            if (userState.heart > 0 && petState.satiety < 100) {
+                                userViewModel.updateHeart(userState.heart - 1)
+                                petViewModel.updateSatiety(5)
+                            }
+                        },
+                        icon = Icons.Default.Favorite,  // 하트 아이콘
+                        enabled = userState.heart > 0 && petState.satiety < 100,  // 하트가 0이면 버튼 비활성화
+                        backgroundColor = if (userState.heart > 0) Color(0xFFD66F24) else Color.Gray
+                    )
+
+                    CircleIconButton(
                     text = "부르기",
                     onClick = {
                         println("부르기 버튼 클릭됨") // 버튼 클릭 로그
@@ -97,7 +115,9 @@ fun PetTab(
                     icon = Icons.Default.Pets,  // 반려 동물 아이콘
                     enabled = !userState.hasPet,
                     backgroundColor = if (!userState.hasPet) Color(0xFFD66F24) else Color.Gray  // 버튼 색상 조건
-                )
+                    )
+                }
+
             }
         }
     }
