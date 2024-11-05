@@ -22,24 +22,31 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.android.horologist.datalayer.sample.screens.watchpage.state.pet.PetViewModel
+import com.google.android.horologist.datalayer.sample.screens.watchpage.state.user.UserViewModel
 
 @Composable
-fun HomeTab(modifier: Modifier = Modifier, petViewModel: PetViewModel) {
+fun HomeTab(modifier: Modifier = Modifier,
+            petViewModel: PetViewModel,
+            userViewModel: UserViewModel = hiltViewModel(),
+            ) {
+
     val petState by petViewModel.uiState.collectAsStateWithLifecycle()
     // satiety를 0-1 사이의 값으로 변환 (100 -> 1.0f, 50 -> 0.5f)
+    val userState by userViewModel.uiState.collectAsStateWithLifecycle()
     val satietyProgress = petState.satiety / 100f
     val expProgress = petState.exp / 100f
     val name = petState.name
     val level = petState.level
 
     // 상태 변화 로그
-    LaunchedEffect(petState.satiety) {
-        println("HomeTab - Satiety Changed: ${petState.satiety}")
-    }
+//    LaunchedEffect(petState.satiety) {
+//        println("HomeTab - Satiety Changed: ${petState.satiety}")
+//    }
 
 
     Box(
-        modifier = Modifier.fillMaxSize() // 화면 전체를 배경으로 채움
+        modifier = Modifier.fillMaxSize(), // 화면 전체를 배경으로 채움
+        contentAlignment = Alignment.Center
     ) {
 
         // 경험치 반원들
@@ -76,13 +83,19 @@ fun HomeTab(modifier: Modifier = Modifier, petViewModel: PetViewModel) {
                 .align(Alignment.Center) // 중앙 정렬
                 .offset(y = 14.dp) // 아래로 이동
         ) {
-            // 캐릭터 이미지
-            Image(
-                painter = painterResource(id = R.drawable.dog_image), // 캐릭터 이미지 리소스
-                contentDescription = "Character",
-                modifier = Modifier
-                    .align(Alignment.Center)
-            )
+            if (userState.hasPet) {
+                Image(
+                    painter = painterResource(id = R.drawable.dog_image),
+                    contentDescription = "Character",
+                    modifier = Modifier.align(Alignment.Center)
+                )
+            } else {
+                Image(
+                    painter = painterResource(id = R.drawable.doghouse),
+                    contentDescription = "Doghouse",
+                    modifier = Modifier.align(Alignment.Center)
+                )
+            }
 
             // 이미지 위에 텍스트 표시
             Text(

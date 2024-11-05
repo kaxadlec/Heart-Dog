@@ -79,13 +79,17 @@ fun PetTab(
                     },
                     icon = Icons.Default.Favorite,  // 하트 아이콘
                     enabled = userState.heart > 0 && petState.satiety < 100,  // 하트가 0이면 버튼 비활성화
-                    backgroundColor = if (userState.heart > 0) Color(0xFFD66F24) else Color.Gray
+                    backgroundColor = if (userState. heart > 0) Color(0xFFD66F24) else Color.Gray
                 )
 
                 CircleIconButton(
                     text = "부르기",
-                    onClick = onNavigateToCall,
-                    icon = Icons.Default.Pets  // 반려동물 아이콘
+                    onClick = {
+                        userViewModel.updateHasPet(true)
+                        onNavigateToCall()
+                    },
+                    icon = Icons.Default.Pets,  // 반려 동물 아이콘
+                    enabled = !userState.hasPet
                 )
             }
         }
