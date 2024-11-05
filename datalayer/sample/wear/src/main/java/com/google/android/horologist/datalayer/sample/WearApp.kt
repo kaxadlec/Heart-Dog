@@ -301,9 +301,10 @@ fun WearApp(
                     ) {
                         val viewModel: HeartRateViewModel = hiltViewModel()
                         val enabled by viewModel.enabled.collectAsState()
-                        val hr by viewModel.hr
-                        val availability by viewModel.availability
-                        val uiState by viewModel.uiState
+//
+                        val hr by viewModel.hr.collectAsState(initial = 0.0)
+                        val availability by viewModel.availability.collectAsState()
+                        val uiState by viewModel.uiState.collectAsState()
 
                         if (uiState == UiState.Supported) {
                             HeartRateScreen(

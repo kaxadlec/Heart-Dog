@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
+import com.google.android.horologist.datalayer.sample.screens.heartrate.presentation.HeartRateViewModel
 import com.google.android.horologist.datalayer.sample.screens.watchpage.state.pet.PetViewModel
 import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.couple.CoupleTabScreen
 import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.couple.coupleTabNavigation
@@ -120,6 +121,8 @@ fun TabContainerScreen() {
 
                     3 -> {
                         val navController = rememberNavController()
+                        val heartRateViewModel: HeartRateViewModel = hiltViewModel()
+
                         LaunchedEffect(navController) {
                             navController.currentBackStackEntryFlow.collect { entry ->
                                 currentGameRoute.value = entry.destination.route ?: ""
@@ -129,7 +132,7 @@ fun TabContainerScreen() {
                             navController = navController,
                             startDestination = GameTabScreen.Main.route
                         ) {
-                            gameTabNavigation(navController)  // 새로 추가할 게임 탭 내비게이션
+                            gameTabNavigation(navController = navController, sharedHeartRateViewModel = heartRateViewModel  )  // 새로 추가할 게임 탭 내비게이션
                         }
                     }
 
