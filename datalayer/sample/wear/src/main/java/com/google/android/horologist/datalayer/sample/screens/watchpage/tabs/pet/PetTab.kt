@@ -92,16 +92,18 @@ fun PetTab(
                     horizontalArrangement = Arrangement.SpaceEvenly,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
+                    // 먹이주기 버튼
                     CircleIconButton(
                         text = "하트 먹이기",
+                        // 하트가 0보다 크고 포만도가 100보다 작을 때만 클릭 가능
                         onClick = {
                             if (userState.heart > 0 && petState.satiety < 100) {
-                                userViewModel.updateHeart(userState.heart - 1)
-                                petViewModel.updateSatiety(5)
+                                userViewModel.updateHeart(userState.heart - 1) // 하트 1 감소
+                                petViewModel.updateSatiety(5) // 포만도 5 증가
                             }
                         },
                         icon = Icons.Default.Favorite,  // 하트 아이콘
-                        enabled = userState.heart > 0 && petState.satiety < 100,  // 하트가 0이면 버튼 비활성화
+                        enabled = userState.hasPet && userState.heart > 0 && petState.satiety < 100, // 버튼 활성화 조건
                         backgroundColor = if (userState.heart > 0) Color(0xFFD66F24) else Color.Gray
                     )
 
@@ -113,7 +115,7 @@ fun PetTab(
                         println("부르기 버튼 클릭 후 hasPet 상태: ${userViewModel.uiState.value.hasPet}") // 상태 업데이트 확인
                     },
                     icon = Icons.Default.Pets,  // 반려 동물 아이콘
-                    enabled = !userState.hasPet,
+                    enabled = !userState.hasPet, // 이미 반려 동물이 있으면 버튼 비활성화
                     backgroundColor = if (!userState.hasPet) Color(0xFFD66F24) else Color.Gray  // 버튼 색상 조건
                     )
                 }
