@@ -131,11 +131,11 @@ fun MainScreen(
                 }
 
                 composable<CreateQRCode> {
-                    CreateQRCodeScreen(navController = navController)
+                    CreateQRCodeScreen(navController = navController, userRepository = userRepository)
                 }
 
                 composable<InsertQRCode> {
-                   InsertQRCodeScreen(navController = navController)
+                   InsertQRCodeScreen(navController = navController, userRepository = userRepository)
                 }
 
                 composable<HotDogMain> {
