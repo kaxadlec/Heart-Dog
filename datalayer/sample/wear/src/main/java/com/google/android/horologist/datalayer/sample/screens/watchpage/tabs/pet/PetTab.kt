@@ -1,6 +1,7 @@
 // PetTab.kt
 package com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.pet
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
@@ -24,9 +25,12 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import com.google.android.horologist.datalayer.sample.screens.watchpage.core.common.ui.CircleIconButton
 import com.google.android.horologist.datalayer.sample.R
+import androidx.compose.runtime.rememberCoroutineScope
+import kotlinx.coroutines.launch
 
 
 
+@SuppressLint("StateFlowValueCalledInComposition")
 @Composable
 fun PetTab(
     modifier: Modifier = Modifier,
@@ -39,7 +43,9 @@ fun PetTab(
 ) {
     val userState by userViewModel.uiState.collectAsStateWithLifecycle()
     val petState by petViewModel.uiState.collectAsStateWithLifecycle()
+    val scope = rememberCoroutineScope()  // 코루틴 스코프 생성
 
+    // 화면 너비에 따라 간격을 조정
     val configuration = LocalConfiguration.current
     val screenWidth = configuration.screenWidthDp.dp
     val largeSpacing = screenWidth * largeSpacingRatio
@@ -64,6 +70,20 @@ fun PetTab(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(largeSpacing)
         ) {
+            // 테스트용 초기화 버튼
+            Button(
+                onClick = {
+                    scope.launch {
+                        petViewModel.resetFeedingCount()
+                        println("급여 데이터 초기화 완료")
+                    }
+                },
+                modifier = Modifier
+                   .size(40.dp)  // 작은 크기의 정사각형 버튼
+                   .padding(top = 8.dp, end = 8.dp)  // 약간의 여백
+            ) {
+                Text("리셋", fontSize = 12.sp)
+            }
             // 상태 텍스트
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -92,17 +112,26 @@ fun PetTab(
                     horizontalArrangement = Arrangement.SpaceEvenly,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
+                    // 먹이주기 버튼
                     CircleIconButton(
                         text = "하트 먹이기",
+                        // 하트가 0보다 크고 포만도가 100보다 작을 때만 클릭 가능
                         onClick = {
-                            if (userState.heart > 0 && petState.satiety < 100) {
-                                userViewModel.updateHeart(userState.heart - 1)
-                                petViewModel.updateSatiety(5)
+                            if (userState.hasPet && userState.heart > 0 && petState.satiety < 100) {
+                                scope.launch {
+                                    if (petViewModel.tryFeed()) {
+                                        userViewModel.updateHeart(userState.heart - 1)
+                                        petViewModel.updateSatiety(5)
+                                        petViewModel.checkFeedingStatus()
+                                    }
+                                }
                             }
                         },
                         icon = Icons.Default.Favorite,  // 하트 아이콘
-                        enabled = userState.heart > 0 && petState.satiety < 100,  // 하트가 0이면 버튼 비활성화
-                        backgroundColor = if (userState.heart > 0) Color(0xFFD66F24) else Color.Gray
+                        enabled = userState.hasPet && userState.heart > 0 && petState.satiety < 100 && petViewModel.todayFeedingCount.value < 10, // 버튼 활성화 조건
+                        backgroundColor = if (userState.hasPet &&
+                            userState.heart > 0 &&
+                            petViewModel.todayFeedingCount.value < 10) Color(0xFFD66F24) else Color.Gray
                     )
 
                     CircleIconButton(
@@ -113,7 +142,7 @@ fun PetTab(
                         println("부르기 버튼 클릭 후 hasPet 상태: ${userViewModel.uiState.value.hasPet}") // 상태 업데이트 확인
                     },
                     icon = Icons.Default.Pets,  // 반려 동물 아이콘
-                    enabled = !userState.hasPet,
+                    enabled = !userState.hasPet, // 이미 반려 동물이 있으면 버튼 비활성화
                     backgroundColor = if (!userState.hasPet) Color(0xFFD66F24) else Color.Gray  // 버튼 색상 조건
                     )
                 }
