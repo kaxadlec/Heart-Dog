@@ -4,7 +4,6 @@ import io.github.jan.supabase.createSupabaseClient
 import io.github.jan.supabase.postgrest.Postgrest
 import io.github.jan.supabase.serializer.KotlinXSerializer
 import kotlinx.serialization.json.Json
-import io.github.jan.supabase.postgrest.postgrest
 
 object SupabaseClientProvider {
 
@@ -17,7 +16,7 @@ object SupabaseClientProvider {
                 Json {
                     ignoreUnknownKeys = true
                     isLenient = true
-                    coerceInputValues = true // null 값을 기본값으로 대체
+                    coerceInputValues = true
                 }
             )
         }

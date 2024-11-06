@@ -49,7 +49,7 @@ fun CreateQRCodeScreen(navController: NavHostController, userRepository: UserRep
         val userId = 1
 
         // 생성된 코드를 데이터베이스에 저장
-        val insertResult = userRepository.insertCode(userId.toLong(), randomCode)
+        val insertResult = userRepository.updateUserCode(userId.toLong(), randomCode)
         if (!insertResult) {
             println("Failed to insert code for userId: $userId")
         }

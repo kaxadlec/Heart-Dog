@@ -18,7 +18,7 @@ plugins {
     id("com.android.application")
     id("com.google.devtools.ksp")
     id("dagger.hilt.android.plugin")
-//    id("org.jetbrains.kotlin.plugin.serialization") version "2.0.21"
+//  id("org.jetbrains.kotlin.plugin.serialization") version "2.0.21"
     kotlin("android")
     kotlin("plugin.serialization")
     alias(libs.plugins.compose.compiler)
@@ -117,6 +117,13 @@ dependencies {
     implementation(platform("io.github.jan-tennert.supabase:bom:3.0.1"))
     implementation("io.github.jan-tennert.supabase:postgrest-kt")
     implementation("io.ktor:ktor-client-android:3.0.0")
+
+    val ktor_version = "2.4.0"
+
+    implementation("io.ktor:ktor-client-core:$ktor_version")
+    implementation("io.ktor:ktor-client-content-negotiation:$ktor_version")
+    implementation("io.ktor:ktor-serialization-kotlinx-json:$ktor_version")
+
 
     /* gif Setting */
     implementation(libs.coil)
