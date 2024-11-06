@@ -17,6 +17,14 @@ import androidx.compose.runtime.LaunchedEffect
 import com.google.accompanist.permissions.PermissionStatus
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.android.horologist.datalayer.sample.repository.UserRepository
+import com.google.android.horologist.datalayer.sample.screens.HotDogMain
+
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+
+import kotlin.Result
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
@@ -39,35 +47,40 @@ fun CameraPermissionWrapper(content: @Composable () -> Unit) {
 }
 
 @Composable
-fun InsertQRCodeScreen(navController: NavHostController) {
+fun InsertQRCodeScreen(navController: NavHostController, userRepository: UserRepository) {
+    val currentUserId = 2L
 
     Box(
-
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White),
         contentAlignment = Alignment.Center
-
     ) {
-
         LogoHeader(navController = navController)
-
-        // 1. 카메라 연결
-        // 2. 데이터 전송
 
         CameraPermissionWrapper {
             CameraPreview(
                 modifier = Modifier
                     .width(250.dp)
                     .height(250.dp),
-                onQRCodeScanned = { qrCode ->
-                    // 스캔된 QR 코드 데이터 처리
-                    println("Scanned QR Code: $qrCode")
-                    // 필요 시 NavController를 통해 다른 화면으로 이동하거나 스캔 결과를 사용하세요.
+                onQRCodeScanned = { scannedCode ->
+                    CoroutineScope(Dispatchers.Main).launch {
+                        try {
+                            val result = userRepository.insertScannedCode(currentUserId, scannedCode)
+                            if (result.success && result.matched) {
+                                navController.navigate(HotDogMain) {
+                                    popUpTo(navController.graph.startDestinationId) {
+                                        saveState = true
+                                    }
+                                    launchSingleTop = true
+                                }
+                            }
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                    }
                 }
             )
         }
-
     }
-
 }

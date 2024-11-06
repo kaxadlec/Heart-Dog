@@ -14,6 +14,8 @@ import io.ktor.client.statement.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
@@ -69,7 +71,6 @@ class UserRepository {
         }
     }
 
-
     suspend fun updateUserCode(userId: Long, code: String): Boolean = withContext(Dispatchers.IO) {
         runCatching {
 
@@ -99,7 +100,67 @@ class UserRepository {
             false
         }
     }
+
+    @Serializable
+    data class MatchData(
+        @SerialName("scanned_user") val scannedUser: User,
+        @SerialName("existing_user") val existingUser: User
+    )
+
+    @Serializable
+    data class InsertCodeResult(
+        val success: Boolean,
+        val message: String? = null,
+        val data: MatchData? = null,
+        @SerialName("matched") val matched: Boolean = false
+    )
+
+    suspend fun insertScannedCode(userId: Long, scannedCode: String): InsertCodeResult = withContext(Dispatchers.IO) {
+        try {
+            val params = JsonObject(
+                mapOf(
+                    "p_user_id" to JsonPrimitive(userId),
+                    "scanned_code" to JsonPrimitive(scannedCode)
+                )
+            )
+
+            val response = SupabaseClientProvider.supabase
+                .postgrest
+                .rpc("insert_scanned_code", params)
+                .decodeAs<InsertCodeResult>() // decodeAs 사용
+
+            println("Response received: $response")
+            response
+
+        } catch (e: Exception) {
+            println("Error in insertScannedCode: ${e.message}")
+            println("JSON input: ${e.message}")
+            InsertCodeResult(
+                success = false,
+                message = e.message ?: "Unknown error occurred",
+                matched = false
+            )
+        }
+    }
+
+    suspend fun checkUserMatching(userId: Long): Boolean = withContext(Dispatchers.IO) {
+        runCatching {
+            val params = JsonObject(
+                mapOf(
+                    "p_user_id" to JsonPrimitive(userId)
+                )
+            )
+
+            val result = SupabaseClientProvider.supabase
+                .postgrest
+                .rpc("check_user_matching", params)
+                .decodeSingleOrNull<User>()
+
+            result?.matching ?: false
+
+        }.getOrElse { e ->
+            println("Error checking matching status: ${e.message}")
+            false
+        }
+    }
 }
-
-
-

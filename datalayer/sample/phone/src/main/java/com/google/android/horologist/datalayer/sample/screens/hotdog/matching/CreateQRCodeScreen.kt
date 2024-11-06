@@ -28,6 +28,7 @@ import com.google.zxing.WriterException
 import com.google.zxing.qrcode.QRCodeWriter
 import com.google.android.horologist.datalayer.sample.R
 import com.google.android.horologist.datalayer.sample.repository.UserRepository
+import com.google.android.horologist.datalayer.sample.screens.HotDogMain
 
 @Composable
 fun CreateQRCodeScreen(navController: NavHostController, userRepository: UserRepository) {
@@ -45,22 +46,30 @@ fun CreateQRCodeScreen(navController: NavHostController, userRepository: UserRep
 
     LaunchedEffect(randomCode) {
         qrBitmap = generateQRCode(randomCode)
+        val userId = 8L
 
-        val userId = 1
+        // 코드 업데이트
+        userRepository.updateUserCode(userId, randomCode)
 
-        // 생성된 코드를 데이터베이스에 저장
-        val insertResult = userRepository.updateUserCode(userId.toLong(), randomCode)
-        if (!insertResult) {
-            println("Failed to insert code for userId: $userId")
-        }
-
-        // 타이머 시작
+        // 타이머 실행 & 매칭 상태 체크
         while (remainingTime > 0) {
-            delay(1000L) // 1초 대기
+            delay(1000L)
+
+            // UserRepository를 통해 매칭 상태 체크
+            if (userRepository.checkUserMatching(userId)) {
+                // 매칭되었다면 메인화면으로 이동
+                navController.navigate(HotDogMain) {
+                    popUpTo(navController.graph.startDestinationId) {
+                        saveState = true
+                    }
+                }
+                return@LaunchedEffect
+            }
+
             remainingTime -= 1
         }
 
-        // 시간이 다 되면 이전 화면으로 이동
+        // 시간 초과시
         navController.popBackStack()
     }
 
