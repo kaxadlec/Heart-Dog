@@ -14,6 +14,10 @@ class UserViewModel @Inject constructor() : ViewModel() {
     private val _uiState = MutableStateFlow(UserUiState())
     val uiState: StateFlow<UserUiState> = _uiState.asStateFlow()
 
+    fun updateCoupleMatched(isMatched: Boolean) {
+        _uiState.update { it.copy(isCoupleMatched = isMatched) }
+    }
+
     fun updateUser(
         userId: String? = null,
         steps: Int? = null,

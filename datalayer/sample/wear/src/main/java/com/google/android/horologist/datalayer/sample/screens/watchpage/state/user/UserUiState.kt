@@ -6,5 +6,9 @@ data class UserUiState(
     val steps: Int = 0,
     val distance: Float = 0f,
     val heart: Int = 100, // 0-100 밥(하트)
-    val hasPet: Boolean = false
+    val hasPet: Boolean = false,
+    val isCoupleMatched: Boolean = false,
+    val eating: Boolean = false,
+    val working: Boolean = false,
+    val commuting: Boolean = false
 )
