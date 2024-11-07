@@ -3,6 +3,8 @@ package com.google.android.horologist.datalayer.sample.screens.watchpage.state.p
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.android.horologist.datalayer.sample.data.preferences.FeedingPreferences
+import com.google.android.horologist.datalayer.sample.data.preferences.strategy.TimeRestrictionStrategy
+import com.google.android.horologist.datalayer.sample.data.preferences.strategy.TimeRestrictionType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -13,13 +15,23 @@ import javax.inject.Inject
 
 // PetViewModel.kt
 @HiltViewModel
-class PetViewModel @Inject constructor( private val feedingPreferences: FeedingPreferences) : ViewModel() {
+class PetViewModel @Inject constructor( private val feedingPreferences: FeedingPreferences, private val timeStrategy: TimeRestrictionStrategy) : ViewModel() {
     private val _uiState = MutableStateFlow(PetUiState())
     val uiState: StateFlow<PetUiState> = _uiState.asStateFlow()
 
     // 오늘의 먹이 주기 횟수를 State로 관리
     private val _todayFeedingCount = MutableStateFlow(0) // 초기값 0으로 설정
     val todayFeedingCount: StateFlow<Int> = _todayFeedingCount.asStateFlow() // StateFlow로 변환
+
+    // 현재 시간 제한 타입
+    val currentTimeRestrictionType = timeStrategy.currentType
+
+    // 시간 제한 타입 변경 함수
+    fun setTimeRestrictionType(type: TimeRestrictionType) {
+        timeStrategy.setType(type)
+        // 타입 변경 시 먹이 주기 횟수 초기화
+        resetFeedingCount()
+    }
 
     // 포만도에 따른 경험치 배율 계산
     private fun getExpMultiplier(satiety: Int): Float = when {

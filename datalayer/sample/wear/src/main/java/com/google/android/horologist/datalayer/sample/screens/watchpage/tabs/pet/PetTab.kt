@@ -26,6 +26,7 @@ import androidx.compose.ui.res.painterResource
 import com.google.android.horologist.datalayer.sample.screens.watchpage.core.common.ui.CircleIconButton
 import com.google.android.horologist.datalayer.sample.R
 import androidx.compose.runtime.rememberCoroutineScope
+import com.google.android.horologist.datalayer.sample.data.preferences.strategy.TimeRestrictionType
 import kotlinx.coroutines.launch
 
 
@@ -51,6 +52,13 @@ fun PetTab(
     val largeSpacing = screenWidth * largeSpacingRatio
     val smallSpacing = screenWidth * smallSpacingRatio
 
+    // 테스트를 위한 1분 모드 설정
+    // 하루 모드로 하려면 주석처리하면됨
+    LaunchedEffect(Unit) {
+        petViewModel.setTimeRestrictionType(TimeRestrictionType.MINUTE)
+        println("1분 제한 모드 설정 완료")
+    }
+
     // 상태 변화 로그 추가
     LaunchedEffect(userState.hasPet) {
         println("PetTab - hasPet 상태: ${userState.hasPet}")
@@ -70,20 +78,20 @@ fun PetTab(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(largeSpacing)
         ) {
-            // 테스트용 초기화 버튼
-            Button(
-                onClick = {
-                    scope.launch {
-                        petViewModel.resetFeedingCount()
-                        println("급여 데이터 초기화 완료")
-                    }
-                },
-                modifier = Modifier
-                   .size(40.dp)  // 작은 크기의 정사각형 버튼
-                   .padding(top = 8.dp, end = 8.dp)  // 약간의 여백
-            ) {
-                Text("리셋", fontSize = 12.sp)
-            }
+//            // 테스트용 초기화 버튼
+//            Button(
+//                onClick = {
+//                    scope.launch {
+//                        petViewModel.resetFeedingCount()
+//                        println("급여 데이터 초기화 완료")
+//                    }
+//                },
+//                modifier = Modifier
+//                   .size(40.dp)  // 작은 크기의 정사각형 버튼
+//                   .padding(top = 8.dp, end = 8.dp)  // 약간의 여백
+//            ) {
+//                Text("리셋", fontSize = 12.sp)
+//            }
             // 상태 텍스트
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
