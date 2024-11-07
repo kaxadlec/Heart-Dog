@@ -33,12 +33,31 @@ import androidx.compose.ui.platform.LocalContext
 import com.google.android.horologist.datalayer.sample.screens.gps.LocationTrackingForegroundService
 import com.google.android.horologist.datalayer.sample.screens.main.MainScreen
 import com.google.android.horologist.datalayer.sample.ui.theme.HorologistTheme
+import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
+import android.util.Log
+import android.Manifest
+import android.content.pm.PackageManager
+import androidx.core.app.ActivityCompat
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            requestNotificationPermission()
+        }
+
+        // FCM 토큰 가져오기
+        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                return@addOnCompleteListener
+            }
+            val token = task.result
+            // 토큰을 서버에 전송하거나 필요한 곳에 저장
+            Log.d("FCM", "Token: $token")
+        }
 
         setContent {
             HorologistTheme {
@@ -47,6 +66,40 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background,
                 ) {
                     MainScreen { startLocationService() }
+                }
+            }
+        }
+    }
+
+    // 알림 권한 요청
+    private fun requestNotificationPermission() {
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.POST_NOTIFICATIONS
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                1
+            )
+        }
+    }
+
+    // 권한 요청 결과 처리
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,  // out 제거
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            1 -> {
+                if (grantResults.isNotEmpty() &&
+                    grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Log.d("FCM", "알림 권한 승인됨")
+                } else {
+                    Log.d("FCM", "알림 권한 거부됨")
                 }
             }
         }
@@ -70,3 +123,5 @@ class MainActivity : ComponentActivity() {
     }
 
 }
+
+
