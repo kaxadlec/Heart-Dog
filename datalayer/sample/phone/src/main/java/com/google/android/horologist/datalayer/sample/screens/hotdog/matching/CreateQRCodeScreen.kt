@@ -46,7 +46,7 @@ fun CreateQRCodeScreen(navController: NavHostController, userRepository: UserRep
 
     LaunchedEffect(randomCode) {
         qrBitmap = generateQRCode(randomCode)
-        val userId = 8L
+        val userId = 1L
 
         // 코드 업데이트
         userRepository.updateUserCode(userId, randomCode)
