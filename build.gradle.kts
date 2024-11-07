@@ -36,6 +36,10 @@ buildscript {
         classpath(libs.gradleMavenPublishPlugin)
 
         classpath(libs.dagger.hiltandroidplugin)
+
+        /* firebase */
+        classpath("com.google.gms:google-services:4.4.2")
+
     }
 }
 

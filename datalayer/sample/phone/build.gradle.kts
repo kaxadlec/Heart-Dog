@@ -18,6 +18,9 @@ plugins {
     id("com.android.application")
     id("com.google.devtools.ksp")
     id("dagger.hilt.android.plugin")
+
+    id("com.google.gms.google-services")
+
 //  id("org.jetbrains.kotlin.plugin.serialization") version "2.0.21"
     kotlin("android")
     kotlin("plugin.serialization")
@@ -130,6 +133,13 @@ dependencies {
     implementation(libs.coil)
     implementation(libs.coil.base)
     implementation("io.coil-kt:coil-gif:2.7.0")
+
+    /* firebase */
+    implementation(platform("com.google.firebase:firebase-bom:33.5.1"))
+    implementation("com.google.firebase:firebase-analytics")
+
+    // FCM을 위한 의존성 추가
+    implementation("com.google.firebase:firebase-messaging-ktx")
 
 
     api(projects.annotations)

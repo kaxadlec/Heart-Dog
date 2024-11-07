@@ -45,6 +45,7 @@ class UserRepository {
                 .from("users")
                 .insert(user)
 
+
             true
         }.getOrElse { e ->
             println("Error inserting user: ${e.localizedMessage}")
