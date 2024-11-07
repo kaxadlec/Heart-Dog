@@ -191,7 +191,7 @@ fun TabContainerScreen(
                     }
                 }
             }
-            if (userState.isCoupleMatched) {
+            if (!userState.isCoupleMatched) {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
