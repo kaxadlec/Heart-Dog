@@ -2,6 +2,7 @@ package com.google.android.horologist.datalayer.sample.data.di
 
 import android.content.Context
 import com.google.android.horologist.datalayer.sample.data.preferences.FeedingPreferences
+import com.google.android.horologist.datalayer.sample.data.preferences.strategy.TimeRestrictionStrategy
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,8 +16,9 @@ object DataStoreModule {
     @Provides
     @Singleton
     fun provideFeedingPreferences(
-        @ApplicationContext context: Context
+        @ApplicationContext context: Context,
+        timeStrategy: TimeRestrictionStrategy
     ): FeedingPreferences {
-        return FeedingPreferences(context)
+        return FeedingPreferences(context, timeStrategy)
     }
 }

@@ -7,6 +7,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.google.android.horologist.datalayer.sample.screens.heartrate.presentation.HeartRateViewModel
+import com.google.android.horologist.datalayer.sample.screens.watchpage.state.user.UserViewModel
 import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.game.screens.couple.CoupleGameScreen
 import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.game.screens.couple.CoupleGameScreenMission
 import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.game.screens.couple.CoupleGameScreenMissionResult
@@ -22,7 +23,8 @@ sealed class GameTabScreen(val route: String) {
 
 fun NavGraphBuilder.gameTabNavigation(
     navController: NavController,
-    sharedHeartRateViewModel: HeartRateViewModel
+    sharedHeartRateViewModel: HeartRateViewModel,
+    userViewModel: UserViewModel
 ) {
 
     composable(GameTabScreen.Main.route) {
@@ -48,7 +50,8 @@ fun NavGraphBuilder.gameTabNavigation(
         CoupleGameScreenMissionResult(
             onBack = { navController.popBackStack() },
             navController = navController,
-            heartRateViewModel = sharedHeartRateViewModel
+            heartRateViewModel = sharedHeartRateViewModel,
+            userViewModel = userViewModel
         )
     }
 
