@@ -1,11 +1,14 @@
 package com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.game.screens.couple
 
 import android.util.Log
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.painterResource
 import androidx.wear.compose.material.Button
 import androidx.wear.compose.material.Text
 import androidx.compose.ui.unit.dp
@@ -14,6 +17,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.android.horologist.datalayer.sample.screens.heartrate.presentation.HeartRateViewModel
 import kotlinx.coroutines.delay
 import kotlin.random.Random
+import com.google.android.horologist.datalayer.sample.R
 
 @Composable
 fun CoupleGameScreenMission(
@@ -36,6 +40,8 @@ fun CoupleGameScreenMission(
     var maxHeartRate by remember { mutableStateOf(0.0) }
     // StateFlow 수집
     val currentHr by heartRateViewModel.hr.collectAsState(initial = 0.0)
+    val DarkRed = Color(0xFFB00020)
+
 
     // 게임 시작 시 심박수 측정 시작
     LaunchedEffect(Unit) {
@@ -46,7 +52,7 @@ fun CoupleGameScreenMission(
     LaunchedEffect(currentHr) {
         if (currentHr > maxHeartRate) {
             maxHeartRate = currentHr
-            Log.d("CoupleGame", "New max heart rate: $maxHeartRate") // 로그 추가
+            Log.d("CoupleGame", "새로운 최대 심박수: $maxHeartRate") // 로그 추가
         }
     }
 
@@ -56,7 +62,7 @@ fun CoupleGameScreenMission(
             delay(1000L)
             timeLeft -= 1
         } else {
-            Log.d("CoupleGame", "Saving final max heart rate: $maxHeartRate") //
+            Log.d("CoupleGame", "최종 최대 심박수 저장: $maxHeartRate") //
             heartRateViewModel.saveMaxHeartRate(maxHeartRate)
             heartRateViewModel.toggleEnabled()
             onNavigate()
@@ -93,12 +99,23 @@ fun CoupleGameScreenMission(
             fontSize = 18.sp,
             color = Color.Black
         )
-        Text(
-            text = "현재 심박수: ${currentHr.toInt()}",
-            fontSize = 12.sp,
-            color = Color.Red,
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.padding(top = 8.dp)
-        )
+        ) {
+            val icon: Painter = painterResource(id = R.drawable.redheart)
+            Image(
+                painter = icon,
+                contentDescription = null,
+                modifier = Modifier.size(30.dp)
+            )
+            Spacer(modifier = Modifier.width(4.dp)) // Add spacing between the icon and text
+            Text(
+                text = currentHr.toInt().toString(),
+                fontSize = 20.sp,
+                color = DarkRed
+            )
+        }
 
 
 

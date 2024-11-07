@@ -24,19 +24,32 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.android.horologist.datalayer.sample.screens.heartrate.presentation.HeartRateViewModel
+import com.google.android.horologist.datalayer.sample.screens.watchpage.state.user.UserViewModel
 
 @Composable
 fun CoupleGameScreenMissionResult(
     onBack: () -> Unit,
     navController: NavController,
-    heartRateViewModel: HeartRateViewModel = hiltViewModel()
-)
-{
+    heartRateViewModel: HeartRateViewModel = hiltViewModel(),
+    userViewModel: UserViewModel = hiltViewModel()
+) {
+    val DarkRed = Color(0xFFB00020)
     // maxHeartRate StateFlow 수집
-    val maxHeartRate by heartRateViewModel.maxHeartRate.collectAsState(initial = 0.0)
+    val maxHeartRate by heartRateViewModel.maxHeartRate.collectAsState(initial = 0.0) // 최대 심박수
+    // 최대 심박수에 따른 하트 획득량 계산 (일단 기준 90으로 설정)
+    val heartsEarned = (maxHeartRate - 90).coerceAtLeast(0.0).toInt() // 최대 심박수가 90을 넘어야 하트 획득
+    // UserViewModel의 StateFlow 수집
+    val userState by userViewModel.uiState.collectAsState()
+
     // 값 확인을 위한 로그
     LaunchedEffect(maxHeartRate) {
         Log.d("CoupleGameResult", "Current max heart rate: $maxHeartRate")
+        Log.d("CoupleGameResult", "Hearts earned: $heartsEarned")
+
+        // 현재 하트 + 획득한 하트로 업데이트
+        val newHeartCount = userState.heart + heartsEarned
+        userViewModel.updateHeart(newHeartCount)
+        Log.d("CoupleGameResult", "Updated heart count: $newHeartCount")
     }
 
     Column(
@@ -46,29 +59,25 @@ fun CoupleGameScreenMissionResult(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        val icon: Painter = painterResource(id = R.drawable.redheart)
-        Image(
-            painter = icon,
-            contentDescription = null,
-            modifier = Modifier
-                .size(30.dp)
-
-        )
-        Spacer(modifier = Modifier.height(14.dp))
+        Spacer(modifier = Modifier.height(24.dp))
         Text(
             text = "당신의 최고 심박수 : ${maxHeartRate.toInt()} bpm",
-            fontSize = 12.sp,
+            fontSize = 14.sp,
             color = Color.Black
         )
 
-        Spacer(modifier = Modifier.height(14.dp))
+
+        Spacer(modifier = Modifier.height(16.dp))
+
         Text(
-            text = "상대의 최고 심박수 : ",
-            fontSize = 12.sp,
-            color = Color.Black
+            text = "획득한 하트: $heartsEarned",
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Bold,
+            color = DarkRed
         )
 
-        Spacer(modifier = Modifier.height(20.dp))
+
+        Spacer(modifier = Modifier.height(12.dp))
 
         androidx.wear.compose.material.Button(
             onClick = {
@@ -79,17 +88,22 @@ fun CoupleGameScreenMissionResult(
                 )
             },
             modifier = Modifier
-                .padding(top = 8.dp)
                 .size(width = 80.dp, height = 30.dp),
             colors = ButtonDefaults.buttonColors(
-            backgroundColor = Color(0xFFFF9A4D),
+                backgroundColor = Color(0xFFFF9A4D),
             ),
         ) {
-            Text(
-                text = "확인",
-                fontSize = 12.sp,
-                color = Color.White
-            )
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = "확인",
+                    fontSize = 16.sp,
+                    color = Color.White
+                )
+            }
         }
     }
 }
+

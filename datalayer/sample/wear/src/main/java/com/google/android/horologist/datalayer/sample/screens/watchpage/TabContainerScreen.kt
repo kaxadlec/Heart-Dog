@@ -140,7 +140,7 @@ fun TabContainerScreen() {
                             navController = navController,
                             startDestination = GameTabScreen.Main.route
                         ) {
-                            gameTabNavigation(navController = navController, sharedHeartRateViewModel = heartRateViewModel  )  // 새로 추가할 게임 탭 내비게이션
+                            gameTabNavigation(navController = navController, sharedHeartRateViewModel = heartRateViewModel, userViewModel = sharedUserViewModel )  // 새로 추가할 게임 탭 내비게이션
                         }
                     }
 
