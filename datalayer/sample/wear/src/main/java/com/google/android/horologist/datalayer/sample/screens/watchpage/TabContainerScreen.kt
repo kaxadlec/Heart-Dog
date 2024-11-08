@@ -16,6 +16,9 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.foundation.Image
+import kotlinx.coroutines.delay
+import java.util.Calendar
 import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -52,6 +55,13 @@ fun TabContainerScreen(
         val userState by sharedUserViewModel.uiState.collectAsStateWithLifecycle()
 
         // 각 탭의 현재 라우트 상태를 저장
+        val currentHour = remember { mutableStateOf(Calendar.getInstance().get(Calendar.HOUR_OF_DAY)) }
+        val backgroundRes = if (currentHour.value in 19..23 || currentHour.value in 0..6) {
+            R.drawable.night // 밤 배경 이미지 ID
+        } else {
+            R.drawable.background_image // 기본 배경 이미지 ID
+        }
+
         val currentPetRoute = remember { mutableStateOf(PetTabScreen.Main.route) }
         val currentHomeRoute = remember { mutableStateOf(HomeTabScreen.Main.route) }
         val currentCoupleRoute = remember { mutableStateOf(CoupleTabScreen.Main.route) }
@@ -75,6 +85,14 @@ fun TabContainerScreen(
             }
         }
 
+        // 시간 확인해서 배경 바꾸기
+        LaunchedEffect(Unit) {
+            while (true) {
+                delay(60 * 60 * 1000L) // 1시간마다 시간 확인
+                currentHour.value = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
+            }
+        }
+
         //  페이지 변경 시 로그 출력
         LaunchedEffect(pagerState.currentPage) {
             println("Current Page: ${pagerState.currentPage}")
@@ -95,13 +113,14 @@ fun TabContainerScreen(
         Box(
             modifier = Modifier.fillMaxSize()
         ) {
-            // 고정 배경 이미지
+            // 고정 배경 이미지 설정
             Image(
-                painter = painterResource(id = R.drawable.background_image),
+                painter = painterResource(id = backgroundRes),
                 contentDescription = "Background",
                 modifier = Modifier.fillMaxSize()
             )
-            // 페이지별 탭
+
+//             페이지별 탭
             HorizontalPager(
                 state = pagerState,
                 modifier = Modifier.fillMaxSize(),
