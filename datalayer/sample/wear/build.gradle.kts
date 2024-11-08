@@ -168,6 +168,7 @@ dependencies {
     implementation(libs.androidx.work.runtime)
     implementation(libs.androidx.work.runtime.ktx)
     implementation(libs.androidx.monitor)
+    implementation(libs.volley)
 
     debugImplementation(libs.compose.ui.tooling)
     implementation(libs.androidx.wear.tooling.preview)
@@ -203,6 +204,10 @@ dependencies {
 
     /*fusedlocation*/
     implementation(libs.play.services.location)
+
+    // Coil
+    implementation(libs.coil)
+    implementation(libs.coil.gif)
 }
 
 // tasks.maybeCreate("prepareKotlinIdeaImport")
