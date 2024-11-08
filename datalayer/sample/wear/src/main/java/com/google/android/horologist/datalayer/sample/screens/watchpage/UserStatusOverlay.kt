@@ -14,6 +14,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
+//import androidx.activity.compose.BackHandler
+//import androidx.navigation.NavController
 import com.google.android.horologist.datalayer.sample.screens.watchpage.state.user.UserUiState
 
 @Composable
@@ -21,7 +23,8 @@ fun UserStatusOverlay(
     userState: UserUiState,
     showTextOverlay: Boolean,
     onCloseOverlay: () -> Unit,
-    onConfirmAction: () -> Unit
+    onConfirmAction: () -> Unit,
+//    navController: NavController
 ) {
     if (!userState.isCoupleMatched) {
         OverlayMessage("모바일에서 커플 매칭을 완료해주세요")
@@ -48,6 +51,25 @@ fun UserStatusOverlay(
             message = "움직임을 감지했습니다.\n출근 중이십니까?",
             onCloseOverlay = onCloseOverlay,
             onConfirmAction = onConfirmAction
+        )
+    }
+
+    if (userState.commutingRecipient && showTextOverlay) {
+        OverlayWithActionsRecipient(
+            message = "상대방이 출근 중 입니다.",
+            onCloseOverlay = onCloseOverlay
+        )
+    }
+    if (userState.workingRecipient && showTextOverlay) {
+        OverlayWithActionsRecipient(
+            message = "상대방이 근무 중 입니다.",
+            onCloseOverlay = onCloseOverlay
+        )
+    }
+    if (userState.eatingRecipient && showTextOverlay) {
+        OverlayWithActionsRecipient(
+            message = "상대방이 식사 중 입니다.",
+            onCloseOverlay = onCloseOverlay
         )
     }
 }
@@ -114,3 +136,39 @@ private fun OverlayWithActions(
         }
     }
 }
+
+@Composable
+private fun OverlayWithActionsRecipient(
+    message: String,
+    onCloseOverlay: () -> Unit,
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.Black),
+        contentAlignment = Alignment.Center
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(
+                text = message,
+                color = Color.White,
+                fontSize = 16.sp,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(bottom = 16.dp)
+            )
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+            ) {
+                Button(onClick = onCloseOverlay) {
+                    Text("닫기")
+                }
+            }
+        }
+    }
+}
+
