@@ -84,20 +84,17 @@ fun CoupleGameScreenMission(
         Text(
             text = "커플 랜덤 미션",
             fontSize = 12.sp,
-            color = Color.Black,
             modifier = Modifier.padding(6.dp)
         )
 
         Text(
             text = randomActivity,
             fontSize = 14.sp,
-            color = Color.Black,
             modifier = Modifier.padding(16.dp)
         )
         Text(
             text = "${timeLeft}초",
             fontSize = 18.sp,
-            color = Color.Black
         )
         Row(
             verticalAlignment = Alignment.CenterVertically,

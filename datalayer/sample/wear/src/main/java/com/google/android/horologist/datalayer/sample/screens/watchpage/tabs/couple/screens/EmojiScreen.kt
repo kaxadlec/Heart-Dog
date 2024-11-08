@@ -51,7 +51,6 @@ fun EmojiScreen() {
                 text = "당신의 기분을 전달하세요",
                 fontSize = (screenWidth * textSizeRatio).value.sp, // 비율로 설정된 텍스트 크기
                 fontWeight = FontWeight.Bold,
-                color = Color.Black,
                 modifier = Modifier.padding(bottom = screenWidth * paddingRatio)
             )
 

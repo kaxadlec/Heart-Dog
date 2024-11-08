@@ -28,6 +28,7 @@ import android.content.Context
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.zIndex
+import androidx.wear.compose.material.MaterialTheme
 import coil.size.Size
 
 @Composable
@@ -38,6 +39,11 @@ fun HomeTab(
 ) {
     val petState by petViewModel.uiState.collectAsStateWithLifecycle()
     val userState by userViewModel.uiState.collectAsStateWithLifecycle()
+
+    // 현재 레벨에 필요한 경험치를 가져옴
+    val requiredExpForLevel = petViewModel.getRequiredExpForLevel(petState.level)
+    // expProgress를 현재 경험치 대비 필요 경험치의 비율로 계산
+    val expProgress = petState.exp / requiredExpForLevel.toFloat()
 
     HomeTabContent(
         satietyProgress = petState.satiety / 100f,
@@ -143,7 +149,7 @@ private fun PetLevelText(
     Text(
         text = "$name LV.$level",
         fontSize = 15.sp,
-        color = Color.Black,
+        color = MaterialTheme.colors.onBackground ,
         modifier = modifier
     )
 }
