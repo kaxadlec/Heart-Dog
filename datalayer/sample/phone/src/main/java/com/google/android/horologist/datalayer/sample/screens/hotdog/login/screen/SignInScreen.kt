@@ -105,11 +105,12 @@ fun SignInScreen(
         )
 
         Button(modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 12.dp),
-                onClick = {
-                    viewModel.onKakaoSignIn()
-                }) {
+            .width(370.dp)
+            .offset(y = 240.dp)
+            .padding(top = 12.dp),
+            onClick = {
+                viewModel.onKakaoSignIn()
+            }) {
                 Text("Sign in with Kakao")
             }
     }
