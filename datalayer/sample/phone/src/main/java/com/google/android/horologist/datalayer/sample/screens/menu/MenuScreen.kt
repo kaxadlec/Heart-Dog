@@ -44,8 +44,6 @@ import com.google.android.horologist.datalayer.sample.screens.gps.LocationTracki
 import com.google.android.horologist.datalayer.sample.screens.StepCount
 
 import com.google.android.horologist.datalayer.sample.screens.Splash
-import com.google.android.horologist.datalayer.sample.screens.UserInsert
-import com.google.android.horologist.datalayer.sample.screens.UserSelect
 
 @Composable
 fun MenuScreen(
@@ -64,14 +62,6 @@ fun MenuScreen(
 
         Button(onClick = { navController.navigate(HotDogMain) }) {
             Text(text = "Go to Splash Screen")
-        }
-
-        Button(onClick = { navController.navigate(UserInsert) }) {
-            Text(text = "Go to insert Screen")
-        }
-
-        Button(onClick = { navController.navigate(UserSelect) }) {
-            Text(text = "Go to select Screen")
         }
 
         Text(text = stringResource(id = R.string.menu_screen_apphelper_header))
