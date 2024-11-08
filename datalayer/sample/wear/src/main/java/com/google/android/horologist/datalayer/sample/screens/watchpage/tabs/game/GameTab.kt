@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.google.android.horologist.datalayer.sample.screens.watchpage.core.common.ui.CircleIconButton
+import com.google.android.horologist.datalayer.sample.screens.watchpage.components.CircleIconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.SportsEsports
 import androidx.compose.material.icons.filled.Favorite

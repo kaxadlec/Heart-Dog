@@ -120,7 +120,7 @@ fun TabContainerScreen(
                 modifier = Modifier.fillMaxSize()
             )
 
-//             페이지별 탭
+            // 페이지별 탭
             HorizontalPager(
                 state = pagerState,
                 modifier = Modifier.fillMaxSize(),
@@ -158,7 +158,6 @@ fun TabContainerScreen(
                     userState.eating -> sharedUserViewModel.updateEatingStatus(false)
                     userState.working -> sharedUserViewModel.updateWorkingStatus(false)
                     userState.commuting -> sharedUserViewModel.updateCommutingStatus(false)
-                    // 상대방의 상태 업데이트
                     userState.eatingRecipient -> sharedUserViewModel.updateRecipientEatingStatus(false)
                     userState.workingRecipient -> sharedUserViewModel.updateRecipientWorkingStatus(false)
                     userState.commutingRecipient -> sharedUserViewModel.updateRecipientCommutingStatus(false)
