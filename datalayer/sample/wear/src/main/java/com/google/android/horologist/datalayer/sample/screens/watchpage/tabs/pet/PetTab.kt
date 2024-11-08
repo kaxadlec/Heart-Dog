@@ -14,7 +14,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.wear.compose.material.Button
 import androidx.wear.compose.material.Text
 import com.google.android.horologist.datalayer.sample.screens.watchpage.state.pet.PetViewModel
 import com.google.android.horologist.datalayer.sample.screens.watchpage.state.user.UserViewModel
@@ -23,7 +22,7 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Pets
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
-import com.google.android.horologist.datalayer.sample.screens.watchpage.core.common.ui.CircleIconButton
+import com.google.android.horologist.datalayer.sample.screens.watchpage.components.CircleIconButton
 import com.google.android.horologist.datalayer.sample.R
 import androidx.compose.runtime.rememberCoroutineScope
 import com.google.android.horologist.datalayer.sample.data.preferences.strategy.TimeRestrictionType
