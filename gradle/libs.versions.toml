@@ -72,6 +72,7 @@ storage = "1.4.2"
 workRuntime = "2.9.1"
 workRuntimeKtx = "2.9.1"
 monitor = "1.7.2"
+volley = "1.2.1"
 
 [libraries]
 accompanist-charts = { module = "com.google.accompanist:accompanist-charts", version.ref = "accompanistCharts" }
@@ -235,6 +236,8 @@ androidx-storage = { group = "androidx.test.services", name = "storage", version
 androidx-work-runtime = { group = "androidx.work", name = "work-runtime", version.ref = "workRuntime" }
 androidx-work-runtime-ktx = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "workRuntimeKtx" }
 androidx-monitor = { group = "androidx.test", name = "monitor", version.ref = "monitor" }
+coil-gif = { module = "io.coil-kt:coil-gif", version.ref = "io-coil-kt" }
+volley = { group = "com.android.volley", name = "volley", version.ref = "volley" }
 
 [plugins]
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }

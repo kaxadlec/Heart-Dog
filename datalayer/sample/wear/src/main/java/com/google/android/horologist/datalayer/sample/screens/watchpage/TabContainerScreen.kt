@@ -1,47 +1,55 @@
 package com.google.android.horologist.datalayer.sample.screens.watchpage
-
+import androidx.compose.runtime.*
+import kotlinx.coroutines.launch
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.ui.res.painterResource
 import com.google.android.horologist.datalayer.sample.R
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.rememberNavController
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.android.horologist.datalayer.sample.screens.heartrate.presentation.HeartRateViewModel
+import com.google.android.horologist.datalayer.sample.screens.watchpage.components.PageIndicator
+import com.google.android.horologist.datalayer.sample.screens.watchpage.content.CoupleTabContent
+import com.google.android.horologist.datalayer.sample.screens.watchpage.content.GameTabContent
+import com.google.android.horologist.datalayer.sample.screens.watchpage.content.HomeTabContent
+import com.google.android.horologist.datalayer.sample.screens.watchpage.content.PetTabContent
+import com.google.android.horologist.datalayer.sample.screens.watchpage.content.SettingsTabContent
 import com.google.android.horologist.datalayer.sample.screens.watchpage.state.pet.PetViewModel
 import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.couple.CoupleTabScreen
-import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.couple.coupleTabNavigation
 import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.game.GameTabScreen
-import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.game.gameTabNavigation
 import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.home.HomeTabScreen
-import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.home.homeTabNavigation
 import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.pet.PetTabScreen
-import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.pet.petTabNavigation
 import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.settings.SettingsTabScreen
-import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.settings.settingsTabNavigation
 import com.google.android.horologist.datalayer.sample.screens.watchpage.theme.WatchPageTheme
 import com.google.android.horologist.datalayer.sample.screens.watchpage.state.user.UserViewModel
 
 
 @Composable
-fun TabContainerScreen() {
+fun TabContainerScreen(
+) {
     WatchPageTheme {
         val pagerState = rememberPagerState(
-            initialPage = 1,  // MainScreen을 초기 페이지로 설정
-            pageCount = { 5 }
+            initialPage = 1,  // 시작 페이지 설정
+            pageCount = {5}  // 페이지 수 설정
         )
         val sharedPetViewModel: PetViewModel = hiltViewModel() // 공유 뷰모델 생성
         val sharedUserViewModel: UserViewModel = hiltViewModel()
+        val heartRateViewModel: HeartRateViewModel = hiltViewModel()
+        val coroutineScope = rememberCoroutineScope()
+        var showTextOverlay by remember { mutableStateOf(false) }
+        val userState by sharedUserViewModel.uiState.collectAsStateWithLifecycle()
 
         // 각 탭의 현재 라우트 상태를 저장
         val currentPetRoute = remember { mutableStateOf(PetTabScreen.Main.route) }
@@ -60,6 +68,30 @@ fun TabContainerScreen() {
             else -> false
         }
 
+        // 식사, 근무, 출근 중일 때 텍스트 오버레이 표시
+        LaunchedEffect(userState.eating, userState.working, userState.commuting, userState.commutingRecipient, userState.workingRecipient, userState.eatingRecipient) {
+            if (userState.eating || userState.working || userState.commuting || userState.commutingRecipient || userState.workingRecipient || userState.eatingRecipient) {
+                showTextOverlay = true
+            }
+        }
+
+        //  페이지 변경 시 로그 출력
+        LaunchedEffect(pagerState.currentPage) {
+            println("Current Page: ${pagerState.currentPage}")
+            println("Current Route: ${
+                when (pagerState.currentPage) {
+                    0 -> currentPetRoute.value
+                    1 -> currentHomeRoute.value
+                    2 -> currentCoupleRoute.value
+                    3 -> currentGameRoute.value
+                    4 -> currentSettingsRoute.value
+                    else -> "unknown"
+                }
+            }")
+            println("Is Main Screen: $isMainScreen")
+            println("showTextOverlay: $showTextOverlay")
+        }
+
         Box(
             modifier = Modifier.fillMaxSize()
         ) {
@@ -73,95 +105,19 @@ fun TabContainerScreen() {
             HorizontalPager(
                 state = pagerState,
                 modifier = Modifier.fillMaxSize(),
-                // 메인 화면에서만 스와이프 가능
-                userScrollEnabled = isMainScreen
+                userScrollEnabled = isMainScreen  // 메인 화면에서만 스와이프 가능
             ) { page ->
                 when (page) {
-                    0 -> {
-                        val navController = rememberNavController()
-                        LaunchedEffect(navController) {
-                            navController.currentBackStackEntryFlow.collect { entry ->
-                                currentPetRoute.value = entry.destination.route ?: ""
-                            }
-                        }
-                        NavHost(
-                            navController = navController,
-                            startDestination = PetTabScreen.Main.route
-                        ) {
-                            petTabNavigation( navController = navController,
-                                petViewModel = sharedPetViewModel,
-                                userViewModel = sharedUserViewModel)
-                        }
-                    }
-
-                    1 -> {
-                        val navController = rememberNavController()
-                        LaunchedEffect(navController) {
-                            navController.currentBackStackEntryFlow.collect { entry ->
-                                currentHomeRoute.value = entry.destination.route ?: ""
-                            }
-                        }
-                        NavHost(
-                            navController = navController,
-                            startDestination = HomeTabScreen.Main.route
-                        ) {
-                            homeTabNavigation(
-                                navController = navController,
-                                petViewModel = sharedPetViewModel,
-                                userViewModel = sharedUserViewModel)
-                        }
-                    }
-
-                    2 -> {
-                        val navController = rememberNavController()
-                        LaunchedEffect(navController) {
-                            navController.currentBackStackEntryFlow.collect { entry ->
-                                currentCoupleRoute.value = entry.destination.route ?: ""
-                            }
-                        }
-                        NavHost(
-                            navController = navController,
-                            startDestination = CoupleTabScreen.Main.route
-                        ) {
-                            coupleTabNavigation(navController)
-                        }
-                    }
-
-                    3 -> {
-                        val navController = rememberNavController()
-                        val heartRateViewModel: HeartRateViewModel = hiltViewModel()
-
-                        LaunchedEffect(navController) {
-                            navController.currentBackStackEntryFlow.collect { entry ->
-                                currentGameRoute.value = entry.destination.route ?: ""
-                            }
-                        }
-                        NavHost(
-                            navController = navController,
-                            startDestination = GameTabScreen.Main.route
-                        ) {
-                            gameTabNavigation(navController = navController, sharedHeartRateViewModel = heartRateViewModel  )  // 새로 추가할 게임 탭 내비게이션
-                        }
-                    }
-
-                    4 -> {
-                        val navController = rememberNavController()
-                        LaunchedEffect(navController) {
-                            navController.currentBackStackEntryFlow.collect { entry ->
-                                currentSettingsRoute.value = entry.destination.route ?: ""
-                            }
-                        }
-                        NavHost(
-                            navController = navController,
-                            startDestination = SettingsTabScreen.Main.route
-                        ) {
-                            settingsTabNavigation(navController)
-                        }
-                    }
+                    0 -> PetTabContent(currentPetRoute, sharedPetViewModel, sharedUserViewModel)
+                    1 -> HomeTabContent(currentHomeRoute, sharedPetViewModel, sharedUserViewModel)
+                    2 -> CoupleTabContent(currentCoupleRoute)
+                    3 -> GameTabContent(currentGameRoute, heartRateViewModel, sharedUserViewModel)
+                    4 -> SettingsTabContent(currentSettingsRoute)
                 }
+
             }
 
-            if (isMainScreen) {
+            if (isMainScreen && !showTextOverlay) {
                 PageIndicator(
                     pagerState = pagerState,
                     indicatorCount = 5,
@@ -174,5 +130,26 @@ fun TabContainerScreen() {
                 )
             }
         }
+        // UserStatusOverlay 컴포저블 호출
+        UserStatusOverlay(
+            userState = userState,
+            showTextOverlay = showTextOverlay,
+            onCloseOverlay = {
+                when {
+                    userState.eating -> sharedUserViewModel.updateEatingStatus(false)
+                    userState.working -> sharedUserViewModel.updateWorkingStatus(false)
+                    userState.commuting -> sharedUserViewModel.updateCommutingStatus(false)
+                    // 상대방의 상태 업데이트
+                    userState.eatingRecipient -> sharedUserViewModel.updateRecipientEatingStatus(false)
+                    userState.workingRecipient -> sharedUserViewModel.updateRecipientWorkingStatus(false)
+                    userState.commutingRecipient -> sharedUserViewModel.updateRecipientCommutingStatus(false)
+                }
+                showTextOverlay = false
+                coroutineScope.launch { pagerState.scrollToPage(1) }
+            },
+            onConfirmAction = {
+                // 확인 버튼 클릭 시 수행할 동작 추가
+            }
+        )
     }
 }

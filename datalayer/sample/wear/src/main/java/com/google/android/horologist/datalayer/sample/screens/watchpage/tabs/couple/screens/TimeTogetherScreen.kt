@@ -40,7 +40,7 @@ fun TimeTogetherScreen(timeTogether: Duration) {
                 .size(40.dp)
                 .padding(bottom = 8.dp)
         )
-        Text(text ="함께한 걸음수",
+        Text(text ="함께한 시간",
             color = Color.Black,
             fontSize = 16.sp,
             fontWeight = FontWeight.Bold

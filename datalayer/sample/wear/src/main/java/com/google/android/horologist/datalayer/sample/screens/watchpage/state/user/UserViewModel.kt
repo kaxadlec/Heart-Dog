@@ -14,6 +14,10 @@ class UserViewModel @Inject constructor() : ViewModel() {
     private val _uiState = MutableStateFlow(UserUiState())
     val uiState: StateFlow<UserUiState> = _uiState.asStateFlow()
 
+    fun updateCoupleMatched(isMatched: Boolean) {
+        _uiState.update { it.copy(isCoupleMatched = isMatched) }
+    }
+
     fun updateUser(
         userId: String? = null,
         steps: Int? = null,
@@ -53,5 +57,31 @@ class UserViewModel @Inject constructor() : ViewModel() {
         println("UserViewModel - hasPet 업데이트 시도: $hasPet") // 업데이트 시작 로그
         _uiState.update { it.copy(hasPet = hasPet) }
         println("UserViewModel - hasPet 업데이트 완료: ${_uiState.value.hasPet}") // 업데이트 완료 로그
+    }
+
+    // 사용자 활동 상태 업데이트 함수들
+    fun updateEatingStatus(isEating: Boolean) {
+        _uiState.update { it.copy(eating = isEating) }
+    }
+
+    fun updateWorkingStatus(isWorking: Boolean) {
+        _uiState.update { it.copy(working = isWorking) }
+    }
+
+    fun updateCommutingStatus(isCommuting: Boolean) {
+        _uiState.update { it.copy(commuting = isCommuting) }
+    }
+
+    // 상대방 활동 상태 업데이트 함수들
+    fun updateRecipientEatingStatus(isEating: Boolean) {
+        _uiState.update { it.copy(eatingRecipient = isEating) }
+    }
+
+    fun updateRecipientWorkingStatus(isWorking: Boolean) {
+        _uiState.update { it.copy(workingRecipient = isWorking) }
+    }
+
+    fun updateRecipientCommutingStatus(isCommuting: Boolean) {
+        _uiState.update { it.copy(commutingRecipient = isCommuting) }
     }
 }
