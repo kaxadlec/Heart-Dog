@@ -69,8 +69,8 @@ fun TabContainerScreen(
         }
 
         // 식사, 근무, 출근 중일 때 텍스트 오버레이 표시
-        LaunchedEffect(userState.eating, userState.working, userState.commuting) {
-            if (userState.eating || userState.working || userState.commuting) {
+        LaunchedEffect(userState.eating, userState.working, userState.commuting, userState.commutingRecipient, userState.workingRecipient, userState.eatingRecipient) {
+            if (userState.eating || userState.working || userState.commuting || userState.commutingRecipient || userState.workingRecipient || userState.eatingRecipient) {
                 showTextOverlay = true
             }
         }
@@ -135,11 +135,19 @@ fun TabContainerScreen(
             userState = userState,
             showTextOverlay = showTextOverlay,
             onCloseOverlay = {
+                when {
+                    userState.eating -> sharedUserViewModel.updateEatingStatus(false)
+                    userState.working -> sharedUserViewModel.updateWorkingStatus(false)
+                    userState.commuting -> sharedUserViewModel.updateCommutingStatus(false)
+                    // 상대방의 상태 업데이트
+                    userState.eatingRecipient -> sharedUserViewModel.updateRecipientEatingStatus(false)
+                    userState.workingRecipient -> sharedUserViewModel.updateRecipientWorkingStatus(false)
+                    userState.commutingRecipient -> sharedUserViewModel.updateRecipientCommutingStatus(false)
+                }
                 showTextOverlay = false
                 coroutineScope.launch { pagerState.scrollToPage(1) }
             },
             onConfirmAction = {
-                showTextOverlay = false
                 // 확인 버튼 클릭 시 수행할 동작 추가
             }
         )
