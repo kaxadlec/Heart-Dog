@@ -11,11 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.res.painterResource
 import com.google.android.horologist.datalayer.sample.R
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.offset
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -23,6 +19,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.android.horologist.datalayer.sample.screens.watchpage.state.pet.PetViewModel
 import com.google.android.horologist.datalayer.sample.screens.watchpage.state.user.UserViewModel
+import com.google.android.horologist.datalayer.sample.screens.watchpage.components.ExperienceArcs
 
 @Composable
 fun HomeTab(modifier: Modifier = Modifier,
@@ -37,11 +34,6 @@ fun HomeTab(modifier: Modifier = Modifier,
     val expProgress = petState.exp / 100f
     val name = petState.name
     val level = petState.level
-
-    // 상태 변화 로그
-//    LaunchedEffect(petState.satiety) {
-//        println("HomeTab - Satiety Changed: ${petState.satiety}")
-//    }
 
 
     Box(
@@ -90,49 +82,5 @@ fun HomeTab(modifier: Modifier = Modifier,
             )
         }
 
-    }
-}
-
-@Composable
-fun ExperienceArcs(
-    modifier: Modifier = Modifier,
-    leftProgress: Float,
-    rightProgress: Float
-) {
-    Canvas(modifier = modifier) {
-        val strokeWidth = 15.dp.toPx() // 선 두께
-        val radius = size.minDimension / 2
-
-        // 진한 빨간색과 연두색 설정
-        val darkRed = Color(0xFFB71C1C) // 진한 빨간색
-        val darkGreen = Color(0xFF388E3C) // 진한 연두색
-
-        // 왼쪽 반원 (빨간색)
-        drawArc(
-            color = darkRed,
-            startAngle = -90f,  // 북쪽(12시)에서 시작
-            sweepAngle = -(180f * leftProgress),  // 음수값: 반시계 방향으로 진행
-            useCenter = false,
-            topLeft = center.copy(
-                x = center.x - radius,
-                y = center.y - radius
-            ),
-            size = androidx.compose.ui.geometry.Size(radius * 2, radius * 2),
-            style = Stroke(width = strokeWidth, cap = StrokeCap.Butt)
-        )
-
-        // 오른쪽 반원 (연두색)
-        drawArc(
-            color = darkGreen,
-            startAngle = -90f,  // 북쪽(12시)에서 시작
-            sweepAngle = 180f * rightProgress,  // 양수값: 시계 방향으로 진행
-            useCenter = false,
-            topLeft = center.copy(
-                x = center.x - radius,
-                y = center.y - radius
-            ),
-            size = androidx.compose.ui.geometry.Size(radius * 2, radius * 2),
-            style = Stroke(width = strokeWidth, cap = StrokeCap.Butt)
-        )
     }
 }
