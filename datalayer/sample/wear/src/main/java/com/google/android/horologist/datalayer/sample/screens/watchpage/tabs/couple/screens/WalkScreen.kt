@@ -26,9 +26,9 @@ fun WalkScreen(stepsViewModel: StepsViewModel = hiltViewModel(),
     val userState = userViewModel.uiState.collectAsState()
     val stepCount = stepsState.value.stepCountValue?.value ?: 0
 
-    // 2보마다 하트 1개씩 증가 (제한 없음)
+    // 200보마다 하트 1개씩 증가 (제한 없음)
     LaunchedEffect(stepCount) {
-        val earnedHearts = stepCount / 2
+        val earnedHearts = stepCount / 20
         if (earnedHearts > 0) {
             val newHeartValue = (userState.value.heart + earnedHearts).coerceAtMost(100)
             userViewModel.updateHeart(newHeartValue)
@@ -70,13 +70,13 @@ fun WalkScreen(stepsViewModel: StepsViewModel = hiltViewModel(),
 
         // 획득한 하트 표시
         Text(
-            text = "획득한 하트: ${stepCount / 200}개",
+            text = "획득한 하트: ${stepCount / 20}개",
             fontSize = 14.sp,
             color = Color.Black
         )
 
         // 다음 하트까지 남은 걸음 수 표시
-        val remainingSteps = 200 - (stepCount % 200)
+        val remainingSteps = 20 - (stepCount % 20)
         Text(
             text = "다음 하트까지 ${remainingSteps}걸음",
             fontSize = 12.sp,
