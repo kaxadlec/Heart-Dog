@@ -49,8 +49,9 @@ android {
         buildConfigField("String", "SUPABASE_ANON_KEY", gradleLocalProperties(rootDir, providers).getProperty("SUPABASE_ANON_KEY"))
         addManifestPlaceholders(
             mapOf(
-                "KAKAO_API_KEY" to gradleLocalProperties(rootDir, providers).getProperty("KAKAO_APP_KEY"),
-//                "KAKAO_REDIRECT_URL" to gradleLocalProperties(rootDir, providers).getProperty("KAKAO_REDIRECT_URL")
+                "KAKAO_APP_KEY" to gradleLocalProperties(rootDir, providers).getProperty("KAKAO_APP_KEY"),
+                "SUPABASE_SIGNIN_SCHEME" to gradleLocalProperties(rootDir, providers).getProperty("SUPABASE_SIGNIN_SCHEME"),
+                "SUPABASE_SIGNIN_HOST" to gradleLocalProperties(rootDir, providers).getProperty("SUPABASE_SIGNIN_HOST"),
             )
         )
 
