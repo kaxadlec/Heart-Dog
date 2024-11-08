@@ -25,6 +25,7 @@ fun UserStatusOverlay(
 ) {
     if (!userState.isCoupleMatched) {
         OverlayMessage("모바일에서 커플 매칭을 완료해주세요")
+        return
     }
 
     if (userState.eating && showTextOverlay) {

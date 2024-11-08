@@ -1,4 +1,4 @@
-package com.google.android.horologist.datalayer.sample.screens.watchpage
+package com.google.android.horologist.datalayer.sample.screens.watchpage.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding

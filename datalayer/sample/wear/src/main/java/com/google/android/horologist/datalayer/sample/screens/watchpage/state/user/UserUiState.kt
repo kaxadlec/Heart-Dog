@@ -10,5 +10,5 @@ data class UserUiState(
     val isCoupleMatched: Boolean = true,
     val eating: Boolean = false,
     val working: Boolean = false,
-    val commuting: Boolean = false
+    val commuting: Boolean = false,
 )
