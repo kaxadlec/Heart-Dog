@@ -41,6 +41,7 @@ fun HomeTab(
 
     HomeTabContent(
         satietyProgress = petState.satiety / 100f,
+        satiety = petState.satiety,
         expProgress = petState.exp / 100f,
         name = petState.name,
         level = petState.level,
@@ -54,8 +55,9 @@ private fun HomeTabContent(
     expProgress: Float,
     name: String,
     level: Int,
+    satiety: Int,
     hasPet: Boolean,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Box(
         modifier = modifier.fillMaxSize(),
@@ -73,6 +75,7 @@ private fun HomeTabContent(
         // 캐릭터 이미지
         PetImage(
             hasPet = hasPet,
+            satiety = satiety,
             modifier = Modifier
                 .align(Alignment.Center)
                 .offset(y = 18.dp)
@@ -94,17 +97,25 @@ private fun HomeTabContent(
 @Composable
 private fun PetImage(
     hasPet: Boolean,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    satiety: Int,
 ) {
     val context = LocalContext.current
     val imageLoader = rememberImageLoader(context)
 
     Box(modifier = modifier) {
         if (hasPet) {
+            val imageRes = when {
+                satiety < 25 -> R.drawable.cryingmotion
+                satiety < 50 -> R.drawable.umnaumna
+                satiety < 75 -> R.drawable.pppig
+                else -> R.drawable.dog_animation_1
+            }
+
             Image(
                 painter = rememberAsyncImagePainter(
                     ImageRequest.Builder(context)
-                        .data(R.drawable.cryingmotion)
+                        .data(imageRes)
                         .size(Size(120, 120))
                         .build(),
                     imageLoader = imageLoader
@@ -112,7 +123,8 @@ private fun PetImage(
                 contentDescription = "Character",
                 modifier = Modifier.align(Alignment.Center)
             )
-        } else {
+        }
+        else {
             Image(
                 painter = painterResource(id = R.drawable.doghouse),
                 contentDescription = "Doghouse",
