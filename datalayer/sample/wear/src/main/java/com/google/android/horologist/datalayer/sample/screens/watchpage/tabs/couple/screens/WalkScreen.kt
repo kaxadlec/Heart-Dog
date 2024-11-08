@@ -72,7 +72,6 @@ fun WalkScreen(stepsViewModel: StepsViewModel = hiltViewModel(),
         Text(
             text = "획득한 하트: ${stepCount / 20}개",
             fontSize = 14.sp,
-            color = Color.Black
         )
 
         // 다음 하트까지 남은 걸음 수 표시
@@ -80,7 +79,6 @@ fun WalkScreen(stepsViewModel: StepsViewModel = hiltViewModel(),
         Text(
             text = "다음 하트까지 ${remainingSteps}걸음",
             fontSize = 12.sp,
-            color = Color.Gray
         )
 
     }

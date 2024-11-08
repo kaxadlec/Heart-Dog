@@ -28,6 +28,7 @@ import android.content.Context
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.zIndex
+import androidx.wear.compose.material.MaterialTheme
 import coil.size.Size
 
 @Composable
@@ -131,7 +132,7 @@ private fun PetLevelText(
     Text(
         text = "$name LV.$level",
         fontSize = 15.sp,
-        color = Color.Black,
+        color = MaterialTheme.colors.onBackground ,
         modifier = modifier
     )
 }

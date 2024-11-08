@@ -25,6 +25,7 @@ import androidx.compose.ui.res.painterResource
 import com.google.android.horologist.datalayer.sample.screens.watchpage.components.CircleIconButton
 import com.google.android.horologist.datalayer.sample.R
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.wear.compose.material.MaterialTheme
 import com.google.android.horologist.datalayer.sample.data.preferences.strategy.TimeRestrictionType
 import kotlinx.coroutines.launch
 
@@ -107,8 +108,8 @@ fun PetTab(
 //                    Spacer(modifier = Modifier.width(8.dp))
                     Text(
                         text = " ${userState.heart}",
-                        color = Color.Black,
-                        fontSize = 20.sp
+                        fontSize = 20.sp,
+                        color = MaterialTheme.colors.onBackground
                     )
 //                Text(text = "현재 포만도 ${petState.satiety} / 100", color = Color.Black)
                 }

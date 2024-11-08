@@ -78,7 +78,8 @@ fun CircleIconButton(
                 icon != null -> Icon(
                     imageVector = icon,
                     contentDescription = text,
-                    modifier = Modifier.size(iconSize)
+                    modifier = Modifier.size(iconSize),
+                    tint = Color.White
                 )
                 iconResId != null -> Image(
                     painter = painterResource(id = iconResId),
