@@ -27,6 +27,7 @@ import com.google.android.horologist.datalayer.sample.R
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.wear.compose.material.MaterialTheme
 import com.google.android.horologist.datalayer.sample.data.preferences.strategy.TimeRestrictionType
+import com.google.android.horologist.datalayer.sample.screens.watchpage.components.ExperienceArcs
 import kotlinx.coroutines.launch
 
 
@@ -52,6 +53,10 @@ fun PetTab(
     val largeSpacing = screenWidth * largeSpacingRatio
     val smallSpacing = screenWidth * smallSpacingRatio
 
+    // 경험치 계산 로직 추가
+    val requiredExpForLevel = petViewModel.getRequiredExpForLevel(petState.level)
+    val expProgress = petState.exp / requiredExpForLevel.toFloat()
+
     // 테스트를 위한 1분 모드 설정
     // 하루 모드로 하려면 주석처리하면됨
     LaunchedEffect(Unit) {
@@ -73,6 +78,16 @@ fun PetTab(
         modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
+
+        // ExperienceArcs 추가
+        ExperienceArcs(
+            modifier = Modifier
+                .align(Alignment.Center)
+                .fillMaxSize(),
+            leftProgress = petState.satiety / 100f,  // 포만도
+            rightProgress = expProgress  // 경험치
+        )
+
         Column(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally,

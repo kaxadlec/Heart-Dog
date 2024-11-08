@@ -16,13 +16,103 @@ import javax.inject.Inject
 // PetViewModel.kt
 @HiltViewModel
 class PetViewModel @Inject constructor( private val feedingPreferences: FeedingPreferences, private val timeStrategy: TimeRestrictionStrategy) : ViewModel() {
+    // ----------------------------------상태 관리----------------------------------
+    // 기본 UI 상태
     private val _uiState = MutableStateFlow(PetUiState())
     val uiState: StateFlow<PetUiState> = _uiState.asStateFlow()
 
-    // 오늘의 먹이 주기 횟수를 State로 관리
+    // 먹이 주기 횟수 상태
     private val _todayFeedingCount = MutableStateFlow(0) // 초기값 0으로 설정
     val todayFeedingCount: StateFlow<Int> = _todayFeedingCount.asStateFlow() // StateFlow로 변환
 
+    // ----------------------------------먹이 주기 관련 함수----------------------------------
+    // 먹이 주기 함수
+    suspend fun tryFeed(): Boolean {
+        return if (feedingPreferences.canFeedToday()) {
+            feedingPreferences.recordFeeding()
+            // 경험치 추가 로직
+            val expToAdd = calculateExpForCurrentSatiety()
+            addExp(expToAdd)
+
+            println("먹이를 주었습니다. 포만도: ${_uiState.value.satiety}, 추가된 경험치: $expToAdd")
+            true
+        } else {
+            false
+        }
+    }
+
+    // 먹이 주기 횟수 초기화
+    fun resetFeedingCount() {
+        viewModelScope.launch {
+            feedingPreferences.resetFeeding()
+            // 상태 업데이트
+            _todayFeedingCount.value = 0
+        }
+    }
+
+    // 현재 먹이 주기 상태 로그 출력
+    fun checkFeedingStatus() {
+        viewModelScope.launch {
+            feedingPreferences.logCurrentState()
+        }
+    }
+
+    // ----------------------------------경험치/레벨 관련 함수----------------------------------
+    // 경험치 추가 및 레벨업 처리
+    fun addExp(amount: Int) {
+        _uiState.update { currentState ->
+            val newExp = currentState.exp + amount
+            val requiredExpForNextLevel = getRequiredExpForLevel(currentState.level)
+
+            // 경험치가 레벨업 기준을 초과하면 레벨업
+            var levelUps = 0
+            var remainingExp = newExp
+
+            while (remainingExp >= requiredExpForNextLevel && currentState.level + levelUps < 30) {
+                levelUps++
+                remainingExp -= requiredExpForNextLevel
+            }
+
+            currentState.copy(
+                level = currentState.level + levelUps,
+                exp = remainingExp
+            )
+        }
+    }
+    // 강아지 레벨에 따른 필요 경험치 계산 함수
+    // 강아지 레벨(1~10): 100~1000
+    // 강아지 레벨(11~20): 1200 ~ 3000
+    // 강아지 레벨(21~30): 3300 ~ 6000
+    fun getRequiredExpForLevel(level: Int): Int {
+        return when {
+            level in 1..10 -> 100 * level // 1~10 레벨은 100
+            level in 11..20 -> 1000 + (200 * (level - 10)) // 11~20 레벨은 200
+            level in 21..30 -> 3000 + (300 * (level - 20)) // 21~30 레벨은 300
+            else -> 6000 // 최대 경험치, 레벨 제한이 있을 경우 고정
+        }
+    }
+
+    // 포만도에 따른 경험치 배율을 결정하는 함수
+    // 포만도에 따라 x0.5, x1, x1.5, x2 경험치 차등 지급
+    private fun getExpMultiplier(satiety: Int): Float {
+        return when {
+            satiety < 25 -> 0.5f
+            satiety < 50 -> 1.0f
+            satiety < 75 -> 1.5f
+            else -> 2.0f
+        }
+    }
+
+    // 포만도에 따른 경험치 배율을 적용하여 경험치를 계산하는 함수
+    private fun calculateExpForCurrentSatiety(): Int {
+        val baseExp = 20 // 먹이 하나당 기본 경험치 (원래는 2인데 테스트 위해 20으로 설정)
+        val satiety = _uiState.value.satiety // 현재 포만도
+        val multiplier = getExpMultiplier(satiety) // 포만도에 따른 배율 적용
+        return (baseExp * multiplier).toInt() // 계산된 경험치 반환
+    }
+
+
+    // ----------------------------------기타 상태 업데이트 함수----------------------------------
     // 현재 시간 제한 타입
     val currentTimeRestrictionType = timeStrategy.currentType
 
@@ -31,22 +121,6 @@ class PetViewModel @Inject constructor( private val feedingPreferences: FeedingP
         timeStrategy.setType(type)
         // 타입 변경 시 먹이 주기 횟수 초기화
         resetFeedingCount()
-    }
-
-    // 포만도에 따른 경험치 배율 계산
-    private fun getExpMultiplier(satiety: Int): Float = when {
-        satiety < 25 -> 0.5f
-        satiety < 50 -> 1.0f
-        satiety < 75 -> 1.5f
-        else -> 2.0f
-    }
-
-    // 레벨업에 필요한 경험치 계산
-    private fun getRequiredExpForLevel(level: Int): Int = when {
-        level <= 10 -> 100 * level
-        level <= 20 -> 1000 + (200 * (level - 10))
-        level <= 30 -> 3000 + (300 * (level - 20))
-        else -> 6000 // 최대 레벨
     }
 
     // 강아지 이름 업데이트 함수
@@ -63,47 +137,6 @@ class PetViewModel @Inject constructor( private val feedingPreferences: FeedingP
         }
     }
 
-    // 먹이 주기 함수
-    suspend fun tryFeed(): Boolean {
-        return if (feedingPreferences.canFeedToday()) {
-            feedingPreferences.recordFeeding()
-            true
-        } else {
-            false
-        }
-    }
-
-    // 현재 먹이 주기 상태 로그 출력
-    fun checkFeedingStatus() {
-        viewModelScope.launch {
-            feedingPreferences.logCurrentState()
-        }
-    }
-
-    // 먹이 주기 횟수 리셋 함수
-    fun resetFeedingCount() {
-        viewModelScope.launch {
-            feedingPreferences.resetFeeding()
-            // 상태 업데이트
-            _todayFeedingCount.value = 0
-        }
-    }
-
-    // 경험치 추가 함수
-    fun addExp(amount: Int) {
-        _uiState.update { currentState ->
-            val newExp = currentState.exp + amount
-            val expForNextLevel = 100   // 100exp 마다 레벨업하는 것으로 일단 설정
-            val levelUps = newExp / expForNextLevel
-            val remainingExp = newExp % expForNextLevel
-
-            currentState.copy(
-                level = currentState.level + levelUps,
-                exp = remainingExp
-            )
-        }
-    }
-
     // 포만감 업데이트 함수
     fun updateSatiety(amount: Int) {
         _uiState.update { currentState ->
@@ -113,17 +146,4 @@ class PetViewModel @Inject constructor( private val feedingPreferences: FeedingP
         }
     }
 
-    // 디버그용 - 현재 경험치 정보 출력
-    fun printExpInfo() {
-        val state = _uiState.value
-        val nextLevelExp = getRequiredExpForLevel(state.level)
-        val multiplier = getExpMultiplier(state.satiety)
-        println("""
-            현재 상태:
-            레벨: ${state.level}
-            경험치: ${state.exp}/$nextLevelExp
-            포만도: ${state.satiety}
-            경험치 배율: x$multiplier
-        """.trimIndent())
-    }
 }

@@ -40,9 +40,14 @@ fun HomeTab(
     val petState by petViewModel.uiState.collectAsStateWithLifecycle()
     val userState by userViewModel.uiState.collectAsStateWithLifecycle()
 
+    // 현재 레벨에 필요한 경험치를 가져옴
+    val requiredExpForLevel = petViewModel.getRequiredExpForLevel(petState.level)
+    // expProgress를 현재 경험치 대비 필요 경험치의 비율로 계산
+    val expProgress = petState.exp / requiredExpForLevel.toFloat()
+
     HomeTabContent(
         satietyProgress = petState.satiety / 100f,
-        expProgress = petState.exp / 100f,
+        expProgress = expProgress,
         name = petState.name,
         level = petState.level,
         hasPet = userState.hasPet
