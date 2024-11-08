@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.sp
 import androidx.wear.compose.material.Button
 import androidx.wear.compose.material.ButtonDefaults
 import androidx.wear.compose.material.Icon
+import java.util.Calendar
 
 
 @Composable
@@ -36,7 +37,7 @@ fun CircleIconButton(
     buttonSizeRatio: Float = 0.3f,  // 화면 너비 대비 버튼 크기 비율
     iconSizeRatio: Float = 0.14f,  //
     backgroundColor: Color = Color(0xFFFF9A4D),
-    textColor: Color = Color.Black,
+//    textColor: Color = Color.Black,
 //    textSize: TextUnit = 10.sp,
     textSizeRatio: Float = 0.05f,
     spacingRatio: Float = 0.02f,
@@ -52,6 +53,11 @@ fun CircleIconButton(
     val iconSize = screenWidth * iconSizeRatio
     val textSize = (screenWidth * textSizeRatio).value.sp
     val spacing = screenHeight * spacingRatio
+
+    // 현재 시간이 밤(19시~6시)인지 확인하여 텍스트 색상 설정
+    val currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
+    val isNightMode = currentHour in 19..23 || currentHour in 0..6
+    val textColor = if (isNightMode) Color.White else Color.Black
 
     Column(
         modifier = modifier,
