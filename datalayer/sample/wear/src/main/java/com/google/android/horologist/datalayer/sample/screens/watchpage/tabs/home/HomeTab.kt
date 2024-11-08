@@ -104,7 +104,7 @@ private fun PetImage(
             Image(
                 painter = rememberAsyncImagePainter(
                     ImageRequest.Builder(context)
-                        .data(R.drawable.dog_animation_1)
+                        .data(R.drawable.cryingmotion)
                         .size(Size(120, 120))
                         .build(),
                     imageLoader = imageLoader
