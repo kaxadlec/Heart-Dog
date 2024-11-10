@@ -18,6 +18,7 @@ package com.google.android.horologist.datalayer.sample.screens.main
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -87,14 +88,30 @@ import com.google.android.horologist.datalayer.sample.screens.hotdog.setting.Set
 import com.google.android.horologist.datalayer.sample.screens.hotdog.setting.components.UserManualPage
 import com.google.android.horologist.datalayer.sample.screens.hotdog.repository.UserInsertScreen
 import com.google.android.horologist.datalayer.sample.screens.hotdog.repository.UserSelectScreen
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.google.android.horologist.datalayer.sample.screens.hotdog.repository.DogRepository
+import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.DogViewModel
+import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.DogViewModelFactory
+import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.UserViewModel
 
 @Composable
 fun MainScreen(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
-    onStartLocationService: () -> Unit
+    onStartLocationService: () -> Unit,
+
 ) {
     val userRepository = UserRepository()
+    val dogRepository = DogRepository()
+
+    val userViewModel: UserViewModel = viewModel()
+    val dogViewModel: DogViewModel = viewModel(
+        factory = DogViewModelFactory(userViewModel, dogRepository)
+    )
+
+    LaunchedEffect(Unit) {
+        userViewModel.setUserId(1L)  // 여기에 추가
+    }
 
     Scaffold(
         modifier = modifier,
@@ -139,7 +156,7 @@ fun MainScreen(
                 }
 
                 composable<HotDogMain> {
-                    HotDogMainScreen(navController = navController)
+                    HotDogMainScreen(navController = navController, dogViewModel = dogViewModel)
                 }
 
                 composable<Notification> {

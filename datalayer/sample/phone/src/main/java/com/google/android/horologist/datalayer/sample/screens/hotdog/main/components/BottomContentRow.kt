@@ -9,10 +9,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.google.android.horologist.datalayer.sample.screens.hotdog.main.utils.ContentType
 import com.google.android.horologist.datalayer.sample.screens.hotdog.main.utils.CustomButtonWithDot
+import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.DogViewModel
 import com.google.android.horologist.datalayer.sample.ui.theme.MainColor
 
 @Composable
-fun BottomContentRow(onButtonClick: (ContentType) -> Unit, selectedContent: ContentType) {
+fun BottomContentRow(dogViewModel: DogViewModel, onButtonClick: (ContentType) -> Unit, selectedContent: ContentType) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -48,7 +49,7 @@ fun BottomContentRow(onButtonClick: (ContentType) -> Unit, selectedContent: Cont
             }
 
             // 선택된 콘텐츠 표시
-            DynamicContentDisplay(contentType = selectedContent)
+            DynamicContentDisplay(contentType = selectedContent, dogViewModel = dogViewModel)
         }
     }
 }
