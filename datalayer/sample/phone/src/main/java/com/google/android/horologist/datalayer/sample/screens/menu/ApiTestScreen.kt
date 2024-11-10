@@ -35,6 +35,16 @@ fun ApiTestScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
+        // Heart 업데이트 버튼
+        Button(
+            onClick = { userViewModel.updateHeartValue(10) },  // 예제: 10씩 추가
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 4.dp)
+        ) {
+            Text(text = "밥 얻기")
+        }
+
         // 걸음 수 업데이트 시작 버튼
         Button(
             onClick = { userViewModel.startUpdatingStepsEveryMinute() },

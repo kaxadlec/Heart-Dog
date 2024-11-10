@@ -241,4 +241,28 @@ class UserRepository {
             false
         }
     }
+
+    suspend fun updateHeart(userId: Long, heartAmount: Int): String = withContext(Dispatchers.IO) {
+        try {
+            val params = JsonObject(
+                mapOf(
+                    "p_user_id" to JsonPrimitive(userId),
+                    "p_heart_amount" to JsonPrimitive(heartAmount)
+                )
+            )
+
+            val response: String = SupabaseClientProvider.supabase
+                .postgrest
+                .rpc("update_heart", params)
+                .decodeAs()
+
+            Log.d(TAG, "Heart updated response: $response")
+            response
+        } catch (e: Exception) {
+            Log.e(TAG, "Error updating heart: ${e.message}", e)
+            "Error updating heart"
+        }
+    }
+
+
 }

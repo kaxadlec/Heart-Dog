@@ -13,6 +13,15 @@ class UserViewModel(private val userRepository: UserRepository) : ViewModel() {
     private val _userId = MutableStateFlow<Long?>(null)
     val userId: StateFlow<Long?> get() = _userId
 
+    fun updateHeartValue(heartAmount: Int) {
+        viewModelScope.launch {
+            val currentUserId = _userId.value
+            if (currentUserId != null) {
+                userRepository.updateHeart(currentUserId, heartAmount)
+            }
+        }
+    }
+
     // 임의의 걸음 수 업데이트 (1분마다 상수 값 사용)
     fun startUpdatingStepsEveryMinute() {
         viewModelScope.launch {

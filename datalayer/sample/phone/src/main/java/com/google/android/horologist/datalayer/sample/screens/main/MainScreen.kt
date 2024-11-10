@@ -115,7 +115,7 @@ fun MainScreen(
     )
 
     LaunchedEffect(Unit) {
-        userViewModel.setUserId(2L)
+        userViewModel.setUserId(1L)
     }
 
     Scaffold(
