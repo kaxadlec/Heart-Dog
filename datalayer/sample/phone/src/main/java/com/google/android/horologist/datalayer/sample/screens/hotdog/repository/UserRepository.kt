@@ -1,5 +1,6 @@
 package com.google.android.horologist.datalayer.sample.repository
 
+import android.util.Log
 import com.google.android.horologist.datalayer.sample.screens.hotdog.data.SupabaseClientProvider
 import com.google.android.horologist.datalayer.sample.screens.hotdog.data.models.User
 import io.github.jan.supabase.annotations.SupabaseExperimental
@@ -23,6 +24,8 @@ import kotlinx.serialization.json.JsonPrimitive
 
 @OptIn(SupabaseExperimental::class)
 class UserRepository {
+
+    private val TAG = "UserRepository"
 
     private val client = HttpClient {
         install(ContentNegotiation) {
@@ -72,6 +75,102 @@ class UserRepository {
         }
     }
 
+    // user 정보 가져오기
+    @Serializable
+    data class UserFullInfoResponse(
+        val user_info: User,
+        val state_info: StateInfo?,
+        val couple_info: CoupleInfo?
+    )
+
+    @Serializable
+    data class StateInfo(val steps: Long?, val distance: Long?, val heart: Int?)
+
+    @Serializable
+    data class CoupleInfo(val couple_id: Long?, val host: Long?, val guest: Long?, val hours: Long?, val code: String?)
+
+    suspend fun getUserFullInfo(userId: Long): UserFullInfoResponse? = withContext(Dispatchers.IO) {
+        try {
+            val params = JsonObject(mapOf("p_user_id" to JsonPrimitive(userId)))
+
+            val response = SupabaseClientProvider.supabase
+                .postgrest
+                .rpc("get_user_info", params)
+                .decodeAs<UserFullInfoResponse>()
+
+            println("Fetched user full info: $response")
+            response
+        } catch (e: Exception) {
+            println("Error fetching user full info: ${e.message}")
+            null
+        }
+    }
+
+    suspend fun updateSteps(userId: Long, steps: Int): Boolean = withContext(Dispatchers.IO) {
+        try {
+            val params = JsonObject(
+                mapOf(
+                    "p_user_id" to JsonPrimitive(userId),
+                    "p_steps" to JsonPrimitive(steps)
+                )
+            )
+
+            SupabaseClientProvider.supabase
+                .postgrest
+                .rpc("update_steps", params)
+
+            Log.d(TAG, "Steps updated successfully for userId: $userId")
+            true
+        } catch (e: Exception) {
+            Log.e(TAG, "Error updating steps: ${e.message}", e)
+            false
+        }
+    }
+
+    suspend fun updateDistance(userId: Long, distance: Long): Boolean = withContext(Dispatchers.IO) {
+        try {
+            val params = JsonObject(
+                mapOf(
+                    "p_user_id" to JsonPrimitive(userId),
+                    "p_distance_meters" to JsonPrimitive(distance)  // 매개변수 이름 수정
+                )
+            )
+
+            SupabaseClientProvider.supabase
+                .postgrest
+                .rpc("update_user_distance", params)  // 함수 이름 수정
+
+            Log.d(TAG, "Distance updated successfully for userId: $userId")
+            true
+        } catch (e: Exception) {
+            Log.e(TAG, "Error updating distance: ${e.message}", e)
+            false
+        }
+    }
+
+    suspend fun updateHeart(userId: Long, heartAmount: Int): String = withContext(Dispatchers.IO) {
+        try {
+            val params = JsonObject(
+                mapOf(
+                    "p_user_id" to JsonPrimitive(userId),
+                    "p_heart_amount" to JsonPrimitive(heartAmount)
+                )
+            )
+
+            val response: String = SupabaseClientProvider.supabase
+                .postgrest
+                .rpc("update_heart", params)
+                .decodeAs()
+
+            Log.d(TAG, "Heart updated response: $response")
+            response
+        } catch (e: Exception) {
+            Log.e(TAG, "Error updating heart: ${e.message}", e)
+            "Error updating heart"
+        }
+    }
+
+    // 생성된 qrcode 입력
     suspend fun updateUserCode(userId: Long, code: String): Boolean = withContext(Dispatchers.IO) {
         runCatching {
 
@@ -164,4 +263,24 @@ class UserRepository {
             false
         }
     }
+
+    suspend fun resetUserData(userId: Long): Boolean = withContext(Dispatchers.IO) {
+        try {
+            val params = JsonObject(
+                mapOf("p_user_id" to JsonPrimitive(userId))
+            )
+
+            SupabaseClientProvider.supabase
+                .postgrest
+                .rpc("reset_user_data", params)
+
+            Log.d(TAG, "User data reset successfully for userId: $userId")
+            true
+        } catch (e: Exception) {
+            Log.e(TAG, "Error resetting user data: ${e.message}", e)
+            false
+        }
+    }
+
+
 }

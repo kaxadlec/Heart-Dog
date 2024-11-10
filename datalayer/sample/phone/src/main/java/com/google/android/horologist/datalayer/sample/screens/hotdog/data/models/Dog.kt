@@ -5,10 +5,10 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Dog(
-    @SerialName("dog_id") val dogId: Long,
-    @SerialName("couple_id") val coupleId: Int,
     val level: Int,
-    val name: String = "",
+    val name: String,
     @SerialName("current_exp") val currentExp: Long,
-    val satiety: Int
+    val satiety: Int,
+    @SerialName("position") val position: Int,
+    @SerialName("max_exp") val maxExp: Long
 )

@@ -27,6 +27,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.google.android.horologist.datalayer.sample.R
+import com.google.android.horologist.datalayer.sample.screens.ApiTest
 import com.google.android.horologist.datalayer.sample.screens.AppHelperNodes
 import com.google.android.horologist.datalayer.sample.screens.AppHelperNodesListener
 import com.google.android.horologist.datalayer.sample.screens.Counter
@@ -55,6 +56,13 @@ fun MenuScreen(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
+
+        Button(
+            onClick = { navController.navigate(ApiTest) },
+            modifier = Modifier.padding(vertical = 4.dp)
+        ) {
+            Text(text = "API Test Menu")
+        }
 
         // 스플래시 화면으로 이동 버튼
         Button(onClick = { navController.navigate(Splash) }) {
