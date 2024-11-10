@@ -106,6 +106,70 @@ class UserRepository {
         }
     }
 
+    suspend fun updateSteps(userId: Long, steps: Int): Boolean = withContext(Dispatchers.IO) {
+        try {
+            val params = JsonObject(
+                mapOf(
+                    "p_user_id" to JsonPrimitive(userId),
+                    "p_steps" to JsonPrimitive(steps)
+                )
+            )
+
+            SupabaseClientProvider.supabase
+                .postgrest
+                .rpc("update_steps", params)
+
+            Log.d(TAG, "Steps updated successfully for userId: $userId")
+            true
+        } catch (e: Exception) {
+            Log.e(TAG, "Error updating steps: ${e.message}", e)
+            false
+        }
+    }
+
+    suspend fun updateDistance(userId: Long, distance: Long): Boolean = withContext(Dispatchers.IO) {
+        try {
+            val params = JsonObject(
+                mapOf(
+                    "p_user_id" to JsonPrimitive(userId),
+                    "p_distance_meters" to JsonPrimitive(distance)  // 매개변수 이름 수정
+                )
+            )
+
+            SupabaseClientProvider.supabase
+                .postgrest
+                .rpc("update_user_distance", params)  // 함수 이름 수정
+
+            Log.d(TAG, "Distance updated successfully for userId: $userId")
+            true
+        } catch (e: Exception) {
+            Log.e(TAG, "Error updating distance: ${e.message}", e)
+            false
+        }
+    }
+
+    suspend fun updateHeart(userId: Long, heartAmount: Int): String = withContext(Dispatchers.IO) {
+        try {
+            val params = JsonObject(
+                mapOf(
+                    "p_user_id" to JsonPrimitive(userId),
+                    "p_heart_amount" to JsonPrimitive(heartAmount)
+                )
+            )
+
+            val response: String = SupabaseClientProvider.supabase
+                .postgrest
+                .rpc("update_heart", params)
+                .decodeAs()
+
+            Log.d(TAG, "Heart updated response: $response")
+            response
+        } catch (e: Exception) {
+            Log.e(TAG, "Error updating heart: ${e.message}", e)
+            "Error updating heart"
+        }
+    }
+
     // 생성된 qrcode 입력
     suspend fun updateUserCode(userId: Long, code: String): Boolean = withContext(Dispatchers.IO) {
         runCatching {
@@ -200,67 +264,21 @@ class UserRepository {
         }
     }
 
-    suspend fun updateSteps(userId: Long, steps: Int): Boolean = withContext(Dispatchers.IO) {
+    suspend fun resetUserData(userId: Long): Boolean = withContext(Dispatchers.IO) {
         try {
             val params = JsonObject(
-                mapOf(
-                    "p_user_id" to JsonPrimitive(userId),
-                    "p_steps" to JsonPrimitive(steps)
-                )
+                mapOf("p_user_id" to JsonPrimitive(userId))
             )
 
             SupabaseClientProvider.supabase
                 .postgrest
-                .rpc("update_steps", params)
+                .rpc("reset_user_data", params)
 
-            Log.d(TAG, "Steps updated successfully for userId: $userId")
+            Log.d(TAG, "User data reset successfully for userId: $userId")
             true
         } catch (e: Exception) {
-            Log.e(TAG, "Error updating steps: ${e.message}", e)
+            Log.e(TAG, "Error resetting user data: ${e.message}", e)
             false
-        }
-    }
-
-    suspend fun updateDistance(userId: Long, distance: Long): Boolean = withContext(Dispatchers.IO) {
-        try {
-            val params = JsonObject(
-                mapOf(
-                    "p_user_id" to JsonPrimitive(userId),
-                    "p_distance_meters" to JsonPrimitive(distance)  // 매개변수 이름 수정
-                )
-            )
-
-            SupabaseClientProvider.supabase
-                .postgrest
-                .rpc("update_user_distance", params)  // 함수 이름 수정
-
-            Log.d(TAG, "Distance updated successfully for userId: $userId")
-            true
-        } catch (e: Exception) {
-            Log.e(TAG, "Error updating distance: ${e.message}", e)
-            false
-        }
-    }
-
-    suspend fun updateHeart(userId: Long, heartAmount: Int): String = withContext(Dispatchers.IO) {
-        try {
-            val params = JsonObject(
-                mapOf(
-                    "p_user_id" to JsonPrimitive(userId),
-                    "p_heart_amount" to JsonPrimitive(heartAmount)
-                )
-            )
-
-            val response: String = SupabaseClientProvider.supabase
-                .postgrest
-                .rpc("update_heart", params)
-                .decodeAs()
-
-            Log.d(TAG, "Heart updated response: $response")
-            response
-        } catch (e: Exception) {
-            Log.e(TAG, "Error updating heart: ${e.message}", e)
-            "Error updating heart"
         }
     }
 

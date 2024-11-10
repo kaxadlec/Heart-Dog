@@ -35,6 +35,16 @@ fun ApiTestScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
+        // User data reset 버튼
+        Button(
+            onClick = { userViewModel.resetUserData(userViewModel.userId.value ?: 0L) },  // 예제: userId 1로 설정
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 4.dp)
+        ) {
+            Text(text = "유저 정보 삭제")
+        }
+
         // Heart 업데이트 버튼
         Button(
             onClick = { userViewModel.updateHeartValue(10) },  // 예제: 10씩 추가

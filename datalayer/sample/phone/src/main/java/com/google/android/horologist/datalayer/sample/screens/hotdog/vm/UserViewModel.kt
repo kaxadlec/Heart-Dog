@@ -66,4 +66,14 @@ class UserViewModel(private val userRepository: UserRepository) : ViewModel() {
             }
         }
     }
+
+    private val _resetResult = MutableStateFlow<String?>(null)
+    val resetResult: StateFlow<String?> get() = _resetResult
+
+    fun resetUserData(userId: Long) {
+        viewModelScope.launch {
+            val success = userRepository.resetUserData(userId)
+            _resetResult.value = if (success) "User data reset successfully." else "Failed to reset user data."
+        }
+    }
 }
