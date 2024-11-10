@@ -64,4 +64,20 @@ class DogViewModel(
             }
         }
     }
+
+    fun updateDogPosition() {
+        viewModelScope.launch {
+            try {
+                val userId = userViewModel.userId.value ?: return@launch
+                val dogId = _dogId.value ?: return@launch
+
+                val success = dogRepository.updateDogPosition(dogId, userId)
+                if (!success) {
+                    Log.e("DogViewModel", "강아지 위치 업데이트 실패")
+                }
+            } catch (e: Exception) {
+                Log.e("DogViewModel", "Error updating dog position: ${e.message}")
+            }
+        }
+    }
 }

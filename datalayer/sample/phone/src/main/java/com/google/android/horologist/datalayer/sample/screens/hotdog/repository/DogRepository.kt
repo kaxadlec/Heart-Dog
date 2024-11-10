@@ -97,4 +97,24 @@ class DogRepository {
             }
         }
 
+    suspend fun updateDogPosition(dogId: Long, userId: Long): Boolean = withContext(Dispatchers.IO) {
+        return@withContext try {
+            val params = JsonObject(
+                mapOf(
+                    "p_dog_id" to JsonPrimitive(dogId),
+                    "p_new_position_user_id" to JsonPrimitive(userId)
+                )
+            )
+
+            SupabaseClientProvider.supabase
+                .postgrest
+                .rpc("update_dog_position", params)
+
+            true
+        } catch (e: Exception) {
+            Log.e(TAG, "updateDogPosition 에러: ${e.message}", e)
+            false
+        }
+    }
+
 }

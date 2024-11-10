@@ -52,5 +52,15 @@ fun ApiTestScreen(
             )
         }
 
+        // 강아지 위치 업데이트 버튼 추가
+        Button(
+            onClick = { dogViewModel.updateDogPosition() },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 4.dp)
+        ) {
+            Text(text = "Update Dog Position to Current User")
+        }
+
     }
 }
