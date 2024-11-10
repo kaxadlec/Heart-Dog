@@ -3,7 +3,6 @@ package com.google.android.horologist.datalayer.sample.screens.hotdog.repository
 import android.util.Log
 import com.google.android.horologist.datalayer.sample.screens.hotdog.data.SupabaseClientProvider
 import com.google.android.horologist.datalayer.sample.screens.hotdog.data.models.Dog
-import com.google.android.horologist.datalayer.sample.screens.hotdog.data.models.Exp
 import io.github.jan.supabase.postgrest.from
 import io.github.jan.supabase.postgrest.postgrest
 import kotlinx.coroutines.Dispatchers
@@ -13,16 +12,6 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
-
-@Serializable
-data class DogDetails(
-    val level: Int,
-    val name: String,
-    val current_exp: Long,
-    val satiety: Int,
-    val dog_position: Int,
-    val max_exp: Long
-)
 
 class DogRepository {
 
