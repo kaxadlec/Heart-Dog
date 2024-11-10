@@ -1,5 +1,6 @@
 package com.google.android.horologist.datalayer.sample.repository
 
+import android.util.Log
 import com.google.android.horologist.datalayer.sample.screens.hotdog.data.SupabaseClientProvider
 import com.google.android.horologist.datalayer.sample.screens.hotdog.data.models.User
 import io.github.jan.supabase.annotations.SupabaseExperimental
@@ -23,6 +24,8 @@ import kotlinx.serialization.json.JsonPrimitive
 
 @OptIn(SupabaseExperimental::class)
 class UserRepository {
+
+    private val TAG = "UserRepository"
 
     private val client = HttpClient {
         install(ContentNegotiation) {
@@ -214,6 +217,27 @@ class UserRepository {
             true
         } catch (e: Exception) {
             Log.e(TAG, "Error updating steps: ${e.message}", e)
+            false
+        }
+    }
+
+    suspend fun updateDistance(userId: Long, distance: Long): Boolean = withContext(Dispatchers.IO) {
+        try {
+            val params = JsonObject(
+                mapOf(
+                    "p_user_id" to JsonPrimitive(userId),
+                    "p_distance_meters" to JsonPrimitive(distance)  // 매개변수 이름 수정
+                )
+            )
+
+            SupabaseClientProvider.supabase
+                .postgrest
+                .rpc("update_user_distance", params)  // 함수 이름 수정
+
+            Log.d(TAG, "Distance updated successfully for userId: $userId")
+            true
+        } catch (e: Exception) {
+            Log.e(TAG, "Error updating distance: ${e.message}", e)
             false
         }
     }

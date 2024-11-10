@@ -6,11 +6,37 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import androidx.lifecycle.viewModelScope
 import com.google.android.horologist.datalayer.sample.repository.UserRepository
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class UserViewModel(private val userRepository: UserRepository) : ViewModel() {
     private val _userId = MutableStateFlow<Long?>(null)
     val userId: StateFlow<Long?> get() = _userId
+
+    // 임의의 걸음 수 업데이트 (1분마다 상수 값 사용)
+    fun startUpdatingStepsEveryMinute() {
+        viewModelScope.launch {
+            while (true) {
+                val currentUserId = _userId.value
+                if (currentUserId != null) {
+                    userRepository.updateSteps(currentUserId, 10)  // 임의의 상수 10을 사용
+                }
+                delay(60000)  // 1분 지연
+            }
+        }
+    }
+
+    fun startUpdatingDistanceEveryMinute() {
+        viewModelScope.launch {
+            while (true) {
+                val currentUserId = _userId.value
+                if (currentUserId != null) {
+                    userRepository.updateDistance(currentUserId, 100)
+                }
+                delay(60000)  // 1분 지연
+            }
+        }
+    }
 
     fun setUserId(id: Long) {
         Log.d("UserViewModel", "setUserId 호출: $id")

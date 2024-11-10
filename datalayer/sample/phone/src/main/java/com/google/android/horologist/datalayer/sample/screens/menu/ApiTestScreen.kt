@@ -34,6 +34,27 @@ fun ApiTestScreen(
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+
+        // 걸음 수 업데이트 시작 버튼
+        Button(
+            onClick = { userViewModel.startUpdatingStepsEveryMinute() },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 4.dp)
+        ) {
+            Text(text = "걸음 수 업데이트")
+        }
+
+        // 거리 업데이트 시작 버튼
+        Button(
+            onClick = { userViewModel.startUpdatingDistanceEveryMinute() },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 4.dp)
+        ) {
+            Text(text = "거리 업데이트")
+        }
+
         // User 정보를 가져오는 버튼
         Button(
             onClick = { userViewModel.fetchUserFullInfo(userViewModel.userId.value ?: 0L) }, // 0L은 기본값, 실제 사용 시 userId가 필요
@@ -41,7 +62,7 @@ fun ApiTestScreen(
                 .fillMaxWidth()
                 .padding(vertical = 4.dp)
         ) {
-            Text(text = "Fetch User Full Info")
+            Text(text = "유저 정보")
         }
 
         // 유저 정보 표시
@@ -59,7 +80,7 @@ fun ApiTestScreen(
                 .fillMaxWidth()
                 .padding(vertical = 4.dp)
         ) {
-            Text(text = "Give 5 Hearts to Dog")
+            Text(text = "강아지 먹이 주기")
         }
 
         // 하트 주기 결과 표시
@@ -81,7 +102,7 @@ fun ApiTestScreen(
                 .fillMaxWidth()
                 .padding(vertical = 4.dp)
         ) {
-            Text(text = "Update Dog Position to Current User")
+            Text(text = "강아지 위치 변경")
         }
     }
 }
