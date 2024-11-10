@@ -94,6 +94,7 @@ import com.google.android.horologist.datalayer.sample.screens.hotdog.repository.
 import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.DogViewModel
 import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.DogViewModelFactory
 import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.UserViewModel
+import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.UserViewModelFactory
 import com.google.android.horologist.datalayer.sample.screens.menu.ApiTestScreen
 
 @Composable
@@ -106,13 +107,15 @@ fun MainScreen(
     val userRepository = UserRepository()
     val dogRepository = DogRepository()
 
-    val userViewModel: UserViewModel = viewModel()
+    val userViewModel: UserViewModel = viewModel(
+        factory = UserViewModelFactory(userRepository)
+    )
     val dogViewModel: DogViewModel = viewModel(
         factory = DogViewModelFactory(userViewModel, dogRepository)
     )
 
     LaunchedEffect(Unit) {
-        userViewModel.setUserId(2L)  // 여기에 추가
+        userViewModel.setUserId(2L)
     }
 
     Scaffold(
@@ -133,7 +136,7 @@ fun MainScreen(
             ) {
 
                 composable<ApiTest> {
-                    ApiTestScreen(navController = navController, modifier = Modifier, dogViewModel = dogViewModel)
+                    ApiTestScreen(navController = navController, modifier = Modifier, userViewModel = userViewModel, dogViewModel = dogViewModel)
                 }
 
                 composable<Menu> {

@@ -72,6 +72,38 @@ class UserRepository {
         }
     }
 
+    // user 정보 가져오기
+    @Serializable
+    data class UserFullInfoResponse(
+        val user_info: User,
+        val state_info: StateInfo?,
+        val couple_info: CoupleInfo?
+    )
+
+    @Serializable
+    data class StateInfo(val steps: Long?, val distance: Long?, val heart: Int?)
+
+    @Serializable
+    data class CoupleInfo(val couple_id: Long?, val host: Long?, val guest: Long?, val hours: Long?, val code: String?)
+
+    suspend fun getUserFullInfo(userId: Long): UserFullInfoResponse? = withContext(Dispatchers.IO) {
+        try {
+            val params = JsonObject(mapOf("p_user_id" to JsonPrimitive(userId)))
+
+            val response = SupabaseClientProvider.supabase
+                .postgrest
+                .rpc("get_user_info", params)
+                .decodeAs<UserFullInfoResponse>()
+
+            println("Fetched user full info: $response")
+            response
+        } catch (e: Exception) {
+            println("Error fetching user full info: ${e.message}")
+            null
+        }
+    }
+
+    // 생성된 qrcode 입력
     suspend fun updateUserCode(userId: Long, code: String): Boolean = withContext(Dispatchers.IO) {
         runCatching {
 
@@ -161,6 +193,27 @@ class UserRepository {
 
         }.getOrElse { e ->
             println("Error checking matching status: ${e.message}")
+            false
+        }
+    }
+
+    suspend fun updateSteps(userId: Long, steps: Int): Boolean = withContext(Dispatchers.IO) {
+        try {
+            val params = JsonObject(
+                mapOf(
+                    "p_user_id" to JsonPrimitive(userId),
+                    "p_steps" to JsonPrimitive(steps)
+                )
+            )
+
+            SupabaseClientProvider.supabase
+                .postgrest
+                .rpc("update_steps", params)
+
+            Log.d(TAG, "Steps updated successfully for userId: $userId")
+            true
+        } catch (e: Exception) {
+            Log.e(TAG, "Error updating steps: ${e.message}", e)
             false
         }
     }
