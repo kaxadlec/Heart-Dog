@@ -1,14 +1,12 @@
 package com.google.android.horologist.datalayer.sample.screens.hotdog.vm
 
 import android.util.Log
-import com.google.android.horologist.datalayer.sample.screens.hotdog.repository.DogRepository
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.android.horologist.datalayer.sample.screens.hotdog.data.models.Dog
+import com.google.android.horologist.datalayer.sample.screens.hotdog.repository.DogRepository
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 
 class DogViewModel(
     private val userViewModel: UserViewModel,
@@ -16,35 +14,14 @@ class DogViewModel(
 ) : ViewModel() {
 
     private val _dogId = MutableStateFlow<Long?>(null)
-    val dogId: StateFlow<Long?> get() = _dogId
-
-    init {
-        Log.d("DogViewModel", "DogViewModel init 시작")
-        Log.d("DogViewModel", "초기 userViewModel.userId: ${userViewModel.userId.value}")
-
-        // userId가 설정되면 dogId를 가져옴
-        userViewModel.userId
-            .filterNotNull() // userId가 null이 아닌 경우만 처리
-            .onEach { userId ->
-                Log.d("DogViewModel", "userId 변경 감지: $userId")
-                if (userId != null) {
-                    fetchDogIdByUserId(userId)
-                }
-            }
-            .launchIn(viewModelScope)
-    }
-
-    private fun fetchDogIdByUserId(userId: Long) {
-        viewModelScope.launch {
-            val fetchedDogId = dogRepository.getDogIdByUserId(userId)
-            _dogId.value = fetchedDogId
-        }
-    }
-
     private val _dogDetails = MutableStateFlow<Dog?>(null)
-    val dogDetails: StateFlow<Dog?> get() = _dogDetails
+    val dogDetails: StateFlow<Dog?> = _dogDetails.asStateFlow()
+
+    private val _giveHeartResult = MutableStateFlow<DogRepository.GiveHeartResponse?>(null)
+    val giveHeartResult: StateFlow<DogRepository.GiveHeartResponse?> = _giveHeartResult.asStateFlow()
 
     init {
+        // userId가 변경될 때마다 강아지 정보를 가져옴
         userViewModel.userId
             .filterNotNull()
             .onEach { userId ->
@@ -55,12 +32,36 @@ class DogViewModel(
 
     private fun fetchDogIdAndDetails(userId: Long) {
         viewModelScope.launch {
-            val dogId = dogRepository.getDogIdByUserId(userId)
-            if (dogId != null) {
-                // getDogDetailsById가 suspend 함수로 되어 있는지 확인 필요
-                _dogDetails.value = dogRepository.getDogDetailsById(dogId)
+            try {
+                val dogId = dogRepository.getDogIdByUserId(userId)
+                _dogId.value = dogId
+
+                if (dogId != null) {
+                    _dogDetails.value = dogRepository.getDogDetailsById(dogId)
+                }
+            } catch (e: Exception) {
+                Log.e("DogViewModel", "Error fetching dog details: ${e.message}")
             }
         }
     }
 
+    // 강아지에게 하트 주기
+    fun giveHeartToDog(heartAmount: Int = 5) {
+        viewModelScope.launch {
+            try {
+                val userId = userViewModel.userId.value ?: return@launch
+                val dogId = _dogId.value ?: return@launch
+
+                val result = dogRepository.giveHeartToDog(userId, dogId, heartAmount)
+                _giveHeartResult.value = result
+
+                // 성공적으로 하트를 준 경우 강아지 정보 새로고침
+                if (result?.success == true) {
+                    fetchDogIdAndDetails(userId)
+                }
+            } catch (e: Exception) {
+                Log.e("DogViewModel", "Error giving heart to dog: ${e.message}")
+            }
+        }
+    }
 }

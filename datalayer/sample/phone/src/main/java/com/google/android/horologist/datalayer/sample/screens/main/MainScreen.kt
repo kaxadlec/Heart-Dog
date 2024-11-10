@@ -89,10 +89,12 @@ import com.google.android.horologist.datalayer.sample.screens.hotdog.setting.com
 import com.google.android.horologist.datalayer.sample.screens.hotdog.repository.UserInsertScreen
 import com.google.android.horologist.datalayer.sample.screens.hotdog.repository.UserSelectScreen
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.google.android.horologist.datalayer.sample.screens.ApiTest
 import com.google.android.horologist.datalayer.sample.screens.hotdog.repository.DogRepository
 import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.DogViewModel
 import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.DogViewModelFactory
 import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.UserViewModel
+import com.google.android.horologist.datalayer.sample.screens.menu.ApiTestScreen
 
 @Composable
 fun MainScreen(
@@ -129,6 +131,11 @@ fun MainScreen(
                 startDestination = Menu,
                 modifier = modifier,
             ) {
+
+                composable<ApiTest> {
+                    ApiTestScreen(navController = navController, modifier = Modifier, dogViewModel = dogViewModel)
+                }
+
                 composable<Menu> {
                     MenuScreen(navController = navController)
                 }

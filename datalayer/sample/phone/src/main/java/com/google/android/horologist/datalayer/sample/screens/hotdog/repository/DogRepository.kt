@@ -62,4 +62,39 @@ class DogRepository {
         }
     }
 
+    @Serializable
+    data class GiveHeartResponse(
+        val success: Boolean,
+        val message: String? = null,
+        @SerialName("updated_heart") val updatedHeart: Int? = null,
+        @SerialName("updated_satiety") val updatedSatiety: Int? = null,
+        @SerialName("exp_gain") val expGain: Long? = null,
+        @SerialName("level_up") val levelUp: Boolean = false,
+        @SerialName("hearts_used") val heartsUsed: Int? = null
+    )
+
+    suspend fun giveHeartToDog(userId: Long, dogId: Long, heartAmount: Int = 5): GiveHeartResponse? =
+        withContext(Dispatchers.IO) {
+            try {
+                val params = JsonObject(
+                    mapOf(
+                        "p_user_id" to JsonPrimitive(userId),
+                        "p_dog_id" to JsonPrimitive(dogId),
+                        "p_heart_amount" to JsonPrimitive(heartAmount)
+                    )
+                )
+
+                val result = SupabaseClientProvider.supabase
+                    .postgrest
+                    .rpc("give_heart_to_dog", params)
+                    .decodeList<GiveHeartResponse>()
+                    .firstOrNull()
+
+                result
+            } catch (e: Exception) {
+                Log.e(TAG, "giveHeartToDog 에러: ${e.message}", e)
+                null
+            }
+        }
+
 }
