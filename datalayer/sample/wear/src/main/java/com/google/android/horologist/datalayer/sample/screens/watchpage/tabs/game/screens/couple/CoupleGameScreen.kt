@@ -39,7 +39,6 @@ fun CoupleGameScreen(
     ) {
         Text("READY",
             fontSize = 20.sp,
-            color = Color.Black,
             modifier = Modifier.padding(16.dp)
         )
 
@@ -49,7 +48,6 @@ fun CoupleGameScreen(
         Text(
             text = "${timeLeft.value} 초",
             fontSize = 24.sp,
-            color = Color.Black
         )
     }
 }

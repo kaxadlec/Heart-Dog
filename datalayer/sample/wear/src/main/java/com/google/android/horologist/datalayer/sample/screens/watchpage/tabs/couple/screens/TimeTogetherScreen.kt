@@ -37,11 +37,10 @@ fun TimeTogetherScreen(timeTogether: Duration) {
             painter = icon,
             contentDescription = null,
             modifier = Modifier
-                .size(40.dp)
-                .padding(bottom = 8.dp)
+                .size(36.dp)
+                .padding(bottom = 8.dp),
         )
         Text(text ="함께한 시간",
-            color = Color.Black,
             fontSize = 16.sp,
             fontWeight = FontWeight.Bold
         )
@@ -52,7 +51,6 @@ fun TimeTogetherScreen(timeTogether: Duration) {
             text = "${hours}시간 ${minutes}분",
             fontSize = 32.sp,
             fontWeight = FontWeight.Bold,
-            color = Color.Black
         )
     }
 }

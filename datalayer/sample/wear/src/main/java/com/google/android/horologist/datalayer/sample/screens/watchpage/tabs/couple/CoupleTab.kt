@@ -9,13 +9,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.wear.compose.foundation.lazy.ScalingLazyColumn
-import androidx.wear.compose.foundation.lazy.rememberScalingLazyListState
-import androidx.wear.compose.material.*
-import com.google.android.horologist.datalayer.sample.screens.watchpage.core.common.ui.CircleIconButton
-import com.google.android.horologist.datalayer.sample.R
+import com.google.android.horologist.datalayer.sample.screens.watchpage.components.CircleIconButton
 
 @Composable
 fun CoupleTab(

@@ -28,6 +28,7 @@ import android.content.Context
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.zIndex
+import androidx.wear.compose.material.MaterialTheme
 import coil.size.Size
 
 @Composable
@@ -39,8 +40,14 @@ fun HomeTab(
     val petState by petViewModel.uiState.collectAsStateWithLifecycle()
     val userState by userViewModel.uiState.collectAsStateWithLifecycle()
 
+    // 현재 레벨에 필요한 경험치를 가져옴
+    val requiredExpForLevel = petViewModel.getRequiredExpForLevel(petState.level)
+    // expProgress를 현재 경험치 대비 필요 경험치의 비율로 계산
+    val expProgress = petState.exp / requiredExpForLevel.toFloat()
+
     HomeTabContent(
         satietyProgress = petState.satiety / 100f,
+        satiety = petState.satiety,
         expProgress = petState.exp / 100f,
         name = petState.name,
         level = petState.level,
@@ -54,8 +61,9 @@ private fun HomeTabContent(
     expProgress: Float,
     name: String,
     level: Int,
+    satiety: Int,
     hasPet: Boolean,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Box(
         modifier = modifier.fillMaxSize(),
@@ -73,6 +81,7 @@ private fun HomeTabContent(
         // 캐릭터 이미지
         PetImage(
             hasPet = hasPet,
+            satiety = satiety,
             modifier = Modifier
                 .align(Alignment.Center)
                 .offset(y = 18.dp)
@@ -94,17 +103,25 @@ private fun HomeTabContent(
 @Composable
 private fun PetImage(
     hasPet: Boolean,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    satiety: Int,
 ) {
     val context = LocalContext.current
     val imageLoader = rememberImageLoader(context)
 
     Box(modifier = modifier) {
         if (hasPet) {
+            val imageRes = when {
+                satiety < 25 -> R.drawable.cryingmotion
+                satiety < 50 -> R.drawable.umnaumna
+                satiety < 75 -> R.drawable.pppig
+                else -> R.drawable.dog_animation_1
+            }
+
             Image(
                 painter = rememberAsyncImagePainter(
                     ImageRequest.Builder(context)
-                        .data(R.drawable.dog_animation_1)
+                        .data(imageRes)
                         .size(Size(120, 120))
                         .build(),
                     imageLoader = imageLoader
@@ -112,7 +129,8 @@ private fun PetImage(
                 contentDescription = "Character",
                 modifier = Modifier.align(Alignment.Center)
             )
-        } else {
+        }
+        else {
             Image(
                 painter = painterResource(id = R.drawable.doghouse),
                 contentDescription = "Doghouse",
@@ -131,7 +149,7 @@ private fun PetLevelText(
     Text(
         text = "$name LV.$level",
         fontSize = 15.sp,
-        color = Color.Black,
+        color = MaterialTheme.colors.onBackground ,
         modifier = modifier
     )
 }

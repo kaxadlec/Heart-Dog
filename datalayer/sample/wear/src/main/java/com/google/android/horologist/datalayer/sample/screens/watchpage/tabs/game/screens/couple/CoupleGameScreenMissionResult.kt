@@ -63,7 +63,6 @@ fun CoupleGameScreenMissionResult(
         Text(
             text = "당신의 최고 심박수 : ${maxHeartRate.toInt()} bpm",
             fontSize = 14.sp,
-            color = Color.Black
         )
 
 
