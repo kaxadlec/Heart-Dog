@@ -18,7 +18,7 @@ fun SingleGameScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text("싱글 게임 화면")
+        Text(" 싱글 게임 화면인 줄 알았지? ")
         Button(onClick = onBack) {
             Text("뒤로가기")
         }
