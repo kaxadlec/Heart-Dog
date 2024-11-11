@@ -1,10 +1,15 @@
 package com.google.android.horologist.datalayer.sample.screens.watchpage.state.pet
 
+import android.util.Log
+import androidx.datastore.core.DataStore
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.android.horologist.data.WearDataLayerRegistry
 import com.google.android.horologist.datalayer.sample.data.preferences.FeedingPreferences
 import com.google.android.horologist.datalayer.sample.data.preferences.strategy.TimeRestrictionStrategy
 import com.google.android.horologist.datalayer.sample.data.preferences.strategy.TimeRestrictionType
+import com.google.android.horologist.datalayer.sample.shared.grpc.DogProto
+import com.google.android.horologist.datalayer.sample.shared.grpc.DogServiceGrpcKt
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -15,7 +20,7 @@ import javax.inject.Inject
 
 // PetViewModel.kt
 @HiltViewModel
-class PetViewModel @Inject constructor( private val feedingPreferences: FeedingPreferences, private val timeStrategy: TimeRestrictionStrategy) : ViewModel() {
+class PetViewModel @Inject constructor( private val feedingPreferences: FeedingPreferences, private val timeStrategy: TimeRestrictionStrategy, private val registry: WearDataLayerRegistry) : ViewModel() {
     // ----------------------------------상태 관리----------------------------------
     // 기본 UI 상태
     private val _uiState = MutableStateFlow(PetUiState())
@@ -24,6 +29,42 @@ class PetViewModel @Inject constructor( private val feedingPreferences: FeedingP
     // 먹이 주기 횟수 상태
     private val _todayFeedingCount = MutableStateFlow(0) // 초기값 0으로 설정
     val todayFeedingCount: StateFlow<Int> = _todayFeedingCount.asStateFlow() // StateFlow로 변환
+
+
+    init {
+        // 기존 피딩 카운트 초기화
+        viewModelScope.launch {
+            feedingPreferences.todayFeedingCount.collect { count ->
+                _todayFeedingCount.value = count
+            }
+        }
+
+        // Phone의 데이터를 받아오기 위한 DataStore 설정
+        viewModelScope.launch {
+            try {
+                val dogDataStore: DataStore<DogProto.DogRecord> = registry.protoDataStore(coroutineScope = coroutineScope,
+                    serializer = DogRecordSerializer)
+
+                // Phone의 데이터 구독
+                dogDataStore.data.collect { dogRecord ->
+                    Log.d("WatchPetViewModel", "Phone 데이터 수신: $dogRecord")
+                    _uiState.update {
+                        it.copy(
+                            dogId = dogRecord.dogId.toString(),
+                            name = dogRecord.name,
+                            level = dogRecord.level,
+                            current_exp = dogRecord.currentExp,
+                            satiety = dogRecord.satiety,
+                            position = dogRecord.position
+                        )
+                    }
+                }
+            } catch (e: Exception) {
+                Log.e("WatchPetViewModel", "Phone 데이터 수신 실패", e)
+            }
+        }
+    }
+
 
     // ----------------------------------먹이 주기 관련 함수----------------------------------
     // 먹이 주기 함수

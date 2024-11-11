@@ -7,5 +7,5 @@ data class PetUiState(
     val level: Int = 1, // 레벨
     val current_exp: Int = 0,   // 경험치
     val satiety: Int = 0,  // 포만도 (0~100)
-    val position: Boolean = false
+    val position: String = ""
 )

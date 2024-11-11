@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package com.google.android.horologist.datalayer.sample.shared.grpc;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+option java_package = "com.google.android.horologist.datalayer.sample.shared.grpc";
+option java_outer_classname = "DogProto";
+
+message DogRecord {
+  int64 dog_id = 1;
+  string name = 2;
+  int32 level = 3;
+  int32 current_exp = 4;
+  int32 max_exp = 5;
+  int32 satiety = 6;
+  string position = 7;
+  .google.protobuf.Timestamp update = 8;
+}
+
+message DogDelta {
+  int64 dog_id = 1;
+  string name = 2;
+  int32 level = 3;
+  int32 current_exp = 4;
+  int32 max_exp = 5;
+  int32 satiety = 6;
+  string position = 7;
+}
+
+service DogService {
+  rpc get(.google.protobuf.Empty) returns (DogRecord);
+  rpc put(DogDelta) returns (DogRecord);
+}

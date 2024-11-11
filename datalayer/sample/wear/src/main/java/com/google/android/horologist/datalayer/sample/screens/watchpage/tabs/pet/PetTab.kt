@@ -55,7 +55,7 @@ fun PetTab(
 
     // 경험치 계산 로직 추가
     val requiredExpForLevel = petViewModel.getRequiredExpForLevel(petState.level)
-    val expProgress = petState.exp / requiredExpForLevel.toFloat()
+    val expProgress = petState.current_exp / requiredExpForLevel.toFloat()
 
     // 테스트를 위한 1분 모드 설정
     // 하루 모드로 하려면 주석처리하면됨
