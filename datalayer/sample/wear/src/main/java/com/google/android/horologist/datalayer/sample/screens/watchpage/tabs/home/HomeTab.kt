@@ -11,133 +11,156 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.res.painterResource
 import com.google.android.horologist.datalayer.sample.R
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.offset
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.android.horologist.datalayer.sample.screens.watchpage.state.pet.PetViewModel
+import com.google.android.horologist.datalayer.sample.screens.watchpage.state.user.UserViewModel
+import com.google.android.horologist.datalayer.sample.screens.watchpage.components.ExperienceArcs
+import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
+import coil.decode.GifDecoder
+import coil.ImageLoader
+import android.content.Context
+import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.zIndex
+import androidx.wear.compose.material.MaterialTheme
+import coil.size.Size
 
 @Composable
-fun HomeTab(modifier: Modifier = Modifier, petViewModel: PetViewModel) {
+fun HomeTab(
+    modifier: Modifier = Modifier,
+    petViewModel: PetViewModel,
+    userViewModel: UserViewModel = hiltViewModel(),
+) {
     val petState by petViewModel.uiState.collectAsStateWithLifecycle()
-    // satiety를 0-1 사이의 값으로 변환 (100 -> 1.0f, 50 -> 0.5f)
-    val satietyProgress = petState.satiety / 100f
-    val expProgress = petState.exp / 100f
-    val name = petState.name
-    val level = petState.level
+    val userState by userViewModel.uiState.collectAsStateWithLifecycle()
 
-    // 상태 변화 로그
-    LaunchedEffect(petState.satiety) {
-        println("HomeTab - Satiety Changed: ${petState.satiety}")
-    }
+    // 현재 레벨에 필요한 경험치를 가져옴
+    val requiredExpForLevel = petViewModel.getRequiredExpForLevel(petState.level)
+    // expProgress를 현재 경험치 대비 필요 경험치의 비율로 계산
+    val expProgress = petState.exp / requiredExpForLevel.toFloat()
 
+    HomeTabContent(
+        satietyProgress = petState.satiety / 100f,
+        satiety = petState.satiety,
+        expProgress = petState.exp / 100f,
+        name = petState.name,
+        level = petState.level,
+        hasPet = userState.hasPet
+    )
+}
 
+@Composable
+private fun HomeTabContent(
+    satietyProgress: Float,
+    expProgress: Float,
+    name: String,
+    level: Int,
+    satiety: Int,
+    hasPet: Boolean,
+    modifier: Modifier = Modifier,
+) {
     Box(
-        modifier = Modifier.fillMaxSize() // 화면 전체를 배경으로 채움
+        modifier = modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
     ) {
-
-        // 경험치 반원들
+        // 경험치 반원
         ExperienceArcs(
             modifier = Modifier
                 .align(Alignment.Center)
-                .fillMaxSize(), // fillMaxSize(0.6f)에서 변경
-            leftProgress = satietyProgress,  // 왼쪽 반원의 진행률
-            rightProgress = expProgress  // 오른쪽 반원의 진행률
-        )
-        // 각 반원 옆에 설명 텍스트 추가
-        Text(
-            text = "포만도", // 왼쪽 반원 설명 텍스트
-            fontSize = 10.sp,
-            color = Color.Black,
-            modifier = Modifier
-                .align(Alignment.CenterStart)
-                .offset(x = 8.dp) // 왼쪽으로 오프셋 설정
+                .fillMaxSize(),
+            leftProgress = satietyProgress,
+            rightProgress = expProgress
         )
 
-        Text(
-            text = "경험치", // 오른쪽 반원 설명 텍스트
-            fontSize = 10.sp,
-            color = Color.Black,
+        // 캐릭터 이미지
+        PetImage(
+            hasPet = hasPet,
+            satiety = satiety,
             modifier = Modifier
-                .align(Alignment.CenterEnd)
-                .offset(x = (-8).dp) // 오른쪽으로 오프셋 설정
+                .align(Alignment.Center)
+                .offset(y = 18.dp)
         )
 
-
-        // 캐릭터 이미지와 텍스트를 감싸는 박스
-        Box(
-            modifier = Modifier
-                .align(Alignment.Center) // 중앙 정렬
-                .offset(y = 14.dp) // 아래로 이동
-        ) {
-            // 캐릭터 이미지
-            Image(
-                painter = painterResource(id = R.drawable.dog_image), // 캐릭터 이미지 리소스
-                contentDescription = "Character",
-                modifier = Modifier
-                    .align(Alignment.Center)
-            )
-
-            // 이미지 위에 텍스트 표시
-            Text(
-                text = "$name LV.$level",
-                fontSize = 15.sp,
-                color = Color.Black,
+        // 레벨 텍스트
+        if (hasPet) {
+            PetLevelText(
+                name = name,
+                level = level,
                 modifier = Modifier
                     .align(Alignment.TopCenter)
-                    .offset(y = (-30).dp) // 이미지 위쪽에 배치
+                    .offset(y = 30.dp)
             )
         }
-
     }
 }
 
 @Composable
-fun ExperienceArcs(
+private fun PetImage(
+    hasPet: Boolean,
     modifier: Modifier = Modifier,
-    leftProgress: Float,
-    rightProgress: Float
+    satiety: Int,
 ) {
-    Canvas(modifier = modifier) {
-        val strokeWidth = 15.dp.toPx() // 선 두께
-        val radius = size.minDimension / 2
+    val context = LocalContext.current
+    val imageLoader = rememberImageLoader(context)
 
-        // 진한 빨간색과 연두색 설정
-        val darkRed = Color(0xFFB71C1C) // 진한 빨간색
-        val darkGreen = Color(0xFF388E3C) // 진한 연두색
+    Box(modifier = modifier) {
+        if (hasPet) {
+            val imageRes = when {
+                satiety < 25 -> R.drawable.cryingmotion
+                satiety < 50 -> R.drawable.umnaumna
+                satiety < 75 -> R.drawable.pppig
+                else -> R.drawable.dog_animation_1
+            }
 
-        // 왼쪽 반원 (빨간색)
-        drawArc(
-            color = darkRed,
-            startAngle = -90f,  // 북쪽(12시)에서 시작
-            sweepAngle = -(180f * leftProgress),  // 음수값: 반시계 방향으로 진행
-            useCenter = false,
-            topLeft = center.copy(
-                x = center.x - radius,
-                y = center.y - radius
-            ),
-            size = androidx.compose.ui.geometry.Size(radius * 2, radius * 2),
-            style = Stroke(width = strokeWidth, cap = StrokeCap.Butt)
-        )
+            Image(
+                painter = rememberAsyncImagePainter(
+                    ImageRequest.Builder(context)
+                        .data(imageRes)
+                        .size(Size(120, 120))
+                        .build(),
+                    imageLoader = imageLoader
+                ),
+                contentDescription = "Character",
+                modifier = Modifier.align(Alignment.Center)
+            )
+        }
+        else {
+            Image(
+                painter = painterResource(id = R.drawable.doghouse),
+                contentDescription = "Doghouse",
+                modifier = Modifier.align(Alignment.Center)
+            )
+        }
+    }
+}
 
-        // 오른쪽 반원 (연두색)
-        drawArc(
-            color = darkGreen,
-            startAngle = -90f,  // 북쪽(12시)에서 시작
-            sweepAngle = 180f * rightProgress,  // 양수값: 시계 방향으로 진행
-            useCenter = false,
-            topLeft = center.copy(
-                x = center.x - radius,
-                y = center.y - radius
-            ),
-            size = androidx.compose.ui.geometry.Size(radius * 2, radius * 2),
-            style = Stroke(width = strokeWidth, cap = StrokeCap.Butt)
-        )
+@Composable
+private fun PetLevelText(
+    name: String,
+    level: Int,
+    modifier: Modifier = Modifier
+) {
+    Text(
+        text = "$name LV.$level",
+        fontSize = 15.sp,
+        color = MaterialTheme.colors.onBackground ,
+        modifier = modifier
+    )
+}
+
+@Composable
+private fun rememberImageLoader(context: Context): ImageLoader {
+    return remember(context) {
+        ImageLoader.Builder(context)
+            .components {
+                add(GifDecoder.Factory())
+            }
+            .build()
     }
 }

@@ -16,7 +16,7 @@
 
 <resources>
     <!-- General -->
-    <string name="app_name">Horologist Datalayer Sample</string>
+    <string name="app_name">Heart Dog</string>
     <string name="close_button_content_description">Close</string>
     <string name="wearable_message_api_unavailable">This device does not have capability to communicate to Wearable Data Layer API</string>
 
@@ -105,6 +105,5 @@
     <!-- Watch Page screen -->
     <string name="main_menu_watch_page_header">Watch Page Section</string>
     <string name="main_menu_watch_page_item">Watch Page</string>
-
 
 </resources>

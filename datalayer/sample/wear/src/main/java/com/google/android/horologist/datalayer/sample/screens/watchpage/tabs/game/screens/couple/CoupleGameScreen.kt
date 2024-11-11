@@ -8,13 +8,14 @@ import androidx.wear.compose.material.Button
 import androidx.wear.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.Navigator
 import kotlinx.coroutines.delay
 
 @Composable
 fun CoupleGameScreen(
-    initialTime: Int = 1,
+    initialTime: Int = 3,
     modifier: Modifier = Modifier,
     onBack: () -> Unit,
     onNavigate : () -> Unit
@@ -36,18 +37,17 @@ fun CoupleGameScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text("남은 시간",
-            fontSize = 24.sp,
-            color = Color.Black
+        Text("READY",
+            fontSize = 20.sp,
+            modifier = Modifier.padding(16.dp)
         )
 
-        Button(onClick = onBack) {
-            Text("<")
-        }
+//        Button(onClick = onBack) {
+//            Text("<")
+//        }
         Text(
             text = "${timeLeft.value} 초",
-            fontSize = 48.sp,
-            color = Color.Black
+            fontSize = 24.sp,
         )
     }
 }

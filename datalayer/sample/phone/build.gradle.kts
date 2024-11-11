@@ -1,3 +1,4 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 /*
  * Copyright 2023 The Android Open Source Project
  *
@@ -33,7 +34,7 @@ android {
     defaultConfig {
         applicationId = "com.google.android.horologist.datalayer.sample"
 
-        minSdk = 21
+        minSdk = 23
         targetSdk = 34
 
         versionCode = 1
@@ -44,6 +45,19 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        /* local 변수 */
+        buildConfigField("String", "KAKAO_APP_KEY", gradleLocalProperties(rootDir, providers).getProperty("KAKAO_APP_KEY"))
+        buildConfigField("String", "SUPABASE_URL", gradleLocalProperties(rootDir, providers).getProperty("SUPABASE_URL"))
+        buildConfigField("String", "SUPABASE_ANON_KEY", gradleLocalProperties(rootDir, providers).getProperty("SUPABASE_ANON_KEY"))
+        addManifestPlaceholders(
+            mapOf(
+                "KAKAO_APP_KEY" to gradleLocalProperties(rootDir, providers).getProperty("KAKAO_APP_KEY"),
+                "SUPABASE_SIGNIN_SCHEME" to gradleLocalProperties(rootDir, providers).getProperty("SUPABASE_SIGNIN_SCHEME"),
+                "SUPABASE_SIGNIN_HOST" to gradleLocalProperties(rootDir, providers).getProperty("SUPABASE_SIGNIN_HOST"),
+            )
+        )
+
     }
 
     buildTypes {
@@ -99,6 +113,7 @@ repositories {
     google()
     mavenCentral()
     maven { url = uri("https://jitpack.io") }
+    maven { url = uri("https://devrepo.kakao.com/nexus/content/groups/public/") }
 }
 
 dependencies {
@@ -184,6 +199,11 @@ dependencies {
     implementation(libs.mpandroidchart)
     implementation(libs.accompanist.permissions)
 
+    implementation(platform("io.github.jan-tennert.supabase:bom:3.0.1"))
+    implementation("io.github.jan-tennert.supabase:auth-kt")
+    implementation("io.github.jan-tennert.supabase:postgrest-kt")
+    implementation("io.ktor:ktor-client-android:3.0.0")
+
     /* Google Play Location */
     implementation(libs.play.services.location)
 
@@ -192,4 +212,10 @@ dependencies {
 
     /* Worker */
     implementation(libs.androidx.work.ktx)
+
+    /* Login */
+    implementation(libs.androidx.credentials)
+    implementation(libs.androidx.credentials.play.services.auth)
+    implementation(libs.libraries.identity.googleid)
+    implementation(libs.kakao.v2.user)
 }

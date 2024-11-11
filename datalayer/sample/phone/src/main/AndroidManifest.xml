@@ -61,6 +61,26 @@
         </activity>
 
         <activity
+            android:name=".screens.hotdog.login.screen.DeepLinkHandlerActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Horologist">
+            <intent-filter android:autoVerify="true"
+                tools:ignore="AppLinkUrlError">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+<!--                <data-->
+<!--                    android:scheme="${SUPABASE_SIGNIN_SCHEME}"-->
+<!--                    android:host="${SUPABASE_SIGNIN_HOST}" -->
+<!--                />-->
+                <data
+                    android:scheme="app"
+                    android:host="supabase.com"
+                />
+            </intent-filter>
+        </activity>
+
+        <activity
             android:name=".screens.startremote.StartRemoteSampleActivity"
             android:exported="false"
             android:taskAffinity=".main"

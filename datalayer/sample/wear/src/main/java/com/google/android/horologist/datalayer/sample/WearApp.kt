@@ -16,12 +16,15 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import androidx.wear.compose.material.Button
+import androidx.wear.compose.material.ButtonDefaults
 import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.Scaffold
 import androidx.wear.compose.material.Text
@@ -33,6 +36,7 @@ import androidx.wear.protolayout.LayoutElementBuilders.Text
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
+import com.google.accompanist.permissions.shouldShowRationale
 import com.google.android.horologist.compose.layout.AppScaffold
 import com.google.android.horologist.compose.layout.ScalingLazyColumnDefaults.ItemType
 import com.google.android.horologist.compose.layout.ScreenScaffold
@@ -57,13 +61,19 @@ import com.google.android.horologist.datalayer.sample.screens.steps.StepsScreen
 import com.google.android.horologist.datalayer.sample.screens.steps.StepsViewModel
 import com.google.android.horologist.datalayer.sample.screens.tracking.TrackingScreen
 import com.google.android.horologist.datalayer.sample.screens.watchpage.TabContainerScreen
+import android.net.Uri
+import android.provider.Settings
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.mutableStateOf
 
-
-
-const val BODY_SENSORS_PERMISSION = Manifest.permission.BODY_SENSORS
-const val ACTIVITY_RECOGNITION_PERMISSION = Manifest.permission.ACTIVITY_RECOGNITION
-const val ACCESS_FINE_LOCATION_PERMISSION = Manifest.permission.ACCESS_FINE_LOCATION
-const val VIBRATE_PERMISSION = Manifest.permission.VIBRATE
+const val BODY_SENSORS_PERMISSION = Manifest.permission.BODY_SENSORS // 걸음 수 접근 권한
+const val ACTIVITY_RECOGNITION_PERMISSION = Manifest.permission.ACTIVITY_RECOGNITION // 활동 인식 권한
+const val ACCESS_FINE_LOCATION_PERMISSION = Manifest.permission.ACCESS_FINE_LOCATION // 위치 정보 접근 권한
+const val VIBRATE_PERMISSION = Manifest.permission.VIBRATE  // 진동 권한
 
 
 @OptIn(ExperimentalPermissionsApi::class)
@@ -73,45 +83,77 @@ fun WearApp(
     navController: NavHostController = rememberNavController(),
 ) {
 
+    // 현재 context 가져오기
     val context = LocalContext.current
 
-    // 각 권한 상태 관리
+    // 권한 상태를 추적하는 PermissionState 객체 생성
     val bodySensorsPermissionState = rememberPermissionState(BODY_SENSORS_PERMISSION)
     val activityRecognitionPermissionState = rememberPermissionState(ACTIVITY_RECOGNITION_PERMISSION)
     val locationPermissionState = rememberPermissionState(ACCESS_FINE_LOCATION_PERMISSION)
     val vibratePermissionState = rememberPermissionState(VIBRATE_PERMISSION)
 
-    // 권한 상태 변경 및 로그 확인
-    Log.d("WearApp", "BODY_SENSORS_PERMISSION granted: ${bodySensorsPermissionState.status.isGranted}")
-    Log.d("WearApp", "ACTIVITY_RECOGNITION_PERMISSION granted: ${activityRecognitionPermissionState.status.isGranted}")
-    Log.d("WearApp", "ACCESS_FINE_LOCATION_PERMISSION granted: ${locationPermissionState.status.isGranted}")
-    Log.d("WearApp", "VIBRATE_PERMISSION granted: ${vibratePermissionState.status.isGranted}")
+    // 권한 요청 진행 중인지 여부를 추적
+    var isRequestingPermissions by remember { mutableStateOf(false) }
+    // 권한 거부 여부를 추적
+    var hasPermissionDenied by remember { mutableStateOf(false) }
 
-
-    // 모든 권한이 승인된 경우 확인
+    // 모든 권한이 승인되었는지 확인
     val allPermissionsGranted = bodySensorsPermissionState.status.isGranted &&
             activityRecognitionPermissionState.status.isGranted &&
-            locationPermissionState.status.isGranted
+            locationPermissionState.status.isGranted &&
+            vibratePermissionState.status.isGranted
 
-    if (!allPermissionsGranted) {
-        // 개별적으로 권한 요청
-        LaunchedEffect(Unit) {
+    // 초기 권한 요청 시작
+    LaunchedEffect(Unit) {
+        if (!allPermissionsGranted && !hasPermissionDenied) {
+            isRequestingPermissions = true
             if (!bodySensorsPermissionState.status.isGranted) {
-                Log.d("WearApp", "Requesting BODY_SENSORS_PERMISSION")
                 bodySensorsPermissionState.launchPermissionRequest()
-            } else if (!activityRecognitionPermissionState.status.isGranted) {
-                Log.d("WearApp", "Requesting ACTIVITY_RECOGNITION_PERMISSION")
-                activityRecognitionPermissionState.launchPermissionRequest()
-            } else if (!locationPermissionState.status.isGranted) {
-                Log.d("WearApp", "Requesting ACCESS_FINE_LOCATION_PERMISSION")
-                locationPermissionState.launchPermissionRequest()
-            } else if (!vibratePermissionState.status.isGranted) {
-                Log.d("WearApp", "Requesting VIBRATE_PERMISSION")
-                vibratePermissionState.launchPermissionRequest()
             }
         }
+    }
 
-        // 권한 요청 메시지 UI 표시
+    // 권한 상태 변경 감지 및 다음 권한 요청
+    LaunchedEffect(
+        bodySensorsPermissionState.status,
+        activityRecognitionPermissionState.status,
+        locationPermissionState.status,
+        vibratePermissionState.status
+    ) {
+        // 권한이 하나라도 거부되었는지 확인
+        hasPermissionDenied = (!bodySensorsPermissionState.status.isGranted &&
+                bodySensorsPermissionState.status.shouldShowRationale) ||
+                (!activityRecognitionPermissionState.status.isGranted &&
+                        activityRecognitionPermissionState.status.shouldShowRationale) ||
+                (!locationPermissionState.status.isGranted &&
+                        locationPermissionState.status.shouldShowRationale) ||
+                (!vibratePermissionState.status.isGranted &&
+                        vibratePermissionState.status.shouldShowRationale)
+
+        // 권한이 거부되지 않은 경우에만 순차적으로 권한 요청
+        if (isRequestingPermissions && !hasPermissionDenied) {
+            when {
+                !bodySensorsPermissionState.status.isGranted -> {
+                    bodySensorsPermissionState.launchPermissionRequest()
+                }
+                !activityRecognitionPermissionState.status.isGranted -> {
+                    activityRecognitionPermissionState.launchPermissionRequest()
+                }
+                !locationPermissionState.status.isGranted -> {
+                    locationPermissionState.launchPermissionRequest()
+                }
+                !vibratePermissionState.status.isGranted -> {
+                    vibratePermissionState.launchPermissionRequest()
+                }
+                else -> {
+                    isRequestingPermissions = false
+                }
+            }
+        }
+    }
+
+    // 모든 권한이 승인되지 않은 경우
+    if (!allPermissionsGranted) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -119,11 +161,65 @@ fun WearApp(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
-                text = "Please grant permissions to access step count, activity recognition, and location.",
-                textAlign = TextAlign.Center,
-                color = MaterialTheme.colors.error
-            )
+            if (!isRequestingPermissions && hasPermissionDenied) {
+                // 권한이 거부된 경우 메시지
+                Text(
+                    text = "Heart Dog 앱 사용을 위한\n모든 권한 설정이 필요합니다",
+                    style = MaterialTheme.typography.body2,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
+                Text(
+                    text = "설정에서 모든 권한을\n허용해주세요",
+                    style = MaterialTheme.typography.body2,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(bottom = 16.dp)
+                )
+                Button(
+                    onClick = {
+                        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                            data = Uri.fromParts("package", context.packageName, null)
+                        }
+                        context.startActivity(intent)
+                    },
+                    colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFFFF9A4D)),
+                    modifier = Modifier
+                        .padding(top = 8.dp)
+                        .widthIn(min = 120.dp)
+                        .heightIn(min = 40.dp)
+                ) {
+                    Text(
+                        text = "설정으로 이동",
+                        color = Color.White,
+                        style = MaterialTheme.typography.button,
+                        modifier = Modifier.padding(horizontal = 10.dp)
+                    )
+                }
+            } else if (!isRequestingPermissions && !hasPermissionDenied) {
+                // 초기 권한 요청 시작 전 메시지
+                Text(
+                    text = "Heart Dog 앱 사용을 위한\n권한 설정이 필요합니다",
+                    style = MaterialTheme.typography.body2,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
+                Button(
+                    onClick = { isRequestingPermissions = true },
+                    colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFFFF9A4D)),
+                    modifier = Modifier
+                        .padding(top = 8.dp)
+                        .widthIn(min = 120.dp)
+                        .heightIn(min = 40.dp)
+                ) {
+                    Text(
+                        text = "권한 설정하기",
+                        color = Color.White,
+                        style = MaterialTheme.typography.button,
+                        modifier = Modifier.padding(horizontal = 10.dp)
+                    )
+                }
+            }
+            // 권한 요청 중일 때는 아무것도 표시하지 않음
         }
     } else {
         // 모든 권한 승인 후 서비스 시작
@@ -142,7 +238,8 @@ fun WearApp(
 
         AppScaffold {
             SwipeDismissableNavHost(
-                startDestination = Screen.MainScreen.route,
+//                startDestination = Screen.MainScreen.route,
+                startDestination = Screen.TabContainerScreen.route,
                 navController = navController,
                 modifier = modifier,
             ) {
@@ -204,9 +301,10 @@ fun WearApp(
                     ) {
                         val viewModel: HeartRateViewModel = hiltViewModel()
                         val enabled by viewModel.enabled.collectAsState()
-                        val hr by viewModel.hr
-                        val availability by viewModel.availability
-                        val uiState by viewModel.uiState
+//
+                        val hr by viewModel.hr.collectAsState(initial = 0.0)
+                        val availability by viewModel.availability.collectAsState()
+                        val uiState by viewModel.uiState.collectAsState()
 
                         if (uiState == UiState.Supported) {
                             HeartRateScreen(
@@ -287,7 +385,7 @@ fun WearApp(
                     }
                 }
 
-                // WearApp.kt 파일에서
+                // watchPage
                 composable(route = Screen.TabContainerScreen.route) {
                     val columnState = rememberResponsiveColumnState(first = ItemType.Unspecified, last = ItemType.Unspecified)
 

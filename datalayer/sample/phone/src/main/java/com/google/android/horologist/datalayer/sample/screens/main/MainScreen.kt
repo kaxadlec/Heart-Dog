@@ -74,20 +74,17 @@ import com.google.android.horologist.datalayer.sample.screens.Matching
 import com.google.android.horologist.datalayer.sample.screens.Notification
 import com.google.android.horologist.datalayer.sample.screens.Setting
 import com.google.android.horologist.datalayer.sample.screens.UserManual
-import com.google.android.horologist.datalayer.sample.screens.UserInsert
-import com.google.android.horologist.datalayer.sample.screens.UserSelect
 
 import com.google.android.horologist.datalayer.sample.screens.hotdog.splash.SplashScreen
 import com.google.android.horologist.datalayer.sample.screens.hotdog.main.HotDogMainScreen
-import com.google.android.horologist.datalayer.sample.screens.hotdog.login.LoginScreen
+import com.google.android.horologist.datalayer.sample.screens.hotdog.login.screen.SignInScreen
 import com.google.android.horologist.datalayer.sample.screens.hotdog.matching.CreateQRCodeScreen
 import com.google.android.horologist.datalayer.sample.screens.hotdog.matching.InsertQRCodeScreen
 import com.google.android.horologist.datalayer.sample.screens.hotdog.matching.MatchingScreen
 import com.google.android.horologist.datalayer.sample.screens.hotdog.notification.NotificationScreen
+
 import com.google.android.horologist.datalayer.sample.screens.hotdog.setting.SettingScreen
 import com.google.android.horologist.datalayer.sample.screens.hotdog.setting.components.UserManualPage
-import com.google.android.horologist.datalayer.sample.screens.hotdog.repository.UserInsertScreen
-import com.google.android.horologist.datalayer.sample.screens.hotdog.repository.UserSelectScreen
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.android.horologist.datalayer.sample.screens.ApiTest
 import com.google.android.horologist.datalayer.sample.screens.hotdog.repository.DogRepository
@@ -96,7 +93,6 @@ import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.DogViewM
 import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.UserViewModel
 import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.UserViewModelFactory
 import com.google.android.horologist.datalayer.sample.screens.menu.ApiTestScreen
-
 @Composable
 fun MainScreen(
     modifier: Modifier = Modifier,
@@ -150,7 +146,7 @@ fun MainScreen(
                 }
 
                 composable<Login> {
-                    LoginScreen(navController = navController)
+                    SignInScreen(navController = navController)
                 }
 
                 composable<Matching> {
@@ -180,17 +176,6 @@ fun MainScreen(
                 composable<UserManual> {
                     UserManualPage(navController = navController)
                 }
-
-                // test
-
-                composable<UserInsert> {
-                    UserInsertScreen(userRepository = userRepository)
-                }
-
-                composable<UserSelect> {
-                    UserSelectScreen(userRepository = userRepository)
-                }
-
 
                 // 기존 코드
 

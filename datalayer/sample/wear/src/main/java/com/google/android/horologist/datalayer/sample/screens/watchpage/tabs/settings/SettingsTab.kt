@@ -1,23 +1,13 @@
 // SettingsTab.kt
 package com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.settings
 
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.wear.compose.material.Button
-import androidx.wear.compose.material.ButtonDefaults
-import androidx.wear.compose.material.Text
-import com.google.android.horologist.datalayer.sample.screens.watchpage.core.common.ui.CircleIconButton
+import com.google.android.horologist.datalayer.sample.screens.watchpage.components.CircleIconButton
 import com.google.android.horologist.datalayer.sample.R
 
 @Composable

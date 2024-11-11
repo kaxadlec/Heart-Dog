@@ -90,10 +90,4 @@ object UserManual
 object StepCount
 
 @Serializable
-object UserInsert
-
-@Serializable
-object UserSelect
-
-@Serializable
 object ApiTest
