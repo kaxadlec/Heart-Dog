@@ -23,7 +23,10 @@ import com.google.android.horologist.data.WearDataLayerRegistry
 import com.google.android.horologist.datalayer.grpc.GrpcExtensions.grpcClient
 import com.google.android.horologist.datalayer.sample.TileSync
 import com.google.android.horologist.datalayer.sample.screens.heartrate.data.HeartRateServicesRepository
+import com.google.android.horologist.datalayer.sample.shared.DogRecordSerializer
 import com.google.android.horologist.datalayer.sample.shared.grpc.CounterServiceGrpcKt
+import com.google.android.horologist.datalayer.sample.shared.grpc.DogProto
+import com.google.android.horologist.datalayer.sample.shared.grpc.DogServiceGrpcKt
 import com.google.android.horologist.datalayer.sample.shared.grpc.GrpcDemoProto
 import com.google.android.horologist.datalayer.sample.shared.grpc.HeartRateProto.HeartRateRecord
 import com.google.android.horologist.datalayer.sample.shared.grpc.HeartRateServiceGrpcKt
@@ -119,4 +122,24 @@ object DatalayerModule {
         wearDataLayerRegistry: WearDataLayerRegistry,
         wearDataLayerAppHelper: WearDataLayerAppHelper,
     ): TileSync = TileSync(wearDataLayerRegistry, wearDataLayerAppHelper)
+
+
+    /* DogService */
+    @ActivityRetainedScoped
+    @Provides
+    fun dogFlow(wearDataLayerRegistry: WearDataLayerRegistry): Flow<DogProto.DogRecord> =
+        wearDataLayerRegistry.protoFlow(TargetNodeId.PairedPhone)
+
+    @ActivityRetainedScoped
+    @Provides
+    fun dogService(
+        wearDataLayerRegistry: WearDataLayerRegistry,
+    ): DogServiceGrpcKt.DogServiceCoroutineStub =
+        wearDataLayerRegistry.grpcClient(
+            nodeId = TargetNodeId.PairedPhone,
+            coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Default),
+        ) {
+            DogServiceGrpcKt.DogServiceCoroutineStub(it)
+        }
+
 }

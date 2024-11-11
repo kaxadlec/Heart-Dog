@@ -17,10 +17,17 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import com.google.protobuf.Empty
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import androidx.lifecycle.viewModelScope
 
 // PetViewModel.kt
 @HiltViewModel
-class PetViewModel @Inject constructor( private val feedingPreferences: FeedingPreferences, private val timeStrategy: TimeRestrictionStrategy, private val registry: WearDataLayerRegistry) : ViewModel() {
+class PetViewModel @Inject constructor( private val feedingPreferences: FeedingPreferences, private val timeStrategy: TimeRestrictionStrategy, private val dogService: DogServiceGrpcKt.DogServiceCoroutineStub,
+                                        private val dogFlow: Flow<DogProto.DogRecord>,) : ViewModel() {
     // ----------------------------------상태 관리----------------------------------
     // 기본 UI 상태
     private val _uiState = MutableStateFlow(PetUiState())
@@ -30,37 +37,55 @@ class PetViewModel @Inject constructor( private val feedingPreferences: FeedingP
     private val _todayFeedingCount = MutableStateFlow(0) // 초기값 0으로 설정
     val todayFeedingCount: StateFlow<Int> = _todayFeedingCount.asStateFlow() // StateFlow로 변환
 
-
     init {
-        // 기존 피딩 카운트 초기화
+        // Phone으로부터 데이터 스트림 수신
         viewModelScope.launch {
-            feedingPreferences.todayFeedingCount.collect { count ->
-                _todayFeedingCount.value = count
+            dogFlow.collect { dogRecord ->
+                Log.d("PetViewModel", """
+                    Received dog data:
+                    ID: ${dogRecord.dogId}
+                    Name: ${dogRecord.name}
+                    Level: ${dogRecord.level}
+                    Exp: ${dogRecord.currentExp}/${dogRecord.maxExp}
+                    Satiety: ${dogRecord.satiety}
+                    Position: ${dogRecord.position}
+                    Update: ${dogRecord.update}
+                """.trimIndent())
+
+                _uiState.update {
+                    it.copy(
+                        dogId = dogRecord.dogId.toString(),
+                        name = dogRecord.name,
+                        level = dogRecord.level,
+                        current_exp = dogRecord.currentExp,
+                        satiety = dogRecord.satiety,
+                        position = dogRecord.position
+                    )
+                }
             }
         }
 
-        // Phone의 데이터를 받아오기 위한 DataStore 설정
+        // 초기 데이터 로드
+        fetchInitialDogData()
+    }
+
+    private fun fetchInitialDogData() {
         viewModelScope.launch {
             try {
-                val dogDataStore: DataStore<DogProto.DogRecord> = registry.protoDataStore(coroutineScope = coroutineScope,
-                    serializer = DogRecordSerializer)
-
-                // Phone의 데이터 구독
-                dogDataStore.data.collect { dogRecord ->
-                    Log.d("WatchPetViewModel", "Phone 데이터 수신: $dogRecord")
-                    _uiState.update {
-                        it.copy(
-                            dogId = dogRecord.dogId.toString(),
-                            name = dogRecord.name,
-                            level = dogRecord.level,
-                            current_exp = dogRecord.currentExp,
-                            satiety = dogRecord.satiety,
-                            position = dogRecord.position
-                        )
-                    }
+                val response = dogService.get(Empty.getDefaultInstance())
+                _uiState.update {
+                    it.copy(
+                        dogId = response.dogId.toString(),
+                        name = response.name,
+                        level = response.level,
+                        current_exp = response.currentExp,
+                        satiety = response.satiety,
+                        position = response.position
+                    )
                 }
+                Log.d("PetViewModel", "Successfully fetched initial dog data")
             } catch (e: Exception) {
-                Log.e("WatchPetViewModel", "Phone 데이터 수신 실패", e)
+                Log.e("PetViewModel", "Error fetching initial dog data", e)
             }
         }
     }

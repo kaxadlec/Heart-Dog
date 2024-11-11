@@ -34,7 +34,7 @@ import coil.size.Size
 @Composable
 fun HomeTab(
     modifier: Modifier = Modifier,
-    petViewModel: PetViewModel,
+    petViewModel: PetViewModel = hiltViewModel(),
     userViewModel: UserViewModel = hiltViewModel(),
 ) {
     val petState by petViewModel.uiState.collectAsStateWithLifecycle()

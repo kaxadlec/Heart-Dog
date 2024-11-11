@@ -10,6 +10,7 @@ import com.google.android.horologist.data.store.ProtoDataListener
 import com.google.android.horologist.datalayer.grpc.GrpcExtensions.grpcClient
 import com.google.android.horologist.datalayer.sample.screens.nodes.SampleDataSerializer
 import com.google.android.horologist.datalayer.sample.shared.CounterValueSerializer
+import com.google.android.horologist.datalayer.sample.shared.DogRecordSerializer
 import com.google.android.horologist.datalayer.sample.shared.HeartRateRecordSerializer
 import com.google.android.horologist.datalayer.sample.shared.StepCountRecordSerializer
 import com.google.android.horologist.datalayer.sample.shared.grpc.StepCountServiceGrpcKt
@@ -58,6 +59,7 @@ object AppModule {
         registerSerializer(HeartRateRecordSerializer)
         registerSerializer(StepCountRecordSerializer)
         registerSerializer(SampleDataSerializer)
+        registerSerializer(DogRecordSerializer)
 
         registerProtoDataListener(object : ProtoDataListener<SampleProto.Data> {
             override fun dataAdded(nodeId: String, path: String, value: SampleProto.Data) {
