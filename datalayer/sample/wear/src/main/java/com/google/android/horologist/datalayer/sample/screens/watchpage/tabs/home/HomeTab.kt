@@ -13,6 +13,7 @@ import com.google.android.horologist.datalayer.sample.R
 import androidx.compose.ui.graphics.Color
 import androidx.compose.foundation.layout.offset
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -25,11 +26,14 @@ import coil.request.ImageRequest
 import coil.decode.GifDecoder
 import coil.ImageLoader
 import android.content.Context
+import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.zIndex
 import androidx.wear.compose.material.MaterialTheme
 import coil.size.Size
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.unit.Dp
 
 @Composable
 fun HomeTab(
@@ -65,6 +69,17 @@ private fun HomeTabContent(
     hasPet: Boolean,
     modifier: Modifier = Modifier,
 ) {
+    // 화면 크기 가져오기
+    val configuration = LocalConfiguration.current
+    val screenHeight = configuration.screenHeightDp.dp
+    val screenWidth = configuration.screenWidthDp.dp
+
+    // 비율로 offset과 폰트 크기 및 이미지 크기 조정
+    val offsetYCenter = screenHeight * 0.10f
+    val offsetYTop = screenHeight * 0.18f
+    val fontSize = (screenWidth * 0.10f).value.sp
+    val imageSize = screenWidth * 0.95f
+
     Box(
         modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
@@ -82,9 +97,10 @@ private fun HomeTabContent(
         PetImage(
             hasPet = hasPet,
             satiety = satiety,
+            imageSize = imageSize,
             modifier = Modifier
                 .align(Alignment.Center)
-                .offset(y = 18.dp)
+                .offset(y = offsetYCenter)
         )
 
         // 레벨 텍스트
@@ -92,9 +108,10 @@ private fun HomeTabContent(
             PetLevelText(
                 name = name,
                 level = level,
+                fontSize = fontSize,
                 modifier = Modifier
                     .align(Alignment.TopCenter)
-                    .offset(y = 30.dp)
+                    .offset(y = offsetYTop)
             )
         }
     }
@@ -105,6 +122,7 @@ private fun PetImage(
     hasPet: Boolean,
     modifier: Modifier = Modifier,
     satiety: Int,
+    imageSize: Dp
 ) {
     val context = LocalContext.current
     val imageLoader = rememberImageLoader(context)
@@ -122,19 +140,23 @@ private fun PetImage(
                 painter = rememberAsyncImagePainter(
                     ImageRequest.Builder(context)
                         .data(imageRes)
-                        .size(Size(120, 120))
+                        .size(imageSize.value.toInt(), imageSize.value.toInt())
                         .build(),
                     imageLoader = imageLoader
                 ),
-                contentDescription = "Character",
-                modifier = Modifier.align(Alignment.Center)
+                contentDescription = "Charact er",
+                modifier = Modifier
+                    .size(imageSize)
+                    .align(Alignment.Center)
             )
         }
         else {
             Image(
                 painter = painterResource(id = R.drawable.doghouse),
                 contentDescription = "Doghouse",
-                modifier = Modifier.align(Alignment.Center)
+                modifier = Modifier
+                    .size(imageSize)
+                    .align(Alignment.Center)
             )
         }
     }
@@ -144,12 +166,13 @@ private fun PetImage(
 private fun PetLevelText(
     name: String,
     level: Int,
+    fontSize: TextUnit,
     modifier: Modifier = Modifier
 ) {
     Text(
         text = "$name LV.$level",
-        fontSize = 15.sp,
-        color = MaterialTheme.colors.onBackground ,
+        fontSize = fontSize,
+        color = MaterialTheme.colors.onBackground,
         modifier = modifier
     )
 }
