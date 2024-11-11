@@ -21,9 +21,10 @@ import com.google.android.horologist.datalayer.sample.R
 import androidx.wear.compose.material.Text
 import kotlin.math.abs
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.foundation.clickable
 
 @Composable
-fun EmojiScreen() {
+fun EmojiScreen(onEmojiSelected: (String) -> Unit) {
     val emojis = listOf("😐", "😭", "😊", "😕", "😔")
     val repeatedEmojis = remember { List(1000) { emojis[it % emojis.size] } }
     val listState = rememberLazyListState(initialFirstVisibleItemIndex = repeatedEmojis.size / 2)
@@ -66,7 +67,9 @@ fun EmojiScreen() {
                     val distanceFromCenter = abs(centerIndex - index)
                     val size = if (distanceFromCenter == 0) screenWidth * largeEmojiSizeRatio else screenWidth * smallEmojiSizeRatio
                     val alpha = if (distanceFromCenter == 0) 1f else 0.5f
-                    EmojiCircle(emoji, size, alpha)
+                    EmojiCircle(emoji, size, alpha) {
+                        onEmojiSelected(emoji)
+                    }
                 }
             }
         }
@@ -74,11 +77,12 @@ fun EmojiScreen() {
 }
 
 @Composable
-fun EmojiCircle(emoji: String, size: Dp, alpha: Float) {
+fun EmojiCircle(emoji: String, size: Dp, alpha: Float, onClick: () -> Unit) {
     Box(
         modifier = Modifier
             .size(size)
-            .background(Color(0xFFFFA726).copy(alpha = alpha), CircleShape),
+            .background(Color(0xFFFFA726).copy(alpha = alpha), CircleShape)
+            .clickable { onClick() },
         contentAlignment = Alignment.Center
     ) {
         Text(
