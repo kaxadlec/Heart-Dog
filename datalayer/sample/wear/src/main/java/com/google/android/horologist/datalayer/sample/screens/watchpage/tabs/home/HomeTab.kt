@@ -38,7 +38,7 @@ import androidx.compose.ui.unit.Dp
 @Composable
 fun HomeTab(
     modifier: Modifier = Modifier,
-    petViewModel: PetViewModel,
+    petViewModel: PetViewModel = hiltViewModel(),
     userViewModel: UserViewModel = hiltViewModel(),
 ) {
     val petState by petViewModel.uiState.collectAsStateWithLifecycle()
@@ -47,12 +47,12 @@ fun HomeTab(
     // 현재 레벨에 필요한 경험치를 가져옴
     val requiredExpForLevel = petViewModel.getRequiredExpForLevel(petState.level)
     // expProgress를 현재 경험치 대비 필요 경험치의 비율로 계산
-    val expProgress = petState.exp / requiredExpForLevel.toFloat()
+    val expProgress = petState.current_exp / requiredExpForLevel.toFloat()
 
     HomeTabContent(
         satietyProgress = petState.satiety / 100f,
         satiety = petState.satiety,
-        expProgress = petState.exp / 100f,
+        expProgress = expProgress,
         name = petState.name,
         level = petState.level,
         hasPet = userState.hasPet

@@ -23,6 +23,7 @@ import com.google.android.horologist.data.WearDataLayerRegistry
 import com.google.android.horologist.datalayer.grpc.GrpcExtensions.grpcClient
 import com.google.android.horologist.datalayer.phone.PhoneDataLayerAppHelper
 import com.google.android.horologist.datalayer.sample.shared.CounterValueSerializer
+import com.google.android.horologist.datalayer.sample.shared.DogRecordSerializer
 import com.google.android.horologist.datalayer.sample.shared.HeartRateRecordSerializer
 import com.google.android.horologist.datalayer.sample.shared.LocationTrackingRecordSerializer
 import com.google.android.horologist.datalayer.sample.shared.StepCountRecordSerializer
@@ -70,6 +71,7 @@ object DatalayerModule {
         registerSerializer(HeartRateRecordSerializer)
         registerSerializer(StepCountRecordSerializer)
         registerSerializer(LocationTrackingRecordSerializer)
+        registerSerializer(DogRecordSerializer)
     }
 
     @Singleton
