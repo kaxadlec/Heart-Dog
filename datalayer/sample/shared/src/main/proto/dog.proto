@@ -29,7 +29,18 @@ message DogDelta {
   string position = 7;
 }
 
+message GiveHeartRequest {
+  int64 user_id = 1;
+  int32 heart_amount = 2;
+}
+
+message DogResponse {  // DogResponse 메시지 정의 추가
+  bool success = 1;
+  string message = 2;  // optional 메시지 필드
+}
+
 service DogService {
   rpc get(.google.protobuf.Empty) returns (DogRecord);
   rpc put(DogDelta) returns (DogRecord);
+  rpc GiveHeartToDog (GiveHeartRequest) returns (DogResponse);
 }

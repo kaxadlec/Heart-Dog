@@ -1,5 +1,6 @@
 package com.google.android.horologist.datalayer.sample.grpc
 
+import android.util.Log
 import androidx.datastore.core.DataStore
 import com.google.android.horologist.datalayer.sample.shared.grpc.DogProto
 import com.google.android.horologist.datalayer.sample.shared.grpc.DogServiceGrpcKt
@@ -8,6 +9,7 @@ import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 import com.google.protobuf.Timestamp
 import com.google.protobuf.Empty
+import kotlinx.coroutines.flow.first
 
 class DogService @Inject constructor(
     private val dataStore: DataStore<DogProto.DogRecord>
@@ -63,6 +65,14 @@ class DogService @Inject constructor(
             .setSeconds(this / 1000)
             .setNanos(((this % 1000) * 1000000).toInt())
             .build()
+    }
+
+    override suspend fun giveHeartToDog(request: DogProto.GiveHeartRequest): DogProto.DogResponse {
+        // 요청 수신 후 로그 출력
+        Log.d("DogService", "하트 먹이기 버튼이 눌렸습니다 - UserID: ${request.userId}, Heart Amount: ${request.heartAmount}")
+
+        // 요청 성공 응답
+        return DogProto.DogResponse.newBuilder().setSuccess(true).build()
     }
 }
 
