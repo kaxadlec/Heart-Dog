@@ -19,7 +19,10 @@ plugins {
     id("com.android.application")
     id("com.google.devtools.ksp")
     id("dagger.hilt.android.plugin")
-//    id("org.jetbrains.kotlin.plugin.serialization") version "2.0.21"
+
+    id("com.google.gms.google-services")
+
+//  id("org.jetbrains.kotlin.plugin.serialization") version "2.0.21"
     kotlin("android")
     kotlin("plugin.serialization")
     alias(libs.plugins.compose.compiler)
@@ -115,11 +118,44 @@ repositories {
 
 dependencies {
 
+    /* Camera Setting */
     val cameraxVersion = "1.1.0"
-
     implementation ("androidx.camera:camera-camera2:$cameraxVersion")
     implementation ("androidx.camera:camera-lifecycle:$cameraxVersion")
     implementation ("androidx.camera:camera-view:$cameraxVersion")
+
+    /* QR 인식 */
+    implementation ("com.google.mlkit:barcode-scanning:17.0.3")
+
+    /* QR 생성 */
+    implementation ("com.google.zxing:core:3.4.1")
+    implementation ("com.journeyapps:zxing-android-embedded:4.3.0")
+
+    /* supabase Setting */
+    implementation(platform("io.github.jan-tennert.supabase:bom:3.0.1"))
+    implementation("io.github.jan-tennert.supabase:postgrest-kt")
+    implementation("io.ktor:ktor-client-android:3.0.0")
+
+
+    val ktor_version = "2.4.0"
+
+    implementation("io.ktor:ktor-client-core:$ktor_version")
+    implementation("io.ktor:ktor-client-content-negotiation:$ktor_version")
+    implementation("io.ktor:ktor-serialization-kotlinx-json:$ktor_version")
+
+
+    /* gif Setting */
+    implementation(libs.coil)
+    implementation(libs.coil.base)
+    implementation("io.coil-kt:coil-gif:2.7.0")
+
+    /* firebase */
+    implementation(platform("com.google.firebase:firebase-bom:33.5.1"))
+    implementation("com.google.firebase:firebase-analytics")
+
+    // FCM을 위한 의존성 추가
+    implementation("com.google.firebase:firebase-messaging-ktx")
+
 
     api(projects.annotations)
 

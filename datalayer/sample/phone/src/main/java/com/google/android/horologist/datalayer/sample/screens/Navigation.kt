@@ -79,5 +79,15 @@ object InsertQRCode
 @Serializable
 object Notification
 
+// test
+@Serializable
+object Setting
+
+@Serializable
+object UserManual
+
 @Serializable
 object StepCount
+
+@Serializable
+object ApiTest

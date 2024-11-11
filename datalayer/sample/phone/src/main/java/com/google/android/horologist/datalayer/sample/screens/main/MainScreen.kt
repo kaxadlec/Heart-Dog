@@ -18,6 +18,7 @@ package com.google.android.horologist.datalayer.sample.screens.main
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -31,6 +32,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.google.android.horologist.datalayer.sample.repository.UserRepository
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.google.android.horologist.datalayer.sample.screens.AppHelperNodes
@@ -70,6 +72,8 @@ import com.google.android.horologist.datalayer.sample.screens.InsertQRCode
 import com.google.android.horologist.datalayer.sample.screens.Login
 import com.google.android.horologist.datalayer.sample.screens.Matching
 import com.google.android.horologist.datalayer.sample.screens.Notification
+import com.google.android.horologist.datalayer.sample.screens.Setting
+import com.google.android.horologist.datalayer.sample.screens.UserManual
 
 import com.google.android.horologist.datalayer.sample.screens.hotdog.splash.SplashScreen
 import com.google.android.horologist.datalayer.sample.screens.hotdog.main.HotDogMainScreen
@@ -79,12 +83,36 @@ import com.google.android.horologist.datalayer.sample.screens.hotdog.matching.In
 import com.google.android.horologist.datalayer.sample.screens.hotdog.matching.MatchingScreen
 import com.google.android.horologist.datalayer.sample.screens.hotdog.notification.NotificationScreen
 
+import com.google.android.horologist.datalayer.sample.screens.hotdog.setting.SettingScreen
+import com.google.android.horologist.datalayer.sample.screens.hotdog.setting.components.UserManualPage
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.google.android.horologist.datalayer.sample.screens.ApiTest
+import com.google.android.horologist.datalayer.sample.screens.hotdog.repository.DogRepository
+import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.DogViewModel
+import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.DogViewModelFactory
+import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.UserViewModel
+import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.UserViewModelFactory
+import com.google.android.horologist.datalayer.sample.screens.menu.ApiTestScreen
 @Composable
 fun MainScreen(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
-    onStartLocationService: () -> Unit
+    onStartLocationService: () -> Unit,
+
 ) {
+    val userRepository = UserRepository()
+    val dogRepository = DogRepository()
+
+    val userViewModel: UserViewModel = viewModel(
+        factory = UserViewModelFactory(userRepository)
+    )
+    val dogViewModel: DogViewModel = viewModel(
+        factory = DogViewModelFactory(userViewModel, dogRepository)
+    )
+
+    LaunchedEffect(Unit) {
+        userViewModel.setUserId(1L)
+    }
 
     Scaffold(
         modifier = modifier,
@@ -102,6 +130,11 @@ fun MainScreen(
                 startDestination = Menu,
                 modifier = modifier,
             ) {
+
+                composable<ApiTest> {
+                    ApiTestScreen(navController = navController, modifier = Modifier, userViewModel = userViewModel, dogViewModel = dogViewModel)
+                }
+
                 composable<Menu> {
                     MenuScreen(navController = navController)
                 }
@@ -121,19 +154,27 @@ fun MainScreen(
                 }
 
                 composable<CreateQRCode> {
-                    CreateQRCodeScreen(navController = navController)
+                    CreateQRCodeScreen(navController = navController, userRepository = userRepository)
                 }
 
                 composable<InsertQRCode> {
-                   InsertQRCodeScreen(navController = navController)
+                   InsertQRCodeScreen(navController = navController, userRepository = userRepository)
                 }
 
                 composable<HotDogMain> {
-                    HotDogMainScreen(navController = navController)
+                    HotDogMainScreen(navController = navController, dogViewModel = dogViewModel)
                 }
 
                 composable<Notification> {
                     NotificationScreen(navController = navController)
+                }
+
+                composable<Setting> {
+                    SettingScreen(navController = navController)
+                }
+
+                composable<UserManual> {
+                    UserManualPage(navController = navController)
                 }
 
                 // 기존 코드

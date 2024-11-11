@@ -2,6 +2,7 @@ package com.google.android.horologist.datalayer.sample.screens.hotdog.matching.c
 
 import android.content.Context
 import androidx.camera.core.CameraSelector
+import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
@@ -19,9 +20,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import com.google.android.horologist.datalayer.sample.R
+import com.google.android.horologist.datalayer.sample.screens.hotdog.matching.qrcode.QRCodeAnalyzer
 
 @Composable
-fun CameraPreview(modifier: Modifier = Modifier) {
+fun CameraPreview(modifier: Modifier = Modifier, onQRCodeScanned: (String) -> Unit) {
     val context = LocalContext.current
     val cameraProviderFuture = ProcessCameraProvider.getInstance(context)
     var isCameraReady by remember { mutableStateOf(false) } // 카메라 준비 상태를 확인하는 변수
@@ -37,10 +39,19 @@ fun CameraPreview(modifier: Modifier = Modifier) {
                 }
 
                 val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
+
+                val imageAnalysis = ImageAnalysis.Builder()
+                    .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
+                    .build()
+                    .also {
+                        it.setAnalyzer(ContextCompat.getMainExecutor(ctx), QRCodeAnalyzer(onQRCodeScanned))
+                    }
+
                 cameraProvider.bindToLifecycle(
                     ctx as androidx.lifecycle.LifecycleOwner,
                     cameraSelector,
-                    preview
+                    preview,
+                    imageAnalysis
                 )
 
                 isCameraReady = true // 카메라가 준비되면 true로 변경

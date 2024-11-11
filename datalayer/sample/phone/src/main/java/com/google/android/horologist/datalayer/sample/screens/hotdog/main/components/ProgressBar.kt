@@ -12,111 +12,139 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.DogViewModel
 import com.google.android.horologist.datalayer.sample.ui.theme.ExpColor
 import com.google.android.horologist.datalayer.sample.ui.theme.HeartColor
 import com.google.android.horologist.datalayer.sample.ui.theme.bgColor
 import com.google.android.horologist.datalayer.sample.ui.theme.textColor
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.runtime.collectAsState
 
 @Composable
-fun ProgressBar(heartValue: Int, expValue: Int) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(
-            text = "Lv.30        몽실이",
-            fontSize = 32.sp,
-            color = textColor,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.align(Alignment.CenterHorizontally)
-        )
+fun ProgressBar(dogViewModel: DogViewModel = viewModel()) {
+    val dogDetails = dogViewModel.dogDetails.collectAsState().value
 
-        Spacer(modifier = Modifier.height(32.dp))
-
-        // 하트 게이지 바
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxWidth()
+    dogDetails?.let { dog ->
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
+            horizontalAlignment = Alignment.Start
         ) {
             Text(
-                text = "Heart",
+                text = "Lv.${dog.level} ${dog.name}",
+                fontSize = 32.sp,
                 color = textColor,
-                fontSize = 20.sp,
-                modifier = Modifier
-                    .weight(3f)
-                    .align(Alignment.CenterVertically)
-                    .padding(end = 8.dp)
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.align(Alignment.CenterHorizontally)
             )
 
-            Text(
-                text = "$heartValue",
-                color = textColor,
-                fontSize = 20.sp,
-                modifier = Modifier
-                    .weight(2f)
-                    .align(Alignment.CenterVertically)
-                    .padding(end = 8.dp)
-            )
+            Spacer(modifier = Modifier.height(16.dp))
 
-            Box(
-                modifier = Modifier
-                    .height(20.dp)
-                    .weight(7f)
-                    .border(width = 1.dp, color = Color.Black, shape = RoundedCornerShape(12.dp))
-                    .background(bgColor, shape = RoundedCornerShape(12.dp))
+            // 포만도 게이지 바
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth()
             ) {
-                Box(
+                Text(
+                    text = "포만도",
+                    color = textColor,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
                     modifier = Modifier
-                        .fillMaxHeight()
-                        .fillMaxWidth(heartValue / 100f)
-                        .border(width = 1.dp, color = Color.Black, shape = RoundedCornerShape(12.dp))
-                        .background(HeartColor, shape = RoundedCornerShape(12.dp))
+                        .weight(3f)
+                        .align(Alignment.CenterVertically)
+                        .padding(end = 8.dp)
                 )
-            }
-        }
 
-        Spacer(modifier = Modifier.height(16.dp))
+                Text(
+                    text = "${dog.satiety}",
+                    color = textColor,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier
+                        .weight(2f)
+                        .align(Alignment.CenterVertically)
+                        .padding(end = 8.dp)
+                )
 
-        // 경험치 게이지 바
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text(
-                text = "EXP",
-                color = textColor,
-                fontSize = 20.sp,
-                modifier = Modifier
-                    .weight(3f)
-                    .align(Alignment.CenterVertically)
-                    .padding(end = 8.dp)
-            )
-
-            Text(
-                text = "$expValue",
-                color = textColor,
-                fontSize = 20.sp,
-                modifier = Modifier
-                    .weight(2f)
-                    .align(Alignment.CenterVertically)
-                    .padding(end = 8.dp)
-            )
-
-            Box(
-                modifier = Modifier
-                    .height(20.dp)
-                    .weight(7f)
-                    .border(width = 1.dp, color = Color.Black, shape = RoundedCornerShape(12.dp))
-                    .background(bgColor, shape = RoundedCornerShape(12.dp))
-            ) {
                 Box(
                     modifier = Modifier
-                        .fillMaxHeight()
-                        .fillMaxWidth(expValue / 100f)
+                        .height(20.dp)
+                        .weight(7f)
                         .border(width = 1.dp, color = Color.Black, shape = RoundedCornerShape(12.dp))
-                        .background(ExpColor, shape = RoundedCornerShape(12.dp))
+                        .background(bgColor, shape = RoundedCornerShape(12.dp))
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .fillMaxWidth(dog.satiety / 100f)
+                            .border(width = 1.dp, color = Color.Black, shape = RoundedCornerShape(12.dp))
+                            .background(HeartColor, shape = RoundedCornerShape(12.dp))
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // 경험치 게이지 바
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(
+                    text = "EXP",
+                    color = textColor,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier
+                        .weight(3f)
+                        .align(Alignment.CenterVertically)
+                        .padding(end = 8.dp)
+                )
+
+                Text(
+                    text = "${dog.currentExp}",
+                    color = textColor,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier
+                        .weight(2f)
+                        .align(Alignment.CenterVertically)
+                        .padding(end = 8.dp)
+                )
+
+                Box(
+                    modifier = Modifier
+                        .height(20.dp)
+                        .weight(7f)
+                        .border(width = 1.dp, color = Color.Black, shape = RoundedCornerShape(12.dp))
+                        .background(bgColor, shape = RoundedCornerShape(12.dp))
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .fillMaxWidth(dog.currentExp / dog.maxExp.toFloat())
+                            .border(width = 1.dp, color = Color.Black, shape = RoundedCornerShape(12.dp))
+                            .background(ExpColor, shape = RoundedCornerShape(12.dp))
+                    )
+                }
+            }
+
+            // 경험치를 더 모으면 레벨업!
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.End
+            ) {
+                Text(
+                    text = "${dog.maxExp - dog.currentExp}을 더 모으면 레벨업!",
+                    color = textColor,
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                        .padding(end = 8.dp)
                 )
             }
         }
