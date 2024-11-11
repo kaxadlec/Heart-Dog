@@ -61,7 +61,7 @@ class PetViewModel @Inject constructor( private val feedingPreferences: FeedingP
     // 경험치 추가 및 레벨업 처리
     fun addExp(amount: Int) {
         _uiState.update { currentState ->
-            val newExp = currentState.exp + amount
+            val newExp = currentState.current_exp + amount
             val requiredExpForNextLevel = getRequiredExpForLevel(currentState.level)
 
             // 경험치가 레벨업 기준을 초과하면 레벨업
@@ -75,7 +75,7 @@ class PetViewModel @Inject constructor( private val feedingPreferences: FeedingP
 
             currentState.copy(
                 level = currentState.level + levelUps,
-                exp = remainingExp
+                current_exp = remainingExp
             )
         }
     }
