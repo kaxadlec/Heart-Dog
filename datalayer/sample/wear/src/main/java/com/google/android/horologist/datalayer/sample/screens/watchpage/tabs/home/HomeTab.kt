@@ -48,7 +48,7 @@ fun HomeTab(
     HomeTabContent(
         satietyProgress = petState.satiety / 100f,
         satiety = petState.satiety,
-        expProgress = petState.exp / 100f,
+        expProgress = expProgress,
         name = petState.name,
         level = petState.level,
         hasPet = userState.hasPet
