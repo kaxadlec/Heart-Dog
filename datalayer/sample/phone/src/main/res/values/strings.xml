@@ -185,4 +185,6 @@
 
     <string name="permission_required_message">권한 추가좀</string>
 
+    <string name="activity_splash_screen">Loading…</string>
+
 </resources>
