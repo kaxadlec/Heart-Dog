@@ -69,12 +69,12 @@ class NotificationRepository @Inject constructor() {
     }
 
     // 알림 전송
-    suspend fun sendNotification(senderId: Long, type: String, content: String) = withContext(Dispatchers.IO) {
+    suspend fun sendNotification(senderId: Long, typeId: Int, content: String) = withContext(Dispatchers.IO) {
         try {
             val params = JsonObject(
                 mapOf(
                     "p_sender_id" to JsonPrimitive(senderId),
-                    "p_type" to JsonPrimitive(type),
+                    "p_type_id" to JsonPrimitive(typeId),
                     "p_content" to JsonPrimitive(content)
                 )
             )
