@@ -53,7 +53,7 @@ class LocationTrackingForegroundService : Service() {
 
             fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
-            val locationRequest = LocationRequest.Builder(5000) // 10초마다 업데이트 (테스트용)
+            val locationRequest = LocationRequest.Builder(30000)
                 .setWaitForAccurateLocation(false)
                 .setPriority(Priority.PRIORITY_HIGH_ACCURACY)
                 .build()

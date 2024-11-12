@@ -42,6 +42,9 @@ import com.google.android.horologist.datalayer.sample.repository.UserRepository
 import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.NotificationViewModel
 import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.UserViewModel
 import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.UserViewModelFactory
+import io.github.jan.supabase.SupabaseClient
+import io.github.jan.supabase.auth.auth
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -55,7 +58,7 @@ class MainActivity : ComponentActivity() {
     private val userViewModel: UserViewModel by viewModels {
         UserViewModelFactory(userRepository)
     }
-    private val notificationViewModel: NotificationViewModel by viewModels()
+//    private val notificationViewModel: NotificationViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,28 +67,28 @@ class MainActivity : ComponentActivity() {
             requestNotificationPermission()
         }
 
-        // 사용자 ID 설정 (예시로 18L 사용)
-        userViewModel.setUserId(17L)
-
-        // FCM 토큰 가져오기 및 업데이트
-        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
-            if (!task.isSuccessful) {
-                Log.e("FCM", "Failed to get FCM token", task.exception)
-                return@addOnCompleteListener
-            }
-
-            val token = task.result
-            Log.d("FCM", "Token: $token")
-
-            // userViewModel의 userId를 observing하여 토큰 업데이트
-            lifecycleScope.launch {
-                userViewModel.userId.collect { userId ->
-                    if (userId != null) {
-                        notificationViewModel.updateFcmToken(userId, token)
-                    }
-                }
-            }
-        }
+//        // 사용자 ID 설정 (예시로 17L 사용)
+//        userViewModel.setUserId(18L)
+//
+//        // FCM 토큰 가져오기 및 업데이트
+//        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+//            if (!task.isSuccessful) {
+//                Log.e("FCM", "Failed to get FCM token", task.exception)
+//                return@addOnCompleteListener
+//            }
+//
+//            val token = task.result
+//            Log.d("FCM", "Token: $token")
+//
+//            // userViewModel의 userId를 observing하여 토큰 업데이트
+//            lifecycleScope.launch {
+//                userViewModel.userId.collect { userId ->
+//                    if (userId != null) {
+//                        notificationViewModel.updateFcmToken(userId, token)
+//                    }
+//                }
+//            }
+//        }
 
         setContent {
             HorologistTheme {
@@ -95,10 +98,8 @@ class MainActivity : ComponentActivity() {
                 ) {
                     MainScreen(
                         userViewModel = userViewModel,
-                        notificationViewModel = notificationViewModel,
-                        onStartLocationService = {
-                            requestLocationPermissions()
-                        }
+//                        notificationViewModel = notificationViewModel,
+                        onStartLocationService = { startLocationService() }
                     )
                 }
             }
