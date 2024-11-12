@@ -34,11 +34,12 @@ import androidx.wear.compose.material.MaterialTheme
 import coil.size.Size
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.Dp
+import java.util.Calendar
 
 @Composable
 fun HomeTab(
     modifier: Modifier = Modifier,
-    petViewModel: PetViewModel = hiltViewModel(),
+    petViewModel: PetViewModel,
     userViewModel: UserViewModel = hiltViewModel(),
 ) {
     val petState by petViewModel.uiState.collectAsStateWithLifecycle()
@@ -98,6 +99,7 @@ private fun HomeTabContent(
             hasPet = hasPet,
             satiety = satiety,
             imageSize = imageSize,
+            level= level,
             modifier = Modifier
                 .align(Alignment.Center)
                 .offset(y = offsetYCenter)
@@ -122,20 +124,52 @@ private fun PetImage(
     hasPet: Boolean,
     modifier: Modifier = Modifier,
     satiety: Int,
+    level: Int,
     imageSize: Dp
 ) {
     val context = LocalContext.current
     val imageLoader = rememberImageLoader(context)
 
+    // 현재 시간을 가져오기
+    val currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
+    val isSleepingTime = currentHour in 23..23 || currentHour in 0..4
+
     Box(modifier = modifier) {
         if (hasPet) {
-            val imageRes = when {
-                satiety < 25 -> R.drawable.cryingmotion
-                satiety < 50 -> R.drawable.umnaumna
-                satiety < 75 -> R.drawable.pppig
-                else -> R.drawable.dog_animation_1
+            // 잠자는 시간일 경우, sleepdog 이미지를 사용
+            val imageRes = if (isSleepingTime) {
+                R.drawable.sleepdog
+            } else {
+                // 레벨과 포만도(satiety)에 따른 캐릭터 이미지 선택
+                when (level) {
+                    1 -> {
+                        when {
+                            satiety < 25 -> R.drawable.onelevel1
+                            satiety < 50 -> R.drawable.twolevel1
+                            satiety < 75 -> R.drawable.threelevel1
+                            else -> R.drawable.fourlevel1
+                        }
+                    }
+                    2 -> {
+                        when {
+                            satiety < 25 -> R.drawable.onelevel2
+                            satiety < 50 -> R.drawable.twolevel2
+                            satiety < 75 -> R.drawable.threelevel2
+                            else -> R.drawable.fourlevel2
+                        }
+                    }
+                    else -> {
+                        when {
+                            satiety < 25 -> R.drawable.onelevel3
+                            satiety < 50 -> R.drawable.twolevel3
+                            satiety < 75 -> R.drawable.threelevel3
+                            else -> R.drawable.fourlevel3
+                        }
+                    }
+                }
             }
 
+            // 선택된 이미지 리소스 표시
             Image(
                 painter = rememberAsyncImagePainter(
                     ImageRequest.Builder(context)
@@ -144,15 +178,21 @@ private fun PetImage(
                         .build(),
                     imageLoader = imageLoader
                 ),
-                contentDescription = "Charact er",
+                contentDescription = "Character",
                 modifier = Modifier
                     .size(imageSize)
                     .align(Alignment.Center)
             )
-        }
-        else {
+        } else {
+            // 강아지가 없는 경우 레벨에 따른 집 이미지 선택
+            val houseRes = when (level) {
+                1 -> R.drawable.doghouselevel1
+                2 -> R.drawable.doghouselevel2
+                else -> R.drawable.doghouselevel3
+            }
+
             Image(
-                painter = painterResource(id = R.drawable.doghouse),
+                painter = painterResource(id = houseRes),
                 contentDescription = "Doghouse",
                 modifier = Modifier
                     .size(imageSize)
@@ -161,6 +201,7 @@ private fun PetImage(
         }
     }
 }
+
 
 @Composable
 private fun PetLevelText(

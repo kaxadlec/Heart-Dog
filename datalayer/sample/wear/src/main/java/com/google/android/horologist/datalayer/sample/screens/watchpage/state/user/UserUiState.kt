@@ -5,7 +5,7 @@ data class UserUiState(
     val userId: String = "1",          // 사용자 ID
     val dogId: String? = "1",        // 연결된 강아지 ID
     val coupleId: String? = "1",     // 연결된 커플 ID
-    val hasPet: Boolean = true,
+    val hasPet: Boolean = false,
     val isCoupleMatched: Boolean = true,
     val steps: Int = 0,
     val distance: Float = 0f,
