@@ -38,7 +38,7 @@ import androidx.compose.ui.unit.Dp
 @Composable
 fun HomeTab(
     modifier: Modifier = Modifier,
-    petViewModel: PetViewModel = hiltViewModel(),
+    petViewModel: PetViewModel,
     userViewModel: UserViewModel = hiltViewModel(),
 ) {
     val petState by petViewModel.uiState.collectAsStateWithLifecycle()
@@ -98,6 +98,7 @@ private fun HomeTabContent(
             hasPet = hasPet,
             satiety = satiety,
             imageSize = imageSize,
+            level= level,
             modifier = Modifier
                 .align(Alignment.Center)
                 .offset(y = offsetYCenter)
@@ -122,6 +123,7 @@ private fun PetImage(
     hasPet: Boolean,
     modifier: Modifier = Modifier,
     satiety: Int,
+    level: Int,
     imageSize: Dp
 ) {
     val context = LocalContext.current
@@ -129,11 +131,31 @@ private fun PetImage(
 
     Box(modifier = modifier) {
         if (hasPet) {
-            val imageRes = when {
-                satiety < 25 -> R.drawable.cryingmotion
-                satiety < 50 -> R.drawable.umnaumna
-                satiety < 75 -> R.drawable.pppig
-                else -> R.drawable.dog_animation_1
+            val imageRes = when (level) {
+                in 1..10 -> {
+                    when {
+                        satiety < 25 -> R.drawable.onelevel1
+                        satiety < 50 -> R.drawable.twolevel1
+                        satiety < 75 -> R.drawable.threelevel1
+                        else -> R.drawable.fourlevel1
+                    }
+                }
+                in 11..20 -> { // 레벨 2 - 미키 캐릭터 이미지 세트
+                    when {
+                        satiety < 25 -> R.drawable.onelevel2
+                        satiety < 50 -> R.drawable.twolevel2
+                        satiety < 75 -> R.drawable.threelevel2
+                        else -> R.drawable.fourlevel2
+                    }
+                }
+                else -> {
+                    when {
+                        satiety < 25 -> R.drawable.onelevel3
+                        satiety < 50 -> R.drawable.twolevel3
+                        satiety < 75 -> R.drawable.threelevel3
+                        else -> R.drawable.fourlevel3
+                    }
+                }
             }
 
             Image(
