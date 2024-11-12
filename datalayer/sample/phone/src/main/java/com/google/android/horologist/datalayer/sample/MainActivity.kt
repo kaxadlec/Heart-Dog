@@ -23,13 +23,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import com.google.android.horologist.datalayer.sample.screens.gps.LocationTrackingForegroundService
 import com.google.android.horologist.datalayer.sample.screens.main.MainScreen
 import com.google.android.horologist.datalayer.sample.ui.theme.HorologistTheme
@@ -50,6 +46,11 @@ import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.UserView
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
+    companion object {
+        private const val NOTIFICATION_PERMISSION_REQUEST_CODE = 1
+        private const val LOCATION_PERMISSION_REQUEST_CODE = 2
+    }
+
     private val userRepository = UserRepository()
     private val userViewModel: UserViewModel by viewModels {
         UserViewModelFactory(userRepository)
@@ -63,8 +64,8 @@ class MainActivity : ComponentActivity() {
             requestNotificationPermission()
         }
 
-        // 사용자 ID 설정 (예시로 17L 사용)
-        userViewModel.setUserId(18L)
+        // 사용자 ID 설정 (예시로 18L 사용)
+        userViewModel.setUserId(17L)
 
         // FCM 토큰 가져오기 및 업데이트
         FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
@@ -95,14 +96,52 @@ class MainActivity : ComponentActivity() {
                     MainScreen(
                         userViewModel = userViewModel,
                         notificationViewModel = notificationViewModel,
-                        onStartLocationService = { startLocationService() }
+                        onStartLocationService = {
+                            requestLocationPermissions()
+                        }
                     )
                 }
             }
         }
     }
 
-    // 알림 권한 요청
+    private fun checkLocationPermissions(): Boolean {
+        return ActivityCompat.checkSelfPermission(
+            this,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) == PackageManager.PERMISSION_GRANTED &&
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    ActivityCompat.checkSelfPermission(
+                        this,
+                        Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                    ) == PackageManager.PERMISSION_GRANTED
+                } else {
+                    true
+                }
+    }
+
+    private fun requestLocationPermissions() {
+        val permissions = mutableListOf(
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        )
+
+        // Android Q (API 29) 이상에서는 백그라운드 위치 권한 추가
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            permissions.add(Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+        }
+
+        ActivityCompat.requestPermissions(
+            this,
+            permissions.toTypedArray(),
+            LOCATION_PERMISSION_REQUEST_CODE
+        )
+    }
+
     private fun requestNotificationPermission() {
         if (ActivityCompat.checkSelfPermission(
                 this,
@@ -112,25 +151,35 @@ class MainActivity : ComponentActivity() {
             ActivityCompat.requestPermissions(
                 this,
                 arrayOf(Manifest.permission.POST_NOTIFICATIONS),
-                1
+                NOTIFICATION_PERMISSION_REQUEST_CODE
             )
         }
     }
 
-    // 권한 요청 결과 처리
     override fun onRequestPermissionsResult(
         requestCode: Int,
-        permissions: Array<String>,  // out 제거
+        permissions: Array<String>,
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
-            1 -> {
+            NOTIFICATION_PERMISSION_REQUEST_CODE -> {
                 if (grantResults.isNotEmpty() &&
-                    grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    grantResults[0] == PackageManager.PERMISSION_GRANTED
+                ) {
                     Log.d("FCM", "알림 권한 승인됨")
                 } else {
                     Log.d("FCM", "알림 권한 거부됨")
+                }
+            }
+            LOCATION_PERMISSION_REQUEST_CODE -> {
+                if (grantResults.isNotEmpty() &&
+                    grantResults.all { it == PackageManager.PERMISSION_GRANTED }
+                ) {
+                    Log.d("Location", "위치 권한 승인됨")
+                    startLocationService()
+                } else {
+                    Log.d("Location", "위치 권한 거부됨")
                 }
             }
         }
@@ -140,8 +189,8 @@ class MainActivity : ComponentActivity() {
         val intent = Intent(this, LocationTrackingForegroundService::class.java)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val serviceChannel = NotificationChannel(
-                "location_channel", // 채널 ID
-                "Location Service Channel", // 채널 이름
+                "location_channel",
+                "Location Service Channel",
                 NotificationManager.IMPORTANCE_DEFAULT
             )
             val manager = getSystemService(NotificationManager::class.java)
@@ -152,5 +201,4 @@ class MainActivity : ComponentActivity() {
             startService(intent)
         }
     }
-
 }
