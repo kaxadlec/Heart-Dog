@@ -34,7 +34,7 @@ fun EmojiScreen(onEmojiSelected: (String) -> Unit) {
     val screenHeight = configuration.screenHeightDp.dp
 
     // 비율로 설정된 크기
-    val paddingRatio = 0.05f // 5% padding 비율
+    val paddingRatio = 0.05f
     val textSizeRatio = 0.06f
     val largeEmojiSizeRatio = 0.40f
     val smallEmojiSizeRatio = 0.20f

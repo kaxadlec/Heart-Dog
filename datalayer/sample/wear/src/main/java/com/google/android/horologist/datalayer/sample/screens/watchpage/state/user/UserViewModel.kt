@@ -2,6 +2,7 @@ package com.google.android.horologist.datalayer.sample.screens.watchpage.state.u
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -83,5 +84,9 @@ class UserViewModel @Inject constructor() : ViewModel() {
 
     fun updateRecipientCommutingStatus(isCommuting: Boolean) {
         _uiState.update { it.copy(commutingRecipient = isCommuting) }
+    }
+
+    fun updateRecipientEmoji(nextEmoji: String?) {
+        _uiState.update { it.copy(emoji = nextEmoji) }
     }
 }

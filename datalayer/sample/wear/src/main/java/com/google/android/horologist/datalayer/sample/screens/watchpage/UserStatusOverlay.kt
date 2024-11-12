@@ -73,6 +73,13 @@ fun UserStatusOverlay(
             onCloseOverlay = onCloseOverlay
         )
     }
+
+    if (userState.emoji != null && showTextOverlay) {
+        OverlayWithActionsRecipient(
+            message = userState.emoji,
+            onCloseOverlay = onCloseOverlay
+        )
+    }
 }
 
 @Composable
