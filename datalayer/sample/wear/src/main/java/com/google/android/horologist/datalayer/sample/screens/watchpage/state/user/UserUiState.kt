@@ -16,6 +16,6 @@ data class UserUiState(
     val eatingRecipient: Boolean = false,
     val workingRecipient: Boolean = false,
     val commutingRecipient: Boolean = false,
-    val emoji: Boolean = false,
-    val emojiRecipient: Boolean = false
+    val emoji: String? = null,
+    val emojiRecipient: String? = null
 )

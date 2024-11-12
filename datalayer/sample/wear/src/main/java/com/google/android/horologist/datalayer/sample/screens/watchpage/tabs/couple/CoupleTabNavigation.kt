@@ -23,6 +23,7 @@ sealed class CoupleTabScreen(val route: String) {
 }
 
 fun sendEmojiToRecipient(emoji: String) {
+    // TODO: 여기서 상대방한테 이모지를 보냈다는 api를 보내야함
     println("전송된 이모지: $emoji")
 }
 
