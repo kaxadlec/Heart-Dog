@@ -28,11 +28,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.google.android.horologist.datalayer.sample.repository.UserRepository
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.google.android.horologist.datalayer.sample.screens.AppHelperNodes
@@ -86,19 +86,22 @@ import com.google.android.horologist.datalayer.sample.screens.hotdog.notificatio
 import com.google.android.horologist.datalayer.sample.screens.hotdog.setting.SettingScreen
 import com.google.android.horologist.datalayer.sample.screens.hotdog.setting.components.UserManualPage
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.google.android.horologist.datalayer.sample.screens.ApiTest
+import com.google.android.horologist.datalayer.sample.screens.hotdog.login.viewmodel.SignInViewModel
 import com.google.android.horologist.datalayer.sample.screens.hotdog.repository.DogRepository
 import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.DogViewModel
 import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.DogViewModelFactory
 import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.NotificationViewModel
 import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.UserViewModel
-import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.UserViewModelFactory
-import com.google.android.horologist.datalayer.sample.screens.menu.ApiTestScreen
+import com.google.firebase.messaging.FirebaseMessaging
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+
 @Composable
 fun MainScreen(
     modifier: Modifier = Modifier,
     userViewModel: UserViewModel,
-    notificationViewModel: NotificationViewModel,
+//    notificationViewModel: NotificationViewModel,
     navController: NavHostController = rememberNavController(),
     onStartLocationService: () -> Unit,
 
@@ -109,9 +112,7 @@ fun MainScreen(
         factory = DogViewModelFactory(userViewModel, dogRepository)
     )
 
-    LaunchedEffect(Unit) {
-        userViewModel.setUserId(17L)
-    }
+//    updateFcmToken(signInViewModel, notificationViewModel)
 
     Scaffold(
         modifier = modifier,
@@ -123,16 +124,16 @@ fun MainScreen(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            RequestLocationPermissions(onAllPermissionsGranted = onStartLocationService)
+//            RequestLocationPermissions(onAllPermissionsGranted = onStartLocationService)
             NavHost(
                 navController = navController,
                 startDestination = Menu,
                 modifier = modifier,
             ) {
 
-                composable<ApiTest> {
-                    ApiTestScreen(navController = navController, modifier = Modifier, userViewModel = userViewModel, dogViewModel = dogViewModel, notificationViewModel = notificationViewModel)
-                }
+//                composable<ApiTest> {
+//                    ApiTestScreen(navController = navController, modifier = Modifier, userViewModel = userViewModel, dogViewModel = dogViewModel, notificationViewModel = notificationViewModel)
+//                }
 
                 composable<Menu> {
                     MenuScreen(navController = navController)

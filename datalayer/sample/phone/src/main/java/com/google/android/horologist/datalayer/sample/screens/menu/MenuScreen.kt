@@ -16,15 +16,19 @@
 
 package com.google.android.horologist.datalayer.sample.screens.menu
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.google.android.horologist.datalayer.sample.R
 import com.google.android.horologist.datalayer.sample.screens.ApiTest
@@ -37,6 +41,7 @@ import com.google.android.horologist.datalayer.sample.screens.InstallAppCustomPr
 import com.google.android.horologist.datalayer.sample.screens.InstallAppPromptDemo
 import com.google.android.horologist.datalayer.sample.screens.InstallTileCustomPromptDemo
 import com.google.android.horologist.datalayer.sample.screens.InstallTilePromptDemo
+import com.google.android.horologist.datalayer.sample.screens.Matching
 import com.google.android.horologist.datalayer.sample.screens.ReEngageCustomPromptDemo
 import com.google.android.horologist.datalayer.sample.screens.ReEngagePromptDemo
 import com.google.android.horologist.datalayer.sample.screens.SignInCustomPromptDemo
@@ -44,12 +49,18 @@ import com.google.android.horologist.datalayer.sample.screens.SignInPromptDemo
 import com.google.android.horologist.datalayer.sample.screens.StepCount
 
 import com.google.android.horologist.datalayer.sample.screens.Splash
+import com.google.android.horologist.datalayer.sample.screens.hotdog.login.viewmodel.SignInViewModel
+import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.UserViewModel
+import io.github.jan.supabase.auth.status.SessionStatus
 
 @Composable
 fun MenuScreen(
     navController: NavHostController,
     modifier: Modifier = Modifier,
 ) {
+    val signInViewModel: SignInViewModel = hiltViewModel()
+    val sessionStatus by signInViewModel.sessionStatus.collectAsState()
+
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -63,8 +74,28 @@ fun MenuScreen(
         }
 
         // 스플래시 화면으로 이동 버튼
-        Button(onClick = { navController.navigate(Splash) }) {
-            Text(text = "Go to Splash Screen")
+        when (sessionStatus) {
+            is SessionStatus.Authenticated -> {
+                Button(onClick = { navController.navigate(Matching) }) {
+                    Text(text = "Go to Splash Screen")
+                }
+            }
+
+            is SessionStatus.Initializing -> {
+                Button(onClick = { navController.navigate(Splash) }) {
+                    Text(text = "Go to Splash Screen")
+                }
+            }
+            is SessionStatus.NotAuthenticated -> {
+                Button(onClick = { navController.navigate(Splash) }) {
+                    Text(text = "Go to Splash Screen")
+                }
+            }
+            is SessionStatus.RefreshFailure -> {
+                Button(onClick = { navController.navigate(Splash) }) {
+                    Text(text = "Go to Splash Screen")
+                }
+            }
         }
 
         Button(onClick = { navController.navigate(HotDogMain) }) {

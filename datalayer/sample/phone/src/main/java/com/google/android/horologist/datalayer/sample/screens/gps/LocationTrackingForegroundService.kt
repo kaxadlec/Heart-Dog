@@ -42,7 +42,7 @@ class LocationTrackingForegroundService : Service() {
         try {
             fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
-            val locationRequest = LocationRequest.Builder(5000)
+            val locationRequest = LocationRequest.Builder(30000)
                 .setWaitForAccurateLocation(false)
                 .setPriority(Priority.PRIORITY_HIGH_ACCURACY)
                 .build()
