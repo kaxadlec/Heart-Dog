@@ -22,7 +22,7 @@ class NotificationViewModel @Inject constructor(
         viewModelScope.launch {
             repository.sendNotification(
                 senderId = senderId,
-                type = "DOG_CALL",
+                typeId = 1,  // type -> typeId로 변경
                 content = "강아지가 호출되었습니다!"
             )
         }
