@@ -29,11 +29,11 @@ import com.google.zxing.qrcode.QRCodeWriter
 import com.google.android.horologist.datalayer.sample.R
 import com.google.android.horologist.datalayer.sample.repository.UserRepository
 import com.google.android.horologist.datalayer.sample.screens.HotDogMain
+import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.UserViewModel
 
 @Composable
-fun CreateQRCodeScreen(navController: NavHostController, userRepository: UserRepository) {
-
-    // , userId: Long 추가해주기
+fun CreateQRCodeScreen(navController: NavHostController, userViewModel: UserViewModel) {
+    val userId = userViewModel.userId.collectAsState().value ?: return
 
     val randomCode = remember { generateRandomCode() }
     var qrBitmap by remember { mutableStateOf<Bitmap?>(null) }
@@ -49,14 +49,14 @@ fun CreateQRCodeScreen(navController: NavHostController, userRepository: UserRep
         val userId = 1L
 
         // 코드 업데이트
-        userRepository.updateUserCode(userId, randomCode)
+        userViewModel.updateUserCode(userId, randomCode)
 
         // 타이머 실행 & 매칭 상태 체크
         while (remainingTime > 0) {
             delay(1000L)
 
             // UserRepository를 통해 매칭 상태 체크
-            if (userRepository.checkUserMatching(userId)) {
+            if (userViewModel.checkUserMatching(userId)) {
                 // 매칭되었다면 메인화면으로 이동
                 navController.navigate(HotDogMain) {
                     popUpTo(navController.graph.startDestinationId) {

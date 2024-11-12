@@ -90,26 +90,27 @@ import com.google.android.horologist.datalayer.sample.screens.ApiTest
 import com.google.android.horologist.datalayer.sample.screens.hotdog.repository.DogRepository
 import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.DogViewModel
 import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.DogViewModelFactory
+import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.NotificationViewModel
 import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.UserViewModel
 import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.UserViewModelFactory
 import com.google.android.horologist.datalayer.sample.screens.menu.ApiTestScreen
 @Composable
 fun MainScreen(
     modifier: Modifier = Modifier,
+    userViewModel: UserViewModel,
+    notificationViewModel: NotificationViewModel,
     navController: NavHostController = rememberNavController(),
-) {
-    val userRepository = UserRepository()
+    onStartLocationService: () -> Unit,
+
+    ) {
     val dogRepository = DogRepository()
 
-    val userViewModel: UserViewModel = viewModel(
-        factory = UserViewModelFactory(userRepository)
-    )
     val dogViewModel: DogViewModel = viewModel(
         factory = DogViewModelFactory(userViewModel, dogRepository)
     )
 
     LaunchedEffect(Unit) {
-        userViewModel.setUserId(1L)
+        userViewModel.setUserId(17L)
     }
 
     Scaffold(
@@ -122,6 +123,7 @@ fun MainScreen(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
+            RequestLocationPermissions(onAllPermissionsGranted = onStartLocationService)
             NavHost(
                 navController = navController,
                 startDestination = Menu,
@@ -129,7 +131,7 @@ fun MainScreen(
             ) {
 
                 composable<ApiTest> {
-                    ApiTestScreen(navController = navController, modifier = Modifier, userViewModel = userViewModel, dogViewModel = dogViewModel)
+                    ApiTestScreen(navController = navController, modifier = Modifier, userViewModel = userViewModel, dogViewModel = dogViewModel, notificationViewModel = notificationViewModel)
                 }
 
                 composable<Menu> {
@@ -151,11 +153,11 @@ fun MainScreen(
                 }
 
                 composable<CreateQRCode> {
-                    CreateQRCodeScreen(navController = navController, userRepository = userRepository)
+                    CreateQRCodeScreen(navController = navController, userViewModel = userViewModel)
                 }
 
                 composable<InsertQRCode> {
-                   InsertQRCodeScreen(navController = navController, userRepository = userRepository)
+                    InsertQRCodeScreen(navController = navController, userViewModel = userViewModel)
                 }
 
                 composable<HotDogMain> {
@@ -217,5 +219,48 @@ fun MainScreen(
                 }
             }
         }
+    }
+}
+
+@SuppressLint("InlinedApi")
+@OptIn(ExperimentalPermissionsApi::class)
+@Composable
+fun RequestLocationPermissions(
+    onAllPermissionsGranted: () -> Unit
+) {
+    // 위치 권한 상태
+    val locationPermissionsState = rememberMultiplePermissionsState(
+        permissions = listOf(
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        )
+    )
+
+    // 위치 서비스 권한 상태
+    val foregroundServicePermissionState = rememberMultiplePermissionsState(
+        permissions = listOf(Manifest.permission.FOREGROUND_SERVICE_LOCATION)
+    )
+
+    // 위치 권한을 먼저 요청
+    LaunchedEffect(Unit) {
+        if (!locationPermissionsState.allPermissionsGranted) {
+            locationPermissionsState.launchMultiplePermissionRequest()
+        }
+    }
+
+    // 위치 권한이 모두 승인된 경우에만 서비스 권한 요청
+    LaunchedEffect(locationPermissionsState.allPermissionsGranted) {
+        if (locationPermissionsState.allPermissionsGranted) {
+            if (!foregroundServicePermissionState.allPermissionsGranted) {
+                foregroundServicePermissionState.launchMultiplePermissionRequest()
+            } else {
+                onAllPermissionsGranted() // 모든 권한이 승인된 경우 호출
+            }
+        }
+    }
+
+    // 모든 권한이 승인되지 않은 경우 콜백 호출
+    if (!locationPermissionsState.allPermissionsGranted || !foregroundServicePermissionState.allPermissionsGranted) {
+//        onPermissionsNotGranted()
     }
 }
