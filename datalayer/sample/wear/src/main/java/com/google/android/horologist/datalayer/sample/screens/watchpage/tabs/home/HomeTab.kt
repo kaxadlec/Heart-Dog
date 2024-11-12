@@ -184,9 +184,15 @@ private fun PetImage(
                     .align(Alignment.Center)
             )
         } else {
-            // 강아지가 없는 경우 기본 이미지 표시
+            // 강아지가 없는 경우 레벨에 따른 집 이미지 선택
+            val houseRes = when (level) {
+                1 -> R.drawable.doghouselevel1
+                2 -> R.drawable.doghouselevel2
+                else -> R.drawable.doghouselevel3
+            }
+
             Image(
-                painter = painterResource(id = R.drawable.doghouse),
+                painter = painterResource(id = houseRes),
                 contentDescription = "Doghouse",
                 modifier = Modifier
                     .size(imageSize)
