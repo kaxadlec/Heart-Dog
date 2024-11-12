@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.DogViewModel
+import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.NotificationViewModel
 import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.UserViewModel
 
 @Composable
@@ -22,8 +23,10 @@ fun ApiTestScreen(
     navController: NavHostController,
     modifier: Modifier = Modifier,
     userViewModel: UserViewModel = viewModel(),
-    dogViewModel: DogViewModel = viewModel()
+    dogViewModel: DogViewModel = viewModel(),
+    notificationViewModel: NotificationViewModel
 ) {
+    val userId = userViewModel.userId.collectAsState().value
     val giveHeartResult = dogViewModel.giveHeartResult.collectAsState().value
     val userFullInfo = userViewModel.userFullInfo.collectAsState().value
 
@@ -34,6 +37,14 @@ fun ApiTestScreen(
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+
+        userId?.let { id ->
+            Button(onClick = {
+                notificationViewModel.sendDogCallNotification(id)
+            }) {
+                Text("강아지 호출")
+            }
+        }
 
         // User data reset 버튼
         Button(

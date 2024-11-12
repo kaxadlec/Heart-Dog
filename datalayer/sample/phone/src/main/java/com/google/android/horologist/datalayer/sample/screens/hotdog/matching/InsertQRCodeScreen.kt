@@ -14,11 +14,13 @@ import androidx.navigation.NavHostController
 import com.google.android.horologist.datalayer.sample.screens.hotdog.common.LogoHeader
 import com.google.android.horologist.datalayer.sample.screens.hotdog.matching.components.CameraPreview
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import com.google.accompanist.permissions.PermissionStatus
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.android.horologist.datalayer.sample.repository.UserRepository
 import com.google.android.horologist.datalayer.sample.screens.HotDogMain
+import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.UserViewModel
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -47,8 +49,8 @@ fun CameraPermissionWrapper(content: @Composable () -> Unit) {
 }
 
 @Composable
-fun InsertQRCodeScreen(navController: NavHostController, userRepository: UserRepository) {
-    val currentUserId = 2L
+fun InsertQRCodeScreen(navController: NavHostController, userViewModel: UserViewModel) {
+    val userId = userViewModel.userId.collectAsState().value ?: return
 
     Box(
         modifier = Modifier
@@ -66,7 +68,7 @@ fun InsertQRCodeScreen(navController: NavHostController, userRepository: UserRep
                 onQRCodeScanned = { scannedCode ->
                     CoroutineScope(Dispatchers.Main).launch {
                         try {
-                            val result = userRepository.insertScannedCode(currentUserId, scannedCode)
+                            val result = userViewModel.insertScannedCode(userId, scannedCode)
                             if (result.success && result.matched) {
                                 navController.navigate(HotDogMain) {
                                     popUpTo(navController.graph.startDestinationId) {
