@@ -16,7 +16,6 @@
 
 package com.google.android.horologist.datalayer.sample.screens.menu
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
@@ -35,6 +34,7 @@ import com.google.android.horologist.datalayer.sample.screens.ApiTest
 import com.google.android.horologist.datalayer.sample.screens.AppHelperNodes
 import com.google.android.horologist.datalayer.sample.screens.AppHelperNodesListener
 import com.google.android.horologist.datalayer.sample.screens.Counter
+import com.google.android.horologist.datalayer.sample.screens.EmojiScreen
 import com.google.android.horologist.datalayer.sample.screens.HeartRate
 import com.google.android.horologist.datalayer.sample.screens.HotDogMain
 import com.google.android.horologist.datalayer.sample.screens.InstallAppCustomPromptDemo
@@ -46,11 +46,9 @@ import com.google.android.horologist.datalayer.sample.screens.ReEngageCustomProm
 import com.google.android.horologist.datalayer.sample.screens.ReEngagePromptDemo
 import com.google.android.horologist.datalayer.sample.screens.SignInCustomPromptDemo
 import com.google.android.horologist.datalayer.sample.screens.SignInPromptDemo
-import com.google.android.horologist.datalayer.sample.screens.StepCount
-
 import com.google.android.horologist.datalayer.sample.screens.Splash
+import com.google.android.horologist.datalayer.sample.screens.StepCount
 import com.google.android.horologist.datalayer.sample.screens.hotdog.login.viewmodel.SignInViewModel
-import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.UserViewModel
 import io.github.jan.supabase.auth.status.SessionStatus
 
 @Composable
@@ -153,7 +151,9 @@ fun MenuScreen(
             text = stringResource(id = R.string.menu_screen_datalayer_header),
             modifier = Modifier.padding(top = 10.dp),
         )
-
+        Button(onClick = { navController.navigate(EmojiScreen) }) {
+            Text(text = "이모지 화면")
+        }
         Button(onClick = { navController.navigate(Counter) }) {
             Text(text = stringResource(id = R.string.menu_screen_counter_item))
         }
@@ -165,5 +165,6 @@ fun MenuScreen(
         Button(onClick = { navController.navigate(StepCount) }) {
             Text(text = stringResource(id = R.string.menu_screen_step_count))
         }
+
     }
 }

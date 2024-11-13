@@ -23,10 +23,12 @@ import com.google.android.horologist.data.WearDataLayerRegistry
 import com.google.android.horologist.datalayer.grpc.GrpcExtensions.grpcClient
 import com.google.android.horologist.datalayer.sample.TileSync
 import com.google.android.horologist.datalayer.sample.screens.heartrate.data.HeartRateServicesRepository
-import com.google.android.horologist.datalayer.sample.shared.DogRecordSerializer
+import com.google.android.horologist.datalayer.sample.shared.EmojiValueSerializer
 import com.google.android.horologist.datalayer.sample.shared.grpc.CounterServiceGrpcKt
 import com.google.android.horologist.datalayer.sample.shared.grpc.DogProto
 import com.google.android.horologist.datalayer.sample.shared.grpc.DogServiceGrpcKt
+import com.google.android.horologist.datalayer.sample.shared.grpc.EmojiProto.EmojiValue
+import com.google.android.horologist.datalayer.sample.shared.grpc.EmojiServiceGrpcKt
 import com.google.android.horologist.datalayer.sample.shared.grpc.GrpcDemoProto
 import com.google.android.horologist.datalayer.sample.shared.grpc.HeartRateProto.HeartRateRecord
 import com.google.android.horologist.datalayer.sample.shared.grpc.HeartRateServiceGrpcKt
@@ -86,6 +88,31 @@ object DatalayerModule {
         ) {
             CounterServiceGrpcKt.CounterServiceCoroutineStub(it)
         }
+
+    // Emoji Service 관련 Flow 및 Service 추가
+    @ActivityRetainedScoped
+    @Provides
+    fun emojiFlow(wearDataLayerRegistry: WearDataLayerRegistry): Flow<EmojiValue> {
+        return wearDataLayerRegistry.protoFlow(
+            TargetNodeId.PairedPhone,
+            EmojiValueSerializer,
+            "emoji_data"
+        )
+    }
+
+    @ActivityRetainedScoped
+    @Provides
+    fun emojiService(
+        wearDataLayerRegistry: WearDataLayerRegistry
+    ): EmojiServiceGrpcKt.EmojiServiceCoroutineStub {
+        return wearDataLayerRegistry.grpcClient(
+            nodeId = TargetNodeId.PairedPhone,
+            coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Default),
+        ) {
+            EmojiServiceGrpcKt.EmojiServiceCoroutineStub(it)
+        }
+    }
+
 
     /* HeartRateService */
     @ActivityRetainedScoped

@@ -16,9 +16,10 @@
 
 package com.google.android.horologist.datalayer.sample.screens.main
 
+// 모바일 화면 개발
+
 import android.Manifest
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -28,7 +29,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -39,19 +40,42 @@ import com.google.android.horologist.datalayer.sample.screens.AppHelperNodes
 import com.google.android.horologist.datalayer.sample.screens.AppHelperNodesListener
 import com.google.android.horologist.datalayer.sample.screens.Counter
 import com.google.android.horologist.datalayer.sample.screens.CreateQRCode
+import com.google.android.horologist.datalayer.sample.screens.EmojiScreen
 import com.google.android.horologist.datalayer.sample.screens.HeartRate
+import com.google.android.horologist.datalayer.sample.screens.HotDogMain
+import com.google.android.horologist.datalayer.sample.screens.InsertQRCode
 import com.google.android.horologist.datalayer.sample.screens.InstallAppCustomPromptDemo
 import com.google.android.horologist.datalayer.sample.screens.InstallAppPromptDemo
 import com.google.android.horologist.datalayer.sample.screens.InstallTileCustomPromptDemo
 import com.google.android.horologist.datalayer.sample.screens.InstallTilePromptDemo
+import com.google.android.horologist.datalayer.sample.screens.Login
+import com.google.android.horologist.datalayer.sample.screens.Matching
 import com.google.android.horologist.datalayer.sample.screens.Menu
+import com.google.android.horologist.datalayer.sample.screens.Notification
 import com.google.android.horologist.datalayer.sample.screens.ReEngageCustomPromptDemo
 import com.google.android.horologist.datalayer.sample.screens.ReEngagePromptDemo
+import com.google.android.horologist.datalayer.sample.screens.Setting
 import com.google.android.horologist.datalayer.sample.screens.SignInCustomPromptDemo
 import com.google.android.horologist.datalayer.sample.screens.SignInPromptDemo
+import com.google.android.horologist.datalayer.sample.screens.Splash
 import com.google.android.horologist.datalayer.sample.screens.StepCount
+import com.google.android.horologist.datalayer.sample.screens.UserManual
 import com.google.android.horologist.datalayer.sample.screens.counter.CounterScreen
+import com.google.android.horologist.datalayer.sample.screens.counter.EmojiScreen
 import com.google.android.horologist.datalayer.sample.screens.heartrate.HeartRateScreen
+import com.google.android.horologist.datalayer.sample.screens.hotdog.login.screen.SignInScreen
+import com.google.android.horologist.datalayer.sample.screens.hotdog.main.HotDogMainScreen
+import com.google.android.horologist.datalayer.sample.screens.hotdog.matching.CreateQRCodeScreen
+import com.google.android.horologist.datalayer.sample.screens.hotdog.matching.InsertQRCodeScreen
+import com.google.android.horologist.datalayer.sample.screens.hotdog.matching.MatchingScreen
+import com.google.android.horologist.datalayer.sample.screens.hotdog.notification.NotificationScreen
+import com.google.android.horologist.datalayer.sample.screens.hotdog.repository.DogRepository
+import com.google.android.horologist.datalayer.sample.screens.hotdog.setting.SettingScreen
+import com.google.android.horologist.datalayer.sample.screens.hotdog.setting.components.UserManualPage
+import com.google.android.horologist.datalayer.sample.screens.hotdog.splash.SplashScreen
+import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.DogViewModel
+import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.DogViewModelFactory
+import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.UserViewModel
 import com.google.android.horologist.datalayer.sample.screens.inappprompts.custom.installapp.InstallAppCustomPromptDemoScreen
 import com.google.android.horologist.datalayer.sample.screens.inappprompts.custom.installtile.InstallTileCustomPromptDemoScreen
 import com.google.android.horologist.datalayer.sample.screens.inappprompts.custom.reengage.ReEngageCustomPromptDemoScreen
@@ -64,38 +88,6 @@ import com.google.android.horologist.datalayer.sample.screens.menu.MenuScreen
 import com.google.android.horologist.datalayer.sample.screens.nodes.NodesScreen
 import com.google.android.horologist.datalayer.sample.screens.nodeslistener.NodesListenerScreen
 import com.google.android.horologist.datalayer.sample.screens.steps.StepCountScreen
-
-// 모바일 화면 개발
-import com.google.android.horologist.datalayer.sample.screens.Splash
-import com.google.android.horologist.datalayer.sample.screens.HotDogMain
-import com.google.android.horologist.datalayer.sample.screens.InsertQRCode
-import com.google.android.horologist.datalayer.sample.screens.Login
-import com.google.android.horologist.datalayer.sample.screens.Matching
-import com.google.android.horologist.datalayer.sample.screens.Notification
-import com.google.android.horologist.datalayer.sample.screens.Setting
-import com.google.android.horologist.datalayer.sample.screens.UserManual
-
-import com.google.android.horologist.datalayer.sample.screens.hotdog.splash.SplashScreen
-import com.google.android.horologist.datalayer.sample.screens.hotdog.main.HotDogMainScreen
-import com.google.android.horologist.datalayer.sample.screens.hotdog.login.screen.SignInScreen
-import com.google.android.horologist.datalayer.sample.screens.hotdog.matching.CreateQRCodeScreen
-import com.google.android.horologist.datalayer.sample.screens.hotdog.matching.InsertQRCodeScreen
-import com.google.android.horologist.datalayer.sample.screens.hotdog.matching.MatchingScreen
-import com.google.android.horologist.datalayer.sample.screens.hotdog.notification.NotificationScreen
-
-import com.google.android.horologist.datalayer.sample.screens.hotdog.setting.SettingScreen
-import com.google.android.horologist.datalayer.sample.screens.hotdog.setting.components.UserManualPage
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.google.android.horologist.datalayer.sample.screens.hotdog.login.viewmodel.SignInViewModel
-import com.google.android.horologist.datalayer.sample.screens.hotdog.repository.DogRepository
-import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.DogViewModel
-import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.DogViewModelFactory
-import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.NotificationViewModel
-import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.UserViewModel
-import com.google.firebase.messaging.FirebaseMessaging
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 @Composable
 fun MainScreen(
@@ -217,6 +209,9 @@ fun MainScreen(
                 }
                 composable<StepCount> {
                     StepCountScreen()
+                }
+                composable<EmojiScreen> {
+                    EmojiScreen()
                 }
             }
         }
