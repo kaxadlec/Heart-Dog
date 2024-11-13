@@ -53,14 +53,15 @@ class LocationTrackingForegroundService : Service() {
 
             fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
-            val locationRequest = LocationRequest.Builder(5000) // 10초마다 업데이트 (테스트용)
+            val locationRequest = LocationRequest.Builder(10000) // 10초마다 업데이트 (테스트용)
                 .setWaitForAccurateLocation(false)
                 .setPriority(Priority.PRIORITY_HIGH_ACCURACY)
                 .build()
 
             locationCallback = object : LocationCallback() {
                 override fun onLocationResult(locationResult: LocationResult) {
-                    locationResult.locations.forEach { location ->
+                    // 가장 최근 위치만 사용
+                    locationResult.lastLocation?.let { location ->
                         Log.d("LocationService",
                             "Lat: ${location.latitude}, Lng: ${location.longitude}, Alt: ${location.altitude}")
 
@@ -131,6 +132,6 @@ class LocationTrackingForegroundService : Service() {
 
     private fun getCurrentUserId(): Long {
         // TODO: 실제 사용자 ID 가져오기 구현
-        return 17L // 임시로 하드코딩
+        return 18L // 임시로 하드코딩
     }
 }

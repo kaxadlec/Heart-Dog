@@ -65,7 +65,7 @@ class MainActivity : ComponentActivity() {
         }
 
         // 사용자 ID 설정 (예시로 18L 사용)
-        userViewModel.setUserId(17L)
+        userViewModel.setUserId(18L)
 
         // FCM 토큰 가져오기 및 업데이트
         FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
