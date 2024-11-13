@@ -25,6 +25,7 @@ import com.google.android.horologist.datalayer.sample.R
 import com.google.android.horologist.datalayer.sample.screens.HotDogMain
 import com.google.android.horologist.datalayer.sample.screens.Matching
 import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.SignInViewModel
+import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.UserViewModel
 import io.github.jan.supabase.auth.status.SessionStatus
 
 @OptIn(ExperimentalMaterial3Api::class)

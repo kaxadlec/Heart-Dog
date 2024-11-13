@@ -35,7 +35,6 @@ import com.google.android.horologist.datalayer.sample.screens.SignInCustomPrompt
 import com.google.android.horologist.datalayer.sample.screens.SignInPromptDemo
 import com.google.android.horologist.datalayer.sample.screens.StepCount
 import com.google.android.horologist.datalayer.sample.screens.Splash
-import com.google.android.horologist.datalayer.sample.screens.hotdog.login.viewmodel.SignInViewModel
 import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.SignInViewModel
 import io.github.jan.supabase.auth.status.SessionStatus
 
