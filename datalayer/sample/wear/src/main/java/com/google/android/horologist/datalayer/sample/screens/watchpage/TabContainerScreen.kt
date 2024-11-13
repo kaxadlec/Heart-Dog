@@ -72,10 +72,10 @@ fun TabContainerScreen(
 
     // TODO:  여기서 FCM 알림을 구독하고 있다가 알림이 오면 userState의 상태를 바꿔준다.
     // TODO: 아래 4줄은 예시임
-    LaunchedEffect(Unit) {
-        delay(5000)
-        sharedUserViewModel.updateRecipientEmoji("❤");
-    }
+//    LaunchedEffect(Unit) {
+//        delay(5000)
+//        sharedUserViewModel.updateRecipientEmoji("❤");
+//    }
 
     WatchPageTheme {
         // 현재 화면이 메인 화면인지 확인
