@@ -5,7 +5,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
@@ -23,15 +22,19 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.google.android.horologist.datalayer.sample.R
-import com.google.android.horologist.datalayer.sample.screens.Matching
 import com.google.android.horologist.datalayer.sample.screens.hotdog.login.viewmodel.SignInViewModel
+import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.NotificationViewModel
+import com.google.firebase.messaging.FirebaseMessaging
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SignInScreen(
     modifier: Modifier = Modifier,
     navController: NavController,
-    viewModel: SignInViewModel = hiltViewModel()
+    signInViewModel: SignInViewModel = hiltViewModel()
 ) {
 //    Scaffold(
 //        topBar = {
@@ -98,8 +101,9 @@ fun SignInScreen(
                     indication = null, // 클릭 피드백 제거
                     interactionSource = remember { MutableInteractionSource() } // InteractionSource 설정
                 ) {
-                    navController.navigate(Matching)
-                    viewModel.onGoogleSignIn()
+//                    navController.navigate(Matching)
+                    signInViewModel.onGoogleSignIn()
+//                    updateFcmToken(signInViewModel, notificationViewModel)
                 },
             contentScale = ContentScale.Fit
         )
@@ -109,7 +113,7 @@ fun SignInScreen(
             .offset(y = 240.dp)
             .padding(top = 12.dp),
             onClick = {
-                viewModel.onKakaoSignIn()
+                signInViewModel.onKakaoSignIn()
             }) {
                 Text("Sign in with Kakao")
             }
