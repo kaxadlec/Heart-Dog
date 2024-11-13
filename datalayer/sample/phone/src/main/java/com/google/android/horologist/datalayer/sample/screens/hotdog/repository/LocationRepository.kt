@@ -78,8 +78,12 @@ class LocationRepository @Inject constructor() {
 
             // 매칭 결과에 따른 처리
             response?.let {
-                if (it.success && it.matched == true) {
-                    Log.d(TAG, "매칭 성공! 거리: ${it.distance}m")
+                if (it.success) {
+                    if (it.matched == true) {
+                        Log.d(TAG, "매칭 성공! 거리: ${it.distance}m")
+                    } else {
+                        Log.d(TAG, "매칭 실패! 거리: ${it.distance}m")
+                    }
                 }
             }
 

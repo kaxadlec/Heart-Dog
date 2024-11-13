@@ -60,7 +60,8 @@ class LocationTrackingForegroundService : Service() {
 
             locationCallback = object : LocationCallback() {
                 override fun onLocationResult(locationResult: LocationResult) {
-                    locationResult.locations.forEach { location ->
+                    // 가장 최근 위치만 사용
+                    locationResult.lastLocation?.let { location ->
                         Log.d("LocationService",
                             "Lat: ${location.latitude}, Lng: ${location.longitude}, Alt: ${location.altitude}")
 
@@ -131,6 +132,6 @@ class LocationTrackingForegroundService : Service() {
 
     private fun getCurrentUserId(): Long {
         // TODO: 실제 사용자 ID 가져오기 구현
-        return 17L // 임시로 하드코딩
+        return 18L // 임시로 하드코딩
     }
 }
