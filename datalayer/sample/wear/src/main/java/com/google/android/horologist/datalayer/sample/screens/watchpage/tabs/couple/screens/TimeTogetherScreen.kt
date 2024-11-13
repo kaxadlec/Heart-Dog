@@ -65,7 +65,7 @@ fun TimeTogetherScreen(timeTogether: Duration) {
             text = "${hours}시간 ${minutes}분",
             fontSize = fontSizeLarge,
             fontWeight = FontWeight.Bold,
-            color = Color.Black
+//            color = Color.Black
         )
     }
 }

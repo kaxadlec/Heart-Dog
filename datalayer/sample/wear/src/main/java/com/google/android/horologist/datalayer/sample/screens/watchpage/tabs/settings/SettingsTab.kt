@@ -45,6 +45,7 @@ fun SettingsTab(
                 text = "로그아웃",
                 onClick = onNavigateToLogout,
                 iconResId = R.drawable.icon_logout,  // 로그아웃 아이콘
+                iconSizeRatio = 0.16f,
                 modifier = Modifier.align(Alignment.BottomStart)
             )
 

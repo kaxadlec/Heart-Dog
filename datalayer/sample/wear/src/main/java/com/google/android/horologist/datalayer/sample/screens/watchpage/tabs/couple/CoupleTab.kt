@@ -35,15 +35,16 @@ fun CoupleTab(
         ) {
             // 상단 버튼
             CircleIconButton(
-                text = "함께 산책하기",
+                text = "산책",
                 onClick = onWalkClick,
                 icon = Icons.Default.DirectionsWalk,
-                modifier = Modifier.align(Alignment.TopCenter)
+                modifier = Modifier
+                    .align(Alignment.TopCenter)
             )
 
             // 좌하단 버튼
             CircleIconButton(
-                text = "함께한 시간",
+                text = "시간",
                 onClick = onTimeTogetherClick,
                 icon = Icons.Default.Timer, // 타이머 아이콘 이미지
                 modifier = Modifier.align(Alignment.BottomStart)
@@ -51,7 +52,7 @@ fun CoupleTab(
 
             // 우하단 버튼
             CircleIconButton(
-                text = "이모지 보내기",
+                text = "이모지",
                 onClick = onEmojiClick,
                 icon = Icons.Default.EmojiEmotions, // 이모지 아이콘 이미지
                 modifier = Modifier.align(Alignment.BottomEnd)

@@ -28,6 +28,7 @@ import coil.ImageLoader
 import android.content.Context
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.remember
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.zIndex
 import androidx.wear.compose.material.MaterialTheme
@@ -35,6 +36,23 @@ import coil.size.Size
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.Dp
 import java.util.Calendar
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeOut
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import kotlinx.coroutines.delay
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.runtime.*
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.core.tween
+import androidx.compose.runtime.*
+import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.delay
+import androidx.wear.compose.material.Text
+
 
 @Composable
 fun HomeTab(
@@ -77,13 +95,22 @@ private fun HomeTabContent(
 
     // 비율로 offset과 폰트 크기 및 이미지 크기 조정
     val offsetYCenter = screenHeight * 0.10f
-    val offsetYTop = screenHeight * 0.18f
+    val offsetYTopRatio = 0.18f
+    val offsetYTop = screenHeight * offsetYTopRatio
     val fontSize = (screenWidth * 0.10f).value.sp
     val imageSize = screenWidth * 0.95f
 
+    var visible by remember { mutableStateOf(true) }
+
+    // 일정 시간 후 showText를 false로 설정하여 텍스트를 서서히 사라지게 함
+    LaunchedEffect(Unit) {
+        delay(2000) // 텍스트가 사라지기 전 3초 동안 유지
+        visible = false
+    }
+
     Box(
         modifier = modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
+        contentAlignment = Alignment.TopCenter
     ) {
         // 경험치 반원
         ExperienceArcs(
@@ -107,14 +134,24 @@ private fun HomeTabContent(
 
         // 레벨 텍스트
         if (hasPet) {
-            PetLevelText(
-                name = name,
-                level = level,
-                fontSize = fontSize,
+            Box(
                 modifier = Modifier
                     .align(Alignment.TopCenter)
                     .offset(y = offsetYTop)
-            )
+            ) {
+                AnimatedVisibility(
+                    visible = visible,
+                    exit = fadeOut(
+                        animationSpec = tween(durationMillis = 1000) // 페이드아웃 시간 (1초)
+                    ),
+                ) {
+                    Text(
+                        text = "$name LV.$level",
+                        fontSize = fontSize,
+                        color = Color.Black,
+                    )
+                }
+            }
         }
     }
 }
@@ -179,6 +216,7 @@ private fun PetImage(
                     imageLoader = imageLoader
                 ),
                 contentDescription = "Character",
+                contentScale = ContentScale.Fit,
                 modifier = Modifier
                     .size(imageSize)
                     .align(Alignment.Center)
@@ -201,7 +239,28 @@ private fun PetImage(
         }
     }
 }
-
+@Composable
+fun TextWithGradientFade(
+    text: String,
+    fontSize: TextUnit,
+    alpha: Float,
+    modifier: Modifier = Modifier
+) {
+    Text(
+        text = text,
+        fontSize = fontSize,
+        color = Color.White.copy(alpha = alpha), // 텍스트 전체 투명도 조정
+        modifier = modifier.drawWithContent {
+            val brush = Brush.verticalGradient(
+                colors = listOf(Color.Transparent, Color.White),
+                startY = size.height / 2,
+                endY = size.height
+            )
+            drawContent()
+            drawRect(brush = brush, alpha = alpha) // 그라데이션 효과로 아래쪽이 서서히 사라짐
+        }
+    )
+}
 
 @Composable
 private fun PetLevelText(
