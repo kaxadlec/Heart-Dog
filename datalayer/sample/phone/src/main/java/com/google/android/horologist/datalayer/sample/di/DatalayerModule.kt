@@ -22,10 +22,14 @@ import com.google.android.horologist.data.TargetNodeId
 import com.google.android.horologist.data.WearDataLayerRegistry
 import com.google.android.horologist.datalayer.grpc.GrpcExtensions.grpcClient
 import com.google.android.horologist.datalayer.phone.PhoneDataLayerAppHelper
+import com.google.android.horologist.datalayer.sample.grpc.EmojiService
 import com.google.android.horologist.datalayer.sample.shared.CounterValueSerializer
+import com.google.android.horologist.datalayer.sample.shared.DogRecordSerializer
+import com.google.android.horologist.datalayer.sample.shared.EmojiValueSerializer
 import com.google.android.horologist.datalayer.sample.shared.HeartRateRecordSerializer
 import com.google.android.horologist.datalayer.sample.shared.LocationTrackingRecordSerializer
 import com.google.android.horologist.datalayer.sample.shared.StepCountRecordSerializer
+import com.google.android.horologist.datalayer.sample.shared.grpc.EmojiProto
 import com.google.android.horologist.datalayer.sample.shared.grpc.StepCountServiceGrpcKt
 import dagger.Module
 import dagger.Provides
@@ -36,6 +40,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import javax.inject.Singleton
+
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -70,7 +75,10 @@ object DatalayerModule {
         registerSerializer(HeartRateRecordSerializer)
         registerSerializer(StepCountRecordSerializer)
         registerSerializer(LocationTrackingRecordSerializer)
+        registerSerializer(DogRecordSerializer)
+        registerSerializer(EmojiValueSerializer)
     }
+
 
     @Singleton
     @Provides
@@ -90,6 +98,48 @@ object DatalayerModule {
         }
 
     }
+
+    @Singleton
+    @Provides
+    fun provideEmojiService(
+        emojiDataStore: androidx.datastore.core.DataStore<EmojiProto.EmojiValue>
+    ): EmojiService {
+        return EmojiService(emojiDataStore)
+    }
+
+    //    @Singleton
+//    @Provides
+//    fun provideEmojiFlow(
+//        wearDataLayerRegistry: WearDataLayerRegistry
+//    ): Flow<EmojiProto.EmojiValue> {
+//        Log.d("DatalayerModule", "Providing Emoji Flow")
+//        return wearDataLayerRegistry.protoFlow(
+//            TargetNodeId.PairedPhone,
+//            EmojiValueSerializer,
+//            "emoji_data"
+//        )
+//    }
+//
+//    @Singleton
+//    @Provides
+//    fun provideEmojiService(
+//        wearDataLayerRegistry: WearDataLayerRegistry,
+//        coroutineScope: CoroutineScope
+//    ): EmojiServiceGrpcKt.EmojiServiceCoroutineStub {
+//        Log.d("DatalayerModule", "Initializing EmojiServiceStub")
+//        return wearDataLayerRegistry.grpcClient(
+//            nodeId = TargetNodeId.PairedPhone,
+//            coroutineScope = coroutineScope
+//        ) {
+//            EmojiServiceGrpcKt.EmojiServiceCoroutineStub(it)
+//        }
+//    }
+
+
+
+
+
+
 
 //    fun heartRateFlow(wearDataLayerRegistry: WearDataLayerRegistry): Flow<HeartRateRecord> =
 //        wearDataLayerRegistry.protoFlow(TargetNodeId.PairedPhone)

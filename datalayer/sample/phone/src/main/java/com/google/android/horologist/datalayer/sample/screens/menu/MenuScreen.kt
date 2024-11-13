@@ -1,10 +1,23 @@
+/*
+ * Copyright 2023 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.google.android.horologist.datalayer.sample.screens.menu
 
-import android.util.Log
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -33,8 +46,8 @@ import com.google.android.horologist.datalayer.sample.screens.ReEngageCustomProm
 import com.google.android.horologist.datalayer.sample.screens.ReEngagePromptDemo
 import com.google.android.horologist.datalayer.sample.screens.SignInCustomPromptDemo
 import com.google.android.horologist.datalayer.sample.screens.SignInPromptDemo
-import com.google.android.horologist.datalayer.sample.screens.StepCount
 import com.google.android.horologist.datalayer.sample.screens.Splash
+import com.google.android.horologist.datalayer.sample.screens.StepCount
 import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.SignInViewModel
 import io.github.jan.supabase.auth.status.SessionStatus
 
@@ -186,5 +199,6 @@ fun MenuScreen(
                 Text(text = stringResource(id = R.string.menu_screen_step_count))
             }
         }
+
     }
 }

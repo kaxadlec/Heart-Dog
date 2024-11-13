@@ -94,3 +94,6 @@ object StepCount
 
 @Serializable
 object ApiTest
+
+@Serializable
+object EmojiScreen

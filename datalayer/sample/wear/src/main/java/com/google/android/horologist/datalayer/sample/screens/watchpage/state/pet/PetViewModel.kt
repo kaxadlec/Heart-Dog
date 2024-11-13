@@ -1,10 +1,15 @@
 package com.google.android.horologist.datalayer.sample.screens.watchpage.state.pet
 
+import android.util.Log
+import androidx.datastore.core.DataStore
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.android.horologist.data.WearDataLayerRegistry
 import com.google.android.horologist.datalayer.sample.data.preferences.FeedingPreferences
 import com.google.android.horologist.datalayer.sample.data.preferences.strategy.TimeRestrictionStrategy
 import com.google.android.horologist.datalayer.sample.data.preferences.strategy.TimeRestrictionType
+import com.google.android.horologist.datalayer.sample.shared.grpc.DogProto
+import com.google.android.horologist.datalayer.sample.shared.grpc.DogServiceGrpcKt
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -12,10 +17,24 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import com.google.protobuf.Empty
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import androidx.lifecycle.viewModelScope
+import com.google.android.horologist.datalayer.sample.screens.watchpage.state.user.UserViewModel
+import kotlinx.coroutines.launch
+
 
 // PetViewModel.kt
 @HiltViewModel
-class PetViewModel @Inject constructor( private val feedingPreferences: FeedingPreferences, private val timeStrategy: TimeRestrictionStrategy) : ViewModel() {
+class PetViewModel @Inject constructor(
+    private val feedingPreferences: FeedingPreferences,
+    private val timeStrategy: TimeRestrictionStrategy,
+    private val dogService: DogServiceGrpcKt.DogServiceCoroutineStub,
+    private val dogFlow: Flow<DogProto.DogRecord>,
+) : ViewModel() {
     // ----------------------------------상태 관리----------------------------------
     // 기본 UI 상태
     private val _uiState = MutableStateFlow(PetUiState())
@@ -24,6 +43,81 @@ class PetViewModel @Inject constructor( private val feedingPreferences: FeedingP
     // 먹이 주기 횟수 상태
     private val _todayFeedingCount = MutableStateFlow(0) // 초기값 0으로 설정
     val todayFeedingCount: StateFlow<Int> = _todayFeedingCount.asStateFlow() // StateFlow로 변환
+
+    // ----------------------------------데이터 수신 및 초기화----------------------------------
+    init {
+        // Phone으로부터 데이터 스트림 수신
+        viewModelScope.launch {
+            dogFlow.collect { dogRecord ->
+                Log.d(
+                    "PetViewModel", """
+                    Received dog data:
+                    ID: ${dogRecord.dogId}
+                    Name: ${dogRecord.name}
+                    Level: ${dogRecord.level}
+                    Exp: ${dogRecord.currentExp}/${dogRecord.maxExp}
+                    Satiety: ${dogRecord.satiety}
+                    Position: ${dogRecord.position}
+                    Update: ${dogRecord.update}
+                """.trimIndent()
+                )
+
+                _uiState.update {
+                    it.copy(
+                        dogId = dogRecord.dogId.toString(),
+                        name = dogRecord.name,
+                        level = dogRecord.level,
+                        current_exp = dogRecord.currentExp,
+                        satiety = dogRecord.satiety,
+                        position = dogRecord.position
+                    )
+                }
+            }
+        }
+
+        // 초기 데이터 로드
+        fetchInitialDogData()
+    }
+
+    private fun fetchInitialDogData() {
+        viewModelScope.launch {
+            try {
+                val response = dogService.get(Empty.getDefaultInstance())
+                _uiState.update {
+                    it.copy(
+                        dogId = response.dogId.toString(),
+                        name = response.name,
+                        level = response.level,
+                        current_exp = response.currentExp,
+                        satiety = response.satiety,
+                        position = response.position
+                    )
+                }
+                Log.d("PetViewModel", "Successfully fetched initial dog data")
+            } catch (e: Exception) {
+                Log.e("PetViewModel", "Error fetching initial dog data", e)
+            }
+        }
+    }
+
+    // ----------------------------------폰과 통신하는 하트 주기 관련 함수----------------------------------
+    fun sendHeartToPhone(userId: Long, heartAmount: Int = 5) {
+        viewModelScope.launch {
+            try {
+                val request = DogProto.GiveHeartRequest.newBuilder()
+                    .setUserId(userId)
+                    .setHeartAmount(heartAmount)
+                    .build()
+
+                val response = dogService.giveHeartToDog(request)
+                if (response.success) {
+                    Log.d("PetViewModel", "하트 주기 요청이 성공적으로 전송됨")
+                }
+            } catch (e: Exception) {
+                Log.e("PetViewModel", "하트 주기 요청 중 오류 발생: ${e.message}")
+            }
+        }
+    }
 
     // ----------------------------------먹이 주기 관련 함수----------------------------------
     // 먹이 주기 함수
@@ -61,7 +155,7 @@ class PetViewModel @Inject constructor( private val feedingPreferences: FeedingP
     // 경험치 추가 및 레벨업 처리
     fun addExp(amount: Int) {
         _uiState.update { currentState ->
-            val newExp = currentState.exp + amount
+            val newExp = currentState.current_exp + amount
             val requiredExpForNextLevel = getRequiredExpForLevel(currentState.level)
 
             // 경험치가 레벨업 기준을 초과하면 레벨업
@@ -75,10 +169,11 @@ class PetViewModel @Inject constructor( private val feedingPreferences: FeedingP
 
             currentState.copy(
                 level = currentState.level + levelUps,
-                exp = remainingExp
+                current_exp = remainingExp
             )
         }
     }
+
     // 강아지 레벨에 따른 필요 경험치 계산 함수
     // 강아지 레벨(1~10): 100~1000
     // 강아지 레벨(11~20): 1200 ~ 3000

@@ -57,7 +57,7 @@ fun NavGraphBuilder.gameTabNavigation(
 
     composable(GameTabScreen.Single.route) {
         SingleGameScreen(
-            onBack = { navController.popBackStack() }
+//            onBack = { navController.popBackStack() }
         )
     }
 
