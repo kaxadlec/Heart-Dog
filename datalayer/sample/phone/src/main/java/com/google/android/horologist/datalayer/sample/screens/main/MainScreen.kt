@@ -141,7 +141,7 @@ fun MainScreen(
                 }
 
                 composable<Login> {
-                    SignInScreen(navController = navController)
+                    SignInScreen(navController = navController, userViewModel = userViewModel)
                 }
 
                 composable<Matching> {

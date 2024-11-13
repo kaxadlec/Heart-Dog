@@ -32,7 +32,8 @@ import io.github.jan.supabase.auth.status.SessionStatus
 fun SignInScreen(
     modifier: Modifier = Modifier,
     navController: NavController,
-    signInViewModel: SignInViewModel = hiltViewModel()
+    signInViewModel: SignInViewModel = hiltViewModel(),
+    userViewModel: UserViewModel
 ) {
 
 //    Scaffold(
@@ -119,10 +120,13 @@ fun SignInScreen(
                     if (signInViewModel.sessionStatus.value is SessionStatus.Authenticated) {
                         // 이미 로그인 되어 있으면
                         val currentUser = signInViewModel.currentUser.value
-                        if (currentUser?.matching == true) {
-                            navController.navigate(HotDogMain)
-                        } else {
-                            navController.navigate(Matching)
+                        currentUser?.userId?.let { userId ->
+                            userViewModel.setUserId(userId)
+                            if (currentUser.matching) {
+                                navController.navigate(HotDogMain)
+                            } else {
+                                navController.navigate(Matching)
+                            }
                         }
                     } else {
                         // 로그인 안되어 있으면 로그인 진행
