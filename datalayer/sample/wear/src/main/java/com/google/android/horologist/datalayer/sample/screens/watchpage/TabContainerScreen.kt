@@ -43,33 +43,41 @@ import com.google.android.horologist.datalayer.sample.screens.watchpage.state.us
 @Composable
 fun TabContainerScreen(
 ) {
+
+    val pagerState = rememberPagerState(
+        initialPage = 1,  // 시작 페이지 설정
+        pageCount = { 5 }  // 페이지 수 설정
+    )
+    val sharedPetViewModel: PetViewModel = hiltViewModel() // 공유 뷰모델 생성
+    val sharedUserViewModel: UserViewModel = hiltViewModel()
+    val heartRateViewModel: HeartRateViewModel = hiltViewModel()
+    val coroutineScope = rememberCoroutineScope()
+    var showTextOverlay by remember { mutableStateOf(false) }
+    val userState by sharedUserViewModel.uiState.collectAsStateWithLifecycle()
+
+    // 각 탭의 현재 라우트 상태를 저장
+    val currentHour =
+        remember { mutableStateOf(Calendar.getInstance().get(Calendar.HOUR_OF_DAY)) }
+    val backgroundRes = if (currentHour.value in 19..23 || currentHour.value in 0..6) {
+        R.drawable.night // 밤 배경 이미지 ID
+    } else {
+        R.drawable.background_image // 기본 배경 이미지 ID
+    }
+
+    val currentPetRoute = remember { mutableStateOf(PetTabScreen.Main.route) }
+    val currentHomeRoute = remember { mutableStateOf(HomeTabScreen.Main.route) }
+    val currentCoupleRoute = remember { mutableStateOf(CoupleTabScreen.Main.route) }
+    val currentGameRoute = remember { mutableStateOf(GameTabScreen.Main.route) }
+    val currentSettingsRoute = remember { mutableStateOf(SettingsTabScreen.Main.route) }
+
+    // TODO:  여기서 FCM 알림을 구독하고 있다가 알림이 오면 userState의 상태를 바꿔준다.
+    // TODO: 아래 4줄은 예시임
+//    LaunchedEffect(Unit) {
+//        delay(5000)
+//        sharedUserViewModel.updateRecipientEmoji("❤");
+//    }
+
     WatchPageTheme {
-        val pagerState = rememberPagerState(
-            initialPage = 1,  // 시작 페이지 설정
-            pageCount = { 5 }  // 페이지 수 설정
-        )
-        val sharedPetViewModel: PetViewModel = hiltViewModel() // 공유 뷰모델 생성
-        val sharedUserViewModel: UserViewModel = hiltViewModel()
-        val heartRateViewModel: HeartRateViewModel = hiltViewModel()
-        val coroutineScope = rememberCoroutineScope()
-        var showTextOverlay by remember { mutableStateOf(false) }
-        val userState by sharedUserViewModel.uiState.collectAsStateWithLifecycle()
-
-        // 각 탭의 현재 라우트 상태를 저장
-        val currentHour =
-            remember { mutableStateOf(Calendar.getInstance().get(Calendar.HOUR_OF_DAY)) }
-        val backgroundRes = if (currentHour.value in 19..23 || currentHour.value in 0..6) {
-            R.drawable.night // 밤 배경 이미지 ID
-        } else {
-            R.drawable.background_image // 기본 배경 이미지 ID
-        }
-
-        val currentPetRoute = remember { mutableStateOf(PetTabScreen.Main.route) }
-        val currentHomeRoute = remember { mutableStateOf(HomeTabScreen.Main.route) }
-        val currentCoupleRoute = remember { mutableStateOf(CoupleTabScreen.Main.route) }
-        val currentGameRoute = remember { mutableStateOf(GameTabScreen.Main.route) }
-        val currentSettingsRoute = remember { mutableStateOf(SettingsTabScreen.Main.route) }
-
         // 현재 화면이 메인 화면인지 확인
         val isMainScreen = when (pagerState.currentPage) {
             0 -> currentPetRoute.value == PetTabScreen.Main.route
@@ -87,8 +95,13 @@ fun TabContainerScreen(
             userState.commuting,
             userState.commutingRecipient,
             userState.workingRecipient,
-            userState.eatingRecipient
+            userState.eatingRecipient,
+            userState.emoji
         ) {
+            if (userState.emoji != null) {
+                showTextOverlay = true;
+            }
+
             if (userState.eating || userState.working || userState.commuting || userState.commutingRecipient || userState.workingRecipient || userState.eatingRecipient) {
                 showTextOverlay = true
             }
@@ -166,6 +179,10 @@ fun TabContainerScreen(
 
                     userState.commutingRecipient -> sharedUserViewModel.updateRecipientCommutingStatus(
                         false
+                    )
+
+                    userState.emoji != null -> sharedUserViewModel.updateRecipientEmoji(
+                        userState.emoji
                     )
                 }
                 showTextOverlay = false

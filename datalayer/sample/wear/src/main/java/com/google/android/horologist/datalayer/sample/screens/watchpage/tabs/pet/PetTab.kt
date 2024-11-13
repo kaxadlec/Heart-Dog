@@ -31,7 +31,6 @@ import com.google.android.horologist.datalayer.sample.screens.watchpage.componen
 import kotlinx.coroutines.launch
 
 
-
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable
 fun PetTab(
@@ -39,7 +38,7 @@ fun PetTab(
     onNavigateToFeed: () -> Unit,
     onNavigateToCall: () -> Unit,
     userViewModel: UserViewModel = hiltViewModel(),
-    petViewModel: PetViewModel,
+    petViewModel: PetViewModel = hiltViewModel(),
     largeSpacingRatio: Float = 0.08f,  // 큰 간격 비율
     smallSpacingRatio: Float = 0.02f   // 작은 간격 비율
 ) {
@@ -55,7 +54,7 @@ fun PetTab(
 
     // 경험치 계산 로직 추가
     val requiredExpForLevel = petViewModel.getRequiredExpForLevel(petState.level)
-    val expProgress = petState.exp / requiredExpForLevel.toFloat()
+    val expProgress = petState.current_exp / requiredExpForLevel.toFloat()
 
     // 테스트를 위한 1분 모드 설정
     // 하루 모드로 하려면 주석처리하면됨
@@ -146,6 +145,11 @@ fun PetTab(
                                         userViewModel.updateHeart(userState.heart - 1)
                                         petViewModel.updateSatiety(5)
                                         petViewModel.checkFeedingStatus()
+                                        // Phone으로 하트를 보내는 함수 호출
+                                        petViewModel.sendHeartToPhone(
+                                            userId = userState.userId?.toLongOrNull() ?: 0L,
+                                            heartAmount = 5
+                                        )
                                     }
                                 }
                             }
@@ -154,19 +158,20 @@ fun PetTab(
                         enabled = userState.hasPet && userState.heart > 0 && petState.satiety < 100 && petViewModel.todayFeedingCount.value < 10, // 버튼 활성화 조건
                         backgroundColor = if (userState.hasPet &&
                             userState.heart > 0 &&
-                            petViewModel.todayFeedingCount.value < 10) Color(0xFFD66F24) else Color.Gray
+                            petViewModel.todayFeedingCount.value < 10
+                        ) Color(0xFFD66F24) else Color.Gray
                     )
 
                     CircleIconButton(
-                    text = "부르기",
-                    onClick = {
-                        println("부르기 버튼 클릭됨") // 버튼 클릭 로그
-                        userViewModel.updateHasPet(true)
-                        println("부르기 버튼 클릭 후 hasPet 상태: ${userViewModel.uiState.value.hasPet}") // 상태 업데이트 확인
-                    },
-                    icon = Icons.Default.Pets,  // 반려 동물 아이콘
-                    enabled = !userState.hasPet, // 이미 반려 동물이 있으면 버튼 비활성화
-                    backgroundColor = if (!userState.hasPet) Color(0xFFD66F24) else Color.Gray  // 버튼 색상 조건
+                        text = "부르기",
+                        onClick = {
+                            println("부르기 버튼 클릭됨") // 버튼 클릭 로그
+                            userViewModel.updateHasPet(true)
+                            println("부르기 버튼 클릭 후 hasPet 상태: ${userViewModel.uiState.value.hasPet}") // 상태 업데이트 확인
+                        },
+                        icon = Icons.Default.Pets,  // 반려 동물 아이콘
+                        enabled = !userState.hasPet, // 이미 반려 동물이 있으면 버튼 비활성화
+                        backgroundColor = if (!userState.hasPet) Color(0xFFD66F24) else Color.Gray  // 버튼 색상 조건
                     )
                 }
 
