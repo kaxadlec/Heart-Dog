@@ -86,6 +86,8 @@ import com.google.android.horologist.datalayer.sample.screens.hotdog.notificatio
 import com.google.android.horologist.datalayer.sample.screens.hotdog.setting.SettingScreen
 import com.google.android.horologist.datalayer.sample.screens.hotdog.setting.components.UserManualPage
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.google.android.horologist.datalayer.sample.screens.EmojiTest
+import com.google.android.horologist.datalayer.sample.screens.emoji.EmojiTestScreen
 import com.google.android.horologist.datalayer.sample.screens.hotdog.login.viewmodel.SignInViewModel
 import com.google.android.horologist.datalayer.sample.screens.hotdog.repository.DogRepository
 import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.DogViewModel
@@ -217,6 +219,9 @@ fun MainScreen(
                 }
                 composable<StepCount> {
                     StepCountScreen()
+                }
+                composable<EmojiTest> {
+                    EmojiTestScreen()
                 }
             }
         }
