@@ -16,8 +16,8 @@
 
 package com.google.android.horologist.datalayer.sample.screens.menu
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -34,7 +34,7 @@ import com.google.android.horologist.datalayer.sample.screens.ApiTest
 import com.google.android.horologist.datalayer.sample.screens.AppHelperNodes
 import com.google.android.horologist.datalayer.sample.screens.AppHelperNodesListener
 import com.google.android.horologist.datalayer.sample.screens.Counter
-import com.google.android.horologist.datalayer.sample.screens.EmojiScreen
+import com.google.android.horologist.datalayer.sample.screens.EmojiTest
 import com.google.android.horologist.datalayer.sample.screens.HeartRate
 import com.google.android.horologist.datalayer.sample.screens.HotDogMain
 import com.google.android.horologist.datalayer.sample.screens.InstallAppCustomPromptDemo
@@ -48,7 +48,7 @@ import com.google.android.horologist.datalayer.sample.screens.SignInCustomPrompt
 import com.google.android.horologist.datalayer.sample.screens.SignInPromptDemo
 import com.google.android.horologist.datalayer.sample.screens.Splash
 import com.google.android.horologist.datalayer.sample.screens.StepCount
-import com.google.android.horologist.datalayer.sample.screens.hotdog.login.viewmodel.SignInViewModel
+import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.SignInViewModel
 import io.github.jan.supabase.auth.status.SessionStatus
 
 @Composable
@@ -59,111 +59,145 @@ fun MenuScreen(
     val signInViewModel: SignInViewModel = hiltViewModel()
     val sessionStatus by signInViewModel.sessionStatus.collectAsState()
 
-    Column(
+    LazyColumn(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
 
-        Button(
-            onClick = { navController.navigate(ApiTest) },
-            modifier = Modifier.padding(vertical = 4.dp)
-        ) {
-            Text(text = "API Test Menu")
+        item {
+            Button(
+                onClick = { navController.navigate(ApiTest) },
+                modifier = Modifier.padding(vertical = 4.dp)
+            ) {
+                Text(text = "API Test Menu")
+            }
         }
 
-        // 스플래시 화면으로 이동 버튼
-        when (sessionStatus) {
-            is SessionStatus.Authenticated -> {
-                Button(onClick = { navController.navigate(Matching) }) {
-                    Text(text = "Go to Splash Screen")
+        item {
+            // 스플래시 화면으로 이동 버튼
+            when (sessionStatus) {
+                is SessionStatus.Authenticated -> {
+                    Button(onClick = { navController.navigate(Matching) }) {
+                        Text(text = "Go to Splash Screen")
+                    }
                 }
-            }
 
-            is SessionStatus.Initializing -> {
-                Button(onClick = { navController.navigate(Splash) }) {
-                    Text(text = "Go to Splash Screen")
-                }
-            }
-            is SessionStatus.NotAuthenticated -> {
-                Button(onClick = { navController.navigate(Splash) }) {
-                    Text(text = "Go to Splash Screen")
-                }
-            }
-            is SessionStatus.RefreshFailure -> {
-                Button(onClick = { navController.navigate(Splash) }) {
-                    Text(text = "Go to Splash Screen")
+                is SessionStatus.Initializing,
+                is SessionStatus.NotAuthenticated,
+                is SessionStatus.RefreshFailure -> {
+                    Button(onClick = { navController.navigate(Splash) }) {
+                        Text(text = "Go to Splash Screen")
+                    }
                 }
             }
         }
 
-        Button(onClick = { navController.navigate(HotDogMain) }) {
-            Text(text = "Go to Splash Screen")
+        item {
+            Button(onClick = { navController.navigate(HotDogMain) }) {
+                Text(text = "Go to Splash Screen")
+            }
         }
 
-        Text(text = stringResource(id = R.string.menu_screen_apphelper_header))
-
-        Button(onClick = { navController.navigate(AppHelperNodes) }) {
-            Text(text = stringResource(id = R.string.menu_screen_nodes_item))
+        item {
+            Text(text = stringResource(id = R.string.menu_screen_apphelper_header))
         }
 
-        Button(onClick = { navController.navigate(AppHelperNodesListener) }) {
-            Text(text = stringResource(id = R.string.menu_screen_nodes_listener_item))
+        item {
+            Button(onClick = { navController.navigate(AppHelperNodes) }) {
+                Text(text = stringResource(id = R.string.menu_screen_nodes_item))
+            }
         }
 
-        Text(
-            text = stringResource(id = R.string.menu_screen_inapp_prompts_header),
-            modifier = Modifier.padding(top = 10.dp),
-        )
-
-        Button(onClick = { navController.navigate(InstallAppPromptDemo) }) {
-            Text(text = stringResource(id = R.string.menu_screen_install_app_demo_item))
+        item {
+            Button(onClick = { navController.navigate(AppHelperNodesListener) }) {
+                Text(text = stringResource(id = R.string.menu_screen_nodes_listener_item))
+            }
         }
 
-        Button(onClick = { navController.navigate(ReEngagePromptDemo) }) {
-            Text(text = stringResource(id = R.string.menu_screen_reengage_demo_item))
+        item {
+            Text(
+                text = stringResource(id = R.string.menu_screen_inapp_prompts_header),
+                modifier = Modifier.padding(top = 10.dp),
+            )
         }
 
-        Button(onClick = { navController.navigate(SignInPromptDemo) }) {
-            Text(text = stringResource(id = R.string.menu_screen_signin_demo_item))
+        item {
+            Button(onClick = { navController.navigate(InstallAppPromptDemo) }) {
+                Text(text = stringResource(id = R.string.menu_screen_install_app_demo_item))
+            }
         }
 
-        Button(onClick = { navController.navigate(InstallTilePromptDemo) }) {
-            Text(text = stringResource(id = R.string.menu_screen_install_tile_demo_item))
+        item {
+            Button(onClick = { navController.navigate(ReEngagePromptDemo) }) {
+                Text(text = stringResource(id = R.string.menu_screen_reengage_demo_item))
+            }
         }
 
-        Button(onClick = { navController.navigate(InstallAppCustomPromptDemo) }) {
-            Text(text = stringResource(id = R.string.menu_screen_install_app_custom_demo_item))
+        item {
+            Button(onClick = { navController.navigate(SignInPromptDemo) }) {
+                Text(text = stringResource(id = R.string.menu_screen_signin_demo_item))
+            }
         }
 
-        Button(onClick = { navController.navigate(ReEngageCustomPromptDemo) }) {
-            Text(text = stringResource(id = R.string.menu_screen_reengage_custom_demo_item))
+        item {
+            Button(onClick = { navController.navigate(InstallTilePromptDemo) }) {
+                Text(text = stringResource(id = R.string.menu_screen_install_tile_demo_item))
+            }
         }
 
-        Button(onClick = { navController.navigate(SignInCustomPromptDemo) }) {
-            Text(text = stringResource(id = R.string.menu_screen_signin_custom_demo_item))
+        item {
+            Button(onClick = { navController.navigate(InstallAppCustomPromptDemo) }) {
+                Text(text = stringResource(id = R.string.menu_screen_install_app_custom_demo_item))
+            }
         }
 
-        Button(onClick = { navController.navigate(InstallTileCustomPromptDemo) }) {
-            Text(text = stringResource(id = R.string.menu_screen_install_tile_custom_demo_item))
+        item {
+            Button(onClick = { navController.navigate(ReEngageCustomPromptDemo) }) {
+                Text(text = stringResource(id = R.string.menu_screen_reengage_custom_demo_item))
+            }
         }
 
-        Text(
-            text = stringResource(id = R.string.menu_screen_datalayer_header),
-            modifier = Modifier.padding(top = 10.dp),
-        )
-        Button(onClick = { navController.navigate(EmojiScreen) }) {
-            Text(text = "이모지 화면")
-        }
-        Button(onClick = { navController.navigate(Counter) }) {
-            Text(text = stringResource(id = R.string.menu_screen_counter_item))
+        item {
+            Button(onClick = { navController.navigate(SignInCustomPromptDemo) }) {
+                Text(text = stringResource(id = R.string.menu_screen_signin_custom_demo_item))
+            }
         }
 
-        Button(onClick = { navController.navigate(HeartRate) }) {
-            Text(text = stringResource(id = R.string.menu_screen_heart_rate))
+        item {
+            Button(onClick = { navController.navigate(InstallTileCustomPromptDemo) }) {
+                Text(text = stringResource(id = R.string.menu_screen_install_tile_custom_demo_item))
+            }
         }
 
-        Button(onClick = { navController.navigate(StepCount) }) {
-            Text(text = stringResource(id = R.string.menu_screen_step_count))
+        item {
+            Text(
+                text = stringResource(id = R.string.menu_screen_datalayer_header),
+                modifier = Modifier.padding(top = 10.dp),
+            )
+        }
+
+        item {
+            Button(onClick = { navController.navigate(Counter) }) {
+                Text(text = stringResource(id = R.string.menu_screen_counter_item))
+            }
+        }
+
+        item {
+            Button(onClick = { navController.navigate(HeartRate) }) {
+                Text(text = stringResource(id = R.string.menu_screen_heart_rate))
+            }
+        }
+
+        item {
+            Button(onClick = { navController.navigate(EmojiTest) }) {
+                Text(text = stringResource(id = R.string.menu_screen_emoji_test))
+            }
+        }
+
+        item {
+            Button(onClick = { navController.navigate(StepCount) }) {
+                Text(text = stringResource(id = R.string.menu_screen_step_count))
+            }
         }
 
     }

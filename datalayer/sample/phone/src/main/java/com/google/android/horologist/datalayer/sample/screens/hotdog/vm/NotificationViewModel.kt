@@ -27,4 +27,24 @@ class NotificationViewModel @Inject constructor(
             )
         }
     }
+
+    fun sendStepNotification(senderId: Long) {
+        viewModelScope.launch {
+            repository.sendNotification(
+                senderId = senderId,
+                typeId = 4,
+                content = "5,000걸음을 함께 걸으셨어요!"
+            )
+        }
+    }
+
+    fun sendEmojiNotification(senderId: Long) {
+        viewModelScope.launch {
+            repository.sendNotification(
+                senderId = senderId,
+                typeId = 6,
+                content = " \uD83D\uDE03"
+            )
+        }
+    }
 }

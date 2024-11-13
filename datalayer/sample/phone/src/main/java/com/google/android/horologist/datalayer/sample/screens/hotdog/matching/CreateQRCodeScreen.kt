@@ -21,20 +21,18 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.withContext
-import java.util.*
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.WriterException
 import com.google.zxing.qrcode.QRCodeWriter
 import com.google.android.horologist.datalayer.sample.R
 import com.google.android.horologist.datalayer.sample.screens.HotDogMain
-import com.google.android.horologist.datalayer.sample.screens.hotdog.login.viewmodel.SignInViewModel
+import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.DogViewModel
+import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.SignInViewModel
 import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.UserViewModel
 
 @Composable
-fun CreateQRCodeScreen(navController: NavHostController, userViewModel: UserViewModel) {
+fun CreateQRCodeScreen(navController: NavHostController, userViewModel: UserViewModel, dogViewModel: DogViewModel) {
     val signInViewModel: SignInViewModel = hiltViewModel()
     val currentUser by signInViewModel.currentUser.collectAsState()
 
@@ -57,6 +55,10 @@ fun CreateQRCodeScreen(navController: NavHostController, userViewModel: UserView
             while (remainingTime > 0) {
                 delay(1000L)
                 if (userViewModel.checkUserMatching(currentUser?.userId!!)) {
+
+                    // 매칭 성공시 강아지 정보 가져오기
+                    dogViewModel.fetchDogIdAndDetails(currentUser?.userId!!)
+
                     navController.navigate(HotDogMain) {
                         popUpTo(navController.graph.startDestinationId) {
                             saveState = true

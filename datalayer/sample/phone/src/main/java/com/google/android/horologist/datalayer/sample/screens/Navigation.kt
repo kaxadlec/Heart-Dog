@@ -87,6 +87,9 @@ object Setting
 object UserManual
 
 @Serializable
+object EmojiTest
+
+@Serializable
 object StepCount
 
 @Serializable
