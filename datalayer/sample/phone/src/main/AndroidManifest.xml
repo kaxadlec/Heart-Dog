@@ -165,6 +165,20 @@
             </intent-filter>
         </service>
 
+        <!-- Dog 서비스 등록 -->
+        <service
+            android:name=".grpc.WearDogDataService"
+            android:exported="true"
+            tools:ignore="ExportedService">
+            <intent-filter>
+                <action android:name="com.google.android.gms.wearable.REQUEST_RECEIVED" />
+                <data
+                    android:host="*"
+                    android:pathPrefix="/grpc/"
+                    android:scheme="wear" />
+            </intent-filter>
+        </service>
+
     </application>
 
 </manifest>

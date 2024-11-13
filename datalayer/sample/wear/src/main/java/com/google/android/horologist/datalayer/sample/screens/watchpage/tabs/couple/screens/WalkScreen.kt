@@ -26,7 +26,7 @@ fun WalkScreen(stepsViewModel: StepsViewModel = hiltViewModel(),
     val userState = userViewModel.uiState.collectAsState()
     val stepCount = stepsState.value.stepCountValue?.value ?: 0
 
-    // 200보마다 하트 1개씩 증가 (제한 없음)
+    // 20보마다 하트 1개씩 증가 (제한 없음)
     LaunchedEffect(stepCount) {
         val earnedHearts = stepCount / 20
         if (earnedHearts > 0) {
