@@ -17,6 +17,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -24,9 +25,11 @@ import androidx.navigation.NavController
 import com.google.android.horologist.datalayer.sample.R
 import com.google.android.horologist.datalayer.sample.screens.HotDogMain
 import com.google.android.horologist.datalayer.sample.screens.Matching
+import com.google.android.horologist.datalayer.sample.screens.hotdog.data.manager.UserSessionManager
 import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.SignInViewModel
 import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.UserViewModel
 import io.github.jan.supabase.auth.status.SessionStatus
+import javax.inject.Inject
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -34,7 +37,7 @@ fun SignInScreen(
     modifier: Modifier = Modifier,
     navController: NavController,
     signInViewModel: SignInViewModel = hiltViewModel(),
-    userViewModel: UserViewModel
+    userViewModel: UserViewModel,
 ) {
 
 //    Scaffold(
@@ -123,6 +126,7 @@ fun SignInScreen(
                         val currentUser = signInViewModel.currentUser.value
                         currentUser?.userId?.let { userId ->
                             userViewModel.setUserId(userId)
+                            signInViewModel.saveUserSession(userId)
                             if (currentUser.matching) {
                                 navController.navigate(HotDogMain)
                             } else {
