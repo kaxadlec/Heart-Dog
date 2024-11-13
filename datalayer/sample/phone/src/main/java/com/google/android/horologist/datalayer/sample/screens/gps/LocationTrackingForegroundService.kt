@@ -27,16 +27,22 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import androidx.annotation.RequiresApi
 import android.os.Build
+import com.google.android.horologist.datalayer.sample.screens.hotdog.data.manager.UserSessionManager
+import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.SignInViewModel
 
 @AndroidEntryPoint
 class LocationTrackingForegroundService : Service() {
 
     companion object {
-        private const val NOTIFICATION_ID = 1  // 위치 추적 알림 ID
+        private const val NOTIFICATION_ID = 1
+        private const val TAG = "LocationService"
     }
 
     @Inject
     lateinit var locationRepository: LocationRepository
+
+    @Inject
+    lateinit var userSessionManager: UserSessionManager
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var locationCallback: LocationCallback
@@ -45,9 +51,8 @@ class LocationTrackingForegroundService : Service() {
     override fun onCreate() {
         super.onCreate()
         try {
-            // 권한 체크
             if (!checkLocationPermissions()) {
-                Log.e("LocationService", "Location permissions not granted")
+                Log.e(TAG, "Location permissions not granted")
                 return
             }
 
@@ -60,22 +65,24 @@ class LocationTrackingForegroundService : Service() {
 
             locationCallback = object : LocationCallback() {
                 override fun onLocationResult(locationResult: LocationResult) {
-                    // 가장 최근 위치만 사용
                     locationResult.lastLocation?.let { location ->
-                        Log.d("LocationService",
-                            "Lat: ${location.latitude}, Lng: ${location.longitude}, Alt: ${location.altitude}")
+                        Log.d(TAG, "Lat: ${location.latitude}, Lng: ${location.longitude}, Alt: ${location.altitude}")
 
-                        CoroutineScope(Dispatchers.IO).launch {
-                            // 1. 위치 업데이트
-                            locationRepository.updateLocation(
-                                userId = getCurrentUserId(),
-                                latitude = location.latitude,
-                                longitude = location.longitude,
-                                altitude = if (location.hasAltitude()) location.altitude else 0.0
-                            )
+                        userSessionManager.getCurrentUserId()?.let { userId ->
+                            CoroutineScope(Dispatchers.IO).launch {
+                                // 1. 위치 업데이트
+                                locationRepository.updateLocation(
+                                    userId = userId,
+                                    latitude = location.latitude,
+                                    longitude = location.longitude,
+                                    altitude = if (location.hasAltitude()) location.altitude else 0.0
+                                )
 
-                            // 2. 매칭 체크
-                            locationRepository.checkMatching(getCurrentUserId())
+                                // 2. 매칭 체크
+                                locationRepository.checkMatching(userId)
+                            }
+                        } ?: run {
+                            Log.e(TAG, "User ID is not available in session")
                         }
                     }
                 }
@@ -87,7 +94,7 @@ class LocationTrackingForegroundService : Service() {
                 Looper.getMainLooper()
             )
         } catch (e: Exception) {
-            Log.e("LocationService", "Error: ${e.message}")
+            Log.e(TAG, "Error in onCreate: ${e.message}")
         }
     }
 
@@ -130,8 +137,4 @@ class LocationTrackingForegroundService : Service() {
         fusedLocationClient.removeLocationUpdates(locationCallback)
     }
 
-    private fun getCurrentUserId(): Long {
-        // TODO: 실제 사용자 ID 가져오기 구현
-        return 18L // 임시로 하드코딩
-    }
 }
