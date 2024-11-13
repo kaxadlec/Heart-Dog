@@ -30,7 +30,7 @@ class DogViewModel(
             .launchIn(viewModelScope)
     }
 
-    private fun fetchDogIdAndDetails(userId: Long) {
+    fun fetchDogIdAndDetails(userId: Long) {
         viewModelScope.launch {
             try {
                 val dogId = dogRepository.getDogIdByUserId(userId)

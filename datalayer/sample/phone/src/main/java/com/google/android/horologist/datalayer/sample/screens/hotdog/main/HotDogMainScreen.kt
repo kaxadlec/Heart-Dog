@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.google.android.horologist.datalayer.sample.screens.hotdog.common.ButtonFooter
-import com.google.android.horologist.datalayer.sample.screens.hotdog.login.viewmodel.SignInViewModel
+import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.SignInViewModel
 import com.google.android.horologist.datalayer.sample.screens.hotdog.main.components.TopContentBox
 import com.google.android.horologist.datalayer.sample.screens.hotdog.main.components.BottomContentRow
 import com.google.android.horologist.datalayer.sample.screens.hotdog.main.utils.ContentType
@@ -17,7 +17,6 @@ import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.Notifica
 import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 @Composable

@@ -18,7 +18,6 @@ package com.google.android.horologist.datalayer.sample.screens.main
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -28,7 +27,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -86,16 +84,10 @@ import com.google.android.horologist.datalayer.sample.screens.hotdog.notificatio
 import com.google.android.horologist.datalayer.sample.screens.hotdog.setting.SettingScreen
 import com.google.android.horologist.datalayer.sample.screens.hotdog.setting.components.UserManualPage
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.google.android.horologist.datalayer.sample.screens.hotdog.login.viewmodel.SignInViewModel
 import com.google.android.horologist.datalayer.sample.screens.hotdog.repository.DogRepository
 import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.DogViewModel
 import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.DogViewModelFactory
-import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.NotificationViewModel
 import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.UserViewModel
-import com.google.firebase.messaging.FirebaseMessaging
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 @Composable
 fun MainScreen(
@@ -127,7 +119,7 @@ fun MainScreen(
 //            RequestLocationPermissions(onAllPermissionsGranted = onStartLocationService)
             NavHost(
                 navController = navController,
-                startDestination = Menu,
+                startDestination = Splash,
                 modifier = modifier,
             ) {
 
@@ -154,11 +146,11 @@ fun MainScreen(
                 }
 
                 composable<CreateQRCode> {
-                    CreateQRCodeScreen(navController = navController, userViewModel = userViewModel)
+                    CreateQRCodeScreen(navController = navController, userViewModel = userViewModel, dogViewModel = dogViewModel)
                 }
 
                 composable<InsertQRCode> {
-                    InsertQRCodeScreen(navController = navController, userViewModel = userViewModel)
+                    InsertQRCodeScreen(navController = navController, userViewModel = userViewModel, dogViewModel = dogViewModel)
                 }
 
                 composable<HotDogMain> {
