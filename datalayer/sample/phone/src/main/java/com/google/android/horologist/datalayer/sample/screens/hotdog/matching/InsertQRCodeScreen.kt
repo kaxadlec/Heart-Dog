@@ -20,16 +20,14 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.permissions.PermissionStatus
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
-import com.google.android.horologist.datalayer.sample.repository.UserRepository
 import com.google.android.horologist.datalayer.sample.screens.HotDogMain
-import com.google.android.horologist.datalayer.sample.screens.hotdog.login.viewmodel.SignInViewModel
+import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.SignInViewModel
 import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.UserViewModel
+import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.DogViewModel
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-
-import kotlin.Result
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
@@ -52,7 +50,7 @@ fun CameraPermissionWrapper(content: @Composable () -> Unit) {
 }
 
 @Composable
-fun InsertQRCodeScreen(navController: NavHostController, userViewModel: UserViewModel) {
+fun InsertQRCodeScreen(navController: NavHostController, userViewModel: UserViewModel, dogViewModel: DogViewModel) {
     val signInViewModel: SignInViewModel = hiltViewModel()
     val currentUser by signInViewModel.currentUser.collectAsState()
 
@@ -78,6 +76,9 @@ fun InsertQRCodeScreen(navController: NavHostController, userViewModel: UserView
                             try {
                                 val result = userViewModel.insertScannedCode(currentUser?.userId!!, scannedCode)
                                 if (result.success && result.matched) {
+                                    // 여기서 DogViewModel의 fetchDogIdAndDetails 호출
+                                    dogViewModel.fetchDogIdAndDetails(currentUser?.userId!!)
+
                                     navController.navigate(HotDogMain) {
                                         popUpTo(navController.graph.startDestinationId) {
                                             saveState = true

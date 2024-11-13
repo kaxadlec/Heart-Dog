@@ -22,12 +22,10 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.google.android.horologist.datalayer.sample.R
-import com.google.android.horologist.datalayer.sample.screens.hotdog.login.viewmodel.SignInViewModel
-import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.NotificationViewModel
-import com.google.firebase.messaging.FirebaseMessaging
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import com.google.android.horologist.datalayer.sample.screens.HotDogMain
+import com.google.android.horologist.datalayer.sample.screens.Matching
+import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.SignInViewModel
+import io.github.jan.supabase.auth.status.SessionStatus
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -36,6 +34,7 @@ fun SignInScreen(
     navController: NavController,
     signInViewModel: SignInViewModel = hiltViewModel()
 ) {
+
 //    Scaffold(
 //        topBar = {
 //            TopAppBar(
@@ -90,6 +89,24 @@ fun SignInScreen(
             contentScale = ContentScale.Fit
         )
 
+//        Image(
+//            painter = painterResource(id = R.drawable.login_button),
+//            contentDescription = null,
+//            modifier = Modifier
+//                .width(370.dp)
+//                .height(120.dp)
+//                .offset(y = 170.dp)
+//                .clickable(
+//                    indication = null, // 클릭 피드백 제거
+//                    interactionSource = remember { MutableInteractionSource() } // InteractionSource 설정
+//                ) {
+////                    navController.navigate(Matching)
+//                    signInViewModel.onGoogleSignIn()
+////                    updateFcmToken(signInViewModel, notificationViewModel)
+//                },
+//            contentScale = ContentScale.Fit
+//        )
+
         Image(
             painter = painterResource(id = R.drawable.login_button),
             contentDescription = null,
@@ -97,15 +114,21 @@ fun SignInScreen(
                 .width(370.dp)
                 .height(120.dp)
                 .offset(y = 170.dp)
-                .clickable(
-                    indication = null, // 클릭 피드백 제거
-                    interactionSource = remember { MutableInteractionSource() } // InteractionSource 설정
-                ) {
-//                    navController.navigate(Matching)
-                    signInViewModel.onGoogleSignIn()
-//                    updateFcmToken(signInViewModel, notificationViewModel)
-                },
-            contentScale = ContentScale.Fit
+                .clickable {
+                    // 로그인 버튼 클릭시
+                    if (signInViewModel.sessionStatus.value is SessionStatus.Authenticated) {
+                        // 이미 로그인 되어 있으면
+                        val currentUser = signInViewModel.currentUser.value
+                        if (currentUser?.matching == true) {
+                            navController.navigate(HotDogMain)
+                        } else {
+                            navController.navigate(Matching)
+                        }
+                    } else {
+                        // 로그인 안되어 있으면 로그인 진행
+                        signInViewModel.onGoogleSignIn()
+                    }
+                }
         )
 
         Button(modifier = Modifier
