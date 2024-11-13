@@ -18,7 +18,6 @@ package com.google.android.horologist.datalayer.sample.screens.main
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -32,7 +31,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.google.android.horologist.datalayer.sample.repository.UserRepository
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.google.android.horologist.datalayer.sample.screens.AppHelperNodes
@@ -86,33 +84,29 @@ import com.google.android.horologist.datalayer.sample.screens.hotdog.notificatio
 import com.google.android.horologist.datalayer.sample.screens.hotdog.setting.SettingScreen
 import com.google.android.horologist.datalayer.sample.screens.hotdog.setting.components.UserManualPage
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.google.android.horologist.datalayer.sample.screens.ApiTest
+import com.google.android.horologist.datalayer.sample.screens.EmojiTest
+import com.google.android.horologist.datalayer.sample.screens.emoji.EmojiTestScreen
 import com.google.android.horologist.datalayer.sample.screens.hotdog.repository.DogRepository
 import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.DogViewModel
 import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.DogViewModelFactory
 import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.UserViewModel
-import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.UserViewModelFactory
-import com.google.android.horologist.datalayer.sample.screens.menu.ApiTestScreen
+
 @Composable
 fun MainScreen(
     modifier: Modifier = Modifier,
+    userViewModel: UserViewModel,
+//    notificationViewModel: NotificationViewModel,
     navController: NavHostController = rememberNavController(),
     onStartLocationService: () -> Unit,
 
-) {
-    val userRepository = UserRepository()
+    ) {
     val dogRepository = DogRepository()
 
-    val userViewModel: UserViewModel = viewModel(
-        factory = UserViewModelFactory(userRepository)
-    )
     val dogViewModel: DogViewModel = viewModel(
         factory = DogViewModelFactory(userViewModel, dogRepository)
     )
 
-    LaunchedEffect(Unit) {
-        userViewModel.setUserId(1L)
-    }
+//    updateFcmToken(signInViewModel, notificationViewModel)
 
     Scaffold(
         modifier = modifier,
@@ -124,16 +118,16 @@ fun MainScreen(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            RequestLocationPermissions(onAllPermissionsGranted = onStartLocationService)
+//            RequestLocationPermissions(onAllPermissionsGranted = onStartLocationService)
             NavHost(
                 navController = navController,
-                startDestination = Menu,
+                startDestination = Splash,
                 modifier = modifier,
             ) {
 
-                composable<ApiTest> {
-                    ApiTestScreen(navController = navController, modifier = Modifier, userViewModel = userViewModel, dogViewModel = dogViewModel)
-                }
+//                composable<ApiTest> {
+//                    ApiTestScreen(navController = navController, modifier = Modifier, userViewModel = userViewModel, dogViewModel = dogViewModel, notificationViewModel = notificationViewModel)
+//                }
 
                 composable<Menu> {
                     MenuScreen(navController = navController)
@@ -146,7 +140,7 @@ fun MainScreen(
                 }
 
                 composable<Login> {
-                    SignInScreen(navController = navController)
+                    SignInScreen(navController = navController, userViewModel = userViewModel)
                 }
 
                 composable<Matching> {
@@ -154,11 +148,11 @@ fun MainScreen(
                 }
 
                 composable<CreateQRCode> {
-                    CreateQRCodeScreen(navController = navController, userRepository = userRepository)
+                    CreateQRCodeScreen(navController = navController, userViewModel = userViewModel, dogViewModel = dogViewModel)
                 }
 
                 composable<InsertQRCode> {
-                   InsertQRCodeScreen(navController = navController, userRepository = userRepository)
+                    InsertQRCodeScreen(navController = navController, userViewModel = userViewModel, dogViewModel = dogViewModel)
                 }
 
                 composable<HotDogMain> {
@@ -218,12 +212,13 @@ fun MainScreen(
                 composable<StepCount> {
                     StepCountScreen()
                 }
+                composable<EmojiTest> {
+                    EmojiTestScreen()
+                }
             }
         }
     }
 }
-
-
 
 @SuppressLint("InlinedApi")
 @OptIn(ExperimentalPermissionsApi::class)

@@ -9,5 +9,6 @@ data class User(
     val email: String,         // 이메일 (필수)
     val code: String = "",     // 기본값 설정
     val matching: Boolean = false, // 기본값 설정
-    val token: String = ""     // 기본값 설정
+    val users_id_fkey: String = "",
+    val fcm_token: String = ""
 )

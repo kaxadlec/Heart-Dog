@@ -11,6 +11,7 @@ import com.google.android.horologist.datalayer.sample.screens.hotdog.common.Logo
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.toArgb
@@ -19,21 +20,21 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import kotlinx.coroutines.Dispatchers
+import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.withContext
-import java.util.*
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.WriterException
 import com.google.zxing.qrcode.QRCodeWriter
 import com.google.android.horologist.datalayer.sample.R
-import com.google.android.horologist.datalayer.sample.repository.UserRepository
 import com.google.android.horologist.datalayer.sample.screens.HotDogMain
+import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.DogViewModel
+import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.SignInViewModel
+import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.UserViewModel
 
 @Composable
-fun CreateQRCodeScreen(navController: NavHostController, userRepository: UserRepository) {
-
-    // , userId: Long 추가해주기
+fun CreateQRCodeScreen(navController: NavHostController, userViewModel: UserViewModel, dogViewModel: DogViewModel) {
+    val signInViewModel: SignInViewModel = hiltViewModel()
+    val currentUser by signInViewModel.currentUser.collectAsState()
 
     val randomCode = remember { generateRandomCode() }
     var qrBitmap by remember { mutableStateOf<Bitmap?>(null) }
@@ -41,78 +42,85 @@ fun CreateQRCodeScreen(navController: NavHostController, userRepository: UserRep
     val minutes = (remainingTime / 60).toString().padStart(2, '0')
     val seconds = (remainingTime % 60).toString().padStart(2, '0')
 
-    // 커스텀 글꼴 로드 (res/font/jejudoldam 파일 위치 필요)
     val customFont = FontFamily(Font(R.font.jejudoldam, FontWeight.Normal))
 
-    LaunchedEffect(randomCode) {
-        qrBitmap = generateQRCode(randomCode)
-        val userId = 1L
+    if (currentUser == null) {
+        // 로딩 UI
+        LoadingScreen()
+    } else {
+        LaunchedEffect(randomCode) {
+            qrBitmap = generateQRCode(randomCode)
+            userViewModel.updateUserCode(currentUser?.userId!!, randomCode)
 
-        // 코드 업데이트
-        userRepository.updateUserCode(userId, randomCode)
+            while (remainingTime > 0) {
+                delay(1000L)
+                if (userViewModel.checkUserMatching(currentUser?.userId!!)) {
 
-        // 타이머 실행 & 매칭 상태 체크
-        while (remainingTime > 0) {
-            delay(1000L)
+                    // 매칭 성공시 강아지 정보 가져오기
+                    dogViewModel.fetchDogIdAndDetails(currentUser?.userId!!)
 
-            // UserRepository를 통해 매칭 상태 체크
-            if (userRepository.checkUserMatching(userId)) {
-                // 매칭되었다면 메인화면으로 이동
-                navController.navigate(HotDogMain) {
-                    popUpTo(navController.graph.startDestinationId) {
-                        saveState = true
+                    navController.navigate(HotDogMain) {
+                        popUpTo(navController.graph.startDestinationId) {
+                            saveState = true
+                        }
                     }
+                    return@LaunchedEffect
                 }
-                return@LaunchedEffect
+                remainingTime -= 1
             }
-
-            remainingTime -= 1
+            navController.popBackStack()
         }
 
-        // 시간 초과시
-        navController.popBackStack()
-    }
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.White),
+            contentAlignment = Alignment.Center
+        ) {
+            LogoHeader(navController = navController)
 
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                qrBitmap?.let { bitmap ->
+                    Image(
+                        bitmap = bitmap.asImageBitmap(),
+                        contentDescription = "Generated QR Code",
+                        modifier = Modifier
+                            .width(250.dp)
+                            .height(250.dp)
+                            .background(if (remainingTime <= 10) Color.Red else Color.White),
+                        contentScale = ContentScale.Fit
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Text(
+                    text = "$minutes:$seconds",
+                    fontSize = 32.sp,
+                    fontFamily = customFont,
+                    color = if (remainingTime <= 10) Color.Red else Color(0xFFD66F24),
+                    modifier = Modifier.padding(top = 1.dp)
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun LoadingScreen() {
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White),
         contentAlignment = Alignment.Center
     ) {
-        LogoHeader(navController = navController)
-
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            // QR 코드 표시
-            qrBitmap?.let { bitmap ->
-                Image(
-                    bitmap = bitmap.asImageBitmap(),
-                    contentDescription = "Generated QR Code",
-                    modifier = Modifier
-                        .width(250.dp)
-                        .height(250.dp)
-                        .background(if (remainingTime <= 10) Color.Red else Color.White),
-                    contentScale = ContentScale.Fit
-                )
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // 남은 시간 텍스트 표시
-            Text(
-                text = "$minutes:$seconds",
-                fontSize = 32.sp,
-                fontFamily = customFont,
-                color = if (remainingTime <= 10) Color.Red else Color(0xFFD66F24),
-                modifier = Modifier.padding(top = 1.dp)
-            )
-        }
+        CircularProgressIndicator()
     }
 }
 
-// 6자리의 랜덤 코드 생성 함수
 fun generateRandomCode(): String {
     val chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
     return (1..6)
@@ -120,10 +128,9 @@ fun generateRandomCode(): String {
         .joinToString("")
 }
 
-// QR 코드 생성 함수
-suspend fun generateQRCode(text: String): Bitmap? = withContext(Dispatchers.IO) {
-    try {
-        val size = 250 // QR 코드 크기 설정
+fun generateQRCode(text: String): Bitmap? {
+    return try {
+        val size = 250
         val qrCodeWriter = QRCodeWriter()
         val bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, size, size)
         val bitmap = Bitmap.createBitmap(size, size, Bitmap.Config.RGB_565)
