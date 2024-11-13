@@ -1,4 +1,4 @@
-package com.google.android.horologist.datalayer.sample.screens.hotdog.login.viewmodel
+package com.google.android.horologist.datalayer.sample.screens.hotdog.vm
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
@@ -103,6 +103,18 @@ class SignInViewModel @Inject constructor(
     fun onGoogleSignIn() {
         viewModelScope.launch {
             authenticationRepository.signInWithGoogle()
+        }
+    }
+
+    fun signOut() {
+        viewModelScope.launch {
+            try {
+                supabaseClient.auth.signOut()
+                _currentUser.value = null
+                Log.d("Auth", "Successfully signed out")
+            } catch (e: Exception) {
+                Log.e("Auth", "Error signing out: ${e.message}")
+            }
         }
     }
 

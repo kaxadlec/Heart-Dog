@@ -64,12 +64,23 @@ object SupabaseModule {
 //        return client.storage
 //    }
 
+//    @Provides
+//    @Singleton
+//    fun provideAuthenticationRepository(
+//        auth: Auth
+//    ) : AuthenticationRepository {
+//        return AuthenticationRepositoryImpl(auth = auth)
+//    }
+
     @Provides
     @Singleton
     fun provideAuthenticationRepository(
-        auth: Auth
+        auth: Auth,
+        supabaseClient: SupabaseClient  // SupabaseClient 추가
     ) : AuthenticationRepository {
-        return AuthenticationRepositoryImpl(auth = auth)
+        return AuthenticationRepositoryImpl(
+            auth = auth,
+            supabaseClient = supabaseClient  // SupabaseClient 전달
+        )
     }
-
 }

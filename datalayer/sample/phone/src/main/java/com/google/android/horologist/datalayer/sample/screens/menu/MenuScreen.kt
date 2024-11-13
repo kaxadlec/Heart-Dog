@@ -1,6 +1,7 @@
 package com.google.android.horologist.datalayer.sample.screens.menu
 
 import android.util.Log
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -35,6 +36,7 @@ import com.google.android.horologist.datalayer.sample.screens.SignInPromptDemo
 import com.google.android.horologist.datalayer.sample.screens.StepCount
 import com.google.android.horologist.datalayer.sample.screens.Splash
 import com.google.android.horologist.datalayer.sample.screens.hotdog.login.viewmodel.SignInViewModel
+import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.SignInViewModel
 import io.github.jan.supabase.auth.status.SessionStatus
 
 @Composable
