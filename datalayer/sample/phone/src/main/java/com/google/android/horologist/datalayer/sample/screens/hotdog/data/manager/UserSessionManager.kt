@@ -19,4 +19,17 @@ class UserSessionManager @Inject constructor(
         val userId = sharedPreferences.getLong("current_user_id", -1L)
         return if (userId == -1L) null else userId
     }
+
+    // 강아지 ID 저장
+    fun saveDogId(dogId: Long) {
+        sharedPreferences.edit().putLong("current_dog_id", dogId).apply()
+    }
+
+    // 강아지 ID 가져오기
+    fun getCurrentDogId(): Long? {
+        val dogId = sharedPreferences.getLong("current_dog_id", -1L)
+        return if (dogId == -1L) null else dogId
+    }
+
+
 }
