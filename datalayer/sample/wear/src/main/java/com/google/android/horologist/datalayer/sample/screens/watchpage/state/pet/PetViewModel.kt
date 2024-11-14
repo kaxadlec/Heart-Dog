@@ -44,80 +44,80 @@ class PetViewModel @Inject constructor(
     private val _todayFeedingCount = MutableStateFlow(0) // 초기값 0으로 설정
     val todayFeedingCount: StateFlow<Int> = _todayFeedingCount.asStateFlow() // StateFlow로 변환
 
-    // ----------------------------------데이터 수신 및 초기화----------------------------------
-    init {
-        // Phone으로부터 데이터 스트림 수신
-        viewModelScope.launch {
-            dogFlow.collect { dogRecord ->
-                Log.d(
-                    "PetViewModel", """
-                    Received dog data:
-                    ID: ${dogRecord.dogId}
-                    Name: ${dogRecord.name}
-                    Level: ${dogRecord.level}
-                    Exp: ${dogRecord.currentExp}/${dogRecord.maxExp}
-                    Satiety: ${dogRecord.satiety}
-                    Position: ${dogRecord.position}
-                    Update: ${dogRecord.update}
-                """.trimIndent()
-                )
-
-                _uiState.update {
-                    it.copy(
-                        dogId = dogRecord.dogId.toString(),
-                        name = dogRecord.name,
-                        level = dogRecord.level,
-                        current_exp = dogRecord.currentExp,
-                        satiety = dogRecord.satiety,
-                        position = dogRecord.position
-                    )
-                }
-            }
-        }
-
-        // 초기 데이터 로드
-        fetchInitialDogData()
-    }
-
-    private fun fetchInitialDogData() {
-        viewModelScope.launch {
-            try {
-                val response = dogService.get(Empty.getDefaultInstance())
-                _uiState.update {
-                    it.copy(
-                        dogId = response.dogId.toString(),
-                        name = response.name,
-                        level = response.level,
-                        current_exp = response.currentExp,
-                        satiety = response.satiety,
-                        position = response.position
-                    )
-                }
-                Log.d("PetViewModel", "Successfully fetched initial dog data")
-            } catch (e: Exception) {
-                Log.e("PetViewModel", "Error fetching initial dog data", e)
-            }
-        }
-    }
-
-    // ----------------------------------폰과 통신하는 하트 주기 관련 함수----------------------------------
-    fun sendHeartToPhone(userId: Long, heartAmount: Int = 5) {
-        viewModelScope.launch {
-            try {
-                val request = DogProto.GiveHeartRequest.newBuilder()
-                    .setUserId(userId)
-                    .setHeartAmount(heartAmount)
-                    .build()
-
-                val response = dogService.giveHeartToDog(request)
-                if (response.success) {
-                    Log.d("PetViewModel", "하트 주기 요청이 성공적으로 전송됨")
-                }
-            } catch (e: Exception) {
-                Log.e("PetViewModel", "하트 주기 요청 중 오류 발생: ${e.message}")
-            }
-        }
-    }
+//    // ----------------------------------데이터 수신 및 초기화----------------------------------
+//    init {
+//        // Phone으로부터 데이터 스트림 수신
+//        viewModelScope.launch {
+//            dogFlow.collect { dogRecord ->
+//                Log.d(
+//                    "PetViewModel", """
+//                    Received dog data:
+//                    ID: ${dogRecord.dogId}
+//                    Name: ${dogRecord.name}
+//                    Level: ${dogRecord.level}
+//                    Exp: ${dogRecord.currentExp}/${dogRecord.maxExp}
+//                    Satiety: ${dogRecord.satiety}
+//                    Position: ${dogRecord.position}
+//                    Update: ${dogRecord.update}
+//                """.trimIndent()
+//                )
+//
+//                _uiState.update {
+//                    it.copy(
+//                        dogId = dogRecord.dogId.toString(),
+//                        name = dogRecord.name,
+//                        level = dogRecord.level,
+//                        current_exp = dogRecord.currentExp,
+//                        satiety = dogRecord.satiety,
+//                        position = dogRecord.position
+//                    )
+//                }
+//            }
+//        }
+//
+//        // 초기 데이터 로드
+//        fetchInitialDogData()
+//    }
+//
+//    private fun fetchInitialDogData() {
+//        viewModelScope.launch {
+//            try {
+//                val response = dogService.get(Empty.getDefaultInstance())
+//                _uiState.update {
+//                    it.copy(
+//                        dogId = response.dogId.toString(),
+//                        name = response.name,
+//                        level = response.level,
+//                        current_exp = response.currentExp,
+//                        satiety = response.satiety,
+//                        position = response.position
+//                    )
+//                }
+//                Log.d("PetViewModel", "Successfully fetched initial dog data")
+//            } catch (e: Exception) {
+//                Log.e("PetViewModel", "Error fetching initial dog data", e)
+//            }
+//        }
+//    }
+//
+//    // ----------------------------------폰과 통신하는 하트 주기 관련 함수----------------------------------
+//    fun sendHeartToPhone(userId: Long, heartAmount: Int = 5) {
+//        viewModelScope.launch {
+//            try {
+//                val request = DogProto.GiveHeartRequest.newBuilder()
+//                    .setUserId(userId)
+//                    .setHeartAmount(heartAmount)
+//                    .build()
+//
+//                val response = dogService.giveHeartToDog(request)
+//                if (response.success) {
+//                    Log.d("PetViewModel", "하트 주기 요청이 성공적으로 전송됨")
+//                }
+//            } catch (e: Exception) {
+//                Log.e("PetViewModel", "하트 주기 요청 중 오류 발생: ${e.message}")
+//            }
+//        }
+//    }
 
     // ----------------------------------먹이 주기 관련 함수----------------------------------
     // 먹이 주기 함수
@@ -155,7 +155,7 @@ class PetViewModel @Inject constructor(
     // 경험치 추가 및 레벨업 처리
     fun addExp(amount: Int) {
         _uiState.update { currentState ->
-            val newExp = currentState.current_exp + amount
+            val newExp = currentState.currentExp + amount
             val requiredExpForNextLevel = getRequiredExpForLevel(currentState.level)
 
             // 경험치가 레벨업 기준을 초과하면 레벨업
@@ -169,7 +169,7 @@ class PetViewModel @Inject constructor(
 
             currentState.copy(
                 level = currentState.level + levelUps,
-                current_exp = remainingExp
+                currentExp = remainingExp
             )
         }
     }
