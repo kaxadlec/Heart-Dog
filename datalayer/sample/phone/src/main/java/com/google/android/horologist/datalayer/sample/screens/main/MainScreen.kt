@@ -86,6 +86,7 @@ import com.google.android.horologist.datalayer.sample.screens.hotdog.setting.com
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.android.horologist.datalayer.sample.screens.EmojiTest
 import com.google.android.horologist.datalayer.sample.screens.emoji.EmojiTestScreen
+import com.google.android.horologist.datalayer.sample.screens.hotdog.data.manager.UserSessionManager
 import com.google.android.horologist.datalayer.sample.screens.hotdog.repository.DogRepository
 import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.DogViewModel
 import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.DogViewModelFactory
@@ -98,12 +99,13 @@ fun MainScreen(
 //    notificationViewModel: NotificationViewModel,
     navController: NavHostController = rememberNavController(),
     onStartLocationService: () -> Unit,
+    userSessionManager: UserSessionManager
 
     ) {
     val dogRepository = DogRepository()
 
     val dogViewModel: DogViewModel = viewModel(
-        factory = DogViewModelFactory(userViewModel, dogRepository)
+        factory = DogViewModelFactory(userViewModel, dogRepository, userSessionManager)
     )
 
 //    updateFcmToken(signInViewModel, notificationViewModel)

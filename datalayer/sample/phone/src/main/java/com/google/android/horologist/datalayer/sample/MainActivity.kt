@@ -39,6 +39,7 @@ import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
 import com.google.android.horologist.datalayer.sample.repository.UserRepository
+import com.google.android.horologist.datalayer.sample.screens.hotdog.data.manager.UserSessionManager
 import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.NotificationViewModel
 import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.UserViewModel
 import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.UserViewModelFactory
@@ -58,6 +59,11 @@ class MainActivity : ComponentActivity() {
     private val userViewModel: UserViewModel by viewModels {
         UserViewModelFactory(userRepository)
     }
+
+    // Hilt를 통한 UserSessionManager 주입
+    @Inject
+    lateinit var userSessionManager: UserSessionManager
+
 //    private val notificationViewModel: NotificationViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -99,7 +105,8 @@ class MainActivity : ComponentActivity() {
                     MainScreen(
                         userViewModel = userViewModel,
 //                        notificationViewModel = notificationViewModel,
-                        onStartLocationService = { startLocationService() }
+                        onStartLocationService = { startLocationService() },
+                        userSessionManager = userSessionManager
                     )
                 }
             }
