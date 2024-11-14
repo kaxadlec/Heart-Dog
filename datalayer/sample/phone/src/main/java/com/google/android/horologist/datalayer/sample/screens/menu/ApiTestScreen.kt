@@ -14,7 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.DogViewModel
 import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.NotificationViewModel
 import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.UserViewModel
 
@@ -23,11 +22,11 @@ fun ApiTestScreen(
     navController: NavHostController,
     modifier: Modifier = Modifier,
     userViewModel: UserViewModel = viewModel(),
-    dogViewModel: DogViewModel = viewModel(),
+//    dogViewModel: DogViewModel = viewModel(),
     notificationViewModel: NotificationViewModel
 ) {
     val userId = userViewModel.userId.collectAsState().value
-    val giveHeartResult = dogViewModel.giveHeartResult.collectAsState().value
+//    val giveHeartResult = dogViewModel.giveHeartResult.collectAsState().value
     val userFullInfo = userViewModel.userFullInfo.collectAsState().value
 
     Column(
@@ -104,36 +103,36 @@ fun ApiTestScreen(
             )
         } ?: Text(text = "No user info available", modifier = Modifier.padding(top = 8.dp))
 
-        // 강아지에게 하트 주기 버튼
-        Button(
-            onClick = { dogViewModel.giveHeartToDog(5) },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 4.dp)
-        ) {
-            Text(text = "강아지 먹이 주기")
-        }
+//        // 강아지에게 하트 주기 버튼
+//        Button(
+//            onClick = { dogViewModel.giveHeartToDog(5) },
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .padding(vertical = 4.dp)
+//        ) {
+//            Text(text = "강아지 먹이 주기")
+//        }
 
         // 하트 주기 결과 표시
-        giveHeartResult?.let { result ->
-            Text(
-                text = if (result.success) {
-                    "Hearts given! Updated satiety: ${result.updatedSatiety}"
-                } else {
-                    "Error: ${result.message}"
-                },
-                modifier = Modifier.padding(top = 8.dp)
-            )
-        }
+//        giveHeartResult?.let { result ->
+//            Text(
+//                text = if (result.success) {
+//                    "Hearts given! Updated satiety: ${result.updatedSatiety}"
+//                } else {
+//                    "Error: ${result.message}"
+//                },
+//                modifier = Modifier.padding(top = 8.dp)
+//            )
+//        }
 
-        // 강아지 위치 업데이트 버튼
-        Button(
-            onClick = { dogViewModel.updateDogPosition() },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 4.dp)
-        ) {
-            Text(text = "강아지 위치 변경")
-        }
+//        // 강아지 위치 업데이트 버튼
+//        Button(
+//            onClick = { dogViewModel.updateDogPosition() },
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .padding(vertical = 4.dp)
+//        ) {
+//            Text(text = "강아지 위치 변경")
+//        }
     }
 }

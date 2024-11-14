@@ -7,7 +7,6 @@ import com.google.android.horologist.datalayer.sample.screens.hotdog.repository.
 import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.UserViewModel
 
 class DogViewModelFactory(
-    private val userViewModel: UserViewModel,
     private val dogRepository: DogRepository,
     private val userSessionManager: UserSessionManager
 ) : ViewModelProvider.Factory {
@@ -15,7 +14,7 @@ class DogViewModelFactory(
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(DogViewModel::class.java)) {
-            return DogViewModel(userViewModel, dogRepository, userSessionManager) as T
+            return DogViewModel(dogRepository, userSessionManager) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
