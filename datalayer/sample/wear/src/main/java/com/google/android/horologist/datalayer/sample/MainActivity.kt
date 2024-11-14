@@ -20,11 +20,16 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.wearable.DataMapItem
 import dagger.hilt.android.AndroidEntryPoint
 import com.google.android.gms.wearable.Wearable
 import com.google.android.horologist.datalayer.sample.screens.watchpage.state.pet.DogDataListener
+import com.google.android.horologist.datalayer.sample.screens.watchpage.state.pet.PetViewModel
 import jakarta.inject.Inject
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -32,10 +37,21 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var dogDataListener: DogDataListener // 데이터 수신 리스너 생성
 
+    private val petViewModel: PetViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
-            WearApp() // 최상위 컴포저블 실행
+            WearApp(petViewModel = petViewModel) // 최상위 컴포저블 실행
+        }
+
+//        petViewModel = ViewModelProvider(this).get(PetViewModel::class.java)
+
+        // DogDataListener의 데이터 변경 콜백 설정
+        dogDataListener.setOnDataReceivedListener { newState ->
+            Log.d("MainActivity", "Received new pet state from DogDataListener: $newState")
+            petViewModel.updatePetState(newState)
         }
     }
 

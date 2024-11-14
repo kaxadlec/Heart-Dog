@@ -32,106 +32,27 @@ import kotlinx.coroutines.launch
 class PetViewModel @Inject constructor(
     private val feedingPreferences: FeedingPreferences,
     private val timeStrategy: TimeRestrictionStrategy,
-//    private val dogService: DogServiceGrpcKt.DogServiceCoroutineStub,
-//    private val dogFlow: Flow<DogProto.DogRecord>,
-    private val dogDataListener: DogDataListener
 ) : ViewModel() {
     // ----------------------------------상태 관리----------------------------------
-    // 기본 UI 상태
     private val _uiState = MutableStateFlow(PetUiState())
     val uiState: StateFlow<PetUiState> = _uiState.asStateFlow()
+
+    init {
+        Log.d("PetViewModel", "Initialized with state: ${_uiState.value}")
+    }
+
+    fun updatePetState(newState: PetUiState) {
+        Log.d("PetViewModel", "Updating state from: ${_uiState.value}")
+        Log.d("PetViewModel", "Updating state to: $newState")
+        _uiState.value = newState
+        Log.d("PetViewModel", "State after update: ${_uiState.value}")
+    }
+
 
     // 먹이 주기 횟수 상태
     private val _todayFeedingCount = MutableStateFlow(0) // 초기값 0으로 설정
     val todayFeedingCount: StateFlow<Int> = _todayFeedingCount.asStateFlow() // StateFlow로 변환
 
-    //  외부에서 데이터 수신 가능하도록 설정
-    val dogData: StateFlow<PetUiState?> = dogDataListener.dogData
-    init {
-        viewModelScope.launch {
-            dogDataListener.dogData.collect { dogData ->
-                if (dogData != null) {
-                    Log.d("PetViewModel", "Received dog data: $dogData")
-                    _uiState.update { dogData }
-                }
-            }
-        }
-    }
-
-//    // ----------------------------------데이터 수신 및 초기화----------------------------------
-//    init {
-//        // Phone으로부터 데이터 스트림 수신
-//        viewModelScope.launch {
-//            dogFlow.collect { dogRecord ->
-//                Log.d(
-//                    "PetViewModel", """
-//                    Received dog data:
-//                    ID: ${dogRecord.dogId}
-//                    Name: ${dogRecord.name}
-//                    Level: ${dogRecord.level}
-//                    Exp: ${dogRecord.currentExp}/${dogRecord.maxExp}
-//                    Satiety: ${dogRecord.satiety}
-//                    Position: ${dogRecord.position}
-//                    Update: ${dogRecord.update}
-//                """.trimIndent()
-//                )
-//
-//                _uiState.update {
-//                    it.copy(
-//                        dogId = dogRecord.dogId.toString(),
-//                        name = dogRecord.name,
-//                        level = dogRecord.level,
-//                        current_exp = dogRecord.currentExp,
-//                        satiety = dogRecord.satiety,
-//                        position = dogRecord.position
-//                    )
-//                }
-//            }
-//        }
-//
-//        // 초기 데이터 로드
-//        fetchInitialDogData()
-//    }
-//
-//    private fun fetchInitialDogData() {
-//        viewModelScope.launch {
-//            try {
-//                val response = dogService.get(Empty.getDefaultInstance())
-//                _uiState.update {
-//                    it.copy(
-//                        dogId = response.dogId.toString(),
-//                        name = response.name,
-//                        level = response.level,
-//                        current_exp = response.currentExp,
-//                        satiety = response.satiety,
-//                        position = response.position
-//                    )
-//                }
-//                Log.d("PetViewModel", "Successfully fetched initial dog data")
-//            } catch (e: Exception) {
-//                Log.e("PetViewModel", "Error fetching initial dog data", e)
-//            }
-//        }
-//    }
-//
-//    // ----------------------------------폰과 통신하는 하트 주기 관련 함수----------------------------------
-//    fun sendHeartToPhone(userId: Long, heartAmount: Int = 5) {
-//        viewModelScope.launch {
-//            try {
-//                val request = DogProto.GiveHeartRequest.newBuilder()
-//                    .setUserId(userId)
-//                    .setHeartAmount(heartAmount)
-//                    .build()
-//
-//                val response = dogService.giveHeartToDog(request)
-//                if (response.success) {
-//                    Log.d("PetViewModel", "하트 주기 요청이 성공적으로 전송됨")
-//                }
-//            } catch (e: Exception) {
-//                Log.e("PetViewModel", "하트 주기 요청 중 오류 발생: ${e.message}")
-//            }
-//        }
-//    }
 
     // ----------------------------------먹이 주기 관련 함수----------------------------------
     // 먹이 주기 함수

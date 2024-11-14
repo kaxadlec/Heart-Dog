@@ -12,8 +12,11 @@ import javax.inject.Inject
 
 class DogDataListener @Inject constructor(): DataClient.OnDataChangedListener {
 
-    private val _dogData = MutableStateFlow<PetUiState?>(null)
-    val dogData = _dogData.asStateFlow() // 외부에서 수신 가능하도록 설정
+    private var onDataReceived: ((PetUiState) -> Unit)? = null
+
+    fun setOnDataReceivedListener(listener: (PetUiState) -> Unit) {
+        onDataReceived = listener
+    }
 
     override fun onDataChanged(dataEvents: DataEventBuffer) {
         Log.d("DogDataListener", "onDataChanged called")
@@ -23,10 +26,9 @@ class DogDataListener @Inject constructor(): DataClient.OnDataChangedListener {
                 val dataMap = DataMapItem.fromDataItem(event.dataItem).dataMap
                 val dogDataJson = dataMap.getString("dogData")
                 val dog = Gson().fromJson(dogDataJson, PetUiState::class.java) // PetUiState로 매핑
-                Log.d("DogDataListener", "Received Dog Data: $dog")
+                Log.d("DogDataListener", "Parsed PetUiState: $dog")
 
-                // 수신한 데이터 Flow로 전달
-                _dogData.value = dog
+                onDataReceived?.invoke(dog) ?: Log.w("DogDataListener", "onDataReceived listener is not set") // 콜백을 통해 MainActivity에 데이터 전달
             }
         }
     }
