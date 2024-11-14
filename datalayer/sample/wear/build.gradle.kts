@@ -208,6 +208,8 @@ dependencies {
     // Coil
     implementation(libs.coil)
     implementation(libs.coil.gif)
+
+    implementation(libs.gson)
 }
 
 // tasks.maybeCreate("prepareKotlinIdeaImport")

@@ -32,8 +32,9 @@ import kotlinx.coroutines.launch
 class PetViewModel @Inject constructor(
     private val feedingPreferences: FeedingPreferences,
     private val timeStrategy: TimeRestrictionStrategy,
-    private val dogService: DogServiceGrpcKt.DogServiceCoroutineStub,
-    private val dogFlow: Flow<DogProto.DogRecord>,
+//    private val dogService: DogServiceGrpcKt.DogServiceCoroutineStub,
+//    private val dogFlow: Flow<DogProto.DogRecord>,
+    private val dogDataListener: DogDataListener
 ) : ViewModel() {
     // ----------------------------------상태 관리----------------------------------
     // 기본 UI 상태
@@ -43,6 +44,19 @@ class PetViewModel @Inject constructor(
     // 먹이 주기 횟수 상태
     private val _todayFeedingCount = MutableStateFlow(0) // 초기값 0으로 설정
     val todayFeedingCount: StateFlow<Int> = _todayFeedingCount.asStateFlow() // StateFlow로 변환
+
+    //  외부에서 데이터 수신 가능하도록 설정
+    val dogData: StateFlow<PetUiState?> = dogDataListener.dogData
+    init {
+        viewModelScope.launch {
+            dogDataListener.dogData.collect { dogData ->
+                if (dogData != null) {
+                    Log.d("PetViewModel", "Received dog data: $dogData")
+                    _uiState.update { dogData }
+                }
+            }
+        }
+    }
 
 //    // ----------------------------------데이터 수신 및 초기화----------------------------------
 //    init {

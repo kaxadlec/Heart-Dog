@@ -23,18 +23,29 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.runtime.collectAsState
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.LocalDogViewModel
+import androidx.compose.ui.platform.LocalContext
+import com.google.android.horologist.datalayer.sample.screens.hotdog.datalayerapi.sendDogDataToWatch
 
 @Composable
 fun ProgressBar() {
 
     val dogViewModel = LocalDogViewModel.current
     var dogDetails = dogViewModel.dogDetails.collectAsState().value
+    val context = LocalContext.current
 
     LaunchedEffect(dogViewModel.dogDetails) {
         dogViewModel.dogDetails.collect { dogDetails ->
             Log.d("ProgressBar", "강아지 상태 변화: $dogDetails")
         }
     }
+    // dogDetails가 변경될 때마다 데이터 전송
+    LaunchedEffect(dogDetails) {
+        dogDetails?.let { dog ->
+            Log.d("ProgressBar", "강아지: $dog")
+            sendDogDataToWatch(context, dog)  // 변경된 데이터 전송
+        }
+    }
+
 
     dogDetails?.let { dog ->
 
