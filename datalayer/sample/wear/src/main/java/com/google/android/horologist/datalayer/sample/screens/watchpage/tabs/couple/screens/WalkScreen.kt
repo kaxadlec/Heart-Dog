@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -16,8 +17,10 @@ import androidx.compose.ui.unit.sp
 import androidx.wear.compose.material.Text
 import com.google.android.horologist.datalayer.sample.R
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.wear.compose.material.Colors
 import com.google.android.horologist.datalayer.sample.screens.steps.StepsViewModel
 import com.google.android.horologist.datalayer.sample.screens.watchpage.state.user.UserViewModel
+import java.util.Calendar
 
 @Composable
 fun WalkScreen(stepsViewModel: StepsViewModel = hiltViewModel(),
@@ -25,7 +28,14 @@ fun WalkScreen(stepsViewModel: StepsViewModel = hiltViewModel(),
     val stepsState = stepsViewModel.uiState.collectAsState()
     val userState = userViewModel.uiState.collectAsState()
     val stepCount = stepsState.value.stepCountValue?.value ?: 0
-
+    val currentHour = remember { Calendar.getInstance().get(Calendar.HOUR_OF_DAY) }
+    val isNightMode = currentHour in 19..23 || currentHour in 0..6
+    val textColor = if (isNightMode) Color.White else Color.Black
+    val colors = Colors(
+        primary = Color(0xFFFF9A4D),
+        onBackground = textColor,
+        background = if (isNightMode) Color.Black else Color.White
+    )
     // 20보마다 하트 1개씩 증가 (제한 없음)
     LaunchedEffect(stepCount) {
         val earnedHearts = stepCount / 20
@@ -54,7 +64,7 @@ fun WalkScreen(stepsViewModel: StepsViewModel = hiltViewModel(),
             text = "함께한 발맞춤",
             fontSize = 16.sp,
             fontWeight = FontWeight.Bold,
-            color = Color.Black
+            color = textColor
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -64,7 +74,7 @@ fun WalkScreen(stepsViewModel: StepsViewModel = hiltViewModel(),
             text = "$stepCount 걸음",
             fontSize = 32.sp,
             fontWeight = FontWeight.Bold,
-            color = Color.Black
+            color = textColor
         )
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -72,6 +82,7 @@ fun WalkScreen(stepsViewModel: StepsViewModel = hiltViewModel(),
         Text(
             text = "획득한 하트: ${stepCount / 20}개",
             fontSize = 14.sp,
+            color = textColor
         )
 
         // 다음 하트까지 남은 걸음 수 표시
@@ -79,6 +90,7 @@ fun WalkScreen(stepsViewModel: StepsViewModel = hiltViewModel(),
         Text(
             text = "다음 하트까지 ${remainingSteps}걸음",
             fontSize = 12.sp,
+            color = textColor
         )
 
     }

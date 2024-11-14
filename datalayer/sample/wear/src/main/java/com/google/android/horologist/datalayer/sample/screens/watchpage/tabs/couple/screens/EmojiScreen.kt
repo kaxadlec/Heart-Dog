@@ -22,16 +22,26 @@ import androidx.wear.compose.material.Text
 import kotlin.math.abs
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.foundation.clickable
+import androidx.wear.compose.material.Colors
+import java.util.Calendar
 
 @Composable
 fun EmojiScreen(onEmojiSelected: (String) -> Unit) {
     val emojis = listOf("😐", "😭", "😊", "😕", "😔")
     val repeatedEmojis = remember { List(1000) { emojis[it % emojis.size] } }
     val listState = rememberLazyListState(initialFirstVisibleItemIndex = repeatedEmojis.size / 2)
-
+    val currentHour = remember { Calendar.getInstance().get(Calendar.HOUR_OF_DAY) }
     val configuration = LocalConfiguration.current
     val screenWidth = configuration.screenWidthDp.dp
     val screenHeight = configuration.screenHeightDp.dp
+
+    val isNightMode = currentHour in 19..23 || currentHour in 0..6
+    val textColor = if (isNightMode) Color.White else Color.Black
+    val colors = Colors(
+        primary = Color(0xFFFF9A4D),
+        onBackground = textColor,
+        background = if (isNightMode) Color.Black else Color.White
+    )
 
     // 비율로 설정된 크기
     val paddingRatio = 0.05f
@@ -52,7 +62,8 @@ fun EmojiScreen(onEmojiSelected: (String) -> Unit) {
                 text = "당신의 기분을 전달하세요",
                 fontSize = (screenWidth * textSizeRatio).value.sp, // 비율로 설정된 텍스트 크기
                 fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(bottom = screenWidth * paddingRatio)
+                modifier = Modifier.padding(bottom = screenWidth * paddingRatio),
+                color = textColor
             )
 
             LazyRow(
