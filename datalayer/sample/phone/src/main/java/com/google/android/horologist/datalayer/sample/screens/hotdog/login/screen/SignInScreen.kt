@@ -26,6 +26,7 @@ import com.google.android.horologist.datalayer.sample.R
 import com.google.android.horologist.datalayer.sample.screens.HotDogMain
 import com.google.android.horologist.datalayer.sample.screens.Matching
 import com.google.android.horologist.datalayer.sample.screens.hotdog.data.manager.UserSessionManager
+import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.DogViewModel
 import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.SignInViewModel
 import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.UserViewModel
 import io.github.jan.supabase.auth.status.SessionStatus
@@ -36,6 +37,7 @@ import javax.inject.Inject
 fun SignInScreen(
     modifier: Modifier = Modifier,
     navController: NavController,
+    dogViewModel: DogViewModel = hiltViewModel(),
     signInViewModel: SignInViewModel = hiltViewModel(),
     userViewModel: UserViewModel,
 ) {
@@ -127,6 +129,8 @@ fun SignInScreen(
                         currentUser?.userId?.let { userId ->
                             userViewModel.setUserId(userId)
                             signInViewModel.saveUserSession(userId)
+                            dogViewModel.saveDogSession(userId)
+
                             if (currentUser.matching) {
                                 navController.navigate(HotDogMain)
                             } else {
