@@ -1,5 +1,6 @@
 package com.google.android.horologist.datalayer.sample.screens.hotdog.login.screen
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -13,6 +14,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,16 +33,30 @@ import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.SignInVi
 import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.UserViewModel
 import io.github.jan.supabase.auth.status.SessionStatus
 import javax.inject.Inject
+import androidx.compose.runtime.LaunchedEffect
+import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.LocalDogViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SignInScreen(
     modifier: Modifier = Modifier,
     navController: NavController,
-    dogViewModel: DogViewModel = hiltViewModel(),
     signInViewModel: SignInViewModel = hiltViewModel(),
-    userViewModel: UserViewModel,
+    userViewModel: UserViewModel = hiltViewModel(),
 ) {
+    val dogViewModel = LocalDogViewModel.current
+    var dogDetails = dogViewModel.dogDetails.collectAsState().value
+
+    // dogDetails가 업데이트된 후 네비게이션 수행
+    LaunchedEffect(dogDetails) {
+        dogDetails?.let {
+            if (signInViewModel.currentUser.value?.matching == true) {
+                navController.navigate(HotDogMain)
+            } else {
+                navController.navigate(Matching)
+            }
+        }
+    }
 
 //    Scaffold(
 //        topBar = {
@@ -122,14 +138,13 @@ fun SignInScreen(
                 .height(120.dp)
                 .offset(y = 170.dp)
                 .clickable {
-                    // 로그인 버튼 클릭시
                     if (signInViewModel.sessionStatus.value is SessionStatus.Authenticated) {
-                        // 이미 로그인 되어 있으면
                         val currentUser = signInViewModel.currentUser.value
                         currentUser?.userId?.let { userId ->
                             userViewModel.setUserId(userId)
                             signInViewModel.saveUserSession(userId)
-                            dogViewModel.saveDogSession(userId)
+
+                            dogViewModel.initUserAndSaveDogSession(userId, userViewModel)
 
                             if (currentUser.matching) {
                                 navController.navigate(HotDogMain)
@@ -138,7 +153,6 @@ fun SignInScreen(
                             }
                         }
                     } else {
-                        // 로그인 안되어 있으면 로그인 진행
                         signInViewModel.onGoogleSignIn()
                     }
                 }

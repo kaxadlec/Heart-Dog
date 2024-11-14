@@ -24,6 +24,7 @@ import com.google.android.horologist.datalayer.sample.screens.HotDogMain
 import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.SignInViewModel
 import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.UserViewModel
 import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.DogViewModel
+import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.LocalDogViewModel
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -50,7 +51,12 @@ fun CameraPermissionWrapper(content: @Composable () -> Unit) {
 }
 
 @Composable
-fun InsertQRCodeScreen(navController: NavHostController, userViewModel: UserViewModel, dogViewModel: DogViewModel) {
+fun InsertQRCodeScreen(
+    navController: NavHostController,
+    userViewModel: UserViewModel = hiltViewModel()
+) {
+    val dogViewModel = LocalDogViewModel.current
+
     val signInViewModel: SignInViewModel = hiltViewModel()
     val currentUser by signInViewModel.currentUser.collectAsState()
 
@@ -76,8 +82,11 @@ fun InsertQRCodeScreen(navController: NavHostController, userViewModel: UserView
                             try {
                                 val result = userViewModel.insertScannedCode(currentUser?.userId!!, scannedCode)
                                 if (result.success && result.matched) {
-                                    // 여기서 DogViewModel의 fetchDogIdAndDetails 호출
-                                    dogViewModel.fetchDogIdAndDetails(currentUser?.userId!!)
+
+                                    currentUser?.userId?.let { userId ->
+                                        // 매칭 성공시 강아지 정보 가져오기
+                                        dogViewModel.initUserAndSaveDogSession(userId, userViewModel)
+                                    }
 
                                     navController.navigate(HotDogMain) {
                                         popUpTo(navController.graph.startDestinationId) {

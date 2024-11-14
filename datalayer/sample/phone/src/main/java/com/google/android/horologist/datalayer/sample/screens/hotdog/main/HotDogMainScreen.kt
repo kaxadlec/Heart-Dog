@@ -14,13 +14,16 @@ import com.google.android.horologist.datalayer.sample.screens.hotdog.main.compon
 import com.google.android.horologist.datalayer.sample.screens.hotdog.main.utils.ContentType
 import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.DogViewModel
 import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.NotificationViewModel
+import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.UserViewModel
 import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @Composable
-fun HotDogMainScreen(navController: NavController, dogViewModel: DogViewModel) {
+fun HotDogMainScreen(
+    navController: NavController,
+) {
     var selectedContent by remember { mutableStateOf(ContentType.ABOUT) } // 선택된 콘텐츠 상태 관리
 
     val signInViewModel: SignInViewModel = hiltViewModel()
@@ -41,7 +44,6 @@ fun HotDogMainScreen(navController: NavController, dogViewModel: DogViewModel) {
     ) {
         TopContentBox()
         BottomContentRow(
-            dogViewModel = dogViewModel,
             onButtonClick = { content -> selectedContent = content }, // onButtonClick 전달
             selectedContent = selectedContent
         )

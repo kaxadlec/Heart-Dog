@@ -6,14 +6,16 @@ import com.google.android.horologist.datalayer.sample.screens.hotdog.data.models
 import io.github.jan.supabase.postgrest.from
 import io.github.jan.supabase.postgrest.postgrest
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
+import javax.inject.Inject
 
-class DogRepository {
+class DogRepository @Inject constructor() {
 
     private val TAG = "DogRepository"
 
@@ -22,7 +24,7 @@ class DogRepository {
         @SerialName("dog_id") val dogId: Long
     )
 
-    suspend fun getDogIdByUserId(userId: Long): Long? = withContext(Dispatchers.IO) {
+    fun getDogIdByUserId(userId: Long): Long? = runBlocking {
         try {
             val params = JsonObject(
                 mapOf(
@@ -42,7 +44,7 @@ class DogRepository {
         }
     }
 
-    suspend fun getDogDetailsById(dogId: Long): Dog? = withContext(Dispatchers.IO) {
+    suspend fun getDogDetailsById(dogId: Long): Dog? = runBlocking {
 
         val params = JsonObject(
             mapOf("p_dog_id" to JsonPrimitive(dogId))

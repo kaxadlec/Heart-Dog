@@ -104,25 +104,18 @@ import com.google.android.horologist.datalayer.sample.screens.EmojiTest
 import com.google.android.horologist.datalayer.sample.screens.emoji.EmojiTestScreen
 import com.google.android.horologist.datalayer.sample.screens.hotdog.data.manager.UserSessionManager
 import com.google.android.horologist.datalayer.sample.screens.hotdog.repository.DogRepository
-import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.DogViewModel
 import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.DogViewModelFactory
 import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.UserViewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 
 @Composable
 fun MainScreen(
     modifier: Modifier = Modifier,
-    userViewModel: UserViewModel,
-//    notificationViewModel: NotificationViewModel,
     navController: NavHostController = rememberNavController(),
     onStartLocationService: () -> Unit,
-    userSessionManager: UserSessionManager
-
-    ) {
-    val dogRepository = DogRepository()
-
-    val dogViewModel: DogViewModel = viewModel(
-        factory = DogViewModelFactory(userViewModel, dogRepository, userSessionManager)
-    )
+) {
+//    val userViewModel: UserViewModel = hiltViewModel()
+//    val dogViewModel: DogViewModel = hiltViewModel()
 
 //    updateFcmToken(signInViewModel, notificationViewModel)
 
@@ -158,7 +151,7 @@ fun MainScreen(
                 }
 
                 composable<Login> {
-                    SignInScreen(navController = navController, userViewModel = userViewModel)
+                    SignInScreen(navController = navController)
                 }
 
                 composable<Matching> {
@@ -166,15 +159,15 @@ fun MainScreen(
                 }
 
                 composable<CreateQRCode> {
-                    CreateQRCodeScreen(navController = navController, userViewModel = userViewModel, dogViewModel = dogViewModel)
+                    CreateQRCodeScreen(navController = navController)
                 }
 
                 composable<InsertQRCode> {
-                    InsertQRCodeScreen(navController = navController, userViewModel = userViewModel, dogViewModel = dogViewModel)
+                    InsertQRCodeScreen(navController = navController)
                 }
 
                 composable<HotDogMain> {
-                    HotDogMainScreen(navController = navController, dogViewModel = dogViewModel)
+                    HotDogMainScreen(navController = navController)
                 }
 
                 composable<Notification> {
