@@ -175,7 +175,7 @@ private fun PetImage(
         if (hasPet) {
             // 잠자는 시간일 경우, sleepdog 이미지를 사용
             val imageRes = if (isSleepingTime) {
-                R.drawable.sleepdog
+                R.drawable.sleepdog2
             } else {
                 // 레벨과 포만도(satiety)에 따른 캐릭터 이미지 선택
                 when (level) {
