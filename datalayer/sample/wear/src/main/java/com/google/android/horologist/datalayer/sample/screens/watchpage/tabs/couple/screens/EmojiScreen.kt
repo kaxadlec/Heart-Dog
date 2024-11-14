@@ -1,7 +1,7 @@
 package com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.couple.screens
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -11,14 +11,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.google.android.horologist.datalayer.sample.R
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.wear.compose.material.Text
+import com.google.android.horologist.datalayer.sample.screens.datalayer.EmojiViewModel
 import kotlin.math.abs
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.foundation.clickable
@@ -26,7 +26,10 @@ import androidx.wear.compose.material.Colors
 import java.util.Calendar
 
 @Composable
-fun EmojiScreen(onEmojiSelected: (String) -> Unit) {
+fun EmojiScreen(
+    onEmojiSelected: (String) -> Unit,
+    viewModel: EmojiViewModel = hiltViewModel()
+) {
     val emojis = listOf("😐", "😭", "😊", "😕", "😔")
     val repeatedEmojis = remember { List(1000) { emojis[it % emojis.size] } }
     val listState = rememberLazyListState(initialFirstVisibleItemIndex = repeatedEmojis.size / 2)
@@ -79,7 +82,9 @@ fun EmojiScreen(onEmojiSelected: (String) -> Unit) {
                     val size = if (distanceFromCenter == 0) screenWidth * largeEmojiSizeRatio else screenWidth * smallEmojiSizeRatio
                     val alpha = if (distanceFromCenter == 0) 1f else 0.5f
                     EmojiCircle(emoji, size, alpha) {
+                        viewModel.sendEmojiToPhone(emoji)
                         onEmojiSelected(emoji)
+
                     }
                 }
             }

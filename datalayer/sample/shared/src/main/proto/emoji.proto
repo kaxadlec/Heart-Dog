@@ -1,0 +1,42 @@
+/*
+ * Copyright 2023 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+syntax = "proto3";
+
+package com.google.android.horologist.datalayer.sample.shared.grpc;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+option java_package = "com.google.android.horologist.datalayer.sample.shared.grpc";
+option java_outer_classname = "EmojiProto";
+
+// 새로운 이모지 메시지 추가
+message EmojiValue {
+  string emoji = 1;  // 이모지를 문자열로 받습니다.
+  .google.protobuf.Timestamp updated = 2;
+}
+
+message EmojiRequest {
+  string emoji = 1; // 이모지를 문자열로 요청합니다.
+}
+
+
+// Emoji 서비스 정의
+service EmojiService {
+  rpc setEmoji(EmojiRequest) returns (EmojiValue);
+  rpc getEmoji(.google.protobuf.Empty) returns (EmojiValue);
+}

@@ -76,4 +76,16 @@ class UserViewModel(private val userRepository: UserRepository) : ViewModel() {
             _resetResult.value = if (success) "User data reset successfully." else "Failed to reset user data."
         }
     }
+
+    suspend fun updateUserCode(userId: Long, code: String): Boolean {
+        return userRepository.updateUserCode(userId, code)
+    }
+
+    suspend fun checkUserMatching(userId: Long): Boolean {
+        return userRepository.checkUserMatching(userId)
+    }
+
+    suspend fun insertScannedCode(userId: Long, scannedCode: String): UserRepository.InsertCodeResult {
+        return userRepository.insertScannedCode(userId, scannedCode)
+    }
 }

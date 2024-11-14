@@ -3,7 +3,9 @@ package com.google.android.horologist.datalayer.sample
 
 import android.Manifest
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
+import android.provider.Settings
 import android.util.Log
 import androidx.compose.foundation.gestures.snapping.SnapPosition
 import androidx.compose.foundation.layout.*
@@ -14,6 +16,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -61,14 +66,6 @@ import com.google.android.horologist.datalayer.sample.screens.steps.StepsScreen
 import com.google.android.horologist.datalayer.sample.screens.steps.StepsViewModel
 import com.google.android.horologist.datalayer.sample.screens.tracking.TrackingScreen
 import com.google.android.horologist.datalayer.sample.screens.watchpage.TabContainerScreen
-import android.net.Uri
-import android.provider.Settings
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.mutableStateOf
 
 const val BODY_SENSORS_PERMISSION = Manifest.permission.BODY_SENSORS // 걸음 수 접근 권한
 const val ACTIVITY_RECOGNITION_PERMISSION = Manifest.permission.ACTIVITY_RECOGNITION // 활동 인식 권한

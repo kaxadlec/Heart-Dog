@@ -3,6 +3,7 @@ package com.google.android.horologist.datalayer.sample.screens.hotdog.vm
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.android.horologist.datalayer.sample.screens.hotdog.data.manager.UserSessionManager
 import com.google.android.horologist.datalayer.sample.screens.hotdog.data.models.Dog
 import com.google.android.horologist.datalayer.sample.screens.hotdog.repository.DogRepository
 import kotlinx.coroutines.flow.*
@@ -10,7 +11,8 @@ import kotlinx.coroutines.launch
 
 class DogViewModel(
     private val userViewModel: UserViewModel,
-    private val dogRepository: DogRepository
+    private val dogRepository: DogRepository,
+    private val userSessionManager: UserSessionManager
 ) : ViewModel() {
 
     private val _dogId = MutableStateFlow<Long?>(null)
@@ -30,7 +32,7 @@ class DogViewModel(
             .launchIn(viewModelScope)
     }
 
-    private fun fetchDogIdAndDetails(userId: Long) {
+    fun fetchDogIdAndDetails(userId: Long) {
         viewModelScope.launch {
             try {
                 val dogId = dogRepository.getDogIdByUserId(userId)
@@ -80,4 +82,18 @@ class DogViewModel(
             }
         }
     }
+
+    fun saveDogSession(userId: Long) {
+        viewModelScope.launch {
+            val dogId = dogRepository.getDogIdByUserId(userId)
+            _dogId.value = dogId
+            if (dogId != null) {
+                userSessionManager.saveDogId(dogId)
+            } else {
+                Log.e("DogViewModel", "saveDogSeession : DogId is null")
+            }
+        }
+
+    }
+
 }

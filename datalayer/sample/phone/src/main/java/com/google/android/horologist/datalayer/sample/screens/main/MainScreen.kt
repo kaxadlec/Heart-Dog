@@ -28,30 +28,53 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.google.android.horologist.datalayer.sample.repository.UserRepository
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.google.android.horologist.datalayer.sample.screens.AppHelperNodes
 import com.google.android.horologist.datalayer.sample.screens.AppHelperNodesListener
 import com.google.android.horologist.datalayer.sample.screens.Counter
 import com.google.android.horologist.datalayer.sample.screens.CreateQRCode
+import com.google.android.horologist.datalayer.sample.screens.EmojiScreen
 import com.google.android.horologist.datalayer.sample.screens.HeartRate
+import com.google.android.horologist.datalayer.sample.screens.HotDogMain
+import com.google.android.horologist.datalayer.sample.screens.InsertQRCode
 import com.google.android.horologist.datalayer.sample.screens.InstallAppCustomPromptDemo
 import com.google.android.horologist.datalayer.sample.screens.InstallAppPromptDemo
 import com.google.android.horologist.datalayer.sample.screens.InstallTileCustomPromptDemo
 import com.google.android.horologist.datalayer.sample.screens.InstallTilePromptDemo
+import com.google.android.horologist.datalayer.sample.screens.Login
+import com.google.android.horologist.datalayer.sample.screens.Matching
 import com.google.android.horologist.datalayer.sample.screens.Menu
+import com.google.android.horologist.datalayer.sample.screens.Notification
 import com.google.android.horologist.datalayer.sample.screens.ReEngageCustomPromptDemo
 import com.google.android.horologist.datalayer.sample.screens.ReEngagePromptDemo
+import com.google.android.horologist.datalayer.sample.screens.Setting
 import com.google.android.horologist.datalayer.sample.screens.SignInCustomPromptDemo
 import com.google.android.horologist.datalayer.sample.screens.SignInPromptDemo
+import com.google.android.horologist.datalayer.sample.screens.Splash
 import com.google.android.horologist.datalayer.sample.screens.StepCount
+import com.google.android.horologist.datalayer.sample.screens.UserManual
 import com.google.android.horologist.datalayer.sample.screens.counter.CounterScreen
+import com.google.android.horologist.datalayer.sample.screens.counter.EmojiScreen
 import com.google.android.horologist.datalayer.sample.screens.heartrate.HeartRateScreen
+import com.google.android.horologist.datalayer.sample.screens.hotdog.login.screen.SignInScreen
+import com.google.android.horologist.datalayer.sample.screens.hotdog.main.HotDogMainScreen
+import com.google.android.horologist.datalayer.sample.screens.hotdog.matching.CreateQRCodeScreen
+import com.google.android.horologist.datalayer.sample.screens.hotdog.matching.InsertQRCodeScreen
+import com.google.android.horologist.datalayer.sample.screens.hotdog.matching.MatchingScreen
+import com.google.android.horologist.datalayer.sample.screens.hotdog.notification.NotificationScreen
+import com.google.android.horologist.datalayer.sample.screens.hotdog.repository.DogRepository
+import com.google.android.horologist.datalayer.sample.screens.hotdog.setting.SettingScreen
+import com.google.android.horologist.datalayer.sample.screens.hotdog.setting.components.UserManualPage
+import com.google.android.horologist.datalayer.sample.screens.hotdog.splash.SplashScreen
+import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.DogViewModel
+import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.DogViewModelFactory
+import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.UserViewModel
 import com.google.android.horologist.datalayer.sample.screens.inappprompts.custom.installapp.InstallAppCustomPromptDemoScreen
 import com.google.android.horologist.datalayer.sample.screens.inappprompts.custom.installtile.InstallTileCustomPromptDemoScreen
 import com.google.android.horologist.datalayer.sample.screens.inappprompts.custom.reengage.ReEngageCustomPromptDemoScreen
@@ -65,15 +88,6 @@ import com.google.android.horologist.datalayer.sample.screens.nodes.NodesScreen
 import com.google.android.horologist.datalayer.sample.screens.nodeslistener.NodesListenerScreen
 import com.google.android.horologist.datalayer.sample.screens.steps.StepCountScreen
 
-// 모바일 화면 개발
-import com.google.android.horologist.datalayer.sample.screens.Splash
-import com.google.android.horologist.datalayer.sample.screens.HotDogMain
-import com.google.android.horologist.datalayer.sample.screens.InsertQRCode
-import com.google.android.horologist.datalayer.sample.screens.Login
-import com.google.android.horologist.datalayer.sample.screens.Matching
-import com.google.android.horologist.datalayer.sample.screens.Notification
-import com.google.android.horologist.datalayer.sample.screens.Setting
-import com.google.android.horologist.datalayer.sample.screens.UserManual
 
 import com.google.android.horologist.datalayer.sample.screens.hotdog.splash.SplashScreen
 import com.google.android.horologist.datalayer.sample.screens.hotdog.main.HotDogMainScreen
@@ -86,33 +100,31 @@ import com.google.android.horologist.datalayer.sample.screens.hotdog.notificatio
 import com.google.android.horologist.datalayer.sample.screens.hotdog.setting.SettingScreen
 import com.google.android.horologist.datalayer.sample.screens.hotdog.setting.components.UserManualPage
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.google.android.horologist.datalayer.sample.screens.ApiTest
+import com.google.android.horologist.datalayer.sample.screens.EmojiTest
+import com.google.android.horologist.datalayer.sample.screens.emoji.EmojiTestScreen
+import com.google.android.horologist.datalayer.sample.screens.hotdog.data.manager.UserSessionManager
 import com.google.android.horologist.datalayer.sample.screens.hotdog.repository.DogRepository
 import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.DogViewModel
 import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.DogViewModelFactory
 import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.UserViewModel
-import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.UserViewModelFactory
-import com.google.android.horologist.datalayer.sample.screens.menu.ApiTestScreen
+
 @Composable
 fun MainScreen(
     modifier: Modifier = Modifier,
+    userViewModel: UserViewModel,
+//    notificationViewModel: NotificationViewModel,
     navController: NavHostController = rememberNavController(),
     onStartLocationService: () -> Unit,
+    userSessionManager: UserSessionManager
 
-) {
-    val userRepository = UserRepository()
+    ) {
     val dogRepository = DogRepository()
 
-    val userViewModel: UserViewModel = viewModel(
-        factory = UserViewModelFactory(userRepository)
-    )
     val dogViewModel: DogViewModel = viewModel(
-        factory = DogViewModelFactory(userViewModel, dogRepository)
+        factory = DogViewModelFactory(userViewModel, dogRepository, userSessionManager)
     )
 
-    LaunchedEffect(Unit) {
-        userViewModel.setUserId(1L)
-    }
+//    updateFcmToken(signInViewModel, notificationViewModel)
 
     Scaffold(
         modifier = modifier,
@@ -124,16 +136,16 @@ fun MainScreen(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            RequestLocationPermissions(onAllPermissionsGranted = onStartLocationService)
+//            RequestLocationPermissions(onAllPermissionsGranted = onStartLocationService)
             NavHost(
                 navController = navController,
-                startDestination = Menu,
+                startDestination = Splash,
                 modifier = modifier,
             ) {
 
-                composable<ApiTest> {
-                    ApiTestScreen(navController = navController, modifier = Modifier, userViewModel = userViewModel, dogViewModel = dogViewModel)
-                }
+//                composable<ApiTest> {
+//                    ApiTestScreen(navController = navController, modifier = Modifier, userViewModel = userViewModel, dogViewModel = dogViewModel, notificationViewModel = notificationViewModel)
+//                }
 
                 composable<Menu> {
                     MenuScreen(navController = navController)
@@ -146,7 +158,7 @@ fun MainScreen(
                 }
 
                 composable<Login> {
-                    SignInScreen(navController = navController)
+                    SignInScreen(navController = navController, userViewModel = userViewModel)
                 }
 
                 composable<Matching> {
@@ -154,11 +166,11 @@ fun MainScreen(
                 }
 
                 composable<CreateQRCode> {
-                    CreateQRCodeScreen(navController = navController, userRepository = userRepository)
+                    CreateQRCodeScreen(navController = navController, userViewModel = userViewModel, dogViewModel = dogViewModel)
                 }
 
                 composable<InsertQRCode> {
-                   InsertQRCodeScreen(navController = navController, userRepository = userRepository)
+                    InsertQRCodeScreen(navController = navController, userViewModel = userViewModel, dogViewModel = dogViewModel)
                 }
 
                 composable<HotDogMain> {
@@ -218,12 +230,16 @@ fun MainScreen(
                 composable<StepCount> {
                     StepCountScreen()
                 }
+                composable<EmojiTest> {
+                    EmojiTestScreen()
+                }
+                composable<EmojiScreen> {
+                    EmojiScreen()
+                }
             }
         }
     }
 }
-
-
 
 @SuppressLint("InlinedApi")
 @OptIn(ExperimentalPermissionsApi::class)

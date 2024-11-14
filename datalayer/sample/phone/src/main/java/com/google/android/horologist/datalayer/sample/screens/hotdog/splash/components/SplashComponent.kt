@@ -18,7 +18,6 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
 import com.google.android.horologist.datalayer.sample.R
@@ -78,11 +77,4 @@ fun SplashComponent() {
                 .alpha(starAlpha.value) // 투명도 애니메이션 적용
         )
     }
-}
-
-// Preview 추가
-@Preview(showBackground = true)
-@Composable
-fun SplashComponentPreview() {
-    SplashComponent()
 }

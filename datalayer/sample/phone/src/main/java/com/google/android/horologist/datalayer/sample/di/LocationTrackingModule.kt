@@ -6,7 +6,6 @@ import androidx.datastore.dataStore
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.horologist.datalayer.sample.grpc.LocationTrackingService
-import com.google.android.horologist.datalayer.sample.screens.gps.LocationTrackingRepository
 import com.google.android.horologist.datalayer.sample.shared.grpc.LocationTrackingProto
 import dagger.Module
 import dagger.Provides
