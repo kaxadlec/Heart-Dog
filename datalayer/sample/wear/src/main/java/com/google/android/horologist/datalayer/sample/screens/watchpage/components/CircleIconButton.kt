@@ -32,13 +32,9 @@ fun CircleIconButton(
     modifier: Modifier = Modifier,
     icon: ImageVector? = null,
     iconResId: Int? = null,
-//    buttonSize: Dp = 55.dp,
-//    iconSize: Dp = 24.dp,
-    buttonSizeRatio: Float = 0.3f,  // 화면 너비 대비 버튼 크기 비율
-    iconSizeRatio: Float = 0.14f,  //
+    buttonSizeRatio: Float = 0.3f,  // 화면 너비 대비 버튼 크기 비율 원래 0.3
+    iconSizeRatio: Float = 0.20f,
     backgroundColor: Color = Color(0xFFFF9A4D),
-//    textColor: Color = Color.Black,
-//    textSize: TextUnit = 10.sp,
     textSizeRatio: Float = 0.05f,
     spacingRatio: Float = 0.02f,
     enabled: Boolean = true  // enabled 속성 추가

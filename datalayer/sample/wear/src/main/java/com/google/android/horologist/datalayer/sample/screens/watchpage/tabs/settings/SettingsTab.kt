@@ -9,6 +9,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import com.google.android.horologist.datalayer.sample.screens.watchpage.components.CircleIconButton
 import com.google.android.horologist.datalayer.sample.R
+import androidx.compose.ui.graphics.Color
 
 @Composable
 fun SettingsTab(
@@ -37,7 +38,8 @@ fun SettingsTab(
                 text = "사용방법",
                 onClick = onNavigateToGuide,
                 iconResId = R.drawable.icon_guide,  // 가이드 아이콘
-                modifier = Modifier.align(Alignment.TopCenter)
+                modifier = Modifier.align(Alignment.TopCenter),
+                backgroundColor = Color(0xFFFF9A4D)
             )
 
             // 좌하단 버튼
@@ -45,7 +47,9 @@ fun SettingsTab(
                 text = "로그아웃",
                 onClick = onNavigateToLogout,
                 iconResId = R.drawable.icon_logout,  // 로그아웃 아이콘
-                modifier = Modifier.align(Alignment.BottomStart)
+                iconSizeRatio = 0.16f,
+                modifier = Modifier.align(Alignment.BottomStart),
+                backgroundColor = Color(0xFFFFBC80)
             )
 
             // 우하단 버튼
@@ -53,7 +57,8 @@ fun SettingsTab(
                 text = "초기화",
                 onClick = onNavigateToReset,
                 iconResId = R.drawable.icon_reset,  // 초기화 아이콘
-                modifier = Modifier.align(Alignment.BottomEnd)
+                modifier = Modifier.align(Alignment.BottomEnd),
+                backgroundColor = Color(0xFFF76E11)
             )
         }
     }
