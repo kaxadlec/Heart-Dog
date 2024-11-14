@@ -7,7 +7,6 @@ import io.github.jan.supabase.postgrest.from
 import io.github.jan.supabase.postgrest.postgrest
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 import javax.inject.Inject
@@ -69,7 +68,7 @@ class NotificationRepository @Inject constructor() {
     }
 
     // 알림 전송
-    suspend fun sendNotification(senderId: Long, typeId: Int, content: String) = withContext(Dispatchers.IO) {
+    suspend fun sendNotification(senderId: Long?, typeId: Int, content: String) = withContext(Dispatchers.IO) {
         try {
             val params = JsonObject(
                 mapOf(

@@ -18,11 +18,14 @@ package com.google.android.horologist.datalayer.sample.di
 
 import android.content.Context
 import android.util.Log
+import androidx.datastore.core.DataStore
 import com.google.android.horologist.data.TargetNodeId
 import com.google.android.horologist.data.WearDataLayerRegistry
 import com.google.android.horologist.datalayer.grpc.GrpcExtensions.grpcClient
 import com.google.android.horologist.datalayer.phone.PhoneDataLayerAppHelper
 import com.google.android.horologist.datalayer.sample.grpc.EmojiService
+import com.google.android.horologist.datalayer.sample.screens.hotdog.data.manager.UserSessionManager
+import com.google.android.horologist.datalayer.sample.screens.hotdog.repository.NotificationRepository
 import com.google.android.horologist.datalayer.sample.shared.CounterValueSerializer
 import com.google.android.horologist.datalayer.sample.shared.DogRecordSerializer
 import com.google.android.horologist.datalayer.sample.shared.EmojiValueSerializer
@@ -102,9 +105,15 @@ object DatalayerModule {
     @Singleton
     @Provides
     fun provideEmojiService(
-        emojiDataStore: androidx.datastore.core.DataStore<EmojiProto.EmojiValue>
+        emojiDataStore: DataStore<EmojiProto.EmojiValue>,
+         notificationRepository: NotificationRepository,
+        userSessionManager: UserSessionManager
     ): EmojiService {
-        return EmojiService(emojiDataStore)
+        return EmojiService(
+            emojiDataStore,
+            notificationRepository,
+            userSessionManager
+        )
     }
 
     //    @Singleton
