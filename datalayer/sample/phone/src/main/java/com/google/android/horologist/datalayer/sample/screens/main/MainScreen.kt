@@ -68,13 +68,10 @@ import com.google.android.horologist.datalayer.sample.screens.hotdog.matching.Cr
 import com.google.android.horologist.datalayer.sample.screens.hotdog.matching.InsertQRCodeScreen
 import com.google.android.horologist.datalayer.sample.screens.hotdog.matching.MatchingScreen
 import com.google.android.horologist.datalayer.sample.screens.hotdog.notification.NotificationScreen
-import com.google.android.horologist.datalayer.sample.screens.hotdog.repository.DogRepository
 import com.google.android.horologist.datalayer.sample.screens.hotdog.setting.SettingScreen
 import com.google.android.horologist.datalayer.sample.screens.hotdog.setting.components.UserManualPage
 import com.google.android.horologist.datalayer.sample.screens.hotdog.splash.SplashScreen
 import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.DogViewModel
-import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.DogViewModelFactory
-import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.UserViewModel
 import com.google.android.horologist.datalayer.sample.screens.inappprompts.custom.installapp.InstallAppCustomPromptDemoScreen
 import com.google.android.horologist.datalayer.sample.screens.inappprompts.custom.installtile.InstallTileCustomPromptDemoScreen
 import com.google.android.horologist.datalayer.sample.screens.inappprompts.custom.reengage.ReEngageCustomPromptDemoScreen
