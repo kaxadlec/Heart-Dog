@@ -11,7 +11,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.Navigator
+import androidx.wear.compose.material.Colors
 import kotlinx.coroutines.delay
+import java.util.Calendar
 
 @Composable
 fun CoupleGameScreen(
@@ -21,6 +23,9 @@ fun CoupleGameScreen(
     onNavigate : () -> Unit
 ) {
     val timeLeft = remember { mutableStateOf(initialTime) }
+    val currentHour = remember { Calendar.getInstance().get(Calendar.HOUR_OF_DAY) }
+    val isNightMode = currentHour in 19..23 || currentHour in 0..6
+    val textColor = if (isNightMode) Color.White else Color.Black
 
     LaunchedEffect(timeLeft.value) {
         if (timeLeft.value > 0) {
@@ -39,15 +44,14 @@ fun CoupleGameScreen(
     ) {
         Text("READY",
             fontSize = 20.sp,
+            color = textColor,
             modifier = Modifier.padding(16.dp)
         )
 
-//        Button(onClick = onBack) {
-//            Text("<")
-//        }
         Text(
             text = "${timeLeft.value} 초",
             fontSize = 24.sp,
+            color = textColor
         )
     }
 }
