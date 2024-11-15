@@ -1,5 +1,6 @@
 package com.google.android.horologist.datalayer.sample.screens.watchpage
 
+import android.util.Log
 import androidx.compose.runtime.*
 import kotlinx.coroutines.launch
 import androidx.compose.foundation.Image
@@ -42,18 +43,21 @@ import com.google.android.horologist.datalayer.sample.screens.watchpage.state.us
 
 @Composable
 fun TabContainerScreen(
+    sharedPetViewModel: PetViewModel = hiltViewModel()
 ) {
 
     val pagerState = rememberPagerState(
         initialPage = 1,  // 시작 페이지 설정
         pageCount = { 5 }  // 페이지 수 설정
     )
-    val sharedPetViewModel: PetViewModel = hiltViewModel() // 공유 뷰모델 생성
+//    val sharedPetViewModel: PetViewModel = hiltViewModel()
     val sharedUserViewModel: UserViewModel = hiltViewModel()
     val heartRateViewModel: HeartRateViewModel = hiltViewModel()
     val coroutineScope = rememberCoroutineScope()
     var showTextOverlay by remember { mutableStateOf(false) }
     val userState by sharedUserViewModel.uiState.collectAsStateWithLifecycle()
+    val petState by sharedPetViewModel.uiState.collectAsStateWithLifecycle()
+    Log.d("TabContainerScreen", "Current PetState: $petState") // 상태 로그 추가
 
     // 각 탭의 현재 라우트 상태를 저장
     val currentHour =
@@ -76,6 +80,8 @@ fun TabContainerScreen(
 //        delay(5000)
 //        sharedUserViewModel.updateRecipientEmoji("❤");
 //    }
+
+
 
     WatchPageTheme {
         // 현재 화면이 메인 화면인지 확인

@@ -26,6 +26,7 @@ import coil.request.ImageRequest
 import coil.decode.GifDecoder
 import coil.ImageLoader
 import android.content.Context
+import android.util.Log
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.remember
 import androidx.compose.ui.layout.ContentScale
@@ -43,21 +44,21 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.animation.core.tween
+import com.google.android.horologist.datalayer.sample.screens.watchpage.state.pet.PetUiState
+import com.google.android.horologist.datalayer.sample.screens.watchpage.state.user.UserUiState
 
 
 @Composable
 fun HomeTab(
-    modifier: Modifier = Modifier,
-    petViewModel: PetViewModel,
-    userViewModel: UserViewModel = hiltViewModel(),
+    petState: PetUiState,
+    userState: UserUiState
 ) {
-    val petState by petViewModel.uiState.collectAsStateWithLifecycle()
-    val userState by userViewModel.uiState.collectAsStateWithLifecycle()
+    val expProgress = petState.currentExp.toFloat() / petState.maxExp.toFloat() // 경험치 진행률
 
-    // 현재 레벨에 필요한 경험치를 가져옴
-    val requiredExpForLevel = petViewModel.getRequiredExpForLevel(petState.level)
-    // expProgress를 현재 경험치 대비 필요 경험치의 비율로 계산
-    val expProgress = petState.current_exp / requiredExpForLevel.toFloat()
+    LaunchedEffect(petState) {
+        Log.d("HomeTab", "Updated Pet State - Name: ${petState.name}, Level: ${petState.level}, " +
+                "CurrentExp: ${petState.currentExp}, MaxExp: ${petState.maxExp}, Satiety: ${petState.satiety}")
+    }
 
     HomeTabContent(
         satietyProgress = petState.satiety / 100f,
