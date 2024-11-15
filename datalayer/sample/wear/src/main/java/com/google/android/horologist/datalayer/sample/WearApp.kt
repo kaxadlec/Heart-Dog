@@ -67,6 +67,7 @@ import com.google.android.horologist.datalayer.sample.screens.steps.StepsViewMod
 import com.google.android.horologist.datalayer.sample.screens.tracking.TrackingScreen
 import com.google.android.horologist.datalayer.sample.screens.watchpage.TabContainerScreen
 import com.google.android.horologist.datalayer.sample.screens.watchpage.state.pet.PetViewModel
+import com.google.android.horologist.datalayer.sample.screens.watchpage.state.user.UserViewModel
 
 const val BODY_SENSORS_PERMISSION = Manifest.permission.BODY_SENSORS // 걸음 수 접근 권한
 const val ACTIVITY_RECOGNITION_PERMISSION = Manifest.permission.ACTIVITY_RECOGNITION // 활동 인식 권한
@@ -79,7 +80,8 @@ const val VIBRATE_PERMISSION = Manifest.permission.VIBRATE  // 진동 권한
 fun WearApp(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
-    petViewModel: PetViewModel
+    petViewModel: PetViewModel,
+    userViewModel: UserViewModel
 ) {
 
     // 현재 context 가져오기
@@ -390,7 +392,8 @@ fun WearApp(
 
                     ScreenScaffold(scrollState = columnState) {
                         TabContainerScreen(
-                            sharedPetViewModel = petViewModel
+                            sharedPetViewModel = petViewModel,
+                            sharedUserViewModel = userViewModel
 //                        columnState = columnState
                         )
                     }
