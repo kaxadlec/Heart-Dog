@@ -1,5 +1,6 @@
 package com.google.android.horologist.datalayer.sample.screens.hotdog.main.components
 
+import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -24,13 +25,21 @@ import androidx.compose.runtime.collectAsState
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.LocalDogViewModel
 import androidx.compose.ui.platform.LocalContext
+import com.google.android.horologist.datalayer.sample.screens.hotdog.data.manager.UserSessionManager
 import com.google.android.horologist.datalayer.sample.screens.hotdog.datalayerapi.sendDogDataToWatch
+import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.LocalSignInViewModel
+import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.SignInViewModel
+import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.UserViewModel
+import kotlin.math.sign
 
+@SuppressLint("StateFlowValueCalledInComposition")
 @Composable
 fun ProgressBar() {
 
     val dogViewModel = LocalDogViewModel.current
     var dogDetails = dogViewModel.dogDetails.collectAsState().value
+    val signInViewModel = LocalSignInViewModel.current
+    var currentUser = signInViewModel.currentUser.collectAsState().value
     val context = LocalContext.current
 
     LaunchedEffect(dogViewModel.dogDetails) {
@@ -42,10 +51,12 @@ fun ProgressBar() {
     LaunchedEffect(dogDetails) {
         dogDetails?.let { dog ->
             Log.d("ProgressBar", "강아지: $dog")
-            sendDogDataToWatch(context, dog)  // 변경된 데이터 전송
+            Log.d("ProgressBar", "사람: $currentUser")
+            val hasDog = currentUser?.userId?.toInt() == dogViewModel.dogDetails.value?.position
+            Log.d("ProgressBar", "hasDog $hasDog")
+            sendDogDataToWatch(context, dog, hasDog)  // 변경된 데이터 전송
         }
     }
-
 
     dogDetails?.let { dog ->
 
@@ -172,6 +183,14 @@ fun ProgressBar() {
                 )
             }
 
+            if (currentUser?.userId?.toInt() != dogDetails.position) {
+                Text(
+                    text = "강아지가 집에 없어요",
+                    fontSize = 32.sp,
+                    color = textColor,
+                    fontWeight = FontWeight.Bold,
+                )
+            }
         }
     } ?: run {
         Text(
