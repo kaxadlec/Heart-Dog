@@ -28,7 +28,9 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.wear.compose.material.MaterialTheme
 import com.google.android.horologist.datalayer.sample.data.preferences.strategy.TimeRestrictionType
 import com.google.android.horologist.datalayer.sample.screens.watchpage.components.ExperienceArcs
+import com.google.android.horologist.datalayer.sample.screens.watchpage.state.pet.DogDataSender
 import kotlinx.coroutines.launch
+import androidx.compose.ui.platform.LocalContext
 
 
 @SuppressLint("StateFlowValueCalledInComposition")
@@ -45,6 +47,7 @@ fun PetTab(
     val userState by userViewModel.uiState.collectAsStateWithLifecycle()
     val petState by petViewModel.uiState.collectAsStateWithLifecycle()
     val scope = rememberCoroutineScope()  // 코루틴 스코프 생성
+    val context = LocalContext.current  // 현재 컨텍스트 가져오기
 
     // 화면 너비에 따라 간격을 조정
     val configuration = LocalConfiguration.current
@@ -127,16 +130,14 @@ fun PetTab(
                         onClick = {
                             if (userState.hasPet && userState.heart > 0 && petState.satiety < 100) {
                                 scope.launch {
-                                    if (petViewModel.tryFeed()) {
-                                        userViewModel.updateHeart(userState.heart - 1)
-                                        petViewModel.updateSatiety(5)
-                                        petViewModel.checkFeedingStatus()
-//                                        // Phone으로 하트를 보내는 함수 호출
-//                                        petViewModel.sendHeartToPhone(
-//                                            userId = userState.userId?.toLongOrNull() ?: 0L,
-//                                            heartAmount = 5
-//                                        )
-                                    }
+                                    // DataLayer API를 통해 폰으로 데이터 전송
+                                    DogDataSender.sendFeedRequestToPhone(
+                                        context = context,
+                                        heartAmount = 5
+                                    )
+                                    // 로컬 상태 업데이트
+                                    userViewModel.updateHeart(userState.heart - 1)
+                                    petViewModel.updateSatiety(5)
                                 }
                             }
                         },

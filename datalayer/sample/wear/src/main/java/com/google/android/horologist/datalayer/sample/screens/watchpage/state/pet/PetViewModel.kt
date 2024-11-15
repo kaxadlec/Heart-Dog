@@ -1,15 +1,11 @@
 package com.google.android.horologist.datalayer.sample.screens.watchpage.state.pet
 
 import android.util.Log
-import androidx.datastore.core.DataStore
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.android.horologist.data.WearDataLayerRegistry
 import com.google.android.horologist.datalayer.sample.data.preferences.FeedingPreferences
 import com.google.android.horologist.datalayer.sample.data.preferences.strategy.TimeRestrictionStrategy
 import com.google.android.horologist.datalayer.sample.data.preferences.strategy.TimeRestrictionType
-import com.google.android.horologist.datalayer.sample.shared.grpc.DogProto
-import com.google.android.horologist.datalayer.sample.shared.grpc.DogServiceGrpcKt
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -17,14 +13,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import com.google.protobuf.Empty
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
-import androidx.lifecycle.viewModelScope
-import com.google.android.horologist.datalayer.sample.screens.watchpage.state.user.UserViewModel
-import kotlinx.coroutines.launch
+import android.content.Context
+
 
 
 // PetViewModel.kt
@@ -48,7 +38,7 @@ class PetViewModel @Inject constructor(
         Log.d("PetViewModel", "State after update: ${_uiState.value}")
     }
 
-
+    // ----------------------------------먹이 주기 관련 상태----------------------------------
     // 먹이 주기 횟수 상태
     private val _todayFeedingCount = MutableStateFlow(0) // 초기값 0으로 설정
     val todayFeedingCount: StateFlow<Int> = _todayFeedingCount.asStateFlow() // StateFlow로 변환
