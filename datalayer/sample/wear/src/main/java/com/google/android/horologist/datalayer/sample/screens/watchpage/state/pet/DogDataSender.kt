@@ -14,6 +14,8 @@ object DogDataSender {
         val putDataMapRequest = PutDataMapRequest.create("/feed_request")
         val dataMap = putDataMapRequest.dataMap
         dataMap.putInt("heartAmount", heartAmount)
+        dataMap.putLong("timestamp", System.currentTimeMillis())
+        Log.d("DogDataSender", "Sending data to path: /feed_request with heartAmount: $heartAmount")
 
         // 요청 생성
         val putDataReq = putDataMapRequest.asPutDataRequest()
