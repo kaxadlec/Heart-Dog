@@ -92,20 +92,6 @@ fun PetTab(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(largeSpacing)
         ) {
-//            // 테스트용 초기화 버튼
-//            Button(
-//                onClick = {
-//                    scope.launch {
-//                        petViewModel.resetFeedingCount()
-//                        println("급여 데이터 초기화 완료")
-//                    }
-//                },
-//                modifier = Modifier
-//                   .size(40.dp)  // 작은 크기의 정사각형 버튼
-//                   .padding(top = 8.dp, end = 8.dp)  // 약간의 여백
-//            ) {
-//                Text("리셋", fontSize = 12.sp)
-//            }
             // 상태 텍스트
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
