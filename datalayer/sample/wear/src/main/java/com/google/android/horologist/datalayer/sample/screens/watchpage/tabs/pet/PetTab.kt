@@ -72,6 +72,10 @@ fun PetTab(
         Log.d("PetTab", "hasPet 상태:${userState.hasPet} / " + "satiety 상태:${petState.satiety}")
     }
 
+    LaunchedEffect(userState.heart) {
+        Log.d("PetTab", "Heart value updated: ${userState.heart}")
+    }
+
     Box(
         modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
@@ -132,7 +136,7 @@ fun PetTab(
                                         heartAmount = 5
                                     )
                                     // 로컬 상태 업데이트
-                                    userViewModel.updateHeart(userState.heart - 1)
+                                    userViewModel.updateHeart(userState.heart - 5)
                                     petViewModel.updateSatiety(5)
                                 }
                             }

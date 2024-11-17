@@ -43,7 +43,8 @@ import com.google.android.horologist.datalayer.sample.screens.watchpage.state.us
 
 @Composable
 fun TabContainerScreen(
-    sharedPetViewModel: PetViewModel = hiltViewModel()
+    sharedPetViewModel: PetViewModel = hiltViewModel(),
+    sharedUserViewModel: UserViewModel = hiltViewModel()
 ) {
 
     val pagerState = rememberPagerState(
@@ -51,7 +52,7 @@ fun TabContainerScreen(
         pageCount = { 5 }  // 페이지 수 설정
     )
 //    val sharedPetViewModel: PetViewModel = hiltViewModel()
-    val sharedUserViewModel: UserViewModel = hiltViewModel()
+//    val sharedUserViewModel: UserViewModel = hiltViewModel()
     val heartRateViewModel: HeartRateViewModel = hiltViewModel()
     val coroutineScope = rememberCoroutineScope()
     var showTextOverlay by remember { mutableStateOf(false) }

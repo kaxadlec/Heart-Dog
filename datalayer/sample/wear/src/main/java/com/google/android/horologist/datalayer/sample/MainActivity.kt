@@ -48,7 +48,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            WearApp(petViewModel = petViewModel) // 최상위 컴포저블 실행
+            WearApp(petViewModel = petViewModel, userViewModel = userViewModel) // 최상위 컴포저블 실행
         }
 
 //        petViewModel = ViewModelProvider(this).get(PetViewModel::class.java)

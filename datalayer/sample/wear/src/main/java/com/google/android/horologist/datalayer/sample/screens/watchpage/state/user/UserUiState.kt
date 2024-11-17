@@ -9,7 +9,7 @@ data class UserUiState(
     val isCoupleMatched: Boolean = true,
     val steps: Int = 0,
     val distance: Float = 0f,
-    val heart: Int = 50, // 0-100 밥(하트)
+    val heart: Int = 0, // 0-100 밥(하트)
     val eating: Boolean = false,
     val working: Boolean = false,
     val commuting: Boolean = false,
