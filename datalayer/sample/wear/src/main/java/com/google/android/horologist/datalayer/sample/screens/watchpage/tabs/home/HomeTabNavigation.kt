@@ -1,6 +1,7 @@
 // HomeTabNavigation.kt
 package com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.home
 
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -17,9 +18,12 @@ fun NavGraphBuilder.homeTabNavigation(
     userViewModel: UserViewModel
 ) {
     composable(HomeTabScreen.Main.route) {
+        val petState = petViewModel.uiState.collectAsStateWithLifecycle().value
+        val userState = userViewModel.uiState.collectAsStateWithLifecycle().value
+
         HomeTab(
-            petViewModel = petViewModel,
-            userViewModel = userViewModel
+            petState = petState,
+            userState = userState
         )
     }
 }

@@ -8,11 +8,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.android.horologist.datalayer.sample.screens.hotdog.main.utils.ContentType
-import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.DogViewModel
 
 @Composable
 fun DynamicContentDisplay(
-    dogViewModel: DogViewModel,
     contentType: ContentType,
                           dist: Int = 1202, hour: Int = 4994, heart: Int = 15000,
             steps: List<Int> = listOf(60100, 52000, 81500, 41800, 32200, 52500, 93000, 32700, 23200),
@@ -28,7 +26,7 @@ fun DynamicContentDisplay(
         // 이름 표시
         when (contentType) {
             ContentType.ABOUT -> {
-                ProgressBar(dogViewModel = dogViewModel)
+                ProgressBar()
             }
             ContentType.STATS -> {
                 StatData(dist, hour, heart)

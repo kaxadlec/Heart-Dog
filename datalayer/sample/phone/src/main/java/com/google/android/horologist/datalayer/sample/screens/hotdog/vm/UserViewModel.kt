@@ -6,10 +6,15 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import androidx.lifecycle.viewModelScope
 import com.google.android.horologist.datalayer.sample.repository.UserRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class UserViewModel(private val userRepository: UserRepository) : ViewModel() {
+@HiltViewModel
+class UserViewModel @Inject constructor(
+    private val userRepository: UserRepository
+) : ViewModel() {
     private val _userId = MutableStateFlow<Long?>(null)
     val userId: StateFlow<Long?> get() = _userId
 

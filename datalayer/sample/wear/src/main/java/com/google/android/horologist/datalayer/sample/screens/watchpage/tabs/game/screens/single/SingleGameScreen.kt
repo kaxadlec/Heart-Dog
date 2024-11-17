@@ -19,6 +19,8 @@ import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.Button
 import androidx.wear.compose.material.ButtonDefaults
 import androidx.compose.ui.unit.sp
+import androidx.wear.compose.material.Colors
+import java.util.Calendar
 import kotlin.system.measureTimeMillis
 
 @Composable
@@ -27,7 +29,9 @@ fun SingleGameScreen() {
     var reactionTime by remember { mutableStateOf(0L) }
     var message by remember { mutableStateOf("준비되면 \n시작 버튼을 \n눌러주세요.") }
     var signalTime by remember { mutableStateOf(0L) }
-
+    val currentHour = remember { Calendar.getInstance().get(Calendar.HOUR_OF_DAY) }
+    val isNightMode = currentHour in 19..23 || currentHour in 0..6
+    val textColor = if (isNightMode) Color.White else Color.Black
     val scope = rememberCoroutineScope()
 
     Column(
@@ -40,7 +44,7 @@ fun SingleGameScreen() {
     ) {
         Text(
             text = message,
-            color = Color.White,
+            color = textColor,
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center,

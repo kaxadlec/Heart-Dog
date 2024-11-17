@@ -18,6 +18,7 @@ import com.google.android.horologist.datalayer.sample.screens.heartrate.presenta
 import kotlinx.coroutines.delay
 import kotlin.random.Random
 import com.google.android.horologist.datalayer.sample.R
+import java.util.Calendar
 
 @Composable
 fun CoupleGameScreenMission(
@@ -34,6 +35,9 @@ fun CoupleGameScreenMission(
         "하이파이브 반복하기",
         "어깨동무하고 셀카찍기"
     )
+    val currentHour = remember { Calendar.getInstance().get(Calendar.HOUR_OF_DAY) }
+    val isNightMode = currentHour in 19..23 || currentHour in 0..6
+    val textColor = if (isNightMode) Color.White else Color.Black
 
     val randomActivity = remember { activities[Random.nextInt(activities.size)] }
     var timeLeft by remember { mutableStateOf(10) }
@@ -84,17 +88,20 @@ fun CoupleGameScreenMission(
         Text(
             text = "커플 랜덤 미션",
             fontSize = 12.sp,
+            color = textColor,
             modifier = Modifier.padding(6.dp)
         )
 
         Text(
             text = randomActivity,
             fontSize = 14.sp,
+            color = textColor,
             modifier = Modifier.padding(16.dp)
         )
         Text(
             text = "${timeLeft}초",
             fontSize = 18.sp,
+            color = textColor,
         )
         Row(
             verticalAlignment = Alignment.CenterVertically,

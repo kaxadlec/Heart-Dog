@@ -3,6 +3,7 @@ package com.google.android.horologist.datalayer.sample.screens.hotdog.vm
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.android.horologist.datalayer.sample.screens.hotdog.data.manager.UserSessionManager
 import com.google.android.horologist.datalayer.sample.screens.hotdog.data.models.User
 import com.google.android.horologist.datalayer.sample.screens.hotdog.login.repository.AuthenticationRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,7 +22,12 @@ import javax.inject.Inject
 class SignInViewModel @Inject constructor(
     private val supabaseClient: SupabaseClient,
     private val authenticationRepository: AuthenticationRepository,
+    private val userSessionManager: UserSessionManager
 ) : ViewModel() {
+
+    fun saveUserSession(userId: Long) {
+        userSessionManager.saveUserId(userId)
+    }
 
     // 세션 상태를 나타내는 StateFlow
     private val _sessionStatus = MutableStateFlow<SessionStatus>(SessionStatus.Initializing)

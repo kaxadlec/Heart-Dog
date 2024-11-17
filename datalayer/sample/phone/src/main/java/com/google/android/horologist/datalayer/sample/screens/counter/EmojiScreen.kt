@@ -13,6 +13,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.SignInViewModel
 
 @Composable
 fun EmojiScreen(
@@ -20,11 +21,14 @@ fun EmojiScreen(
     viewModel: EmojiViewModel = hiltViewModel()
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
+    val signInViewModel: SignInViewModel = hiltViewModel()
+    val emojiViewModel: EmojiViewModel = hiltViewModel()
+
 
     // ViewModel 초기화
     if (state == EmojiScreenUiState.Idle) {
         SideEffect {
-            viewModel.initialize()
+            viewModel.initialize(signInViewModel)
         }
     }
 

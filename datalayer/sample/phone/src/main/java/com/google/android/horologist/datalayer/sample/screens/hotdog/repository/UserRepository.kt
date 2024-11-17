@@ -16,10 +16,11 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
+import javax.inject.Inject
 
 
 @OptIn(SupabaseExperimental::class)
-class UserRepository {
+class UserRepository @Inject constructor() {
 
     private val TAG = "UserRepository"
 

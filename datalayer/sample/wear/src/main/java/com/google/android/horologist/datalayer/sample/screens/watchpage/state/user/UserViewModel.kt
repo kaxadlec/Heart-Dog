@@ -46,8 +46,8 @@ class UserViewModel @Inject constructor() : ViewModel() {
         _uiState.update { it.copy(distance = distance) }
     }
 
-    fun updateHeart(heart: Int) {
-        _uiState.update { it.copy(heart = heart) }
+    fun updateHeart(newHeartValue: Int) {
+        _uiState.value = _uiState.value.copy(heart = newHeartValue) // 상태를 새로운 값으로 업데이트
     }
 
     fun updateUserId(userId: String) {

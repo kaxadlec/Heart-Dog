@@ -10,13 +10,18 @@ import androidx.wear.compose.material.Button
 import androidx.wear.compose.material.Text
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
+import java.util.Calendar
 
 @Composable
 fun GuideScreen(
     modifier: Modifier = Modifier,
     onBack: () -> Unit
 ) {
+    val currentHour = remember { Calendar.getInstance().get(Calendar.HOUR_OF_DAY) }
+    val isNightMode = currentHour in 19..23 || currentHour in 0..6
+    val textColor = if (isNightMode) Color.White else Color.Black
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -28,7 +33,7 @@ fun GuideScreen(
         Text(
             text = "사용방법 안내",
             fontSize = 18.sp,
-            color = Color.Black,
+            color = textColor,
             modifier = Modifier.padding(bottom = 8.dp)
         )
 
@@ -40,7 +45,7 @@ fun GuideScreen(
                     "4. 경험치 단계 \n: 경험치는 어떻게 증가하는지 나 모르겠는데?\n\n" +
                     "이 앱을 통해 커플 관계를 개선하고, 함께 강아지를 키워보세요!",
             fontSize = 14.sp,
-            color = Color.LightGray,
+            color = textColor,
             modifier = Modifier.padding(vertical = 8.dp)
         )
 

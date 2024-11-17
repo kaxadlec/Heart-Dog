@@ -1,11 +1,13 @@
 package com.google.android.horologist.datalayer.sample.screens.hotdog.main.components
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -19,12 +21,34 @@ import com.google.android.horologist.datalayer.sample.ui.theme.bgColor
 import com.google.android.horologist.datalayer.sample.ui.theme.textColor
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.runtime.collectAsState
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.LocalDogViewModel
+import androidx.compose.ui.platform.LocalContext
+import com.google.android.horologist.datalayer.sample.screens.hotdog.datalayerapi.sendDogDataToWatch
 
 @Composable
-fun ProgressBar(dogViewModel: DogViewModel = viewModel()) {
-    val dogDetails = dogViewModel.dogDetails.collectAsState().value
+fun ProgressBar() {
+
+    val dogViewModel = LocalDogViewModel.current
+    var dogDetails = dogViewModel.dogDetails.collectAsState().value
+    val context = LocalContext.current
+
+    LaunchedEffect(dogViewModel.dogDetails) {
+        dogViewModel.dogDetails.collect { dogDetails ->
+            Log.d("ProgressBar", "강아지 상태 변화: $dogDetails")
+        }
+    }
+    // dogDetails가 변경될 때마다 데이터 전송
+    LaunchedEffect(dogDetails) {
+        dogDetails?.let { dog ->
+            Log.d("ProgressBar", "강아지: $dog")
+            sendDogDataToWatch(context, dog)  // 변경된 데이터 전송
+        }
+    }
+
 
     dogDetails?.let { dog ->
+
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -147,6 +171,15 @@ fun ProgressBar(dogViewModel: DogViewModel = viewModel()) {
                         .padding(end = 8.dp)
                 )
             }
+
         }
+    } ?: run {
+        Text(
+            text = "강아지가 없다",
+            fontSize = 32.sp,
+            color = textColor,
+            fontWeight = FontWeight.Bold,
+        )
+        Log.d("ProgressBar", "No dog details available")
     }
 }

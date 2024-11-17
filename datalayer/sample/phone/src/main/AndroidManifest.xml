@@ -39,6 +39,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/> <!-- 백그라운드 -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION"/> <!-- 포그라운드 -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
 
     <application
         android:name=".App"
@@ -115,8 +116,11 @@
             </intent-filter>
         </service>
 
-        <service android:name=".grpc.WearEmojiDataService" android:exported="true"
-            tools:ignore="ExportedService">
+        <service android:name=".grpc.WearEmojiDataService"
+            android:exported="true"
+            android:foregroundServiceType="dataSync"
+            tools:ignore="ExportedService,ForegroundServicePermission"
+            >
             <intent-filter>
                 <action android:name="com.google.android.gms.wearable.REQUEST_RECEIVED" />
                 <data

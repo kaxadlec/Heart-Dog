@@ -9,6 +9,7 @@ import com.google.android.horologist.data.proto.SampleProto
 import com.google.android.horologist.data.store.ProtoDataListener
 import com.google.android.horologist.datalayer.grpc.GrpcExtensions.grpcClient
 import com.google.android.horologist.datalayer.sample.screens.nodes.SampleDataSerializer
+import com.google.android.horologist.datalayer.sample.screens.watchpage.state.pet.PetViewModel
 import com.google.android.horologist.datalayer.sample.shared.CounterValueSerializer
 import com.google.android.horologist.datalayer.sample.shared.DogRecordSerializer
 import com.google.android.horologist.datalayer.sample.shared.EmojiValueSerializer

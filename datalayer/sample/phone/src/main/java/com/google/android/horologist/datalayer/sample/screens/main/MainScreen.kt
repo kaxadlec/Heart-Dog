@@ -68,13 +68,10 @@ import com.google.android.horologist.datalayer.sample.screens.hotdog.matching.Cr
 import com.google.android.horologist.datalayer.sample.screens.hotdog.matching.InsertQRCodeScreen
 import com.google.android.horologist.datalayer.sample.screens.hotdog.matching.MatchingScreen
 import com.google.android.horologist.datalayer.sample.screens.hotdog.notification.NotificationScreen
-import com.google.android.horologist.datalayer.sample.screens.hotdog.repository.DogRepository
 import com.google.android.horologist.datalayer.sample.screens.hotdog.setting.SettingScreen
 import com.google.android.horologist.datalayer.sample.screens.hotdog.setting.components.UserManualPage
 import com.google.android.horologist.datalayer.sample.screens.hotdog.splash.SplashScreen
 import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.DogViewModel
-import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.DogViewModelFactory
-import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.UserViewModel
 import com.google.android.horologist.datalayer.sample.screens.inappprompts.custom.installapp.InstallAppCustomPromptDemoScreen
 import com.google.android.horologist.datalayer.sample.screens.inappprompts.custom.installtile.InstallTileCustomPromptDemoScreen
 import com.google.android.horologist.datalayer.sample.screens.inappprompts.custom.reengage.ReEngageCustomPromptDemoScreen
@@ -102,21 +99,20 @@ import com.google.android.horologist.datalayer.sample.screens.hotdog.setting.com
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.android.horologist.datalayer.sample.screens.EmojiTest
 import com.google.android.horologist.datalayer.sample.screens.emoji.EmojiTestScreen
+import com.google.android.horologist.datalayer.sample.screens.hotdog.data.manager.UserSessionManager
+import com.google.android.horologist.datalayer.sample.screens.hotdog.repository.DogRepository
+import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.DogViewModelFactory
+import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.UserViewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 
 @Composable
 fun MainScreen(
     modifier: Modifier = Modifier,
-    userViewModel: UserViewModel,
-//    notificationViewModel: NotificationViewModel,
     navController: NavHostController = rememberNavController(),
     onStartLocationService: () -> Unit,
-
-    ) {
-    val dogRepository = DogRepository()
-
-    val dogViewModel: DogViewModel = viewModel(
-        factory = DogViewModelFactory(userViewModel, dogRepository)
-    )
+) {
+//    val userViewModel: UserViewModel = hiltViewModel()
+//    val dogViewModel: DogViewModel = hiltViewModel()
 
 //    updateFcmToken(signInViewModel, notificationViewModel)
 
@@ -152,7 +148,7 @@ fun MainScreen(
                 }
 
                 composable<Login> {
-                    SignInScreen(navController = navController, userViewModel = userViewModel)
+                    SignInScreen(navController = navController)
                 }
 
                 composable<Matching> {
@@ -160,15 +156,15 @@ fun MainScreen(
                 }
 
                 composable<CreateQRCode> {
-                    CreateQRCodeScreen(navController = navController, userViewModel = userViewModel, dogViewModel = dogViewModel)
+                    CreateQRCodeScreen(navController = navController)
                 }
 
                 composable<InsertQRCode> {
-                    InsertQRCodeScreen(navController = navController, userViewModel = userViewModel, dogViewModel = dogViewModel)
+                    InsertQRCodeScreen(navController = navController)
                 }
 
                 composable<HotDogMain> {
-                    HotDogMainScreen(navController = navController, dogViewModel = dogViewModel)
+                    HotDogMainScreen(navController = navController)
                 }
 
                 composable<Notification> {

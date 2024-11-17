@@ -11,6 +11,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.SportsEsports
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.graphics.Color
 
 @Composable
 fun GameTab(
@@ -37,13 +38,15 @@ fun GameTab(
             CircleIconButton(
                 text = "싱글 게임",
                 onClick = onNavigateToSingle,
-                icon = Icons.Default.SportsEsports  // 게임 아이콘
+                icon = Icons.Default.SportsEsports,  // 게임 아이콘,
+                baseColor = Color(0xFFE1BEE7)
             )
 
             CircleIconButton(
                 text = "커플 게임",
                 onClick = onNavigateToCouple,
-                icon = Icons.Default.Favorite  // 커플용 하트 아이콘
+                icon = Icons.Default.Favorite,  // 커플용 하트 아이콘
+                baseColor = Color(0xFFEF5350)
             )
         }
     }

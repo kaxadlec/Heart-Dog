@@ -2,6 +2,7 @@
 package com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.pet
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
@@ -28,7 +29,9 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.wear.compose.material.MaterialTheme
 import com.google.android.horologist.datalayer.sample.data.preferences.strategy.TimeRestrictionType
 import com.google.android.horologist.datalayer.sample.screens.watchpage.components.ExperienceArcs
+import com.google.android.horologist.datalayer.sample.screens.watchpage.state.pet.DogDataSender
 import kotlinx.coroutines.launch
+import androidx.compose.ui.platform.LocalContext
 
 
 @SuppressLint("StateFlowValueCalledInComposition")
@@ -45,6 +48,7 @@ fun PetTab(
     val userState by userViewModel.uiState.collectAsStateWithLifecycle()
     val petState by petViewModel.uiState.collectAsStateWithLifecycle()
     val scope = rememberCoroutineScope()  // 코루틴 스코프 생성
+    val context = LocalContext.current  // 현재 컨텍스트 가져오기
 
     // 화면 너비에 따라 간격을 조정
     val configuration = LocalConfiguration.current
@@ -54,23 +58,22 @@ fun PetTab(
 
     // 경험치 계산 로직 추가
     val requiredExpForLevel = petViewModel.getRequiredExpForLevel(petState.level)
-    val expProgress = petState.current_exp / requiredExpForLevel.toFloat()
+    val expProgress = petState.currentExp / requiredExpForLevel.toFloat()
 
     // 테스트를 위한 1분 모드 설정
     // 하루 모드로 하려면 주석처리하면됨
     LaunchedEffect(Unit) {
         petViewModel.setTimeRestrictionType(TimeRestrictionType.MINUTE)
-        println("1분 제한 모드 설정 완료")
-    }
-
-    // 상태 변화 로그 추가
-    LaunchedEffect(userState.hasPet) {
-        println("PetTab - hasPet 상태: ${userState.hasPet}")
+//        println("1분 밥 주기 제한 모드 설정 완료")
     }
 
     // 상태 변화 로그
-    LaunchedEffect(petState.satiety) {
-        println("PetTab - Satiety Changed: ${petState.satiety}")
+    LaunchedEffect(userState.hasPet) {
+        Log.d("PetTab", "hasPet 상태:${userState.hasPet} / " + "satiety 상태:${petState.satiety}")
+    }
+
+    LaunchedEffect(userState.heart) {
+        Log.d("PetTab", "Heart value updated: ${userState.heart}")
     }
 
     Box(
@@ -92,20 +95,6 @@ fun PetTab(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(largeSpacing)
         ) {
-//            // 테스트용 초기화 버튼
-//            Button(
-//                onClick = {
-//                    scope.launch {
-//                        petViewModel.resetFeedingCount()
-//                        println("급여 데이터 초기화 완료")
-//                    }
-//                },
-//                modifier = Modifier
-//                   .size(40.dp)  // 작은 크기의 정사각형 버튼
-//                   .padding(top = 8.dp, end = 8.dp)  // 약간의 여백
-//            ) {
-//                Text("리셋", fontSize = 12.sp)
-//            }
             // 상태 텍스트
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -136,30 +125,28 @@ fun PetTab(
                 ) {
                     // 먹이주기 버튼
                     CircleIconButton(
-                        text = "하트 먹이기",
+                        text = "밥주기",
                         // 하트가 0보다 크고 포만도가 100보다 작을 때만 클릭 가능
                         onClick = {
                             if (userState.hasPet && userState.heart > 0 && petState.satiety < 100) {
                                 scope.launch {
-                                    if (petViewModel.tryFeed()) {
-                                        userViewModel.updateHeart(userState.heart - 1)
-                                        petViewModel.updateSatiety(5)
-                                        petViewModel.checkFeedingStatus()
-                                        // Phone으로 하트를 보내는 함수 호출
-                                        petViewModel.sendHeartToPhone(
-                                            userId = userState.userId?.toLongOrNull() ?: 0L,
-                                            heartAmount = 5
-                                        )
-                                    }
+                                    // DataLayer API를 통해 폰으로 데이터 전송
+                                    DogDataSender.sendFeedRequestToPhone(
+                                        context = context,
+                                        heartAmount = 5
+                                    )
+                                    // 로컬 상태 업데이트
+                                    userViewModel.updateHeart(userState.heart - 5)
+                                    petViewModel.updateSatiety(5)
                                 }
                             }
                         },
                         icon = Icons.Default.Favorite,  // 하트 아이콘
                         enabled = userState.hasPet && userState.heart > 0 && petState.satiety < 100 && petViewModel.todayFeedingCount.value < 10, // 버튼 활성화 조건
-                        backgroundColor = if (userState.hasPet &&
+                        baseColor = if (userState.hasPet &&
                             userState.heart > 0 &&
                             petViewModel.todayFeedingCount.value < 10
-                        ) Color(0xFFD66F24) else Color.Gray
+                        ) Color(0xFFFF9A4D) else Color(0xFF90A4AE)
                     )
 
                     CircleIconButton(
@@ -171,7 +158,7 @@ fun PetTab(
                         },
                         icon = Icons.Default.Pets,  // 반려 동물 아이콘
                         enabled = !userState.hasPet, // 이미 반려 동물이 있으면 버튼 비활성화
-                        backgroundColor = if (!userState.hasPet) Color(0xFFD66F24) else Color.Gray  // 버튼 색상 조건
+                        baseColor = if (!userState.hasPet) Color(0xFFFF9A4D) else Color(0xFF90A4AE)// 버튼 색상 조건
                     )
                 }
 

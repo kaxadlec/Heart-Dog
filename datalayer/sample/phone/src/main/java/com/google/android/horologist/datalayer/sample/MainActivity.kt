@@ -15,36 +15,33 @@
  */
 package com.google.android.horologist.datalayer.sample
 
+import android.Manifest
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.Modifier
+import androidx.core.app.ActivityCompat
+import com.google.android.horologist.datalayer.sample.repository.UserRepository
 import com.google.android.horologist.datalayer.sample.screens.gps.LocationTrackingForegroundService
+import com.google.android.horologist.datalayer.sample.screens.hotdog.data.manager.UserSessionManager
+import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.DogViewModel
 import com.google.android.horologist.datalayer.sample.screens.main.MainScreen
 import com.google.android.horologist.datalayer.sample.ui.theme.HorologistTheme
-import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
-import android.util.Log
-import android.Manifest
-import android.content.pm.PackageManager
-import androidx.core.app.ActivityCompat
-import androidx.activity.viewModels
-import androidx.lifecycle.lifecycleScope
-import kotlinx.coroutines.launch
-import com.google.android.horologist.datalayer.sample.repository.UserRepository
-import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.NotificationViewModel
-import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.UserViewModel
-import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.UserViewModelFactory
-import io.github.jan.supabase.SupabaseClient
-import io.github.jan.supabase.auth.auth
 import javax.inject.Inject
+import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.LocalDogViewModel
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -55,9 +52,14 @@ class MainActivity : ComponentActivity() {
     }
 
     private val userRepository = UserRepository()
-    private val userViewModel: UserViewModel by viewModels {
-        UserViewModelFactory(userRepository)
-    }
+
+    // Hilt를 통한 UserSessionManager 주입
+    @Inject
+    lateinit var userSessionManager: UserSessionManager
+
+    private val dogViewModel: DogViewModel by viewModels()
+
+
 //    private val notificationViewModel: NotificationViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -92,17 +94,20 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             HorologistTheme {
+                CompositionLocalProvider(
+                    LocalDogViewModel provides dogViewModel
+                ) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background,
                 ) {
                     MainScreen(
-                        userViewModel = userViewModel,
 //                        notificationViewModel = notificationViewModel,
                         onStartLocationService = { startLocationService() }
                     )
                 }
             }
+                }
         }
     }
 

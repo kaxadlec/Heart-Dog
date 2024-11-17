@@ -9,6 +9,7 @@ import com.google.android.horologist.data.ProtoDataStoreHelper.protoDataStore
 import com.google.android.horologist.data.WearDataLayerRegistry
 import com.google.android.horologist.datalayer.phone.PhoneDataLayerAppHelper
 import com.google.android.horologist.datalayer.sample.screens.hotdog.repository.NotificationRepository
+import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.SignInViewModel
 import com.google.android.horologist.datalayer.sample.shared.grpc.EmojiProto
 import com.google.android.horologist.datalayer.sample.util.toProtoTimestamp
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -47,7 +48,7 @@ class EmojiViewModel @Inject constructor(
 
 
     @MainThread
-    fun initialize() {
+    fun initialize(signInViewModel: SignInViewModel) {
         if (initializeCalled) return
         initializeCalled = true
 
@@ -65,20 +66,23 @@ class EmojiViewModel @Inject constructor(
                 _uiState.value = EmojiScreenUiState.Loading
             }
 
-            emojiState.collect { emoji ->
-                if (emoji != null) {
-                    when (_uiState.value) {
-                        EmojiScreenUiState.Loading,
-                        is EmojiScreenUiState.Loaded -> {
-                            _uiState.value = EmojiScreenUiState.Loaded(emoji = emoji.emoji)
+            signInViewModel.currentUser.collect { currentUser ->
+                if (currentUser != null) {
+                    emojiState.collect { emoji ->
+                        if (emoji != null) {
+                            when (_uiState.value) {
+                                EmojiScreenUiState.Loading,
+                                is EmojiScreenUiState.Loaded -> {
+                                    _uiState.value = EmojiScreenUiState.Loaded(emoji = emoji.emoji)
 
+                                    Log.d("viewmodel", "sendEmojiNotification1")
 
-//                            // 서버로 알림 전송
-//                            viewModelScope.launch {
-//                                sendEmojiNotification(emoji.emoji)
-//                            }
+                                    // 서버로 이모지 알림 전송
+                                    sendEmojiNotification(currentUser.userId, emoji.emoji)
+                                }
+                                else -> { /* noop */ }
+                            }
                         }
-                        else -> { /* noop */ }
                     }
                 }
             }
@@ -86,6 +90,25 @@ class EmojiViewModel @Inject constructor(
 
     }
 
+
+    private suspend fun sendEmojiNotification(userId: Long?, emoji: String) {
+        Log.d("viewmodel", "sendEmojiNotificationw")
+        val typeId = 6 // 이모지 알림 타입 ID
+        try {
+            val result = notificationRepository.sendNotification(
+                senderId = userId,
+                typeId = typeId,
+                content = emoji
+            )
+            if (result) {
+                Log.d("EmojiViewModel", "Notification sent successfully for emoji: $emoji")
+            } else {
+                Log.e("EmojiViewModel", "Failed to send notification for emoji: $emoji")
+            }
+        } catch (e: Exception) {
+            Log.e("EmojiViewModel", "Error sending emoji notification: ${e.message}")
+        }
+    }
 
 
 
