@@ -28,6 +28,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import com.google.android.gms.wearable.Wearable
 import com.google.android.horologist.datalayer.sample.screens.watchpage.state.pet.DogDataListener
 import com.google.android.horologist.datalayer.sample.screens.watchpage.state.pet.PetViewModel
+import com.google.android.horologist.datalayer.sample.screens.watchpage.state.user.HeartDataListener
+import com.google.android.horologist.datalayer.sample.screens.watchpage.state.user.UserViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.launch
 
@@ -35,9 +37,12 @@ import kotlinx.coroutines.launch
 class MainActivity : ComponentActivity() {
 
     @Inject
-    lateinit var dogDataListener: DogDataListener // 데이터 수신 리스너 생성
+    lateinit var dogDataListener: DogDataListener // 강아지 데이터 수신 리스너 생성
+    @Inject
+    lateinit var heartDataListener: HeartDataListener // Heart 데이터 수신 리스너 생성
 
     private val petViewModel: PetViewModel by viewModels()
+    private val userViewModel: UserViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +57,11 @@ class MainActivity : ComponentActivity() {
         dogDataListener.setOnDataReceivedListener { newState ->
             Log.d("MainActivity", "Received new pet state from DogDataListener: $newState")
             petViewModel.updatePetState(newState)
+        }
+        // HeartDataListener를 통해 Heart 데이터를 수신
+        heartDataListener.setOnHeartDataReceivedListener { heartValue ->
+            Log.d("MainActivity", "Heart data received: $heartValue")
+            userViewModel.updateHeart(heartValue) // Heart 데이터 업데이트
         }
     }
 
@@ -71,30 +81,12 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+        Wearable.getDataClient(this).addListener(heartDataListener) // Listener 등록
     }
 
     override fun onPause() {
         Wearable.getDataClient(this).removeListener(dogDataListener) // 리스너 해제
+        Wearable.getDataClient(this).removeListener(heartDataListener) // Listener 해제
         super.onPause()
     }
 }
-
-//class MainActivity : ComponentActivity() {
-//    @Inject
-//    lateinit var tileSync: TileSync
-//
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//
-//        lifecycleScope.launch {
-//            tileSync.trackInstalledTiles(this@MainActivity)
-//
-//        }
-//
-////        val heartRateServicesRepository = (application as SampleApplication).heartRateServicesRepository
-//
-//        setContent {
-//            WearApp()
-//        }
-//    }
-//}
