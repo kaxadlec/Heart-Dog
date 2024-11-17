@@ -143,7 +143,7 @@ fun PetTab(
                         },
                         icon = Icons.Default.Favorite,  // 하트 아이콘
                         enabled = userState.hasPet && userState.heart > 0 && petState.satiety < 100 && petViewModel.todayFeedingCount.value < 10, // 버튼 활성화 조건
-                        backgroundColor = if (userState.hasPet &&
+                        baseColor = if (userState.hasPet &&
                             userState.heart > 0 &&
                             petViewModel.todayFeedingCount.value < 10
                         ) Color(0xFFFF9A4D) else Color.Gray
@@ -158,7 +158,7 @@ fun PetTab(
                         },
                         icon = Icons.Default.Pets,  // 반려 동물 아이콘
                         enabled = !userState.hasPet, // 이미 반려 동물이 있으면 버튼 비활성화
-                        backgroundColor = if (!userState.hasPet) Color(0xFFFF9A4D) else Color.Gray  // 버튼 색상 조건
+                        baseColor = if (!userState.hasPet) Color(0xFFFF9A4D) else Color.Gray  // 버튼 색상 조건
                     )
                 }
 

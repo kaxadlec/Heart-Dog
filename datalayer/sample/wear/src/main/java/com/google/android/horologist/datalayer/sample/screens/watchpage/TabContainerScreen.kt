@@ -159,8 +159,6 @@ fun TabContainerScreen(
                     indicatorSizeRatio = 0.03f,
                     curveRadiusRatio = 0.6f,
                     paddingBottomRatio = 0.28f,
-                    activeColor = Color(0xFFFFA500),
-                    inactiveColor = Color(0xFFFFCC80),
                     modifier = Modifier.align(Alignment.BottomCenter)
                 )
             }

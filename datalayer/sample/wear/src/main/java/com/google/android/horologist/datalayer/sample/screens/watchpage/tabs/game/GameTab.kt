@@ -39,14 +39,14 @@ fun GameTab(
                 text = "싱글 게임",
                 onClick = onNavigateToSingle,
                 icon = Icons.Default.SportsEsports,  // 게임 아이콘,
-                backgroundColor = Color(0xFFfad267)
+                baseColor = Color(0xFF4CAF50)
             )
 
             CircleIconButton(
                 text = "커플 게임",
                 onClick = onNavigateToCouple,
                 icon = Icons.Default.Favorite,  // 커플용 하트 아이콘
-                backgroundColor = Color(0xFFde872d)
+                baseColor = Color(0xFFEF5350)
             )
         }
     }

@@ -2,6 +2,7 @@ package com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.co
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Terrain
 import androidx.compose.material.icons.filled.DirectionsWalk
 import androidx.compose.material.icons.filled.EmojiEmotions
 import androidx.compose.material.icons.filled.Timer
@@ -24,7 +25,6 @@ fun CoupleTab(
     val configuration = LocalConfiguration.current
     val screenWidth = configuration.screenWidthDp.dp
     val dynamicPadding = screenWidth * paddingRatio
-    val background =
 
     Box(
         modifier = modifier.fillMaxSize(),
@@ -39,8 +39,8 @@ fun CoupleTab(
             CircleIconButton(
                 text = "산책",
                 onClick = onWalkClick,
-                backgroundColor = Color(0xFFDB8018),
-                icon = Icons.Default.DirectionsWalk,
+                baseColor  = Color(0xFF8BC34A),
+                icon = Icons.Default.Terrain,
                 modifier = Modifier
                     .align(Alignment.TopCenter)
             )
@@ -49,7 +49,7 @@ fun CoupleTab(
             CircleIconButton(
                 text = "시간",
                 onClick = onTimeTogetherClick,
-                backgroundColor = Color(0xFFDEBFA4),
+                baseColor  = Color(0xFF64B5F6),
                 icon = Icons.Default.Timer, // 타이머 아이콘 이미지
                 modifier = Modifier.align(Alignment.BottomStart)
             )
@@ -58,7 +58,7 @@ fun CoupleTab(
             CircleIconButton(
                 text = "이모지",
                 onClick = onEmojiClick,
-                backgroundColor = Color(0xFFFEC001 ),
+                baseColor  = Color(0xFFFFC107),
                 icon = Icons.Default.EmojiEmotions, // 이모지 아이콘 이미지
                 modifier = Modifier.align(Alignment.BottomEnd)
             )
