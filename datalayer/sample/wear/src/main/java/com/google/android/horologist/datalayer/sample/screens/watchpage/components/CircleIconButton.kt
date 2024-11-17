@@ -68,7 +68,7 @@ fun CircleIconButton(
     }
 
     // 그라디언트 색상 계산
-    val highlightColor = baseColor.copy(alpha = 1f).lighter(0.3f) // 더 밝게
+    val highlightColor = baseColor.copy(alpha = 1f).lighter(0.15f) // 더 밝게
     val midColor = baseColor.copy(alpha = 1f).lighter(0.1f) // 중간 색상
     val shadowColor = baseColor.copy(alpha = 1f).darker(0.1f) // 덜 어두운 색상
 

@@ -39,7 +39,7 @@ fun SettingsTab(
                 onClick = onNavigateToGuide,
                 iconResId = R.drawable.icon_guide,  // 가이드 아이콘
                 modifier = Modifier.align(Alignment.TopCenter),
-                baseColor = Color(0xFFFFBC80)
+                baseColor = Color(0xFFFFB5B5)
             )
 
             // 좌하단 버튼
@@ -49,7 +49,7 @@ fun SettingsTab(
                 iconResId = R.drawable.icon_logout,  // 로그아웃 아이콘
                 iconSizeRatio = 0.16f,
                 modifier = Modifier.align(Alignment.BottomStart),
-                baseColor = Color(0xFFFFBC80)
+                baseColor = Color(0xFFFFAB91)
             )
 
             // 우하단 버튼
@@ -58,7 +58,7 @@ fun SettingsTab(
                 onClick = onNavigateToReset,
                 iconResId = R.drawable.icon_reset,  // 초기화 아이콘
                 modifier = Modifier.align(Alignment.BottomEnd),
-                baseColor = Color(0xFFFFBC80)
+                baseColor = Color(0xFFFFC8A2)
             )
         }
     }
