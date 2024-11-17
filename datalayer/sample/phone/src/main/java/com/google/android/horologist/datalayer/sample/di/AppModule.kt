@@ -4,6 +4,7 @@ import android.content.Context
 import com.google.android.horologist.datalayer.sample.repository.UserRepository
 import com.google.android.horologist.datalayer.sample.screens.hotdog.data.manager.UserSessionManager
 import com.google.android.horologist.datalayer.sample.screens.hotdog.repository.DogRepository
+import com.google.android.horologist.datalayer.sample.screens.hotdog.repository.NotificationRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
