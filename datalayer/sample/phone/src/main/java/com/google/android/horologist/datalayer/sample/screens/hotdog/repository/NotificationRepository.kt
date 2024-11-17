@@ -1,9 +1,9 @@
 package com.google.android.horologist.datalayer.sample.screens.hotdog.repository
 
+import android.util.Log
 import com.google.android.horologist.datalayer.sample.screens.hotdog.data.SupabaseClientProvider
 import com.google.android.horologist.datalayer.sample.screens.hotdog.data.models.Notification
 import com.google.android.horologist.datalayer.sample.screens.hotdog.data.models.NotificationType
-import io.github.jan.supabase.postgrest.from
 import io.github.jan.supabase.postgrest.postgrest
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -15,37 +15,51 @@ import javax.inject.Singleton
 @Singleton
 class NotificationRepository @Inject constructor() {
 
-    // 기존 함수 1: userId가 일치하는 모든 알림을 리스트로 가져오는 함수
     suspend fun getNotificationsByUserId(userId: Long): List<Notification> = withContext(Dispatchers.IO) {
         try {
-            val allNotifications = SupabaseClientProvider.supabase
-                .from("notification")
-                .select()
-                .decodeList<Notification>()
-                .filter { it.userId == userId }
+            Log.d(TAG, "Calling get_notifications_by_user_id with userId: $userId")
 
-            allNotifications
+            val params = JsonObject(mapOf("p_user_id" to JsonPrimitive(userId)))
+            val response = SupabaseClientProvider.supabase
+                .postgrest
+                .rpc("get_notifications_by_user_id", params)
+
+            val notifications = response.decodeList<Notification>()
+            Log.d(TAG, "Received notifications: $notifications")
+            notifications
+
         } catch (e: Exception) {
+            Log.e(TAG, "Failed to get notifications: ${e.message}")
+            e.printStackTrace()
             emptyList()
         }
     }
 
-    // 기존 함수 2: typeId가 일치하는 category를 가져오는 함수
     suspend fun getNotificationContentByTypeIds(typeIds: List<Int>): List<NotificationType> = withContext(Dispatchers.IO) {
         try {
-            val allNotificationTypes = SupabaseClientProvider.supabase
-                .from("notification_type")
-                .select()
-                .decodeList<NotificationType>()
-                .filter { it.typeId in typeIds }
+            if (typeIds.isEmpty()) {
+                Log.d(TAG, "No type IDs provided")
+                return@withContext emptyList()
+            }
 
-            allNotificationTypes
+            Log.d(TAG, "Calling get_notification_types_by_ids with typeIds: $typeIds")
+
+            val params = JsonObject(mapOf("p_type_ids" to JsonPrimitive(typeIds.joinToString(","))))
+            val response = SupabaseClientProvider.supabase
+                .postgrest
+                .rpc("get_notification_types_by_ids", params)
+
+            val types = response.decodeList<NotificationType>()
+            Log.d(TAG, "Received notification types: $types")
+            types
+
         } catch (e: Exception) {
+            Log.e(TAG, "Failed to get notification types: ${e.message}")
+            e.printStackTrace()
             emptyList()
         }
     }
 
-    // FCM 토큰 업데이트
     suspend fun updateFcmToken(userId: Long, token: String) = withContext(Dispatchers.IO) {
         try {
             val params = JsonObject(
@@ -59,15 +73,12 @@ class NotificationRepository @Inject constructor() {
                 .postgrest
                 .rpc("update_fcm_token", params)
 
-            println("FCM token updated successfully")
             true
         } catch (e: Exception) {
-            println("Error updating FCM token: ${e.message}")
             false
         }
     }
 
-    // 알림 전송
     suspend fun sendNotification(senderId: Long?, typeId: Int, content: String) = withContext(Dispatchers.IO) {
         try {
             val params = JsonObject(
@@ -82,11 +93,13 @@ class NotificationRepository @Inject constructor() {
                 .postgrest
                 .rpc("send_notification", params)
 
-            println("Notification sent successfully")
             true
         } catch (e: Exception) {
-            println("Error sending notification: ${e.message}")
             false
         }
+    }
+
+    companion object {
+        private const val TAG = "NotificationRepo"  // 고유한 TAG 정의
     }
 }

@@ -1,6 +1,5 @@
 package com.google.android.horologist.datalayer.sample.screens.hotdog.main.components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,14 +26,14 @@ fun StatData(dist: Int, hour: Int, heart: Int) {
         modifier = Modifier
             .fillMaxWidth()
     ) {
-        // 첫 번째 줄: 함께한 거리, 함께한 시간, 누적 하트
+        // 첫 번째 줄: 함께한 걸음, 함께한 시간, 누적 하트
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 4.dp)
         ) {
             Text(
-                text = "함께한 거리",
+                text = "함께한 걸음 수",
                 fontSize = 16.sp,
                 color = BluePurple,
                 fontWeight = FontWeight.Bold,
@@ -72,7 +71,7 @@ fun StatData(dist: Int, hour: Int, heart: Int) {
                 .padding(bottom = 4.dp)
         ) {
             Text(
-                text = "${numberFormat.format(dist)} km",
+                text = "${numberFormat.format(dist)} 걸음",
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
                 color = textColor,
