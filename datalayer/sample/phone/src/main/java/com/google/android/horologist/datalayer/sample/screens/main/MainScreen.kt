@@ -18,7 +18,9 @@ package com.google.android.horologist.datalayer.sample.screens.main
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -105,6 +107,7 @@ import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.DogViewM
 import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.UserViewModel
 import androidx.hilt.navigation.compose.hiltViewModel
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun MainScreen(
     modifier: Modifier = Modifier,
