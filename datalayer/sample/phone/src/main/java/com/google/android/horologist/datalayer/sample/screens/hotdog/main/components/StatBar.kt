@@ -23,7 +23,7 @@ fun StatBar(steps: List<Int>, hours: List<Int>, hearts: List<Int>) {
         modifier = Modifier
             .fillMaxWidth()
     ) {
-        CombinedChartView(steps = steps, hours = hours, monthLabels = monthLabels)
+        CombinedBarChart(steps = steps, hours = hours, monthLabels = monthLabels)
         HeartsBarChart(hearts = hearts, monthLabels = monthLabels)
     }
 }

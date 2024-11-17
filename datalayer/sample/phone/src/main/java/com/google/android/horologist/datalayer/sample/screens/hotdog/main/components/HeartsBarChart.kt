@@ -68,7 +68,7 @@ fun HeartsBarChart(hearts: List<Int>, monthLabels: List<String>) {
         },
         update = { barChart ->
             val heartsEntries = hearts.mapIndexed { index, value -> BarEntry(index.toFloat(), value.toFloat()) }
-            val heartsDataSet = BarDataSet(heartsEntries, "월별 누적 하트 수").apply {
+            val heartsDataSet = BarDataSet(heartsEntries, "하트").apply {
                 color = BrightRed.toArgb()
                 setDrawValues(false) // 평소에는 숫자가 보이지 않도록 설정
             }

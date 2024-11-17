@@ -20,7 +20,7 @@ fun DynamicContentDisplay(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp),
+            .padding(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         // 이름 표시
