@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -19,7 +20,7 @@ import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.hom
 fun HomeTabContent(
     currentHomeRoute: MutableState<String>,
     petViewModel: PetViewModel = hiltViewModel(),
-    userViewModel: UserViewModel
+    userViewModel: UserViewModel = hiltViewModel()
 ) {
     val navController = rememberNavController()
     LaunchedEffect(navController) {
@@ -31,6 +32,11 @@ fun HomeTabContent(
     val petState by petViewModel.uiState.collectAsStateWithLifecycle()
     LaunchedEffect(petState) {
         Log.d("HomeTabContent", "Updated petState: $petState")
+    }
+
+    val userState by userViewModel.uiState.collectAsStateWithLifecycle()
+    LaunchedEffect(userState) {
+        Log.d("HomeTabContent", "Updated userState: $userState")
     }
 
 

@@ -13,7 +13,7 @@ fun StatBar(steps: List<Int>, hours: List<Int>, hearts: List<Int>) {
     val monthLabels = mutableListOf<String>()
     val calendar = Calendar.getInstance()
     val dateFormat = SimpleDateFormat("MM", Locale.getDefault())
-    repeat(9) {
+    repeat(8) {
         monthLabels.add(dateFormat.format(calendar.time))
         calendar.add(Calendar.MONTH, -1)
     }
@@ -23,7 +23,7 @@ fun StatBar(steps: List<Int>, hours: List<Int>, hearts: List<Int>) {
         modifier = Modifier
             .fillMaxWidth()
     ) {
-        CombinedChartView(steps = steps, hours = hours, monthLabels = monthLabels)
+        CombinedBarChart(steps = steps, hours = hours, monthLabels = monthLabels)
         HeartsBarChart(hearts = hearts, monthLabels = monthLabels)
     }
 }

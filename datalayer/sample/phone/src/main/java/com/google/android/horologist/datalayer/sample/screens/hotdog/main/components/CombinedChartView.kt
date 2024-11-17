@@ -7,13 +7,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
-import com.github.mikephil.charting.charts.CombinedChart
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
-import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
@@ -22,14 +19,19 @@ import com.google.android.horologist.datalayer.sample.ui.theme.LightBlue
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
+import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.data.BarData
+import com.github.mikephil.charting.data.BarDataSet
+import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+
 
 @Composable
-fun CombinedChartView(steps: List<Int>, hours: List<Int>, monthLabels: List<String>) {
-    val context = LocalContext.current
+fun CombinedBarChart(steps: List<Int>, hours: List<Int>, monthLabels: List<String>) {
     val stepsMaxValue = steps.maxOrNull()?.toFloat() ?: 1f
     val hoursMaxValue = hours.maxOrNull()?.toFloat() ?: 1f
 
-    // 월 이름을 "3월", "4월"과 같은 형식으로 변경
     val monthLabelsFormatted = monthLabels.map { month ->
         val calendar = Calendar.getInstance().apply {
             time = SimpleDateFormat("MM", Locale.getDefault()).parse(month) ?: time
@@ -39,7 +41,7 @@ fun CombinedChartView(steps: List<Int>, hours: List<Int>, monthLabels: List<Stri
 
     AndroidView(
         factory = { ctx ->
-            CombinedChart(ctx).apply {
+            BarChart(ctx).apply {
                 layoutParams = FrameLayout.LayoutParams(
                     FrameLayout.LayoutParams.MATCH_PARENT,
                     FrameLayout.LayoutParams.MATCH_PARENT
@@ -49,14 +51,14 @@ fun CombinedChartView(steps: List<Int>, hours: List<Int>, monthLabels: List<Stri
 
                 // 왼쪽 Y축: Steps
                 axisLeft.apply {
-                    axisMinimum = 0f
+                    axisMinimum = -0.5f
                     axisMaximum = stepsMaxValue * 1.2f
                     textColor = BluePurple.toArgb()
                     setDrawGridLines(false)
-                    setLabelCount(1, true)
+                    setLabelCount(2, true)
                     valueFormatter = object : ValueFormatter() {
                         override fun getFormattedValue(value: Float): String {
-                            return "${String.format("%.2f", value / 1000)} km"
+                            return "${String.format("%,d", value.toInt())}걸음"
                         }
                     }
                 }
@@ -67,7 +69,7 @@ fun CombinedChartView(steps: List<Int>, hours: List<Int>, monthLabels: List<Stri
                     axisMaximum = hoursMaxValue * 1.2f
                     textColor = LightBlue.toArgb()
                     setDrawGridLines(false)
-                    setLabelCount(1, true)
+                    setLabelCount(2, true)
                     valueFormatter = object : ValueFormatter() {
                         override fun getFormattedValue(value: Float): String {
                             return "${value.toInt()}시간"
@@ -80,63 +82,87 @@ fun CombinedChartView(steps: List<Int>, hours: List<Int>, monthLabels: List<Stri
                     position = XAxis.XAxisPosition.BOTTOM
                     setDrawGridLines(false)
                     textColor = AndroidColor.BLACK
-                    valueFormatter = com.github.mikephil.charting.formatter.IndexAxisValueFormatter(monthLabelsFormatted)
+                    valueFormatter = IndexAxisValueFormatter(monthLabelsFormatted)
                     labelCount = monthLabelsFormatted.size
+                    axisMinimum = 0f  // 최소값 설정
+                    axisMaximum = monthLabelsFormatted.size.toFloat()  // 최대값 설정
+                    granularity = 1f  // 간격 설정
+                    setCenterAxisLabels(true)  // 라벨 가운데 정렬
                 }
 
-                legend.isEnabled = false
+                legend.isEnabled = true
             }
         },
-        update = { combinedChart ->
-            val stepsEntries = steps.mapIndexed { index, value -> Entry(index.toFloat(), value.toFloat()) }
-            val stepsDataSet = LineDataSet(stepsEntries, "Steps").apply {
+        update = { barChart ->
+            val stepsEntries = steps.mapIndexed { index, value ->
+                BarEntry((index + 0.5f), value.toFloat())
+            }
+            val hoursEntries = hours.mapIndexed { index, value ->
+                BarEntry((index + 0.5f), value.toFloat())
+            }
+
+            val stepsDataSet = BarDataSet(stepsEntries, "걸음").apply {
                 color = BluePurple.toArgb()
-                lineWidth = 3f
-                setCircleColor(BluePurple.toArgb())
-                circleRadius = 4f
+                valueTextColor = BluePurple.toArgb()
+                valueTextSize = 10f
                 setDrawValues(false)
             }
 
-            val hoursEntries = hours.mapIndexed { index, value -> Entry(index.toFloat(), value.toFloat()) }
-            val hoursDataSet = LineDataSet(hoursEntries, "Hours").apply {
+            val hoursDataSet = BarDataSet(hoursEntries, "시간").apply {
                 color = LightBlue.toArgb()
-                lineWidth = 3f
-                setCircleColor(LightBlue.toArgb())
-                circleRadius = 4f
+                valueTextColor = LightBlue.toArgb()
+                valueTextSize = 10f
                 setDrawValues(false)
-                axisDependency = YAxis.AxisDependency.RIGHT // Right Y-axis
+                axisDependency = YAxis.AxisDependency.RIGHT
             }
 
-            val lineData = LineData(stepsDataSet, hoursDataSet)
-            val combinedData = CombinedData().apply { setData(lineData) }
+            val barData = BarData(stepsDataSet, hoursDataSet)
+            barData.barWidth = 0.3f
 
-            combinedChart.data = combinedData
-            combinedChart.invalidate()
+            val groupSpace = 0.4f
+            barData.groupBars(0f, groupSpace, 0f)
 
-            // 클릭 리스너 추가하여 클릭 시에만 값 표시
-            combinedChart.setOnChartValueSelectedListener(object : OnChartValueSelectedListener {
+            barChart.data = barData
+            barChart.setVisibleXRangeMaximum(monthLabelsFormatted.size.toFloat())  // 보여질 최대 범위 설정
+            barChart.invalidate()
+
+            // 클릭 리스너 수정
+            barChart.setOnChartValueSelectedListener(object : OnChartValueSelectedListener {
                 override fun onValueSelected(e: Entry?, h: Highlight?) {
-                    stepsDataSet.setDrawValues(true)
-                    hoursDataSet.setDrawValues(true)
-                    stepsDataSet.valueFormatter = object : ValueFormatter() {
-                        override fun getFormattedValue(value: Float): String {
-                            return String.format("%.2f km", value / 1000)
+                    // 모든 데이터셋의 값을 먼저 숨김
+                    stepsDataSet.setDrawValues(false)
+                    hoursDataSet.setDrawValues(false)
+
+                    // 클릭된 데이터셋만 값을 표시
+                    val clickedDataSetIndex = h?.dataSetIndex ?: return
+                    when (clickedDataSetIndex) {
+                        0 -> { // steps
+                            stepsDataSet.setDrawValues(true)
+                            stepsDataSet.valueFormatter = object : ValueFormatter() {
+                                override fun getFormattedValue(value: Float): String {
+                                    return "${String.format("%,d", value.toInt())}걸음"
+
+                                }
+                            }
+                        }
+                        1 -> { // hours
+                            hoursDataSet.setDrawValues(true)
+                            hoursDataSet.valueFormatter = object : ValueFormatter() {
+                                override fun getFormattedValue(value: Float): String {
+                                    return "${value.toInt()}시간"
+                                }
+                            }
                         }
                     }
-                    hoursDataSet.valueFormatter = object : ValueFormatter() {
-                        override fun getFormattedValue(value: Float): String {
-                            return "${value.toInt()}시간"
-                        }
-                    }
-                    combinedChart.highlightValue(h)
-                    combinedChart.invalidate()
+                    barChart.highlightValue(h)
+                    barChart.invalidate()
                 }
 
                 override fun onNothingSelected() {
                     stepsDataSet.setDrawValues(false)
                     hoursDataSet.setDrawValues(false)
-                    combinedChart.highlightValue(null)
-                    combinedChart.invalidate()
+                    barChart.highlightValue(null)
+                    barChart.invalidate()
                 }
             })
         },

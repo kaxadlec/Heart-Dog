@@ -33,6 +33,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.Modifier
 import androidx.core.app.ActivityCompat
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.android.horologist.datalayer.sample.repository.UserRepository
 import com.google.android.horologist.datalayer.sample.screens.gps.LocationTrackingForegroundService
 import com.google.android.horologist.datalayer.sample.screens.hotdog.data.manager.UserSessionManager
@@ -42,6 +43,8 @@ import com.google.android.horologist.datalayer.sample.ui.theme.HorologistTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.LocalDogViewModel
+import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.LocalSignInViewModel
+import com.google.android.horologist.datalayer.sample.screens.hotdog.vm.SignInViewModel
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -58,6 +61,7 @@ class MainActivity : ComponentActivity() {
     lateinit var userSessionManager: UserSessionManager
 
     private val dogViewModel: DogViewModel by viewModels()
+    private val signInViewModel: SignInViewModel by viewModels()
 
 
 //    private val notificationViewModel: NotificationViewModel by viewModels()
@@ -95,7 +99,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             HorologistTheme {
                 CompositionLocalProvider(
-                    LocalDogViewModel provides dogViewModel
+                    LocalDogViewModel provides dogViewModel,
+                    LocalSignInViewModel provides signInViewModel
                 ) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),

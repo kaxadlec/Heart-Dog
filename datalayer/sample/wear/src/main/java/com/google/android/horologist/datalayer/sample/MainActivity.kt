@@ -21,8 +21,7 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.android.gms.wearable.DataMapItem
 import dagger.hilt.android.AndroidEntryPoint
 import com.google.android.gms.wearable.Wearable
@@ -31,7 +30,6 @@ import com.google.android.horologist.datalayer.sample.screens.watchpage.state.pe
 import com.google.android.horologist.datalayer.sample.screens.watchpage.state.user.HeartDataListener
 import com.google.android.horologist.datalayer.sample.screens.watchpage.state.user.UserViewModel
 import jakarta.inject.Inject
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -58,6 +56,7 @@ class MainActivity : ComponentActivity() {
             Log.d("MainActivity", "Received new pet state from DogDataListener: $newState")
             petViewModel.updatePetState(newState)
         }
+
         dogDataListener.setOnHasDogDataReceivedListener { newState ->
             Log.d("MainActivity", "Received new pet state from HasDogDataListener: $newState")
             userViewModel.updateHasPet(newState)
@@ -81,7 +80,9 @@ class MainActivity : ComponentActivity() {
                 if (item.uri.path == "/dog_data") {
                     val dataMap = DataMapItem.fromDataItem(item).dataMap
                     val dogDataJson = dataMap.getString("dogData")
+                    val hasDog = dataMap.getBoolean("hasDog")
                     Log.d("DataClientCheck", "Received dogData JSON: $dogDataJson")
+                    Log.d("DataClientCheck", "Received dogData Boolean hasDog: $hasDog")
                 }
             }
         }
