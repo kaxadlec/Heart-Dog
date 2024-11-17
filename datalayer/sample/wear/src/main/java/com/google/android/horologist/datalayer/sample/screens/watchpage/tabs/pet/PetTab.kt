@@ -146,7 +146,7 @@ fun PetTab(
                         baseColor = if (userState.hasPet &&
                             userState.heart > 0 &&
                             petViewModel.todayFeedingCount.value < 10
-                        ) Color(0xFFFF9A4D) else Color.Gray
+                        ) Color(0xFFFF9A4D) else Color(0xFF90A4AE)
                     )
 
                     CircleIconButton(
@@ -158,7 +158,7 @@ fun PetTab(
                         },
                         icon = Icons.Default.Pets,  // 반려 동물 아이콘
                         enabled = !userState.hasPet, // 이미 반려 동물이 있으면 버튼 비활성화
-                        baseColor = if (!userState.hasPet) Color(0xFFFF9A4D) else Color.Gray  // 버튼 색상 조건
+                        baseColor = if (!userState.hasPet) Color(0xFFFF9A4D) else Color(0xFF90A4AE)// 버튼 색상 조건
                     )
                 }
 

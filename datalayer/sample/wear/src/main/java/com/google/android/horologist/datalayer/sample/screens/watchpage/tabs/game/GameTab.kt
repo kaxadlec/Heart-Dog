@@ -39,7 +39,7 @@ fun GameTab(
                 text = "싱글 게임",
                 onClick = onNavigateToSingle,
                 icon = Icons.Default.SportsEsports,  // 게임 아이콘,
-                baseColor = Color(0xFF4CAF50)
+                baseColor = Color(0xFFDEB887)
             )
 
             CircleIconButton(
