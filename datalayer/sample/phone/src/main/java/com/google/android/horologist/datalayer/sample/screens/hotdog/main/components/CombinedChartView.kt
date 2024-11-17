@@ -51,7 +51,7 @@ fun CombinedBarChart(steps: List<Int>, hours: List<Int>, monthLabels: List<Strin
 
                 // 왼쪽 Y축: Steps
                 axisLeft.apply {
-                    axisMinimum = 0f
+                    axisMinimum = -0.5f
                     axisMaximum = stepsMaxValue * 1.2f
                     textColor = BluePurple.toArgb()
                     setDrawGridLines(false)
@@ -84,6 +84,10 @@ fun CombinedBarChart(steps: List<Int>, hours: List<Int>, monthLabels: List<Strin
                     textColor = AndroidColor.BLACK
                     valueFormatter = IndexAxisValueFormatter(monthLabelsFormatted)
                     labelCount = monthLabelsFormatted.size
+                    axisMinimum = 0f  // 최소값 설정
+                    axisMaximum = monthLabelsFormatted.size.toFloat()  // 최대값 설정
+                    granularity = 1f  // 간격 설정
+                    setCenterAxisLabels(true)  // 라벨 가운데 정렬
                 }
 
                 legend.isEnabled = true
@@ -91,10 +95,10 @@ fun CombinedBarChart(steps: List<Int>, hours: List<Int>, monthLabels: List<Strin
         },
         update = { barChart ->
             val stepsEntries = steps.mapIndexed { index, value ->
-                BarEntry(index.toFloat(), value.toFloat())
+                BarEntry((index + 0.5f), value.toFloat())
             }
             val hoursEntries = hours.mapIndexed { index, value ->
-                BarEntry(index.toFloat(), value.toFloat())
+                BarEntry((index + 0.5f), value.toFloat())
             }
 
             val stepsDataSet = BarDataSet(stepsEntries, "걸음").apply {
@@ -119,6 +123,7 @@ fun CombinedBarChart(steps: List<Int>, hours: List<Int>, monthLabels: List<Strin
             barData.groupBars(0f, groupSpace, 0f)
 
             barChart.data = barData
+            barChart.setVisibleXRangeMaximum(monthLabelsFormatted.size.toFloat())  // 보여질 최대 범위 설정
             barChart.invalidate()
 
             // 클릭 리스너 수정
