@@ -1,20 +1,25 @@
 package com.google.android.horologist.datalayer.sample.screens.watchpage.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.wear.compose.material.Text
-
-// core/common/ui/CircleIconButton.kt
-
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -34,10 +39,12 @@ fun CircleIconButton(
     iconResId: Int? = null,
     buttonSizeRatio: Float = 0.3f,  // 화면 너비 대비 버튼 크기 비율 원래 0.3
     iconSizeRatio: Float = 0.20f,
-    backgroundColor: Color = Color(0xFFFF9A4D),
     textSizeRatio: Float = 0.05f,
     spacingRatio: Float = 0.02f,
-    enabled: Boolean = true  // enabled 속성 추가
+    enabled: Boolean = true,  // enabled 속성 추가
+    shadowSizeRatio: Float = 0.03f, // 그림자 크기 비율
+    backgroundColor: Color = Color(0xFFFF9A4D),
+    baseColor: Color = Color(0xFFFF9A4D), // 버튼의 기본 색상
 ) {
     // 화면 너비와 높이 가져오기
     val configuration = LocalConfiguration.current
@@ -55,6 +62,16 @@ fun CircleIconButton(
     val isNightMode = currentHour in 19..23 || currentHour in 0..6
     val textColor = if (isNightMode) Color.White else Color.Black
 
+    // 그림자 크기 설정
+    val shadowElevation = with(LocalDensity.current) {
+        (screenWidth * shadowSizeRatio).toPx()
+    }
+
+    // 그라디언트 색상 계산
+    val highlightColor = baseColor.copy(alpha = 1f).lighter(0.15f) // 더 밝게
+    val midColor = baseColor.copy(alpha = 1f).lighter(0.1f) // 중간 색상
+    val shadowColor = baseColor.copy(alpha = 1f).darker(0.1f) // 덜 어두운 색상
+
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -63,9 +80,22 @@ fun CircleIconButton(
         Button(
             onClick = onClick,
             modifier = Modifier
-                .size(buttonSize),
+                .size(buttonSize)
+                .graphicsLayer(
+                    shadowElevation = shadowElevation,
+                    shape = CircleShape,
+                    clip = false // 그림자가 잘리지 않도록 설정
+                )
+                .background(
+                    brush = Brush.linearGradient(
+                        colors = listOf(highlightColor, midColor, shadowColor),
+                        start = Offset(0f, 0f), // 시작점 (좌측 상단)
+                        end = Offset(0f, buttonSize.value) // 끝점 (아래쪽)
+                    ),
+                    shape = CircleShape
+                ) ,
             colors = ButtonDefaults.buttonColors(
-                backgroundColor = backgroundColor
+                backgroundColor = Color.Transparent
             ),
             shape = CircleShape,
             enabled = enabled
@@ -77,6 +107,7 @@ fun CircleIconButton(
                     modifier = Modifier.size(iconSize),
                     tint = Color.White
                 )
+
                 iconResId != null -> Image(
                     painter = painterResource(id = iconResId),
                     contentDescription = text,
@@ -91,4 +122,23 @@ fun CircleIconButton(
             fontWeight = FontWeight.Normal
         )
     }
+}
+
+// 확장 함수로 밝은 색상과 어두운 색상 계산
+fun Color.lighter(factor: Float): Color {
+    return Color(
+        red = (red + factor).coerceIn(0f, 1f),
+        green = (green + factor).coerceIn(0f, 1f),
+        blue = (blue + factor).coerceIn(0f, 1f),
+        alpha = alpha
+    )
+}
+
+fun Color.darker(factor: Float): Color {
+    return Color(
+        red = (red - factor).coerceIn(0f, 1f),
+        green = (green - factor).coerceIn(0f, 1f),
+        blue = (blue - factor).coerceIn(0f, 1f),
+        alpha = alpha
+    )
 }

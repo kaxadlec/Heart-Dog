@@ -56,7 +56,7 @@ fun HomeTab(
     val expProgress = petState.currentExp.toFloat() / petState.maxExp.toFloat() // 경험치 진행률
 
     LaunchedEffect(petState) {
-        Log.d("HomeTab", "Updated Pet State - Name: ${petState.name}, Level: ${petState.level}, " +
+        Log.d("HomeTab", "업데이트된 Pet State - Name: ${petState.name}, Level: ${petState.level}, " +
                 "CurrentExp: ${petState.currentExp}, MaxExp: ${petState.maxExp}, Satiety: ${petState.satiety}")
     }
 
@@ -92,7 +92,13 @@ private fun HomeTabContent(
     val fontSize = (screenWidth * 0.10f).value.sp
     val imageSize = screenWidth * 0.95f
 
+    // 텍스트 표시 여부 상태
     var visible by remember { mutableStateOf(true) }
+
+    // 현재 시간이 밤(19시~6시)인지 확인하여 텍스트 색상 설정
+    val currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
+    val isNightMode = currentHour in 19..23 || currentHour in 0..6
+    val textColor = if (isNightMode) Color.White else Color.Black
 
     // 일정 시간 후 showText를 false로 설정하여 텍스트를 서서히 사라지게 함
     LaunchedEffect(Unit) {
@@ -140,7 +146,7 @@ private fun HomeTabContent(
                     Text(
                         text = "$name LV.$level",
                         fontSize = fontSize,
-                        color = Color.Black,
+                        color = textColor,
                     )
                 }
             }

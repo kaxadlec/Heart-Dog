@@ -393,7 +393,7 @@ fun WearApp(
                     ScreenScaffold(scrollState = columnState) {
                         TabContainerScreen(
                             sharedPetViewModel = petViewModel,
-                            sharedUserViewModel = userViewModel
+                            sharedUserViewModel = userViewModel,
 //                        columnState = columnState
                         )
                     }

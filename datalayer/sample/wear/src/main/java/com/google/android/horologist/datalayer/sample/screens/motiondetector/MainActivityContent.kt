@@ -20,7 +20,7 @@ import com.google.android.horologist.datalayer.sample.screens.watchpage.state.us
 fun MainActivityContent(
     navController: NavHostController = rememberNavController(),
     petViewModel: PetViewModel,
-    userViewModel: UserViewModel
+    userViewModel: UserViewModel,
 ) {
     val context = LocalContext.current as Activity
     val intent = context.intent

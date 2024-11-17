@@ -117,9 +117,9 @@ fun TabContainerScreen(
 
         //  페이지 변경 시 로그 출력
         LaunchedEffect(pagerState.currentPage) {
-            println("Current Page: ${pagerState.currentPage}")
-            println(
-                "Current Route: ${
+            Log.d("TabContainerScreen", "Current Page: ${pagerState.currentPage}")
+            Log.d(
+                "TabContainerScreen","Current Route: ${
                     when (pagerState.currentPage) {
                         0 -> currentPetRoute.value
                         1 -> currentHomeRoute.value
@@ -130,8 +130,8 @@ fun TabContainerScreen(
                     }
                 }"
             )
-            println("Is Main Screen: $isMainScreen")
-            println("showTextOverlay: $showTextOverlay")
+//            println("Is Main Screen: $isMainScreen")
+//            println("showTextOverlay: $showTextOverlay")
         }
 
         Box(
@@ -160,8 +160,6 @@ fun TabContainerScreen(
                     indicatorSizeRatio = 0.03f,
                     curveRadiusRatio = 0.6f,
                     paddingBottomRatio = 0.28f,
-                    activeColor = Color(0xFFFFA500),
-                    inactiveColor = Color(0xFFFFCC80),
                     modifier = Modifier.align(Alignment.BottomCenter)
                 )
             }
