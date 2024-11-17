@@ -58,6 +58,10 @@ class MainActivity : ComponentActivity() {
             Log.d("MainActivity", "Received new pet state from DogDataListener: $newState")
             petViewModel.updatePetState(newState)
         }
+        dogDataListener.setOnHasDogDataReceivedListener { newState ->
+            Log.d("MainActivity", "Received new pet state from HasDogDataListener: $newState")
+            userViewModel.updateHasPet(newState)
+        }
         // HeartDataListener를 통해 Heart 데이터를 수신
         heartDataListener.setOnHeartDataReceivedListener { heartValue ->
             Log.d("MainActivity", "Heart data received: $heartValue")
