@@ -2,6 +2,7 @@
 package com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.pet
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
@@ -63,17 +64,12 @@ fun PetTab(
     // 하루 모드로 하려면 주석처리하면됨
     LaunchedEffect(Unit) {
         petViewModel.setTimeRestrictionType(TimeRestrictionType.MINUTE)
-        println("1분 제한 모드 설정 완료")
-    }
-
-    // 상태 변화 로그 추가
-    LaunchedEffect(userState.hasPet) {
-        println("PetTab - hasPet 상태: ${userState.hasPet}")
+//        println("1분 밥 주기 제한 모드 설정 완료")
     }
 
     // 상태 변화 로그
-    LaunchedEffect(petState.satiety) {
-        println("PetTab - Satiety Changed: ${petState.satiety}")
+    LaunchedEffect(userState.hasPet) {
+        Log.d("PetTab", "hasPet 상태:${userState.hasPet} / " + "satiety 상태:${petState.satiety}")
     }
 
     Box(

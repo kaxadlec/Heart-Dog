@@ -83,7 +83,7 @@ class FeedingPreferences @Inject constructor(
     suspend fun resetFeeding() {
         context.feedingDataStore.edit { preferences ->
             preferences.clear()
-            println("FeedingPreferences - 데이터 초기화 완료")
+//            println("FeedingPreferences - 데이터 초기화 완료")
         }
     }
 }

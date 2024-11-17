@@ -116,9 +116,9 @@ fun TabContainerScreen(
 
         //  페이지 변경 시 로그 출력
         LaunchedEffect(pagerState.currentPage) {
-            println("Current Page: ${pagerState.currentPage}")
-            println(
-                "Current Route: ${
+            Log.d("TabContainerScreen", "Current Page: ${pagerState.currentPage}")
+            Log.d(
+                "TabContainerScreen","Current Route: ${
                     when (pagerState.currentPage) {
                         0 -> currentPetRoute.value
                         1 -> currentHomeRoute.value
@@ -129,8 +129,8 @@ fun TabContainerScreen(
                     }
                 }"
             )
-            println("Is Main Screen: $isMainScreen")
-            println("showTextOverlay: $showTextOverlay")
+//            println("Is Main Screen: $isMainScreen")
+//            println("showTextOverlay: $showTextOverlay")
         }
 
         Box(

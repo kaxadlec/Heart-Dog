@@ -56,7 +56,7 @@ fun HomeTab(
     val expProgress = petState.currentExp.toFloat() / petState.maxExp.toFloat() // 경험치 진행률
 
     LaunchedEffect(petState) {
-        Log.d("HomeTab", "Updated Pet State - Name: ${petState.name}, Level: ${petState.level}, " +
+        Log.d("HomeTab", "업데이트된 Pet State - Name: ${petState.name}, Level: ${petState.level}, " +
                 "CurrentExp: ${petState.currentExp}, MaxExp: ${petState.maxExp}, Satiety: ${petState.satiety}")
     }
 
