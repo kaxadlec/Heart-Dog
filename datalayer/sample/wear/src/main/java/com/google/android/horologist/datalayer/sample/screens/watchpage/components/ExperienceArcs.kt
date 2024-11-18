@@ -13,8 +13,8 @@ fun ExperienceArcs(
     modifier: Modifier = Modifier,
     leftProgress: Float,
     rightProgress: Float,
-    leftColor: Color = Color(0xFFB71C1C), // 진한 빨간색
-    rightColor: Color = Color(0xFF388E3C), // 진한 연두색
+    leftColor: Color = Color(0xFFD32F2F),
+    rightColor: Color = Color(0xFF388E3C),
     strokeWidth: Float = 15f // dp
 ) {
     Canvas(modifier = modifier) {

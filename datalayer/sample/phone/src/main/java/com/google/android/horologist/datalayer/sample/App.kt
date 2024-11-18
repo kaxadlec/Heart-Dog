@@ -6,15 +6,21 @@ import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
 import android.util.Log
+import com.google.android.gms.wearable.Wearable
+import com.google.android.horologist.datalayer.sample.screens.hotdog.datalayerapi.DogDataListener
 import com.google.firebase.FirebaseApp
 import com.kakao.sdk.common.KakaoSdk
 import dagger.hilt.android.HiltAndroidApp
+import jakarta.inject.Inject
 
 @HiltAndroidApp
 class App : Application() {
     companion object {
         const val FCM_CHANNEL_ID = "fcm_default_channel"
     }
+
+    @Inject
+    lateinit var dogDataListener: DogDataListener
 
     override fun onCreate() {
         super.onCreate()
@@ -32,6 +38,10 @@ class App : Application() {
 
         // FCM 알림 채널 생성
         createNotificationChannel()
+
+        // DataClient Listener 등록
+        Wearable.getDataClient(this).addListener(dogDataListener)
+        Log.d("DogDataListener", "Listener registered in App")
     }
 
     private fun createNotificationChannel() {

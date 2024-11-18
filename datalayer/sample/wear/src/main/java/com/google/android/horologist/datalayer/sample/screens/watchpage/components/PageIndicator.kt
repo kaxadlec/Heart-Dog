@@ -23,8 +23,8 @@ fun PageIndicator(
     indicatorSizeRatio: Float = 0.03f,
     curveRadiusRatio: Float = 0.6f,
     paddingBottomRatio: Float = 0.28f,
-    activeColor: Color = Color(0xFFFFFFFF),
-    inactiveColor: Color = Color(0x4DFFFFFF),
+    activeColor: Color = Color(0xFFFF9800),
+    inactiveColor: Color = Color(0xFFFFECB3),
 ) {
     val configuration = LocalConfiguration.current
     val screenWidth = configuration.screenWidthDp.dp

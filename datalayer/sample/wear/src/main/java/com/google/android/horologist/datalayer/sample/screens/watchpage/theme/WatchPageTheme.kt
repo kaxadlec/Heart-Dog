@@ -18,14 +18,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.wear.compose.material.Colors
 import java.util.Calendar
 
-// 커스텀 폰트 설정
-val GyeonggiBatang = FontFamily(
-    Font(R.font.line_seed_kr_bold, FontWeight.Normal)
-)
 
 // WatchPage 전용 Typography
 val WatchPageTypography = Typography(
-    defaultFontFamily = GyeonggiBatang
+    defaultFontFamily = FontFamily(
+        Font(R.font.goryeong_strawberry, FontWeight.Normal)
+    )
 )
 
 // WatchPage 전용 Theme

@@ -26,6 +26,7 @@ import coil.request.ImageRequest
 import coil.decode.GifDecoder
 import coil.ImageLoader
 import android.content.Context
+import android.util.Log
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.remember
 import androidx.compose.ui.layout.ContentScale
@@ -43,21 +44,21 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.animation.core.tween
+import com.google.android.horologist.datalayer.sample.screens.watchpage.state.pet.PetUiState
+import com.google.android.horologist.datalayer.sample.screens.watchpage.state.user.UserUiState
 
 
 @Composable
 fun HomeTab(
-    modifier: Modifier = Modifier,
-    petViewModel: PetViewModel,
-    userViewModel: UserViewModel = hiltViewModel(),
+    petState: PetUiState,
+    userState: UserUiState
 ) {
-    val petState by petViewModel.uiState.collectAsStateWithLifecycle()
-    val userState by userViewModel.uiState.collectAsStateWithLifecycle()
+    val expProgress = petState.currentExp.toFloat() / petState.maxExp.toFloat() // 경험치 진행률
 
-    // 현재 레벨에 필요한 경험치를 가져옴
-    val requiredExpForLevel = petViewModel.getRequiredExpForLevel(petState.level)
-    // expProgress를 현재 경험치 대비 필요 경험치의 비율로 계산
-    val expProgress = petState.current_exp / requiredExpForLevel.toFloat()
+    LaunchedEffect(petState) {
+        Log.d("HomeTab", "업데이트된 Pet State - Name: ${petState.name}, Level: ${petState.level}, " +
+                "CurrentExp: ${petState.currentExp}, MaxExp: ${petState.maxExp}, Satiety: ${petState.satiety}")
+    }
 
     HomeTabContent(
         satietyProgress = petState.satiety / 100f,
@@ -91,7 +92,13 @@ private fun HomeTabContent(
     val fontSize = (screenWidth * 0.10f).value.sp
     val imageSize = screenWidth * 0.95f
 
+    // 텍스트 표시 여부 상태
     var visible by remember { mutableStateOf(true) }
+
+    // 현재 시간이 밤(19시~6시)인지 확인하여 텍스트 색상 설정
+    val currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
+    val isNightMode = currentHour in 19..23 || currentHour in 0..6
+    val textColor = if (isNightMode) Color.White else Color.Black
 
     // 일정 시간 후 showText를 false로 설정하여 텍스트를 서서히 사라지게 함
     LaunchedEffect(Unit) {
@@ -139,7 +146,7 @@ private fun HomeTabContent(
                     Text(
                         text = "$name LV.$level",
                         fontSize = fontSize,
-                        color = Color.Black,
+                        color = textColor,
                     )
                 }
             }

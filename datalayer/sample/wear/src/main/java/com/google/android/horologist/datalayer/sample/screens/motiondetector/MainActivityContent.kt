@@ -13,10 +13,14 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.google.android.horologist.datalayer.sample.Screen
 import com.google.android.horologist.datalayer.sample.WearApp
+import com.google.android.horologist.datalayer.sample.screens.watchpage.state.pet.PetViewModel
+import com.google.android.horologist.datalayer.sample.screens.watchpage.state.user.UserViewModel
 
 @Composable
 fun MainActivityContent(
-    navController: NavHostController = rememberNavController()
+    navController: NavHostController = rememberNavController(),
+    petViewModel: PetViewModel,
+    userViewModel: UserViewModel,
 ) {
     val context = LocalContext.current as Activity
     val intent = context.intent
@@ -54,5 +58,5 @@ fun MainActivityContent(
     }
 
     // Render the main app UI
-    WearApp(navController = navController)
+    WearApp(navController = navController, petViewModel = petViewModel, userViewModel = userViewModel)
 }
