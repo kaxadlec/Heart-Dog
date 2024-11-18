@@ -7,6 +7,7 @@ import android.content.Context
 import android.os.Build
 import android.util.Log
 import com.google.android.gms.wearable.Wearable
+import com.google.android.horologist.datalayer.sample.screens.hotdog.datalayerapi.CallDataListener
 import com.google.android.horologist.datalayer.sample.screens.hotdog.datalayerapi.DogDataListener
 import com.google.firebase.FirebaseApp
 import com.kakao.sdk.common.KakaoSdk
@@ -21,6 +22,8 @@ class App : Application() {
 
     @Inject
     lateinit var dogDataListener: DogDataListener
+    @Inject
+    lateinit var callDataListener: CallDataListener
 
     override fun onCreate() {
         super.onCreate()
@@ -41,7 +44,9 @@ class App : Application() {
 
         // DataClient Listener 등록
         Wearable.getDataClient(this).addListener(dogDataListener)
-        Log.d("DogDataListener", "Listener registered in App")
+        Log.d("App", "DogDataListener registered in App")
+        Wearable.getDataClient(this).addListener(callDataListener)
+        Log.d("App", "callDataListener registered in App")
     }
 
     private fun createNotificationChannel() {

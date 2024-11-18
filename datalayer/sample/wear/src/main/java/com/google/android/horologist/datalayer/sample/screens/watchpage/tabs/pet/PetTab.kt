@@ -32,6 +32,7 @@ import com.google.android.horologist.datalayer.sample.screens.watchpage.componen
 import com.google.android.horologist.datalayer.sample.screens.watchpage.state.pet.DogDataSender
 import kotlinx.coroutines.launch
 import androidx.compose.ui.platform.LocalContext
+import com.google.android.horologist.datalayer.sample.screens.watchpage.state.user.CallerDataSender
 
 
 @SuppressLint("StateFlowValueCalledInComposition")
@@ -152,9 +153,10 @@ fun PetTab(
                     CircleIconButton(
                         text = "부르기",
                         onClick = {
-                            println("부르기 버튼 클릭됨") // 버튼 클릭 로그
+                            Log.d("PetTab", "부르기 버튼 클릭됨") // 버튼 클릭 로그
                             userViewModel.updateHasPet(true)
-                            println("부르기 버튼 클릭 후 hasPet 상태: ${userViewModel.uiState.value.hasPet}") // 상태 업데이트 확인
+                            CallerDataSender.sendCallRequestToPhone(context)
+                            Log.d("PetTab", "부르기 버튼 클릭 후 hasPet 상태: ${userViewModel.uiState.value.hasPet}") // 버튼 클릭 로그
                         },
                         icon = Icons.Default.Pets,  // 반려 동물 아이콘
                         enabled = !userState.hasPet, // 이미 반려 동물이 있으면 버튼 비활성화

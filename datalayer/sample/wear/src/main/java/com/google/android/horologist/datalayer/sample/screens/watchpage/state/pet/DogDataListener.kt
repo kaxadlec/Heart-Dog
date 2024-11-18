@@ -32,6 +32,7 @@ class DogDataListener @Inject constructor(): DataClient.OnDataChangedListener {
 
                 val dog = Gson().fromJson(dogDataJson, PetUiState::class.java) // PetUiState로 매핑
                 Log.d("DogDataListener", "Parsed PetUiState: $dog")
+                Log.d("DogDataListener", "$hasDog")
 
                 onDataReceived?.invoke(dog) ?: Log.w("DogDataListener", "onDataReceived listener is not set") // 콜백을 통해 MainActivity에 데이터 전달
                 onHasDogDataReceived?.invoke(hasDog) ?: Log.w("DogDataListener", "onHasDogDataReceived listener is not set") // 콜백을 통해 MainActivity에 데이터 전달
