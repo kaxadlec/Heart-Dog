@@ -118,6 +118,7 @@ repositories {
 
 dependencies {
 
+    implementation(libs.androidx.runtime.android)
     /* Camera Setting */
     val cameraxVersion = "1.1.0"
     implementation ("androidx.camera:camera-camera2:$cameraxVersion")

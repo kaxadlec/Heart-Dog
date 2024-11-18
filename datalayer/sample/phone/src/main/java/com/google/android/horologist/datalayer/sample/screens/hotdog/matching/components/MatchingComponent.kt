@@ -22,9 +22,15 @@ import com.google.android.horologist.datalayer.sample.R
 import com.google.android.horologist.datalayer.sample.screens.CreateQRCode
 import com.google.android.horologist.datalayer.sample.screens.InsertQRCode
 import com.google.android.horologist.datalayer.sample.screens.hotdog.common.LogoHeader
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
 
 @Composable
 fun MatchingComponent(navController: NavHostController) {
+    var showDialog by remember { mutableStateOf(false) }
 
     Box(
         modifier = Modifier
@@ -66,7 +72,27 @@ fun MatchingComponent(navController: NavHostController) {
                 },
             contentScale = ContentScale.Fit
         )
+        if (showDialog) {
+            MatchingSuccessDialog(onDismiss = { showDialog = false })
+        }
 
     }
+}
 
+@Composable
+fun MatchingSuccessDialog(onDismiss: () -> Unit) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = {
+            Text(text = "매칭 성공")
+        },
+        text = {
+            Text(text = "커플이 등록되었습니다.")
+        },
+        confirmButton = {
+            Button(onClick = onDismiss) {
+                Text("확인")
+            }
+        }
+    )
 }
