@@ -166,7 +166,7 @@ class MotionDetectorService : Service(), SensorEventListener {
         val action = intent?.getStringExtra("action")
         action?.let {
             when (it) {
-                "Typing gesture detected" -> sendEmojiToPhone("✏")
+                "Typing gesture detected" -> sendEmojiToPhone("💻")
                 "Eating gesture detected" -> sendEmojiToPhone("🍽️")
             }
         }
