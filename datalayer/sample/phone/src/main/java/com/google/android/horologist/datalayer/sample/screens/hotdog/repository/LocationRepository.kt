@@ -73,7 +73,7 @@ class LocationRepository @Inject constructor() {
 
             val response = SupabaseClientProvider.supabase
                 .postgrest
-                .rpc("check_matching_status", params)
+                .rpc("check_couple_matching", params)
                 .decodeAs<MatchingCheckResponse>()
 
             // 매칭 결과에 따른 처리
