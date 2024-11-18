@@ -33,12 +33,20 @@ fun NavGraphBuilder.gameTabNavigation(
             onNavigateToCouple = { navController.navigate(GameTabScreen.Couple.route) }
         )
     }
+//    composable(GameTabScreen.Couple.route) {
+//        CoupleGameScreen(
+//            onBack = { navController.popBackStack() },
+//            onNavigate = { navController.navigate(GameTabScreen.CoupleMission.route) }
+//        )
+//    }
     composable(GameTabScreen.Couple.route) {
         CoupleGameScreen(
             onBack = { navController.popBackStack() },
-            onNavigate = { navController.navigate(GameTabScreen.CoupleMission.route) }
+            onNavigate = { navController.navigate(GameTabScreen.CoupleMissionResult.route) },
+            heartRateViewModel = sharedHeartRateViewModel
         )
     }
+
     composable(GameTabScreen.CoupleMission.route) {
         CoupleGameScreenMission(
             onBack = { navController.popBackStack() },
