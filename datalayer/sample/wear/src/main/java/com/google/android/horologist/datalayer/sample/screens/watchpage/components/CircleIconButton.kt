@@ -39,7 +39,7 @@ fun CircleIconButton(
     iconResId: Int? = null,
     buttonSizeRatio: Float = 0.3f,  // 화면 너비 대비 버튼 크기 비율 원래 0.3
     iconSizeRatio: Float = 0.20f,
-    textSizeRatio: Float = 0.05f,
+    textSizeRatio: Float = 0.07f,
     spacingRatio: Float = 0.02f,
     enabled: Boolean = true,  // enabled 속성 추가
     shadowSizeRatio: Float = 0.03f, // 그림자 크기 비율

@@ -22,7 +22,7 @@ import java.util.Calendar
 // WatchPage 전용 Typography
 val WatchPageTypography = Typography(
     defaultFontFamily = FontFamily(
-        Font(R.font.goryeong_strawberry, FontWeight.Normal)
+        Font(R.font.ppangbold, FontWeight.Bold)
     )
 )
 
