@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,9 +30,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.wear.compose.material.Button
 import androidx.wear.compose.material.ButtonDefaults
 import androidx.wear.compose.material.MaterialTheme
-import androidx.wear.compose.material.Scaffold
 import androidx.wear.compose.material.Text
-import androidx.wear.compose.material.TimeText
 import androidx.wear.compose.navigation.SwipeDismissableNavHost
 import androidx.wear.compose.navigation.WearNavigator
 import androidx.wear.compose.navigation.composable
@@ -48,10 +45,6 @@ import com.google.android.horologist.compose.layout.ScreenScaffold
 import com.google.android.horologist.compose.layout.rememberResponsiveColumnState
 import com.google.android.horologist.datalayer.sample.screens.MainScreen
 import com.google.android.horologist.datalayer.sample.screens.datalayer.DataLayerScreen
-import com.google.android.horologist.datalayer.sample.screens.heartrate.presentation.HeartRateScreen
-import com.google.android.horologist.datalayer.sample.screens.heartrate.presentation.HeartRateViewModel
-import com.google.android.horologist.datalayer.sample.screens.heartrate.presentation.NotSupportedScreen
-import com.google.android.horologist.datalayer.sample.screens.heartrate.presentation.UiState
 import com.google.android.horologist.datalayer.sample.screens.info.infoScreen
 import com.google.android.horologist.datalayer.sample.screens.info.navigateToInfoScreen
 import com.google.android.horologist.datalayer.sample.screens.motiondetector.MotionDetectorScreen
@@ -295,31 +288,31 @@ fun WearApp(
                         DataLayerNodesScreen(columnState = columnState)
                     }
                 }
-                composable(route = Screen.HeartRateScreen.route) {
-                    Scaffold(
-                        modifier = Modifier.fillMaxSize(),
-                        timeText = { TimeText() }
-                    ) {
-                        val viewModel: HeartRateViewModel = hiltViewModel()
-                        val enabled by viewModel.enabled.collectAsState()
+//                composable(route = Screen.HeartRateScreen.route) {
+//                    Scaffold(
+//                        modifier = Modifier.fillMaxSize(),
+//                        timeText = { TimeText() }
+//                    ) {
+//                        val viewModel: HeartRateViewModel = hiltViewModel()
+//                        val enabled by viewModel.enabled.collectAsState()
+////
+//                        val hr by viewModel.hr.collectAsState(initial = 0.0)
+//                        val availability by viewModel.availability.collectAsState()
+//                        val uiState by viewModel.uiState.collectAsState()
 //
-                        val hr by viewModel.hr.collectAsState(initial = 0.0)
-                        val availability by viewModel.availability.collectAsState()
-                        val uiState by viewModel.uiState.collectAsState()
-
-                        if (uiState == UiState.Supported) {
-                            HeartRateScreen(
-                                hr = hr,
-                                availability = availability,
-                                enabled = enabled,
-                                onButtonClick = { viewModel.toggleEnabled() },
-                                permissionState = bodySensorsPermissionState
-                            )
-                        } else if (uiState == UiState.NotSupported) {
-                            NotSupportedScreen()
-                        }
-                    }
-                }
+//                        if (uiState == UiState.Supported) {
+//                            HeartRateScreen(
+//                                hr = hr,
+//                                availability = availability,
+//                                enabled = enabled,
+//                                onButtonClick = { viewModel.toggleEnabled() },
+//                                permissionState = bodySensorsPermissionState
+//                            )
+//                        } else if (uiState == UiState.NotSupported) {
+//                            NotSupportedScreen()
+//                        }
+//                    }
+//                }
                 composable(route = Screen.StepsScreen.route) {
                     val viewModel: StepsViewModel = hiltViewModel()
                     val columnState = rememberResponsiveColumnState(ItemType.Unspecified, ItemType.Unspecified)

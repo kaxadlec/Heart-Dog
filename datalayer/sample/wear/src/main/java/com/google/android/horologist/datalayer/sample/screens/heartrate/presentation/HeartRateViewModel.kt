@@ -1,8 +1,6 @@
 package com.google.android.horologist.datalayer.sample.screens.heartrate.presentation
 
 import android.util.Log
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
 import androidx.health.services.client.data.DataTypeAvailability
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,7 +8,6 @@ import com.google.android.horologist.datalayer.sample.screens.heartrate.data.Hea
 import com.google.android.horologist.datalayer.sample.screens.heartrate.data.MeasureMessage
 import com.google.android.horologist.datalayer.sample.shared.grpc.HeartRateProto.HeartRateRecord
 import com.google.android.horologist.datalayer.sample.shared.grpc.HeartRateServiceGrpcKt.HeartRateServiceCoroutineStub
-import com.google.android.horologist.datalayer.sample.shared.grpc.heartRateDelta
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -57,23 +54,26 @@ class HeartRateViewModel
             }
         }
 
+
         viewModelScope.launch {
-            enabled.collect {
-                if (it) {
+            enabled.collect { isEnabled ->
+                if (isEnabled) {
                     heartRateServicesRepository.heartRateMeasureFlow()
                         .takeWhile { enabled.value }
                         .collect { measureMessage ->
                             when (measureMessage) {
                                 is MeasureMessage.MeasureData -> {
-//                                    hr.value = measureMessage.data.last().value
-                                    _hr.value = measureMessage.data.last().value
+                                    if (measureMessage.data.isNotEmpty()) {
+                                        val latestHeartRate = measureMessage.data.last().value
+                                        _hr.value = latestHeartRate
 
-                                    /* update data */
-                                    Log.i("heartRate", "measure start ${hr.value.toInt()}")
+                                        // 최대 심박수 업데이트
+                                        if (latestHeartRate > _maxHeartRate.value) {
+                                            _maxHeartRate.value = latestHeartRate
+                                        }
 
-                                    /* Coroutine */
-                                    val newRecord = heartRateService.put(heartRateDelta { heartRate = hr.value.toInt() })
-                                    Log.i("heartRate", "measure end ${newRecord.heartRate}")
+                                        Log.i("HeartRate", "현재 심박수: $latestHeartRate")
+                                    }
                                 }
                                 is MeasureMessage.MeasureAvailability -> {
                                     _availability.value = measureMessage.availability
@@ -83,6 +83,7 @@ class HeartRateViewModel
                 }
             }
         }
+
     }
 
     fun toggleEnabled() {
@@ -94,16 +95,18 @@ class HeartRateViewModel
 
     fun saveMaxHeartRate(value: Double) {
         _maxHeartRate.value = value
-        viewModelScope.launch {
-            try {
-                heartRateService.put(heartRateDelta {
-                    heartRate = value.toInt()
-                })
-                Log.d("HeartRateViewModel", "Successfully saved heart rate to service") // 로그 추가
-            } catch (e: Exception) {
-                Log.e("HeartRateViewModel", "Failed to save heart rate", e)
-            }
-        }
+//        viewModelScope.launch {
+//            try {
+//                heartRateService.put(heartRateDelta {
+//                    heartRate = value.toInt()
+//                })
+//                Log.d("HeartRateViewModel", "Successfully saved heart rate to service") // 로그 추가
+//            } catch (e: Exception) {
+//                Log.e("HeartRateViewModel", "Failed to save heart rate", e)
+//            }
+//        }
+        Log.d("HeartRateViewModel", "Max Heart Rate Saved: $value")
+
     }
 
 }
