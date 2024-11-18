@@ -110,15 +110,6 @@ private fun HomeTabContent(
         modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.TopCenter
     ) {
-        // 경험치 반원
-        ExperienceArcs(
-            modifier = Modifier
-                .align(Alignment.Center)
-                .fillMaxSize(),
-            leftProgress = satietyProgress,
-            rightProgress = expProgress
-        )
-
         // 캐릭터 이미지
         PetImage(
             hasPet = hasPet,
@@ -128,6 +119,15 @@ private fun HomeTabContent(
             modifier = Modifier
                 .align(Alignment.Center)
                 .offset(y = offsetYCenter)
+        )
+
+        // 경험치 반원
+        ExperienceArcs(
+            modifier = Modifier
+                .align(Alignment.Center)
+                .fillMaxSize(),
+            leftProgress = satietyProgress,
+            rightProgress = expProgress
         )
 
         // 레벨 텍스트
