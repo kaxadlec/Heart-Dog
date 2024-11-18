@@ -183,14 +183,14 @@ fun ProgressBar() {
                 )
             }
 
-            if (currentUser?.userId?.toInt() != dogDetails.position) {
-                Text(
-                    text = "강아지가 집에 없어요",
-                    fontSize = 32.sp,
-                    color = textColor,
-                    fontWeight = FontWeight.Bold,
-                )
-            }
+//            if (currentUser?.userId?.toInt() != dogDetails.position) {
+//                Text(
+//                    text = "강아지가 집에 없어요",
+//                    fontSize = 32.sp,
+//                    color = textColor,
+//                    fontWeight = FontWeight.Bold,
+//                )
+//            }
         }
     } ?: run {
         Text(
