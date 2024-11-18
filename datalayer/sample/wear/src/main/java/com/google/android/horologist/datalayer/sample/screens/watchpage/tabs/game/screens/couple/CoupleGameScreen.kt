@@ -1,61 +1,3 @@
-//package com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.game.screens.couple
-//
-//import androidx.compose.foundation.layout.*
-//import androidx.compose.runtime.Composable
-//import androidx.compose.ui.Modifier
-//import androidx.compose.ui.Alignment
-//import androidx.wear.compose.material.Button
-//import androidx.wear.compose.material.Text
-//import androidx.compose.runtime.*
-//import androidx.compose.ui.graphics.Color
-//import androidx.compose.ui.unit.dp
-//import androidx.compose.ui.unit.sp
-//import androidx.navigation.Navigator
-//import androidx.wear.compose.material.Colors
-//import kotlinx.coroutines.delay
-//import java.util.Calendar
-//
-//@Composable
-//fun CoupleGameScreen(
-//    initialTime: Int = 3,
-//    modifier: Modifier = Modifier,
-//    onBack: () -> Unit,
-//    onNavigate : () -> Unit
-//) {
-//    val timeLeft = remember { mutableStateOf(initialTime) }
-//    val currentHour = remember { Calendar.getInstance().get(Calendar.HOUR_OF_DAY) }
-//    val isNightMode = currentHour in 19..23 || currentHour in 0..6
-//    val textColor = if (isNightMode) Color.White else Color.Black
-//
-//    LaunchedEffect(timeLeft.value) {
-//        if (timeLeft.value > 0) {
-//            delay(1000L)
-//            timeLeft.value -= 1
-//        }
-//        else {
-//            onNavigate()
-//        }
-//    }
-//
-//    Column(
-//        modifier = Modifier.fillMaxSize(),
-//        verticalArrangement = Arrangement.Center,
-//        horizontalAlignment = Alignment.CenterHorizontally
-//    ) {
-//        Text("READY",
-//            fontSize = 20.sp,
-//            color = textColor,
-//            modifier = Modifier.padding(16.dp)
-//        )
-//
-//        Text(
-//            text = "${timeLeft.value} 초",
-//            fontSize = 24.sp,
-//            color = textColor
-//        )
-//    }
-//}
-
 package com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.game.screens.couple
 
 import android.util.Log
@@ -66,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.wear.compose.material.Button
 import androidx.wear.compose.material.Text
@@ -76,74 +19,64 @@ import com.google.android.horologist.datalayer.sample.screens.heartrate.presenta
 import kotlinx.coroutines.delay
 import kotlin.random.Random
 import com.google.android.horologist.datalayer.sample.R
+import com.google.android.horologist.datalayer.sample.SampleApplication
 import java.util.Calendar
 
 @Composable
 fun CoupleGameScreen(
-    initialTime: Int = 15,
-    missionDuration: Int = 15,
+    initialTime: Int = 5,
+    missionDuration: Int = 10,
     modifier: Modifier = Modifier,
     onBack: () -> Unit,
-    onNavigate: () -> Unit,
-    heartRateViewModel: HeartRateViewModel = hiltViewModel()
+    onNavigate: (Float) -> Unit // maxHeartRate 전달
 ) {
+    val application = LocalContext.current.applicationContext as SampleApplication
+    val currentHr by application.heartRate.collectAsState(initial = 0.0)
+
     val currentHour = remember { Calendar.getInstance().get(Calendar.HOUR_OF_DAY) }
     val isNightMode = currentHour in 19..23 || currentHour in 0..6
     val textColor = if (isNightMode) Color.White else Color.Black
     val DarkRed = Color(0xFFB00020)
 
-    // States
     var timeLeft by remember { mutableStateOf(initialTime) }
     var missionTimeLeft by remember { mutableStateOf(missionDuration) }
     var isMissionStarted by remember { mutableStateOf(false) }
     val activities = listOf(
         "서로 눈맞춤",
-        "마주 보고 손잡기",
-        "서로에게 사랑한다고 말하기",
-        "서로 볼 마주 대고 있기",
-        "하이파이브 반복하기",
-        "어깨동무하고 셀카찍기"
+        //        "마주 보고 손잡기",
+        //        "서로에게 사랑한다고 말하기",
+        //        "서로 볼 마주 대고 있기",
+        //        "하이파이브 반복하기",
+        //        "어깨동무하고 셀카찍기"
     )
     val randomActivity = remember { activities[Random.nextInt(activities.size)] }
 
     var maxHeartRate by remember { mutableStateOf(0.0) }
-    val currentHr by heartRateViewModel.hr.collectAsState(initial = 0.0)
 
-    // Game start and heart rate monitoring
-    LaunchedEffect(Unit) {
-        heartRateViewModel.toggleEnabled()
-    }
-
-    // Unified timer handling
-    LaunchedEffect(isMissionStarted, timeLeft, missionTimeLeft) {
-        if (!isMissionStarted) {
-            if (timeLeft > 0) {
-                delay(1000L)
-                timeLeft -= 1
-            } else {
-                isMissionStarted = true
-            }
-        } else {
-            while (missionTimeLeft > 0) {
-                delay(1000L)
-                missionTimeLeft -= 1
-            }
-            heartRateViewModel.saveMaxHeartRate(maxHeartRate)
-            heartRateViewModel.toggleEnabled()
-            onNavigate()
-        }
-    }
-
-    // Update max heart rate
     LaunchedEffect(currentHr) {
         if (currentHr > maxHeartRate) {
             maxHeartRate = currentHr
+            Log.d("CoupleGameScreen", "최고 심박수 갱신: $maxHeartRate")
         }
     }
 
-    DisposableEffect(Unit) {
-        onDispose {
-            heartRateViewModel.toggleEnabled()
+    // 준비 타이머
+    LaunchedEffect(timeLeft) {
+        if (!isMissionStarted && timeLeft > 0) {
+            delay(1000L)
+            timeLeft -= 1
+        } else if (timeLeft == 0) {
+            isMissionStarted = true
+        }
+    }
+
+    // 미션 타이머
+    LaunchedEffect(isMissionStarted, missionTimeLeft) {
+        if (isMissionStarted && missionTimeLeft > 0) {
+            delay(1000L)
+            missionTimeLeft -= 1
+        } else if (missionTimeLeft == 0) {
+            onNavigate(maxHeartRate.toFloat())
         }
     }
 
@@ -153,35 +86,35 @@ fun CoupleGameScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         if (!isMissionStarted) {
-            // Initial countdown screen
+            // 준비 타이머 화면
             Text(
                 text = "READY",
-                fontSize = 20.sp,
+                fontSize = 32.sp, // 글씨 크기 증가
                 color = textColor,
                 modifier = Modifier.padding(16.dp)
             )
             Text(
                 text = "${timeLeft} 초",
-                fontSize = 24.sp,
+                fontSize = 28.sp, // 글씨 크기 증가
                 color = textColor
             )
         } else {
-            // Mission screen
+            // 미션 화면
             Text(
                 text = "커플 랜덤 미션",
-                fontSize = 12.sp,
+                fontSize = 28.sp, // 글씨 크기 증가
                 color = textColor,
                 modifier = Modifier.padding(6.dp)
             )
             Text(
                 text = randomActivity,
-                fontSize = 14.sp,
+                fontSize = 30.sp, // 글씨 크기 증가
                 color = textColor,
                 modifier = Modifier.padding(16.dp)
             )
             Text(
                 text = "${missionTimeLeft}초",
-                fontSize = 18.sp,
+                fontSize = 26.sp, // 글씨 크기 증가
                 color = textColor,
             )
             Row(
@@ -192,15 +125,16 @@ fun CoupleGameScreen(
                 Image(
                     painter = icon,
                     contentDescription = null,
-                    modifier = Modifier.size(30.dp)
+                    modifier = Modifier.size(40.dp) // 이미지 크기 증가
                 )
                 Spacer(modifier = Modifier.width(4.dp))
                 Text(
                     text = currentHr.toInt().toString(),
-                    fontSize = 20.sp,
+                    fontSize = 28.sp, // 글씨 크기 증가
                     color = DarkRed
                 )
             }
         }
+
     }
 }

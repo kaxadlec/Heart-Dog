@@ -22,29 +22,33 @@ import com.google.android.horologist.datalayer.sample.Screen
 import com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.game.GameTabScreen
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.android.horologist.datalayer.sample.screens.heartrate.presentation.HeartRateViewModel
 import com.google.android.horologist.datalayer.sample.screens.watchpage.state.user.UserViewModel
+import java.util.Calendar
 
 @Composable
 fun CoupleGameScreenMissionResult(
     onBack: () -> Unit,
     navController: NavController,
-    heartRateViewModel: HeartRateViewModel = hiltViewModel(),
+    maxHeartRate: Float, // maxHeartRate 직접 받음
     userViewModel: UserViewModel = hiltViewModel()
 ) {
     val DarkRed = Color(0xFFB00020)
-    // maxHeartRate StateFlow 수집
-    val maxHeartRate by heartRateViewModel.maxHeartRate.collectAsState(initial = 0.0) // 최대 심박수
-    // 최대 심박수에 따른 하트 획득량 계산 (일단 기준 90으로 설정)
-    val heartsEarned = (maxHeartRate - 90).coerceAtLeast(0.0).toInt() // 최대 심박수가 90을 넘어야 하트 획득
+    val currentHour = remember { Calendar.getInstance().get(Calendar.HOUR_OF_DAY) }
+    val isNightMode = currentHour in 19..23 || currentHour in 0..6
+    val textColor = if (isNightMode) Color.White else Color.Black
+
+    // 최대 심박수에 따른 하트 획득량 계산
+    val heartsEarned = (maxHeartRate - 90).coerceAtLeast(0f).toInt()
     // UserViewModel의 StateFlow 수집
     val userState by userViewModel.uiState.collectAsState()
 
     // 값 확인을 위한 로그
     LaunchedEffect(maxHeartRate) {
-        Log.d("CoupleGameResult", "Current max heart rate: $maxHeartRate")
-        Log.d("CoupleGameResult", "Hearts earned: $heartsEarned")
+//        Log.d("CoupleGameResult", "Current max heart rate: $maxHeartRate")
+//        Log.d("CoupleGameResult", "Hearts earned: $heartsEarned")
 
         // 현재 하트 + 획득한 하트로 업데이트
         val newHeartCount = userState.heart + heartsEarned
@@ -55,39 +59,39 @@ fun CoupleGameScreenMissionResult(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(10.dp),
+            .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(32.dp))
         Text(
-            text = "당신의 최고 심박수 : ${maxHeartRate.toInt()} bpm",
-            fontSize = 14.sp,
+            text = "최고 심박수 : ${maxHeartRate.toInt()} bpm",
+            fontSize = 24.sp, // 글씨 크기 증가
+            fontWeight = FontWeight.Bold,
+            color = textColor,
         )
 
-
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(24.dp))
 
         Text(
             text = "획득한 하트: $heartsEarned",
-            fontSize = 18.sp,
+            fontSize = 26.sp, // 글씨 크기 증가
             fontWeight = FontWeight.Bold,
             color = DarkRed
         )
 
-
-        Spacer(modifier = Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(24.dp))
 
         androidx.wear.compose.material.Button(
             onClick = {
-                // 게임화면 밖으로 나가기
+                // 게임 화면 밖으로 나가기
                 navController.popBackStack(
                     route = GameTabScreen.Main.route,
                     inclusive = false
                 )
             },
             modifier = Modifier
-                .size(width = 80.dp, height = 30.dp),
+                .size(width = 120.dp, height = 50.dp), // 버튼 크기 증가
             colors = ButtonDefaults.buttonColors(
                 backgroundColor = Color(0xFFFF9A4D),
             ),
@@ -98,7 +102,8 @@ fun CoupleGameScreenMissionResult(
             ) {
                 Text(
                     text = "확인",
-                    fontSize = 16.sp,
+                    fontSize = 20.sp, // 글씨 크기 증가
+                    fontWeight = FontWeight.Bold,
                     color = Color.White
                 )
             }

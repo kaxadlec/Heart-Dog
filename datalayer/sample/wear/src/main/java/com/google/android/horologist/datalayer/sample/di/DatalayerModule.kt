@@ -115,11 +115,11 @@ object DatalayerModule {
             HeartRateServiceGrpcKt.HeartRateServiceCoroutineStub(it)
         }
 
-    @ActivityRetainedScoped
-    @Provides
-    fun provideHeartRateServicesRepository(@ApplicationContext context: Context): HeartRateServicesRepository {
-        return HeartRateServicesRepository(context)
-    }
+//    @ActivityRetainedScoped
+//    @Provides
+//    fun provideHeartRateServicesRepository(@ApplicationContext context: Context): HeartRateServicesRepository {
+//        return HeartRateServicesRepository(context)
+//    }
 
     @ActivityRetainedScoped
     @Provides
