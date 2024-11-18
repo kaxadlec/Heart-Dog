@@ -3,6 +3,7 @@ package com.google.android.horologist.datalayer.sample.screens.watchpage.tabs.co
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DirectionsWalk
+import androidx.compose.material.icons.filled.Terrain
 import androidx.compose.material.icons.filled.EmojiEmotions
 import androidx.compose.material.icons.filled.Timer
 import androidx.compose.runtime.Composable
@@ -40,7 +41,7 @@ fun CoupleTab(
                 text = "산책",
                 onClick = onWalkClick,
                 backgroundColor = Color(0xFFDB8018),
-                icon = Icons.Default.DirectionsWalk,
+                icon = Icons.Default.Terrain,
                 modifier = Modifier
                     .align(Alignment.TopCenter)
             )
