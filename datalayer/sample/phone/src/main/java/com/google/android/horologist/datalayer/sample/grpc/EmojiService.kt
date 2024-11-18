@@ -54,7 +54,7 @@ class EmojiService @Inject constructor(
         return updatedValue
     }
 
-    private suspend fun sendNotification(userId: Long, emoji: String) {
+    suspend fun sendNotification(userId: Long, emoji: String) {
         val typeId = 6
         try {
             val result = notificationRepository.sendNotification(

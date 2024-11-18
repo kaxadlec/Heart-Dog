@@ -89,29 +89,7 @@ object DatalayerModule {
             CounterServiceGrpcKt.CounterServiceCoroutineStub(it)
         }
 
-    // Emoji Service 관련 Flow 및 Service 추가
-    @ActivityRetainedScoped
-    @Provides
-    fun emojiFlow(wearDataLayerRegistry: WearDataLayerRegistry): Flow<EmojiValue> {
-        return wearDataLayerRegistry.protoFlow(
-            TargetNodeId.PairedPhone,
-            EmojiValueSerializer,
-            "emoji_data"
-        )
-    }
 
-    @ActivityRetainedScoped
-    @Provides
-    fun emojiService(
-        wearDataLayerRegistry: WearDataLayerRegistry
-    ): EmojiServiceGrpcKt.EmojiServiceCoroutineStub {
-        return wearDataLayerRegistry.grpcClient(
-            nodeId = TargetNodeId.PairedPhone,
-            coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Default),
-        ) {
-            EmojiServiceGrpcKt.EmojiServiceCoroutineStub(it)
-        }
-    }
 
 
     /* HeartRateService */

@@ -15,6 +15,8 @@ import com.google.android.horologist.datalayer.sample.shared.DogRecordSerializer
 import com.google.android.horologist.datalayer.sample.shared.EmojiValueSerializer
 import com.google.android.horologist.datalayer.sample.shared.HeartRateRecordSerializer
 import com.google.android.horologist.datalayer.sample.shared.StepCountRecordSerializer
+import com.google.android.horologist.datalayer.sample.shared.grpc.EmojiProto.EmojiValue
+import com.google.android.horologist.datalayer.sample.shared.grpc.EmojiServiceGrpcKt
 import com.google.android.horologist.datalayer.sample.shared.grpc.StepCountServiceGrpcKt
 import dagger.Module
 import dagger.Provides
@@ -24,6 +26,7 @@ import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Singleton
 
 
@@ -94,4 +97,29 @@ object AppModule {
     fun provideSensorManager(
         @ApplicationContext context: Context
     ): SensorManager = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
+
+    // Emoji Service 관련 Flow 및 Service 추가
+    @Singleton
+    @Provides
+    fun emojiFlow(wearDataLayerRegistry: WearDataLayerRegistry): Flow<EmojiValue> {
+        return wearDataLayerRegistry.protoFlow(
+            TargetNodeId.PairedPhone,
+            EmojiValueSerializer,
+            "emoji_data"
+        )
+    }
+
+    @Singleton
+    @Provides
+    fun provideEmojiService(
+        wearDataLayerRegistry: WearDataLayerRegistry
+    ): EmojiServiceGrpcKt.EmojiServiceCoroutineStub {
+        return wearDataLayerRegistry.grpcClient(
+            nodeId = TargetNodeId.PairedPhone,
+            coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Default),
+        ) {
+            EmojiServiceGrpcKt.EmojiServiceCoroutineStub(it)
+        }
+    }
+
 }

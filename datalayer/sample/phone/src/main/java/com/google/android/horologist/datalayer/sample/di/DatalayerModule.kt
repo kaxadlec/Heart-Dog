@@ -19,6 +19,7 @@ package com.google.android.horologist.datalayer.sample.di
 import android.content.Context
 import android.util.Log
 import androidx.datastore.core.DataStore
+import androidx.datastore.dataStoreFile
 import com.google.android.horologist.data.TargetNodeId
 import com.google.android.horologist.data.WearDataLayerRegistry
 import com.google.android.horologist.datalayer.grpc.GrpcExtensions.grpcClient
@@ -100,6 +101,18 @@ object DatalayerModule {
             }
         }
 
+    }
+
+    @Singleton
+    @Provides
+    fun provideEmojiDataStore(
+        @ApplicationContext context: Context
+    ): DataStore<EmojiProto.EmojiValue> {
+        return androidx.datastore.core.DataStoreFactory.create(
+            serializer = EmojiValueSerializer,
+            produceFile = { context.dataStoreFile("emoji_prefs.pb") },
+            scope = CoroutineScope(Dispatchers.IO)
+        )
     }
 
     @Singleton
