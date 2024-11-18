@@ -58,7 +58,7 @@ class LocationTrackingForegroundService : Service() {
 
             fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
-            val locationRequest = LocationRequest.Builder(30000)
+            val locationRequest = LocationRequest.Builder(5000)
                 .setWaitForAccurateLocation(false)
                 .setPriority(Priority.PRIORITY_HIGH_ACCURACY)
                 .build()
@@ -111,9 +111,6 @@ class LocationTrackingForegroundService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val notification = NotificationCompat.Builder(this, "location_channel")
-            .setContentTitle("위치 추적")
-            .setContentText("위치 추적 중...")
-            .setSmallIcon(R.drawable.ic_notification)
             .build()
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {

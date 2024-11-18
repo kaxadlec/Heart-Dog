@@ -110,7 +110,7 @@ class WearEmojiDataService : BaseGrpcDataService<EmojiServiceGrpcKt.EmojiService
         val notification = NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle("이모지 서비스")
             .setContentText("이모지 알림 서비스 실행 중...")
-            .setSmallIcon(R.drawable.ic_notification)
+            .setSmallIcon(R.mipmap.ic_launcher)
             .setContentIntent(pendingIntent)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .build()
